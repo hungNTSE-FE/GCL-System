@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nhóm quyền</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css"/>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <!-- Google Fonts Roboto -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"/>
+    <!-- MDB -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.5.0/mdb.min.css" rel="stylesheet"/>
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/v/dt/dt-1.10.16/sl-1.2.5/datatables.min.css"/>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/awesome-bootstrap-checkbox/0.3.7/awesome-bootstrap-checkbox.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/fixedcolumns/3.2.1/css/fixedColumns.dataTables.min.css"/>
+</head>
+<body>
+    <!--Navbar-->
+    <header>
+        <th:block th:include="/common/navbar.html"></th:block>
+    </header>
+
+    <!-- Header -->
+    <div class="container border-bottom mw-100" style="position: relative">
+        <div class="row py-3">
+            <div class="col-md-4" style="padding-top: 15px">
+                <h2>NHÓM QUYỀN (2)</h2>
+            </div>
+            <div class="col-md-8" style="padding-top: 10px">
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    <a th:href="@{/createPermissionPage}" class="btn btn-lg me-md-2" style="background-color: #ffeb3b; color: #1266f1">
+                        THÊM MỚI
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <table id="example" class="display" cellspacing="0" width="100%">
+            <thead>
+            <tr>
+                <th style="width: 200px">Hành động</th>
+                <th>Nhóm Quyền</th>
+                <th>Mô tả</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                    <a href="#" style="padding-right: 20px">Sửa</a>
+                    <a th:href="@{/decentralizationPermissionPage}">Phân quyền</a>
+                </td>
+                <td>Kế toán</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="#" style="padding-right: 20px">Sửa</a>
+                    <a th:href="@{/decentralizationPermissionPage}">Phân quyền</a>
+                </td>
+                <td>Chăm sóc khách hàng</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="#" style="padding-right: 20px">Sửa</a>
+                    <a th:href="@{/decentralizationPermissionPage}">Phân quyền</a>
+                </td>
+                <td>Kỹ quỹ</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="#" style="padding-right: 20px">Sửa</a>
+                    <a th:href="@{/decentralizationPermissionPage}">Phân quyền</a>
+                </td>
+                <td>Marketing</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="#" style="padding-right: 20px">Sửa</a>
+                    <a th:href="@{/decentralizationPermissionPage}">Phân quyền</a>
+                </td>
+                <td>Admin</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="#" style="padding-right: 20px">Sửa</a>
+                    <a th:href="@{/decentralizationPermissionPage}">Phân quyền</a>
+                </td>
+                <td>Kinh doanh (Sale)</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="#" style="padding-right: 20px">Sửa</a>
+                    <a th:href="@{/decentralizationPermissionPage}">Phân quyền</a>
+                </td>
+                <td>Kỹ thuật</td>
+                <td></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!--Footer-->
+    <th:block th:include="/common/footer.html"></th:block>
+
+    <!-- MDB -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.5.0/mdb.min.js"></script>
+
+    <!-- DATATABLE JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://cdn.datatables.net/v/dt/dt-1.10.16/sl-1.2.5/datatables.min.js"></script>
+
+    <!-- DATATABLE-FIXEDCOLUMNS  -->
+    <script type="text/javascript" src="https://cdn.datatables.net/fixedcolumns/3.2.1/js/dataTables.fixedColumns.min.js"></script>
+
+    <script type="text/javascript" src="/js/permission-datatable.js"></script>
+</body>
+</html>

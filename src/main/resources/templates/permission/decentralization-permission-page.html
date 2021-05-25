@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Phân quyền phòng ban</title>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css"/>
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+  <!-- Google Fonts Roboto -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"/>
+  <!-- MDB -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.5.0/mdb.min.css" rel="stylesheet"/>
+
+  <!-- DATATABLE CSS -->
+  <link rel="stylesheet" href="https://gyrocode.github.io/jquery-datatables-checkboxes/1.2.11/css/dataTables.checkboxes.css"/>
+  <link rel="stylesheet" href="https://cdn.datatables.net/v/dt/dt-1.10.16/sl-1.2.5/datatables.min.css"/>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/awesome-bootstrap-checkbox/0.3.7/awesome-bootstrap-checkbox.css"/>
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/fixedcolumns/3.2.1/css/fixedColumns.dataTables.min.css"/>
+</head>
+<body>
+  <!--Navbar-->
+  <header>
+    <th:block th:include="/common/navbar.html"></th:block>
+  </header>
+
+  <!-- Header -->
+  <div class="container border-bottom mw-100">
+    <div class="row py-3">
+      <div class="col-md-4">
+        <h2>PHÒNG BAN (12)</h2>
+      </div>
+      <div class="col-md-8">
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+          <button type="button" class="btn btn-warning me-md-2">
+            CẬP NHẬT
+          </button>
+          <a th:href="@{/homePermissionPage}" class="btn btn-light" data-mdb-ripple-color="dark">TRỞ VỀ</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--Main-->
+  <div class="container mw-100">
+    <div class="row py-3">
+      <div class="col-md-4">
+        <label class="form-label" for="formControlLg">
+          Tên phòng ban
+        </label>
+        <input type="text" id="formControlLg" class="form-control" />
+        <div class="d-grid gap-2 d-md-flex justify-content-start my-3">
+          <button type="button" class="btn btn-warning me-md-2">
+            Tìm kiếm
+          </button>
+          <button type="button" class="btn btn-light" data-mdb-ripple-color="dark">
+            Mặc định
+          </button>
+        </div>
+      </div>
+      <div class="col-md-8">
+        <p>
+          <strong>Nhóm quyền: </strong>
+          Chăm sóc khách hàng
+        </p>
+        <table id="example" class="display" cellspacing="0" width="100%">
+          <thead>
+          <tr>
+            <th></th>
+            <th>TÊN PHÒNG BAN</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>1</td>
+            <td>Phòng Marketing</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>Phòng Kinh doanh</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>Phòng Kế toán</td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td>Admin</td>
+          </tr>
+          <tr>
+            <td>5</td>
+            <td>Phòng Chăm sóc khách hàng</td>
+          </tr>
+          <tr>
+            <td>6</td>
+            <td>Công ty</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!--Footer-->
+  <th:block th:include="/common/footer.html"></th:block>
+
+  <!-- MDB -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.5.0/mdb.min.js"></script>
+
+  <!-- DATATABLE JS -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="https://cdn.datatables.net/v/dt/dt-1.10.16/sl-1.2.5/datatables.min.js"></script>
+  <script src="https://gyrocode.github.io/jquery-datatables-checkboxes/1.2.11/js/dataTables.checkboxes.min.js"></script>
+
+  <!-- DATATABLE-FIXEDCOLUMNS  -->
+  <script type="text/javascript" src="https://cdn.datatables.net/fixedcolumns/3.2.1/js/dataTables.fixedColumns.min.js"></script>
+
+  <script src="/js/decentralization-permission-datatable.js"></script>
+</body>
+</html>

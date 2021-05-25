@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/main.css" />
+
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet"/>
+    <!-- MDB -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.5.0/mdb.min.css" rel="stylesheet"/>
+    <title>Department Page</title>
+</head>
+<body>
+    <!--Navbar-->
+    <header>
+        <th:block th:include="/common/navbar.html"></th:block>
+    </header>
+
+    <!--Header-->
+    <div class="container border-bottom mw-100">
+        <div class="row py-3">
+            <div class="col-md-4">
+                <h2>CƠ CẤU CÔNG TY</h2>
+            </div>
+            <div class="col-md-8">
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    <a th:href="@{/createDepartmentPage}" type="button" class="btn btn-lg me-md-2 " style="background-color: #ffeb3b; color: #1266f1;">
+                        Thêm mới
+                    </a>
+                    <a th:href="@{/editDepartmentPage}" type="button" class="btn btn-lg btn-light" data-mdb-ripple-color="dark">
+                        Sửa
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Main-->
+    <div class="container mw-100">
+        <div class="row py-3">
+            <!-- VIEW TREE: DEPARTMENT -->
+            <div class="col-md-4">
+                <th:block th:include="/common/viewtree.html"></th:block>
+
+            </div>
+            <div class="col-md-8">
+                <!-- TABLE DEPARTMENT -->
+                <th:block th:include="/common/table.html"></th:block>
+            </div>
+        </div>
+    </div>
+
+    <!--Footer-->
+    <th:block th:include="/common/footer.html"></th:block>
+
+    <!-- MDB -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.5.0/mdb.min.js"></script>
+</body>
+</html>

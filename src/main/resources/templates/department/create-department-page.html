@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Thêm mới phòng ban</title>
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet"/>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet"/>
+  <!-- MDB -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.5.0/mdb.min.css" rel="stylesheet"/>
+</head>
+<body>
+  <!--Navbar-->
+  <header>
+    <th:block th:include="/common/navbar.html"></th:block>
+  </header>
+
+  <!-- Header -->
+  <div class="container border-bottom mw-100" style="position: relative">
+    <div id="button-return-department" style="position: absolute; top: 5; left: 5">
+      <a th:href="@{/homeDepartmentPage}" class="btn btn-outline-primary btn-sm" style="padding: 5px; color: black">
+        <span><i class="fas fa-angle-left"></i> Cơ cấu công ty</span>
+      </a>
+    </div>
+    <div class="row py-3">
+      <div class="col-md-4" style="padding-top: 15px">
+        <h2>THÊM MỚI PHÒNG BAN</h2>
+      </div>
+      <div class="col-md-8" style="padding-top: 10px">
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+          <button type="button" class="btn btn-lg me-md-2" style="background-color: #ffeb3b; color: #1266f1">
+            LƯU
+          </button>
+          <button type="button" class="btn btn-lg btn-light" data-mdb-ripple-color="dark">
+            TRỞ VỀ
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main -->
+  <div class="container-fluid d-flex flex-column my-2">
+    <div class="border">
+      <div style="background-color: #f9fbe7; height: 40px">
+        <h5 style="padding: 8px">Thông tin phòng ban</h5>
+      </div>
+
+      <div style="padding: 8px">
+        <form>
+          <div class="row mb-3">
+            <label class="col-sm-2 col-form-label">
+              <strong>
+                Phòng ban
+              </strong>
+              <span style="color: red">*</span>
+            </label>
+            <div class="col-sm-7 mx-3">
+              <input type="input" class="form-control" />
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label class="col-sm-2 col-form-label">
+              <strong>
+                Nhóm cấp trên
+              </strong>
+              <span style="color: red">*</span>
+            </label>
+            <div class="col-sm-7 mx-3">
+              <select class="form-select" aria-label="Default select example">
+                <option selected>Phòng sales kinh doanh</option>
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+              </select>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label class="col-sm-2 col-form-label">
+              <strong>
+                Ghi chú
+              </strong>
+            </label>
+            <div class="col-sm-7 mx-3">
+                <textarea class="form-control" id="textAreaExample" rows="4"></textarea>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label class="col-sm-2 col-form-label">
+              Bắt buộc <span style="color: red">*</span>
+            </label>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!--Footer-->
+  <th:block th:include="/common/footer.html"></th:block>
+
+  <!-- MDB -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.5.0/mdb.min.js"></script>
+</body>
+</html>

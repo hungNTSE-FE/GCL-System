@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Thêm mới nhóm quyền</title>
+  <link rel="stylesheet" href="/css/main.css" />
+  <!-- Font Awesome -->
+  <link
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
+          rel="stylesheet"
+  />
+  <!-- Google Fonts -->
+  <link
+          href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+          rel="stylesheet"
+  />
+  <!-- MDB -->
+  <link
+          href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.5.0/mdb.min.css"
+          rel="stylesheet"
+  />
+
+  <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <script src="http://www.jqueryscript.net/demo/Checkable-Collapsible-jQuery-Tree-View-Plugin-Treeview/dev/logger.js"></script>
+  <script src="http://www.jqueryscript.net/demo/Checkable-Collapsible-jQuery-Tree-View-Plugin-Treeview/dev/treeview.js"></script>
+</head>
+<body>
+
+  <!--Navbar-->
+  <header>
+    <th:block th:include="/common/navbar.html"></th:block>
+  </header>
+
+  <!-- Header -->
+  <div class="container border-bottom mw-100" style="position: relative">
+    <div class="row py-3">
+      <div class="col-md-4" style="padding-top: 15px">
+        <h2>THÊM MỚI NHÓM QUYỀN</h2>
+      </div>
+      <div class="col-md-8" style="padding-top: 10px">
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+          <button type="button" class="btn btn-lg me-md-2" style="background-color: #ffeb3b; color: #1266f1">
+            LƯU
+          </button>
+          <a th:href="@{/homePermissionPage}" class="btn btn-lg btn-light" data-mdb-ripple-color="dark">
+            TRỞ VỀ
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main -->
+  <div class="container-fluid d-flex flex-column my-2">
+    <div class="border">
+      <div style="background-color: #f9fbe7; height: 40px">
+        <h5 style="padding: 8px">Thông tin Nhóm quyền</h5>
+      </div>
+
+      <div style="padding: 8px">
+        <form>
+          <div class="row mb-3">
+            <label class="col-sm-2 col-form-label">
+              <strong>Nhóm quyền </strong><span style="color: red">*</span>
+            </label>
+            <div class="col-sm-7 mx-3">
+              <input type="input" class="form-control" />
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label class="col-sm-2 col-form-label"
+            ><strong>Mô tả</strong></label
+            >
+            <div class="col-sm-7 mx-3">
+                <textarea class="form-control" id="textAreaExample" rows="4"></textarea>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="container-fluid d-grid gap-3 d-md-flex justify-content-start my-2">
+  <!-- <button type="button" class="btn btn-light" id="show-values">
+    Get Values
+  </button> -->
+    <pre id="values"></pre>
+    <button type="button" class="btn btn-light" onClick="selectAllNone()">
+      CHỌN TOÀN QUYỀN
+    </button>
+    <button type="button" class="btn btn-light" onClick="ClearAll()">
+      XOÁ
+    </button>
+  </div>
+
+  <!-- Main -->
+  <div class="container-fluid d-flex flex-column my-2">
+    <div class="border">
+      <div style="background-color: #f9fbe7; height: 40px">
+        <h5 style="padding: 8px">Chọn quyền</h5>
+      </div>
+
+      <div style="padding: 8px" class="d-grid gap-3 d-md-flex justify-content-between">
+        <div id="treeview-container">
+          <ul>
+            <li>Khách hàng</li>
+            <li>
+              Báo cáo
+              <ul>
+                <li>node 2.1</li>
+                <li>
+                  node 2.2
+                  <ul>
+                    <li data-value="2.2.1">subnode 2.2.1</li>
+                    <li data-value="2.2.2">subnode 2.2.2</li>
+                    <li data-value="2.2.3">subnode 2.2.3</li>
+                  </ul>
+                </li>
+                <li>node 2.3</li>
+              </ul>
+            </li>
+            <li>
+              Mua hàng
+              <ul>
+                <li data-value="3.1">node 3.1</li>
+                <li data-value="3.2">node 3.2</li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--Footer-->
+  <th:block th:include="/common/footer.html"></th:block>
+
+  <!-- MDB -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.5.0/mdb.min.js"></script>
+
+  <script src="/js/viewtree-checkbox.js"></script>
+</body>
+</html>
