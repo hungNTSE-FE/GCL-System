@@ -61,7 +61,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         // Ngoại lệ AccessDeniedException sẽ ném ra.
         http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/403");
 
-        // Cấu hình cho Login Form.
+        // Cấu hình cho Login form.
         http.authorizeRequests().and().formLogin()//
                 // Submit URL của trang login
                 .loginProcessingUrl("/j_spring_security_check") // Submit URL
