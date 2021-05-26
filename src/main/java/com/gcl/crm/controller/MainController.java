@@ -107,21 +107,4 @@ public class MainController {
         return "/permission/create-permission-page";
     }
 
-    @RequestMapping(value = "/403", method = RequestMethod.GET)
-    public String accessDenied(Model model, Principal principal) {
-
-        if (principal != null) {
-            User loginedUser = (User) ((Authentication) principal).getPrincipal();
-
-            String userInfo = WebUtils.toString(loginedUser);
-
-            model.addAttribute("userInfo", userInfo);
-
-            String message = "Hi" + principal.getName() + "<br> You do not have permission to access this page!";
-            model.addAttribute("message", message);
-        }
-        return "403Page";
-    }
-
-
 }
