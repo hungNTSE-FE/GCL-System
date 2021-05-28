@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><title>
+    Page
+</title>
+
+    <!-- Bootstrap CSS -->
+    <!-- Required meta tags -->
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&amp;display=swap" rel="stylesheet">
+    <!-- MDB -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.5.0/mdb.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/resource/jquery-datatables-checkboxes-1.2.12/css/dataTables.checkboxes.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/v/dt/dt-1.10.16/sl-1.2.5/datatables.min.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/awesome-bootstrap-checkbox/0.3.7/awesome-bootstrap-checkbox.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/fixedcolumns/3.2.1/css/fixedColumns.dataTables.min.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+    <style>
+
+
+        #work {
+            margin-top: 8%;
+            margin-left: 5%;
+            height: 550px;
+            width: 80%;
+            border: 1px solid black;
+            position: relative;
+        }
+        #banner{
+            width: 100%;
+            height : 70px;
+            border-style: groove;
+        }
+        #navi{
+            width: 100%;
+            height:70px;
+            border-style: groove;
+            border-bottom: none;
+        }
+        #label {
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            height: 30px;
+            width: 300px;
+            margin-bottom: 30px;
+            background-color: gainsboro;
+            border: 2px solid black;
+            text-align: center;
+        }
+        .table-earnings {
+            background: #F3F5F6;
+        }
+        table {
+            display: block;
+            height: 200px;
+            margin-left: 20px;
+            overflow-y: auto;
+
+
+        }
+
+        legend{
+            color: cyan;
+        }
+        fieldset{
+            display: block;
+            height: 100px;
+        }
+        .table_column_name{
+            font-size: 12px;
+        }
+        #banner label{
+            font-size: 30px;
+            font-family: "Poor Richard";
+            margin-top: 10px;
+            margin-left:45px;
+        }
+        #title{
+            width: 100%;
+            height: 60px;
+            float: left;
+            border-style: groove;
+            border-top: none;
+
+        }
+
+
+        .TopButton{
+            position:  fixed;
+            width: 50px;
+            height: 50px;
+            background: yellow;
+            bottom: 40px;
+            right: 50px;
+            text-align: center ;
+            text-decoration: none;
+            line-height: 50px;
+            color: white;
+            font-size: 22px;
+        }
+
+        .title_name{
+            text-align: center;
+            width: 10%;
+            height : 60px;
+            float:left;
+            border-style: groove;
+            background-color: yellow;
+            border-radius: 10px;
+            margin-left: 5px;
+        }
+        .title_name label{
+            margin-top: 16px;
+        }
+
+        #createButton{
+            with:20%;
+            padding-top: 25px;
+            margin-left: 81%;
+        }
+        .container{
+            padding-bottom: 10px;
+            margin-top: 10px;
+        }
+        table.dataTable thead .sorting:after,
+        table.dataTable thead .sorting:before,
+        table.dataTable thead .sorting_asc:after,
+        table.dataTable thead .sorting_asc:before,
+        table.dataTable thead .sorting_asc_disabled:after,
+        table.dataTable thead .sorting_asc_disabled:before,
+        table.dataTable thead .sorting_desc:after,
+        table.dataTable thead .sorting_desc:before,
+        table.dataTable thead .sorting_desc_disabled:after,
+        table.dataTable thead .sorting_desc_disabled:before {
+            bottom: .5em;
+        }
+        td i{
+            padding-left: 40px;
+        }
+    </style>
+</head>
+<body>
+
+<div id="banner">
+    <label>CRM - GIA CAT LOI</label>
+</div>
+<div id="title">
+
+    <div class="title_name">
+        <label>Home</label>
+    </div>
+    <div class="title_name">
+        <label>Customer</label>
+
+    </div>
+    <div class="title_name">
+        <label>MKT</label>
+
+    </div>
+    <div class="title_name">
+        <label>Sale</label>
+
+    </div>
+
+</div>
+<div id="work">
+    <div id="label">Công Việc Hiện Tại</div>
+
+
+    <div id="createButton">
+        <a th:href="@{/task/showCreateForm}" class="btn btn-warning" style="color: white">
+            <i class="fa fa-shopping-cart"></i>
+
+            Thêm công việc
+        </a>
+    </div>
+
+
+    <div class="container">
+        <form id="frm-example">
+            <table id="example" class="display" cellspacing="0" width="100%">
+                <thead>
+                <tr>
+                    <th></th>
+
+                    <th>CÔNG VIỆC</th>
+                    <th>LIÊN HỆ</th>
+                    <th>ĐỐI TƯỢNG</th>
+                    <th>MỨC ƯU TIÊN</th>
+                    <th>CHI TIẾT</th>
+                    <th>XÓA</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                <tr th:each="task : ${listTasks}">
+                    <td th:text="${task.task_id}"></td>
+                    <td th:text="${task.name}"></td>
+                    <td th:text="${task.assign}"></td>
+                    <td th:text="${task.reporter}"></td>
+                    <td th:text="${task.priority}"></td>
+                    <td>
+
+                        <a th:href="@{'/task/showUpdateTaskForm/'+${task.task_id}}"><i class="fa fa-arrow-circle-right" aria-hidden="true"></i></a>
+
+                    </td>
+                    <td ><a th:href="@{'/task/deleteTask/'+${task.task_id}}"><i onclick="return confirm('Bạn có chắc muốn xóa')" class="fa fa-trash" aria-hidden="true"></i></a></td>
+                </tr>
+
+                </tbody>
+
+                <tfoot>
+                <tr>
+                    <th></th>
+                    <th>CÔNG VIỆC</th>
+                    <th>LIÊN HỆ</th>
+                    <th>ĐỐI TƯỢNG</th>
+                    <th>MỨC ƯU TIÊN</th>
+                    <th>CHI TIẾT</th>
+                    <th>XÓA</th>
+                </tr>
+                </tfoot>
+            </table>
+
+            <p>
+                Press <b>Submit</b> and check console for URL-encoded form data that
+                would be submitted.
+            </p>
+
+            <p><button>Submit</button></p>
+
+            <p><b>Selected rows data:</b></p>
+            <pre id="example-console-rows"></pre>
+
+            <p><b>Form data as submitted to the server:</b></p>
+            <pre id="example-console-form"></pre>
+        </form>
+    </div>
+
+
+
+
+</div>
+<a class="TopButton" href="#"><i class="fas fa-arrow-up"></i> </a>
+
+
+
+
+
+<!-- MDB -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://cdn.datatables.net/v/dt/dt-1.10.16/sl-1.2.5/datatables.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://cdn.datatables.net/v/dt/dt-1.10.16/sl-1.2.5/datatables.min.js"></script>
+<script src="https://gyrocode.github.io/jquery-datatables-checkboxes/1.2.12/js/dataTables.checkboxes.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        var table = $("#example").DataTable({
+            scrollY: "300px",
+            scrollX: true,
+            scrollCollapse: true,
+            paging: true,
+            columnDefs: [
+                {
+                    targets: 0,
+                    checkboxes: true,
+                },
+            ],
+        });
+
+        // Handle form submission event
+        $("#frm-example").on("submit", function (e) {
+            var form = this;
+
+            var rows_selected = table.column(0).checkboxes.selected();
+
+            // Iterate over all selected checkboxes
+            $.each(rows_selected, function (index, rowId) {
+                // Create a hidden element
+                $(form).append(
+                    $("<input>")
+                        .attr("type", "hidden")
+                        .attr("name", "id[]")
+                        .val(rowId)
+                );
+            });
+
+            // FOR DEMONSTRATION ONLY
+            // The code below is not needed in production
+
+            // Output form data to a console
+            $("#example-console-rows").text(rows_selected.join(","));
+
+            // Output form data to a console
+            $("#example-console-form").text($(form).serialize());
+
+            // Remove added elements
+            $('input[name="id[]"]', form).remove();
+
+            // Prevent actual form submission
+            e.preventDefault();
+        });
+    });
+</script>
+
+
+</body>
+</html>

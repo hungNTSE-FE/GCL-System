@@ -1,18 +1,38 @@
 package com.gcl.crm.controller;
 
+import com.gcl.crm.entity.Documentary;
+import com.gcl.crm.entity.Employee;
+import com.gcl.crm.entity.Task;
+import com.gcl.crm.repository.DocumentaryRepository;
+import com.gcl.crm.service.TaskService;
 import com.gcl.crm.utils.WebUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.jws.WebParam;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.security.Principal;
+import java.util.Date;
+import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class MainController {
+    @Autowired
+    private TaskService taskService;
 
+    @Autowired
+    private DocumentaryRepository documentaryRepo;
     @RequestMapping(value = "/welcome", method = RequestMethod.GET)
     public String welcomePage(Model model) {
         model.addAttribute("title", "Welcome");
@@ -105,5 +125,72 @@ public class MainController {
     @RequestMapping(value = "/createPermissionPage", method = RequestMethod.GET)
     public String linkCreatePermissionPage(Model model) {
         return "/permission/create-permission-page";
+    }
+
+    @GetMapping("/task/viewAllTask")
+    public  String viewTaskPage(Model model){
+        model.addAttribute("listTasks",taskService.getAllTask());
+        return "viewTaskPage";
+    }
+    @GetMapping("/task/showCreateForm")
+    public String showTaskCreatePage(Model model){
+        Task task = new Task();
+        model.addAttribute("task",task);
+        return "createTaskPage";
+    }
+    @PostMapping("/task/saveTask")
+    public String saveTask(@ModelAttribute("task") Task task){
+        taskService.createTask(task);
+        return "redirect:/task/viewAllTask";
+    }
+    @GetMapping("/task/showUpdateTaskForm/{id}")
+    public String showTaskUpdateForm(@PathVariable(name = "id") int id,Model model){
+        Task task = taskService.findTaskByID(id);
+        model.addAttribute("task",task);
+        return "updateTaskPage";
+    }
+    @PostMapping("/task/updateTask")
+    public String updateTask(@ModelAttribute("task") Task task){
+        taskService.createTask(task);
+        return "redirect:/task/viewAllTask";
+    }
+    @GetMapping("/task/deleteTask/{id}")
+    public String deleteTask(@PathVariable(value ="id") int id){
+        this.taskService.deleteTaskByID(id);
+        return "redirect:/task/viewAllTask";
+
+    }
+    @GetMapping("/documentary/uploadPage")
+    public String showDocumentaryUploadForm(Model model){
+        List<Documentary> listDocs = documentaryRepo.findAll();
+         model.addAttribute("listDocs",listDocs);
+        return "documentaryUploadPage";
+    }
+    @PostMapping("/documentary/upload")
+    public String uploadDocumentary(@RequestParam("documentary") MultipartFile multipartFile, RedirectAttributes ra) throws IOException {
+       String filename = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+        Documentary documentary = new Documentary();
+        documentary.setName(filename);
+        documentary.setContent(multipartFile.getBytes());
+        documentary.setSize(multipartFile.getSize());
+        documentary.setUploadTime(new Date());
+        documentaryRepo.save(documentary);
+        ra.addFlashAttribute("message","Công văn đã được gửi");
+        return "redirect:/documentary/uploadPage";
+    }
+    @GetMapping("/documentary/download")
+    public void downloadDocumentary(@Param("id") int id, HttpServletResponse response) throws Exception {
+        Optional<Documentary> result = documentaryRepo.findById(id);
+        if(!result.isPresent()){
+            throw new Exception("Không tìm thấy công văn !!!");
+        }
+        Documentary documentary = result.get();
+        response.setContentType("application/octet-stream");
+        String headerKey = "Content-Disposition";
+        String headerValue ="attachment; filename=" + documentary.getName();
+        response.setHeader(headerKey,headerValue);
+        ServletOutputStream outputStream =response.getOutputStream();
+        outputStream.write(documentary.getContent());
+        outputStream.close();
     }
 }

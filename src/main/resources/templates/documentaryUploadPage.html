@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&amp;display=swap" rel="stylesheet">
+  <!-- MDB -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.5.0/mdb.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/resource/jquery-datatables-checkboxes-1.2.12/css/dataTables.checkboxes.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/v/dt/dt-1.10.16/sl-1.2.5/datatables.min.css">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/awesome-bootstrap-checkbox/0.3.7/awesome-bootstrap-checkbox.css">
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/fixedcolumns/3.2.1/css/fixedColumns.dataTables.min.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+</head>
+<body>
+<header>
+  <th:block th:include="/common/navbar.html"></th:block>
+</header>
+<div class="container-fluid text-center">
+  <h1>Quản lý công văn</h1>
+</div>
+<div class="text-success">
+  <h3>[[${message}]]</h3>
+</div>
+<div class="row border rounded">
+  <th:block th:each="doc: ${listDocs}">
+    <div class="col">
+      <div>
+        <a th:href="@{'/documentary/download?id='+ ${doc.id}}"> [[${doc.name}]]</a>
+      </div>
+      <div>
+        ([[${#numbers.formatInteger(doc.size , 4,'COMMA')}]] bytes)
+      </div>
+    </div>
+  </th:block>
+</div>
+
+<form th:action="@{/documentary/upload}" method="post" enctype="multipart/form-data" style="max-width: 600px;margin: 0 auto">
+ <div class="border rounded m-3">
+   <h2>Thêm Công Văn (.pdf)</h2>
+   <p>
+     <input type="file" name="documentary" required/>
+
+   </p>
+   <p>
+     <input type="submit" value="Tải Lên" class="btn btn-primary"/>
+   </p>
+ </div>
+</form>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://cdn.datatables.net/v/dt/dt-1.10.16/sl-1.2.5/datatables.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://cdn.datatables.net/v/dt/dt-1.10.16/sl-1.2.5/datatables.min.js"></script>
+<script src="https://gyrocode.github.io/jquery-datatables-checkboxes/1.2.12/js/dataTables.checkboxes.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,275 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<title>Create Task Page</title>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Bootstrap CSS -->
+  <!--  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">-->
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&amp;display=swap" rel="stylesheet">
+  <!-- MDB -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.5.0/mdb.min.css" rel="stylesheet">
+  <style>
+    #id_field{
+
+      width: 100%;
+      height:50px;
+
+    }
+
+    .field{
+
+      width: 100%;
+      height:50px;
+      margin-top: 5px;
+
+
+    }
+    .title label{
+      margin-bottom: 10px;
+    }
+    .form{
+
+      height: 500px;
+      width: 40%;
+      margin-left: 5%;
+
+      float:left;
+    }
+
+    .title{
+      width: 40%;
+      height:50px;
+
+      float:left;
+    }
+    .title_field{
+      font-size: 15px;
+
+
+    }
+    .input_field{
+      width: 57%;
+      height: 50px;
+
+      float:left;
+
+
+    }
+
+
+    label{
+      padding-top :10px ;
+      padding-left:10px ;
+    }
+    input{
+      margin-top: 5px;
+    }
+
+    #banner{
+      width: 100%;
+      height: 130px;
+      margin-top:5%;
+      float:left
+    }
+    .banner_child{
+      height:130px;
+      width: 50%;
+      float:left;
+    }
+    #back{
+      height: 40px;
+    }
+    #back i{
+      margin-left: 25px;
+    }
+    #back label{
+      margin-left: 20px;
+    }
+    #banner_title{
+      height:90px;
+    }
+    #banner_title label{
+      font-size: 30px;
+      margin-left: 10px;
+    }
+    #banner_button{
+      margin-left: 50%;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+<form method="POST" th:action="@{/task/saveTask}" th:object="${task}" >
+  <div id="banner">
+    <div class="banner_child">
+      <div id="back">
+        <a href="/task/view">
+          <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        </a>
+        <label>Công Việc</label>
+
+      </div>
+      <div id="banner_title">
+        <label>THÊM MỚI CÔNG VIỆC</label>
+
+      </div>
+    </div>
+    <div class="banner_child">
+      <div id="banner_button">
+        <button type="button" class="btn btn-success btn-lg">THÊM</button>
+        <button type="button" class="btn btn-danger btn-lg">HỦY</button>
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <div class="form">
+    <div id="id_field">
+      <div class="title">
+        <label class="title_field">Tên Công Việc</label>
+      </div>
+      <div class="input_field">
+
+        <input class="form-control" th:field="*{name}" type="text" id="name" name="name" value="">
+
+      </div>
+
+
+
+
+    </div>
+    <div class="field">
+      <div class="title">
+        <label class="title_field">Mức độ phức tạp</label>
+      </div>
+      <div class="input_field">
+
+
+
+        <select  th:field="*{complex}" class="form-control" id="complexity" name="complex">
+          <option value="Phức tạp">Phức tạp</option>
+          <option value="Trung bình">Trung bình</option>
+          <option value="Dễ">Dễ</option>
+        </select>
+
+      </div>
+
+    </div>
+    <div class="field">
+      <div class="title">
+        <label class="title_field">Độ ưu tiên</label>
+      </div>
+      <div class="input_field">
+
+        <select th:field="*{priority}" class="form-control" id="priority" name="priority">
+          <option value="Cao">Cao</option>
+          <option value="Trung bình">Trung Bình</option>
+          <option value="Thấp">Thấp</option>
+        </select>
+
+      </div>
+
+    </div>
+    <div class="field">
+      <div class="title">
+        <label class="title_field">Người báo cáo</label>
+      </div>
+      <div class="input_field">
+
+        <input class="form-control" th:field="*{reporter}"type="text" id="reporter" name="reporter" value="">
+
+      </div>
+
+
+    </div>
+
+    <div class="field">
+      <div class="title">
+        <label class="title_field">Ngày bắt đầu</label>
+      </div>
+      <div class="input_field">
+
+        <input id="startField" th:field="*{startDate}" type="date" min="2021-05-27" pattern="yyyy-MM-dd" class="form-control"  value="">
+
+
+      </div>
+
+
+      <div class="title">
+        <label class="title_field">Ngày kết thúc</label>
+      </div>
+      <div class="input_field">
+
+        <input id="endField" th:field="*{endDate}" min="2021-05-27" type="date" pattern="yyyy-MM-dd" class="form-control" name="endDate" value="">
+
+      </div>
+
+
+    </div>
+    <div class="field">
+      <div class="title">
+        <label class="title_field">Trạng Thái</label>
+      </div>
+      <div class="input_field">
+
+        <input type="text" th:field="*{status}" class="form-control" id="status" name="status" value="">
+
+      </div>
+
+
+    </div>
+    <div class="field">
+      <div class="title">
+        <label class="title_field">Người thực hiện</label>
+      </div>
+      <div class="input_field">
+
+        <input type="text" class="form-control" th:field="*{assign}" id="assign" name="assign" value="">
+
+      </div>
+
+    </div>
+
+  </div>
+  <button type="submit" class="btn btn-info col-2">Tạo Công Việc</button>
+</form>
+
+
+
+
+
+
+
+
+
+<!--  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>-->
+<!-- MDB -->
+<script>
+  type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.5.0/mdb.min.js"
+</script>
+<script>
+  var today = new Date();
+  var dd = today.getDate();
+  var mm = today.getMonth()+1; //January is 0!
+  var yyyy = today.getFullYear();
+  if(dd<10){
+    dd='0'+dd
+  }
+  if(mm<10){
+    mm='0'+mm
+  }
+
+  today = yyyy+'-'+mm+'-'+dd;
+  document.getElementById("startField").setAttribute("min", today);
+  document.getElementById("endField").setAttribute("min", today);
+
+</script>
+
+</body></html>
