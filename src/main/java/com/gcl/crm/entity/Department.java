@@ -38,4 +38,10 @@ public class Department {
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "company_id", nullable = false)
     private Company company;
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name="department_documentary",joinColumns = @JoinColumn(name="department_id"),inverseJoinColumns = @JoinColumn(name="permission_id"))
+    private List<Documentary> documentaries;
+
+
 }

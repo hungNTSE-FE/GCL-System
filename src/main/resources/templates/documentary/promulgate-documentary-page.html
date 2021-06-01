@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Thêm mới phòng ban</title>
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet"/>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet"/>
+    <!-- MDB -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.5.0/mdb.min.css" rel="stylesheet"/>
+    <style>
+        .wrapper{
+            border : 1px solid black;
+            height: 200px;
+            width: 400px;
+            position: absolute;
+            margin: auto;
+            top : 0;
+            bottom: 0;
+            right: 0;
+            left: 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            outline: none;
+        }
+        input[type="checkbox"]{
+            appearance: none;
+            -webkit-appearance: none;
+            height: 30px;
+            width: 30px;
+            background-color: yellow;
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            outline: none;
+
+        }
+        label{
+            color: yellow;
+            font-size: 55px;
+            font-weight: 600;
+            cursor: pointer;
+
+        }
+        input[type="checkbox"]:after{
+            font-family: "Font Awesome 5 Free";
+            font-weight: 900;
+            content: "\f00c";
+            font-size: 20px;
+            color: white;
+            display : none ;
+        }
+        input [type="checkbox"]:hover{
+            background-color: #0b3d91;
+        }
+        input[type="checkbox"]:checked{
+            background-color: green;
+        }
+        input[type="checkbox"]:checked:after {
+        display: block;
+        }
+        .title_field{
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+<!--Navbar-->
+<header>
+    <th:block th:include="/common/navbar.html"></th:block>
+</header>
+<form method="POST" th:object="${documentary}" th:action="@{/documentary/promulgate}"  >
+    <div class="title">
+        <div class="title">
+            <label class="title_field">Công Văn</label>
+        </div>
+        <div class="input_field">
+            <input type="hidden" th:field="*{id}" name="documentary_id">
+
+            <input required=""  th:field="*{name} "class="form-control" type="text" id="name" name="name" >
+
+        </div>
+    </div>
+<div class ="wrapper">
+    <th:block th:each="department: ${departmentList}">
+        <input type="checkbox" id="check" name="department_id_check"
+               th:value="${department.getId()}">
+        <label for="check">[[${department.name}]]</label>
+    </th:block>
+
+</div>
+    <input type="submit" value="Ban Hành" class="btn btn-primary"/>
+</form>
+
+
+<!--Footer-->
+<th:block th:include="/common/footer.html"></th:block>
+
+<!-- MDB -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.5.0/mdb.min.js"></script>
+</body>
+</html>

@@ -2,6 +2,7 @@ package com.gcl.crm.entity;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 
 @Entity
@@ -67,5 +68,15 @@ public class Documentary {
 
     public void setContent(byte[] content) {
         this.content = content;
+    }
+    @ManyToMany(mappedBy = "documentaries", fetch = FetchType.LAZY)
+    private List<Department> departments;
+
+    public List<Department> getDepartments() {
+        return departments;
+    }
+
+    public void setDepartments(List<Department> departments) {
+        this.departments = departments;
     }
 }

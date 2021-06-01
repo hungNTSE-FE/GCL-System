@@ -23,4 +23,7 @@ public class Company {
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "company")
     private List<Department> departments;
+
+    public Company() {
+    }
 }

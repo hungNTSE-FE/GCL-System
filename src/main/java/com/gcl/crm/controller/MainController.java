@@ -1,9 +1,11 @@
 package com.gcl.crm.controller;
 
+import com.gcl.crm.entity.Department;
 import com.gcl.crm.entity.Documentary;
-import com.gcl.crm.entity.Employee;
 import com.gcl.crm.entity.Task;
 import com.gcl.crm.repository.DocumentaryRepository;
+import com.gcl.crm.service.DepartmentService;
+import com.gcl.crm.service.DocumentaryService;
 import com.gcl.crm.service.TaskService;
 import com.gcl.crm.utils.WebUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,11 +19,11 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.jws.WebParam;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -30,6 +32,12 @@ import java.util.Optional;
 public class MainController {
     @Autowired
     private TaskService taskService;
+
+    @Autowired
+    private DepartmentService departmentService;
+
+    @Autowired
+    private DocumentaryService documentaryService;
 
     @Autowired
     private DocumentaryRepository documentaryRepo;
@@ -130,13 +138,13 @@ public class MainController {
     @GetMapping("/task/viewAllTask")
     public  String viewTaskPage(Model model){
         model.addAttribute("listTasks",taskService.getAllTask());
-        return "viewTaskPage";
+        return "task/view-task-page";
     }
     @GetMapping("/task/showCreateForm")
     public String showTaskCreatePage(Model model){
         Task task = new Task();
         model.addAttribute("task",task);
-        return "createTaskPage";
+        return "task/create-task-page";
     }
     @PostMapping("/task/saveTask")
     public String saveTask(@ModelAttribute("task") Task task){
@@ -147,7 +155,7 @@ public class MainController {
     public String showTaskUpdateForm(@PathVariable(name = "id") int id,Model model){
         Task task = taskService.findTaskByID(id);
         model.addAttribute("task",task);
-        return "updateTaskPage";
+        return "task/update-task-page";
     }
     @PostMapping("/task/updateTask")
     public String updateTask(@ModelAttribute("task") Task task){
@@ -164,7 +172,7 @@ public class MainController {
     public String showDocumentaryUploadForm(Model model){
         List<Documentary> listDocs = documentaryRepo.findAll();
          model.addAttribute("listDocs",listDocs);
-        return "documentaryUploadPage";
+        return "documentary/upload-documentary-page";
     }
     @PostMapping("/documentary/upload")
     public String uploadDocumentary(@RequestParam("documentary") MultipartFile multipartFile, RedirectAttributes ra) throws IOException {
@@ -192,5 +200,33 @@ public class MainController {
         ServletOutputStream outputStream =response.getOutputStream();
         outputStream.write(documentary.getContent());
         outputStream.close();
+    }
+    @GetMapping("/documentary/promulgatePage/{id}")
+    public String promulgateDocumentary(Model model,@PathVariable(name="id") int id){
+        List<Department> departmentList = departmentService.findAllDepartments();
+        model.addAttribute("departmentList",departmentList);
+        Optional<Documentary> documentary= documentaryRepo.findById(id);
+        if(documentary.isPresent()){
+            model.addAttribute("documentary",documentary);
+
+        }
+        return"documentary/promulgate-documentary-page";
+    }
+    @PostMapping("/documentary/promulgate")
+    public String promulgateDocumentary(@RequestParam(required=false,name="documentary_id") String docID,@RequestParam(required=false,name="department_id_check") List<String> departmentID){
+        int docIDParse = Integer.parseInt(docID);
+        List<Department> departmentList = new ArrayList<>();
+        Documentary documentary = documentaryService.findByID(docIDParse);
+        for(int i =0;i<departmentID.size();i++){
+            departmentList.add(departmentService.findDepartmentById(Long.parseLong(departmentID.get(0).toString())
+            ));
+
+        }
+        System.out.println(docIDParse);
+        System.out.println(documentary.getName());
+        System.out.println(departmentList.get(0).getId());
+        documentary.setDepartments(departmentList);
+        documentaryRepo.save(documentary);
+        return "redirect:/task/viewAllTask";
     }
 }

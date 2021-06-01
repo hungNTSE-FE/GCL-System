@@ -60,6 +60,9 @@ public class Employee {
     @Column(name = "tax_code", nullable = false)
     private String taxCode;
 
+    @OneToOne(mappedBy = "employee")
+    private AppUser appUser ;
+
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "department_id")
     private Department department;

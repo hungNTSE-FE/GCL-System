@@ -1,5 +1,5 @@
-<html lang="en" xmlns="http://www.w3.org/1999/html"><head>
-  <title>Create Task Page</title>
+<html xmlns:th="http://www.thymeleaf.org">
+<title>Create Task Page</title>
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -68,6 +68,9 @@
     input{
       margin-top: 5px;
     }
+    .add{
+      margin-top: 3px;
+    }
 
     #banner{
       width: 100%;
@@ -103,9 +106,11 @@
   </style>
 </head>
 <body>
+<head>
+  <th:block th:include="/common/navbar.html"></th:block>
 
-<form method="POST" th:object="${task}" th:action="@{/task/updateTask}"  >
-  <input type="hidden" th:field="*{task_id}"  >
+</head>
+<form method="POST" th:action="@{/task/saveTask}" th:object="${task}" >
   <div id="banner">
     <div class="banner_child">
       <div id="back">
@@ -116,16 +121,9 @@
 
       </div>
       <div id="banner_title">
-        <label>CẬP NHẬT CÔNG VIỆC</label>
+        <label>THÊM MỚI CÔNG VIỆC</label>
 
       </div>
-    </div>
-    <div class="banner_child">
-      <div id="banner_button">
-        <button type="button" class="btn btn-success btn-lg">CẬP NHẬT</button>
-        <button type="button" class="btn btn-danger btn-lg">HỦY</button>
-      </div>
-
     </div>
 
   </div>
@@ -134,11 +132,11 @@
   <div class="form">
     <div id="id_field">
       <div class="title">
-        <label class="title_field">Tên công việc</label>
+        <label class="title_field">Tên Công Việc</label>
       </div>
       <div class="input_field">
 
-        <input required=""  th:field="*{name} "class="form-control" type="text" id="name" name="name" >
+        <input class="form-control" th:field="*{name}" type="text" id="name" name="name" value="">
 
       </div>
 
@@ -154,10 +152,10 @@
 
 
 
-        <select  th:field="*{complex} " class="form-control" id="complexity" name="complex">
+        <select  th:field="*{complex}" class="form-control" id="complexity" name="complex">
           <option value="Phức tạp">Phức tạp</option>
           <option value="Trung bình">Trung bình</option>
-          <option value="Dễ" selected="selected">Dễ</option>
+          <option value="Dễ">Dễ</option>
         </select>
 
       </div>
@@ -169,10 +167,10 @@
       </div>
       <div class="input_field">
 
-        <select  th:field="*{priority}" class="form-control" id="priority" name="priority">
+        <select th:field="*{priority}" class="form-control" id="priority" name="priority">
           <option value="Cao">Cao</option>
           <option value="Trung bình">Trung Bình</option>
-          <option value="Thấp" selected="selected">Thấp</option>
+          <option value="Thấp">Thấp</option>
         </select>
 
       </div>
@@ -184,7 +182,7 @@
       </div>
       <div class="input_field">
 
-        <input required="" th:field="*{reporter}" class="form-control" type="text" id="reporter" name="reporter" value="Duy ">
+        <input class="form-control" th:field="*{reporter}"type="text" id="reporter" name="reporter" value="">
 
       </div>
 
@@ -197,7 +195,7 @@
       </div>
       <div class="input_field">
 
-        <input type="date" id="startField"th:field="*{startDate}" pattern="yyyy-MM-dd" class="form-control" name="startDate" value="2021-05-29" min="2021-05-27">
+        <input id="startField" th:field="*{startDate}" type="date" min="2021-05-27" pattern="yyyy-MM-dd" class="form-control"  value="">
 
 
       </div>
@@ -208,7 +206,7 @@
       </div>
       <div class="input_field">
 
-        <input id="endField" type="date" pattern="yyyy-MM-dd" th:field="*{endDate}"class="form-control" name="endDate" value="2021-05-20" min="2021-05-27">
+        <input id="endField" th:field="*{endDate}" min="2021-05-27" type="date" pattern="yyyy-MM-dd" class="form-control" name="endDate" value="">
 
       </div>
 
@@ -220,7 +218,7 @@
       </div>
       <div class="input_field">
 
-        <input required="" type="text" class="form-control" id="status" th:field="*{status}"name="status" value="Chua Hoan Thanh">
+        <input type="text" th:field="*{status}" class="form-control" id="status" name="status" value="">
 
       </div>
 
@@ -232,14 +230,21 @@
       </div>
       <div class="input_field">
 
-        <input required="" type="text" class="form-control" id="assign" name="assign" th:field="*{assign}"value="Duy">
+        <input type="text" class="form-control" th:field="*{assign}" id="assign" name="assign" value="">
 
       </div>
 
     </div>
 
   </div>
-  <button type="submit" class="btn btn-info col-2">Cập Nhật</button>
+  <button type="submit" class="btn btn-info col-2 add">Tạo Công Việc</button>
+  <br/>
+
+
+</form>
+<form th:action="@{/task/viewAllTask}" method="GET">
+  <button type="submit" class="btn btn-danger col-2">Hủy</button>
+
 </form>
 
 
@@ -271,6 +276,7 @@
   today = yyyy+'-'+mm+'-'+dd;
   document.getElementById("startField").setAttribute("min", today);
   document.getElementById("endField").setAttribute("min", today);
+
 </script>
 
 </body></html>

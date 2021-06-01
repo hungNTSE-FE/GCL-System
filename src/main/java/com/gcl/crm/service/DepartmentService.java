@@ -11,4 +11,5 @@ public interface DepartmentService {
     boolean createDepartment(Department department);
     boolean updateDepartment(Department department);
     boolean deleteDepartment(Long id);
+
 }
