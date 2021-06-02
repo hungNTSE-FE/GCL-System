@@ -69,7 +69,9 @@ public class Documentary {
     public void setContent(byte[] content) {
         this.content = content;
     }
-    @ManyToMany(mappedBy = "documentaries", fetch = FetchType.LAZY)
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name="documentary_department",joinColumns = @JoinColumn(name="documentary_id"),inverseJoinColumns = @JoinColumn(name="department_id"))
     private List<Department> departments;
 
     public List<Department> getDepartments() {

@@ -135,98 +135,22 @@ public class MainController {
         return "/permission/create-permission-page";
     }
 
-    @GetMapping("/task/viewAllTask")
-    public  String viewTaskPage(Model model){
-        model.addAttribute("listTasks",taskService.getAllTask());
-        return "task/view-task-page";
-    }
-    @GetMapping("/task/showCreateForm")
-    public String showTaskCreatePage(Model model){
-        Task task = new Task();
-        model.addAttribute("task",task);
-        return "task/create-task-page";
-    }
-    @PostMapping("/task/saveTask")
-    public String saveTask(@ModelAttribute("task") Task task){
-        taskService.createTask(task);
-        return "redirect:/task/viewAllTask";
-    }
-    @GetMapping("/task/showUpdateTaskForm/{id}")
-    public String showTaskUpdateForm(@PathVariable(name = "id") int id,Model model){
-        Task task = taskService.findTaskByID(id);
-        model.addAttribute("task",task);
-        return "task/update-task-page";
-    }
-    @PostMapping("/task/updateTask")
-    public String updateTask(@ModelAttribute("task") Task task){
-        taskService.createTask(task);
-        return "redirect:/task/viewAllTask";
-    }
-    @GetMapping("/task/deleteTask/{id}")
-    public String deleteTask(@PathVariable(value ="id") int id){
-        this.taskService.deleteTaskByID(id);
-        return "redirect:/task/viewAllTask";
+//    @GetMapping("/task/viewAllTask")
+//    public  String viewTaskPage(Model model){
+//        model.addAttribute("listTasks",taskService.getAllTask());
+//        return "task/view-task-page";
+//    }
+//    @GetMapping("/task/showCreateForm")
+//    public String showTaskCreatePage(Model model){
+//        Task task = new Task();
+//        model.addAttribute("task",task);
+//        return "task/create-task-page";
+//    }
+//    @PostMapping("/task/saveTask")
+//    public String saveTask(@ModelAttribute("task") Task task){
+//        taskService.createTask(task);
+//        return "redirect:/task/viewAllTask";
+//    }
 
-    }
-    @GetMapping("/documentary/uploadPage")
-    public String showDocumentaryUploadForm(Model model){
-        List<Documentary> listDocs = documentaryRepo.findAll();
-         model.addAttribute("listDocs",listDocs);
-        return "documentary/upload-documentary-page";
-    }
-    @PostMapping("/documentary/upload")
-    public String uploadDocumentary(@RequestParam("documentary") MultipartFile multipartFile, RedirectAttributes ra) throws IOException {
-       String filename = StringUtils.cleanPath(multipartFile.getOriginalFilename());
-        Documentary documentary = new Documentary();
-        documentary.setName(filename);
-        documentary.setContent(multipartFile.getBytes());
-        documentary.setSize(multipartFile.getSize());
-        documentary.setUploadTime(new Date());
-        documentaryRepo.save(documentary);
-        ra.addFlashAttribute("message","Công văn đã được gửi");
-        return "redirect:/documentary/uploadPage";
-    }
-    @GetMapping("/documentary/download")
-    public void downloadDocumentary(@Param("id") int id, HttpServletResponse response) throws Exception {
-        Optional<Documentary> result = documentaryRepo.findById(id);
-        if(!result.isPresent()){
-            throw new Exception("Không tìm thấy công văn !!!");
-        }
-        Documentary documentary = result.get();
-        response.setContentType("application/octet-stream");
-        String headerKey = "Content-Disposition";
-        String headerValue ="attachment; filename=" + documentary.getName();
-        response.setHeader(headerKey,headerValue);
-        ServletOutputStream outputStream =response.getOutputStream();
-        outputStream.write(documentary.getContent());
-        outputStream.close();
-    }
-    @GetMapping("/documentary/promulgatePage/{id}")
-    public String promulgateDocumentary(Model model,@PathVariable(name="id") int id){
-        List<Department> departmentList = departmentService.findAllDepartments();
-        model.addAttribute("departmentList",departmentList);
-        Optional<Documentary> documentary= documentaryRepo.findById(id);
-        if(documentary.isPresent()){
-            model.addAttribute("documentary",documentary);
 
-        }
-        return"documentary/promulgate-documentary-page";
-    }
-    @PostMapping("/documentary/promulgate")
-    public String promulgateDocumentary(@RequestParam(required=false,name="documentary_id") String docID,@RequestParam(required=false,name="department_id_check") List<String> departmentID){
-        int docIDParse = Integer.parseInt(docID);
-        List<Department> departmentList = new ArrayList<>();
-        Documentary documentary = documentaryService.findByID(docIDParse);
-        for(int i =0;i<departmentID.size();i++){
-            departmentList.add(departmentService.findDepartmentById(Long.parseLong(departmentID.get(0).toString())
-            ));
-
-        }
-        System.out.println(docIDParse);
-        System.out.println(documentary.getName());
-        System.out.println(departmentList.get(0).getId());
-        documentary.setDepartments(departmentList);
-        documentaryRepo.save(documentary);
-        return "redirect:/task/viewAllTask";
-    }
 }

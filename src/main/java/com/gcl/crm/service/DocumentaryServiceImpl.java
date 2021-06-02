@@ -1,15 +1,25 @@
 package com.gcl.crm.service;
 
+import com.gcl.crm.entity.Department;
 import com.gcl.crm.entity.Documentary;
 import com.gcl.crm.entity.Task;
 import com.gcl.crm.repository.DocumentRepository;
+import com.gcl.crm.repository.DocumentaryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
 public class DocumentaryServiceImpl implements DocumentaryService{
+    @Autowired
+    private DepartmentService departmentService;
+
+    @Autowired
+    private DocumentaryService documentaryService;
+
 
     @Autowired
     private DocumentRepository documentRepository;
@@ -25,5 +35,20 @@ public class DocumentaryServiceImpl implements DocumentaryService{
         return documentary;
 
     }
+
+    @Override
+    public void promulgateDocumentary(String docID, List<String> departmentID) {
+        int docIDParse = Integer.parseInt(docID);
+        List<Department> departmentList = new ArrayList<>();
+        Documentary documentary = documentaryService.findByID(docIDParse);
+        for(int i =0;i<departmentID.size();i++){
+            departmentList.add(departmentService.findDepartmentById(Long.parseLong(departmentID.get(0).toString())
+            ));
+
+        }
+
+        documentary.setDepartments(departmentList);
+        documentRepository.save(documentary);
     }
+}
 

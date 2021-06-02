@@ -15,11 +15,86 @@
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/fixedcolumns/3.2.1/css/fixedColumns.dataTables.min.css">
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
 
+
+
+
+  html,body{
+    display: grid;
+    height: 100%;
+    place-items: center;
+    text-align: center;
+
+  }
+  .container{
+    heigh :350px;
+    width:430px;
+  }
+  .container .wrapper{
+    height: 300px;
+    width: 100%;
+    border:2px dashed #00b8d4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+
+  }
+  .wrapper .icon{
+    font-size: 100px;
+    color: #00b8d4;
+  }
+  .wrapper .text{
+    font-size: 20px;
+    font-weight: 50;
+    color: #00bcd4;
+
+  }
+  .wrapper #cancel-btn{
+    position: absolute;
+    right: 15px;
+    top : 15px;
+    font-size: 20px;
+    cursor: pointer;
+    color: firebrick;
+    display: none;
+  }
+  .wrapper .file-name{
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+    font-size: 18px;
+    color: #fff3e0;
+    padding: 8px 0;
+
+    background: linear-gradient(135deg,yellow 0%,springgreen 100%);
+  }
+  .container #custom-btn{
+    margin-top: 30px;
+    width: 100%;
+    height: 50px;
+    display: block;
+    border: none;
+    outline: none;
+    border-radius: 25px;
+    color: #fff3e0;
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+    background: linear-gradient(135deg,yellow 0%,springgreen 100%);
+
+  }
+  #file{
+    display: none;
+  }
+</style>
 </head>
 <body>
 <header>
-  <th:block th:include="/common/navbar.html"></th:block>
+<!--  <th:block th:include="/common/navbar.html"></th:block>-->
 </header>
 <div class="container-fluid text-center">
   <h1>Quản lý công văn</h1>
@@ -38,7 +113,8 @@
         <a th:href="@{'/documentary/download?id='+ ${doc.id}}"> [[${doc.name}]]</a>
       </div>
       <div>
-        ([[${#numbers.formatInteger(doc.size , 4,'COMMA')}]] bytes)
+        <label>File size :</label>
+        [[${#numbers.formatInteger(doc.size , 4,'COMMA')}]] bytes
       </div>
       <div>
         <a th:href="@{'/documentary/promulgatePage/'+${doc.id}}"><i class="fa fa-arrow-circle-right" aria-hidden="true"></i></a>
@@ -48,17 +124,85 @@
 </div>
 
 <form th:action="@{/documentary/upload}" method="post" enctype="multipart/form-data" style="max-width: 600px;margin: 0 auto">
- <div class="border rounded m-3">
-   <h2>Thêm Công Văn (.pdf)</h2>
-   <p>
-     <input type="file" name="documentary" required/>
+<!-- <div class="border rounded m-3s">-->
+<!--   <h2>Thêm Công Văn (.pdf)</h2>-->
+<!--   <p>-->
+  <div id="file">
+    <input id="default-btn"  name="documentary" type="file" hidden="">
+  </div>
 
-   </p>
-   <p>
-     <input type="submit" value="Tải Lên" class="btn btn-primary"/>
-   </p>
- </div>
-</form>
+  <input type="submit" value="Tải Lên" class="btn btn-primary"/>
+<!--   </p>-->
+<!--&lt;!&ndash;   <p>&ndash;&gt;-->
+<!--&lt;!&ndash;     <input type="submit" value="Tải Lên" class="btn btn-primary"/>&ndash;&gt;-->
+<!--&lt;!&ndash;   </p>&ndash;&gt;-->
+<!--&lt;!&ndash;   <div class="center">&ndash;&gt;-->
+<!--&lt;!&ndash;     <input type="submit"  id="click">&ndash;&gt;-->
+<!--&lt;!&ndash;     <label for="click" class="click-me">Tải Lên</label>&ndash;&gt;-->
+<!--&lt;!&ndash;     <div class="content">&ndash;&gt;-->
+<!--&lt;!&ndash;       <div class="header">&ndash;&gt;-->
+<!--&lt;!&ndash;         <h2>Modal Popup</h2>&ndash;&gt;-->
+<!--&lt;!&ndash;         <label for="click" class="fas fa-times"></label>&ndash;&gt;-->
+<!--&lt;!&ndash;       </div>&ndash;&gt;-->
+<!--&lt;!&ndash;       <label for="click" class="fas fa-check">Đóng</label>&ndash;&gt;-->
+<!--&lt;!&ndash;       <p>Công văn của bạn đã được đăng tải lên hệ thống </p>&ndash;&gt;-->
+<!--&lt;!&ndash;       <div class="line"></div>&ndash;&gt;-->
+<!--&lt;!&ndash;       <label for="click" class="close-btn"></label>&ndash;&gt;-->
+<!--&lt;!&ndash;     </div>&ndash;&gt;-->
+<!--&lt;!&ndash;   </div>&ndash;&gt;-->
+<!--   -->
+<!-- </div>-->
+  </form>
+  <div class="container">
+    <div class="wrapper">
+
+      <div class="content">
+        <div class="icon"><i class="fas fa-cloud-upload-alt"></i></div>
+        <div class="text">Chưa có tập tin nào được chọn </div>
+
+
+      </div>
+      <div id="cancel-btn"><i class="fas fa-times"></i></div>
+      <div class="file-name">
+
+        Tên tập tin
+      </div>
+
+    </div>
+    <button onclick="defaultBtnActive()" id="custom-btn">Choose a file</button>
+  </div>
+<script>
+  const noFile =document.querySelector(".text")
+  const fileName = document.querySelector(".file-name");
+  const defaultBtn = document.querySelector("#default-btn");
+  const customBtn = document.querySelector("#custom-btn");
+
+  let inputGet = document.querySelector("#documentary");
+
+  let regExp= /[0-9a-zA-Z\^\&\'\@\{\}\[\]\,\$\=\!\-\#\(\)\.\%\+\~\_ ]+$/;
+  function defaultBtnActive(){
+    defaultBtn.click();
+  }
+
+  defaultBtn.addEventListener("change",function (){
+    const file = this.files[0];
+    let fileType = file.type;
+    let valid=["application/pdf"];
+    if(valid.includes(fileType)){
+      if(this.value){
+
+        let valueStore = this.value.match(regExp);
+        fileName.textContent= valueStore;
+        noFile.textContent = "";
+
+
+      }
+
+    }else{
+      alert("Tệp là pdf")
+    }
+  });
+</script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="https://cdn.datatables.net/v/dt/dt-1.10.16/sl-1.2.5/datatables.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>

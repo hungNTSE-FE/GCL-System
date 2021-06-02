@@ -39,8 +39,7 @@ public class Department {
     @JoinColumn(name = "company_id", nullable = false)
     private Company company;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(name="department_documentary",joinColumns = @JoinColumn(name="department_id"),inverseJoinColumns = @JoinColumn(name="permission_id"))
+    @ManyToMany(mappedBy = "departments", fetch = FetchType.LAZY)
     private List<Documentary> documentaries;
 
 
