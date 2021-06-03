@@ -16,7 +16,7 @@ public class TaskController {
     @GetMapping({"/viewAllTask"})
     public  String viewTaskPage(Model model){
         model.addAttribute("listTasks",taskService.getAllTask());
-        return "task/view-task-page";
+        return "task/home";
     }
     @GetMapping({"/showCreateForm"})
     public String showTaskCreatePage(Model model){

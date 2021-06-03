@@ -35,16 +35,19 @@ public class DocumentaryController {
     @Autowired
     private DocumentaryRepository documentaryRepo;
 
-    @GetMapping({"/home"})
-    public String showDocumentaryHome(){
 
+
+
+    @GetMapping({"/home"})
+    public String showDocumentaryHomePage(Model model){
+        List<Documentary> listDocs = documentaryRepo.findAll();
+
+        model.addAttribute("listDocs",listDocs);
         return "documentary/home";
     }
-
     @GetMapping({"/uploadPage"})
-    public String showDocumentaryUploadForm(Model model){
-        List<Documentary> listDocs = documentaryRepo.findAll();
-        model.addAttribute("listDocs",listDocs);
+    public String showUploadPage(Model model){
+
         return "documentary/upload-documentary-page";
     }
     @PostMapping({"/upload"})
@@ -57,7 +60,7 @@ public class DocumentaryController {
         documentary.setUploadTime(new Date());
         documentaryRepo.save(documentary);
         ra.addFlashAttribute("message","Công văn đã được gửi");
-        return "redirect:/documentary/uploadPage";
+        return "redirect:/documentary/home";
     }
     @GetMapping({"/download"})
     public void downloadDocumentary(@Param("id") int id, HttpServletResponse response) throws Exception {
@@ -99,6 +102,6 @@ public class DocumentaryController {
 //        documentary.setDepartments(departmentList);
 //        documentaryRepo.save(documentary);
         documentaryService.promulgateDocumentary(docID,departmentID);
-        return "redirect:/task/viewAllTask";
+        return "redirect:/documentary/home";
     }
 }

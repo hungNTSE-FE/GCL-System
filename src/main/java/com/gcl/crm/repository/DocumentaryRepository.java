@@ -10,6 +10,7 @@ import java.util.List;
 @Repository
 public interface DocumentaryRepository extends JpaRepository<Documentary,Integer> {
 
-    @Query("SELECT new Documentary(d.id, d.name, d.size) FROM Documentary d ORDER BY d.uploadTime DESC")
+    @Query("SELECT new Documentary(d.id, d.name, d.size, d.uploadTime) FROM Documentary d ORDER BY d.uploadTime DESC")
     List<Documentary> findAll();
+
 }

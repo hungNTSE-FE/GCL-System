@@ -30,6 +30,13 @@ public class Documentary {
         this.size = size;
     }
 
+    public Documentary(int id, String name, long size, Date uploadTime) {
+        this.id = id;
+        this.name = name;
+        this.size = size;
+        this.uploadTime = uploadTime;
+    }
+
     public int getId() {
         return id;
     }
