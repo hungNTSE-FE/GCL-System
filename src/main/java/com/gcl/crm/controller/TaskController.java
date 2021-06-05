@@ -27,7 +27,7 @@ public class TaskController {
     @PostMapping({"/saveTask"})
     public String saveTask(@ModelAttribute("task") Task task){
         taskService.createTask(task);
-        return "redirect:/task/viewAllTask";
+        return  "redirect:/task/viewAllTask";
     }
     @GetMapping({"/showUpdateTaskForm/{id}"})
     public String showTaskUpdateForm(@PathVariable(name = "id") int id, Model model){
