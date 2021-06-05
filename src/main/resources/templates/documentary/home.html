@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&amp;display=swap" rel="stylesheet">
+    <!-- MDB -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.5.0/mdb.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/resource/jquery-datatables-checkboxes-1.2.12/css/dataTables.checkboxes.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/v/dt/dt-1.10.16/sl-1.2.5/datatables.min.css">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/awesome-bootstrap-checkbox/0.3.7/awesome-bootstrap-checkbox.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/fixedcolumns/3.2.1/css/fixedColumns.dataTables.min.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+<!--    <style>-->
+<!--        body{-->
+<!--            margin:0;-->
+<!--            padding: 0;-->
+<!--            font-family: sans-serif;-->
+<!--            background: linear-gradient(yellow,white);-->
+<!--            height: 100vh;-->
+<!--        }-->
+<!--        .center,.content{-->
+<!--            position: absolute;-->
+<!--            top:50%;-->
+<!--            left: 50%;-->
+<!--            transform: translate(-50%,-50%);-->
+<!--        }-->
+<!--        .click-me{-->
+<!--            display: block;-->
+<!--            width : 160px;-->
+<!--            height: 50px;-->
+<!--            background: #00b8d4;-->
+<!--            border :1px solid yellow;-->
+<!--            color : white;-->
+<!--            text-align: center;-->
+<!--            font-size: 22px;-->
+<!--            line-height: 50px;-->
+<!--            border-radius: 3px;-->
+<!--            cursor: pointer;-->
+<!--            transition: .5s;-->
+<!--        }-->
+
+<!--        #click{-->
+<!--            display: none;-->
+<!--        }-->
+<!--        .click-me:hover{-->
+<!--            background: #0d6efd;-->
+<!--        }-->
+<!--        .content{-->
+<!--            opacity: 0;-->
+<!--            visibility: hidden;-->
+<!--            width:400px;-->
+<!--            height: 350px;-->
+<!--            background: white;-->
+<!--            border-radius: 3px;-->
+<!--            box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);-->
+
+
+<!--        }-->
+<!--        .header{-->
+<!--            height: 68px;-->
+<!--            background :#ffee58;-->
+<!--            overflow: hidden;-->
+<!--            border-radius: 3px 3px 0 0 ;-->
+<!--            box-shadow: 0 2px 3px 0 rgba(0,0,0,.2);-->
+<!--        }-->
+<!--        .header h2{-->
+<!--            padding-top: 25px;-->
+<!--            color:white;-->
+<!--            padding-left: 32px;-->
+<!--            font-weight: normal;-->
+<!--        }-->
+<!--        .fa-times{-->
+<!--            position: absolute;-->
+<!--            right: 20px;-->
+<!--            top:20px;-->
+<!--            color: #e8f5e9;-->
+<!--            font-size: 20px;-->
+<!--            font-weight: bold;-->
+<!--            cursor : pointer;-->
+<!--        }-->
+<!--        .fa-check{-->
+<!--           font-size: 50px;-->
+<!--            color: #2e7d32;-->
+<!--            height: 80px;-->
+<!--            width: 80px;-->
+<!--            border: 2px solid #2e7d32;-->
+<!--            text-align: center;-->
+<!--            padding-top: 13px;-->
+<!--            border-radius: 50%;-->
+<!--            box-sizing: border-box;-->
+<!--            margin : 30px 0 0 160px;-->
+<!--        }-->
+<!--        p{-->
+<!--            padding-top: 10px;-->
+<!--            font-size: 19px;-->
+<!--            color: #1abe5c;-->
+<!--            text-align: center;-->
+
+<!--        }-->
+<!--        .line{-->
+
+<!--            position: absolute;-->
+<!--            bottom: 60px;-->
+<!--            width: 100%;-->
+<!--            height:1px;-->
+<!--            background: silver;-->
+<!--        }-->
+<!--        .close-btn{-->
+<!--            position: absolute;-->
+<!--            bottom: 12px;-->
+<!--            right: 25px;-->
+<!--            border: 1px solid firebrick;-->
+<!--            border-radius: 3px;-->
+<!--            color: firebrick;-->
+<!--            padding: 8px 10px;-->
+<!--            font-size: 18px;-->
+<!--            cursor: pointer;-->
+<!--        }-->
+<!--        .close-btn:hover{-->
+<!--            background: firebrick;-->
+<!--            color: white;-->
+<!--            transition: .5s;-->
+<!--        }-->
+<!--        #click:checked ~.content{-->
+<!--            opacity: 1;-->
+<!--            visibility: visible;-->
+
+<!--        }-->
+<!--    </style>-->
+<!--    <style>-->
+<!--     html,body{-->
+<!--         display: grid;-->
+<!--         height: 100%;-->
+<!--         place-items: center;-->
+<!--         text-align: center;-->
+
+<!--     }-->
+<!--     .container{-->
+<!--         heigh :350px;-->
+<!--         width:430px;-->
+<!--     }-->
+<!--     .container .wrapper{-->
+<!--         height: 300px;-->
+<!--         width: 100%;-->
+<!--         border:2px dashed #00b8d4;-->
+<!--         display: flex;-->
+<!--         align-items: center;-->
+<!--         justify-content: center;-->
+<!--         position: relative;-->
+
+<!--     }-->
+<!--     .wrapper .icon{-->
+<!--         font-size: 100px;-->
+<!--         color: #00b8d4;-->
+<!--     }-->
+<!--     .wrapper .text{-->
+<!--         font-size: 20px;-->
+<!--         font-weight: 50;-->
+<!--         color: #00bcd4;-->
+
+<!--     }-->
+<!--     .wrapper #cancel-btn{-->
+<!--         position: absolute;-->
+<!--         right: 15px;-->
+<!--         top : 15px;-->
+<!--         font-size: 20px;-->
+<!--         cursor: pointer;-->
+<!--         color: firebrick;-->
+<!--         display: none;-->
+<!--     }-->
+<!--     .wrapper .file-name{-->
+<!--         position: absolute;-->
+<!--         bottom: 0px;-->
+<!--         width: 100%;-->
+<!--         font-size: 18px;-->
+<!--         color: #fff3e0;-->
+<!--         padding: 8px 0;-->
+
+<!--         background: linear-gradient(135deg,yellow 0%,springgreen 100%);-->
+<!--     }-->
+<!--        .container #custom-btn{-->
+<!--            margin-top: 30px;-->
+<!--            width: 100%;-->
+<!--            height: 50px;-->
+<!--            display: block;-->
+<!--            border: none;-->
+<!--            outline: none;-->
+<!--            border-radius: 25px;-->
+<!--            color: #fff3e0;-->
+<!--            font-size: 18px;-->
+<!--            font-weight: 500;-->
+<!--            letter-spacing: 1px;-->
+<!--            text-transform: uppercase;-->
+<!--            cursor: pointer;-->
+<!--            background: linear-gradient(135deg,yellow 0%,springgreen 100%);-->
+
+<!--        }-->
+<!--    </style>-->
+</head>
+<!--<body>-->
+
+<!--<div class="center">-->
+<!--    <input type="checkbox" id="click">-->
+<!--    <label for="click" class="click-me">Click Me</label>-->
+<!--    <div class="content">-->
+<!--        <div class="header">-->
+<!--            <h2>Modal Popup</h2>-->
+<!--            <label for="click" class="fas fa-times"></label>-->
+<!--        </div>-->
+<!--        <label for="click" class="fas fa-check"></label>-->
+<!--        <p>Công văn của bạn đã được đăng tải lên hệ thống </p>-->
+<!--        <div class="line"></div>-->
+<!--        <label for="click" class="close-btn">close</label>-->
+<!--    </div>-->
+<!--</div>-->
+
+<!--</body>-->
+<body>
+<div class="drag-area">
+    <div class="icon"><i class="fas fa-cloud-upload-alt"></i></div>
+    <header>Drag & Drop to Upload File</header>
+    <span>Or</span>
+    <button>Browse File</button>
+</div>
+<!--<div class="container">-->
+<!--    <div class="wrapper">-->
+
+<!--       <div class="content">-->
+<!--           <div class="icon"><i class="fas fa-cloud-upload-alt"></i></div>-->
+<!--           <div class="text">Chua co tap tin nao </div>-->
+
+
+<!--       </div>-->
+<!--        <div id="cancel-btn"><i class="fas fa-times"></i></div>-->
+<!--        <div class="file-name">File name here</div>-->
+<!--    </div>-->
+<!--    <input id="default-btn" type="file" hidden="">-->
+<!--    <button onclick="defaultBtnActive()" id="custom-btn">Choose a file</button>-->
+<!--</div>-->
+<!--<script>-->
+
+<!--    const dropArea = document.querySelector(".drag-area");-->
+<!--    let file;-->
+<!--    dropArea.addEventListener("dragover", (event)=>{-->
+<!--        event.preventDefault();-->
+
+<!--        dropArea.classList.add("active");-->
+<!--    });-->
+<!--    dropArea.addEventListener("dragleave", ()=>{-->
+
+<!--        dropArea.classList.remove("active");-->
+
+<!--    });-->
+<!--    dropArea.addEventListener("drop", (event)=>{-->
+<!--        event.preventDefault();-->
+<!--        file = event.dataTransfer.files[0];-->
+<!--        let fileType = file.type;-->
+<!--        console.log(fileType);-->
+<!--        let validExtensions = ["image/jpg","image/jpeg","image/png"];-->
+<!--        if(validExtensions.includes(fileType)){-->
+<!--            let fileReader = new FileReader();-->
+<!--            fileReader.onload= ()=>{-->
+<!--                let fileURL = fileReader.result;-->
+<!--                console.log(fileURL)-->
+<!--                let imgTag =`<label>Tệp đã được chọn</label>`;-->
+<!--                dropArea.innerHTML = imgTag;-->
+<!--            }-->
+<!--                fileReader.readAsDataURL(file);-->
+<!--        }else{-->
+<!--                alert("Đây không phải là tệp .PDF")-->
+<!--                dropArea.classList.remove("active");-->
+<!--        }-->
+
+<!--    });-->
+
+<!--</script>-->
+<script>
+    const noFile =document.querySelector(".text")
+    const fileName = document.querySelector(".file-name");
+const defaultBtn = document.querySelector("#default-btn");
+const customBtn = document.querySelector("#custom-btn");
+let regExp= /[0-9a-zA-Z\^\&\'\@\{\}\[\]\,\$\=\!\-\#\(\)\.\%\+\~\_ ]+$/;
+function defaultBtnActive(){
+    defaultBtn.click();
+}
+defaultBtn.addEventListener("change",function (){
+const file = this.files[0];
+if(this.value){
+
+    let valueStore = this.value.match(regExp);
+    fileName.textContent= valueStore;
+    noFile.textContent = "";
+}
+});
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://cdn.datatables.net/v/dt/dt-1.10.16/sl-1.2.5/datatables.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://cdn.datatables.net/v/dt/dt-1.10.16/sl-1.2.5/datatables.min.js"></script>
+<script src="https://gyrocode.github.io/jquery-datatables-checkboxes/1.2.12/js/dataTables.checkboxes.min.js"></script>
+</body>
+</html>

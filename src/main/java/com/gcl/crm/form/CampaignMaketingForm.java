@@ -3,22 +3,24 @@ package com.gcl.crm.form;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 public class CampaignMaketingForm {
 
-    private List<CampaignForm> listCampaignForm;
+    private List<CampaignForm> campaignForm;
+    private List<CampaignDetailForm> campaignDetailFormList;
     private List<CampaignReportDetailForm> listCampaignReportDetailForm;
     private Date campaignReportFromDate;
     private Date campaignReportToDate;
     private Date campaignFromDate;
     private Date campaignToDate;
 
-    public List<CampaignForm> getListCampaignForm() {
-        return Collections.unmodifiableList(listCampaignForm);
+    public List<CampaignForm> getCampaignForm() {
+        return campaignForm;
     }
 
-    public void setListCampaignForm(List<CampaignForm> listCampaignForm) {
-        this.listCampaignForm = listCampaignForm;
+    public void setCampaignForm(List<CampaignForm> campaignForm) {
+        this.campaignForm = campaignForm;
     }
 
     public List<CampaignReportDetailForm> getListCampaignReportDetailForm() {
@@ -59,5 +61,13 @@ public class CampaignMaketingForm {
 
     public void setCampaignToDate(Date campaignToDate) {
         this.campaignToDate = campaignToDate;
+    }
+
+    public List<CampaignDetailForm> getCampaignDetailFormList() {
+        return Collections.unmodifiableList(campaignDetailFormList);
+    }
+
+    public void setCampaignDetailFormList(List<CampaignDetailForm> campaignDetailFormList) {
+        this.campaignDetailFormList = campaignDetailFormList;
     }
 }

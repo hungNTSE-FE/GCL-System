@@ -1,9 +1,7 @@
 package com.gcl.crm.repository;
 
 import com.gcl.crm.entity.Campaign;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.repository.CrudRepository;
+import com.gcl.crm.entity.UserRole;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.*;
@@ -17,7 +15,7 @@ public class CampaignRepository {
     @PersistenceContext
     EntityManager entityManager;
 
-    public Campaign findObjectByPrimaryKey( Long id ){
+    public Campaign findObjectByPrimaryKey( Integer id ){
         return entityManager.find( Campaign.class, id );
     }
 
@@ -31,14 +29,12 @@ public class CampaignRepository {
     }
 
     public void update( Campaign entity ){
-        try {
-            entityManager.merge( entity );
-        } catch (PersistenceException e) {
-            System.out.println(e.getMessage());
-        }
+        entityManager.merge( entity );
     }
 
-    public void delete( Campaign entity ){
-        entityManager.remove( entity );
+    public boolean delete( Integer campaignCode ){
+        entityManager.remove(findObjectByPrimaryKey(campaignCode));
+        return true;
     }
+
 }

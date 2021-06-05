@@ -9,7 +9,6 @@ public class CampaignForm {
     private Long totalBudget;
     private Long totalActualExpense;
     private Double totalAverageExpense;
-    private List<CampaignDetailForm> campaignDetailFormList;
 
     public String getSourceName() {
         return sourceName;
@@ -51,11 +50,4 @@ public class CampaignForm {
         this.totalAverageExpense = totalAverageExpense;
     }
 
-    public List<CampaignDetailForm> getCampaignDetailFormList() {
-        return Collections.unmodifiableList(campaignDetailFormList);
-    }
-
-    public void setCampaignDetailFormList(List<CampaignDetailForm> campaignDetailFormList) {
-        this.campaignDetailFormList = campaignDetailFormList;
-    }
 }

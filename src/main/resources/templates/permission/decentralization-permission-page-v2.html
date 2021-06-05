@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+  <meta name="description" content="" />
+  <meta name="author" content="" />
+  <title>Phân quyền</title>
+  <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet"/>
+  <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+  <link rel="icon" type="image/x-icon" href="assets/img/favicon.png" />
+  <script data-search-pseudo-elements defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js" crossorigin="anonymous"></script>
+</head>
+<body class="nav-fixed">
+<th:block th:include="/common/nav-fixed.html"></th:block>
+<div id="layoutSidenav">
+  <th:block th:include="/common/layoutSidenav.html"></th:block>
+  <div id="layoutSidenav_content">
+    <main>
+      <header
+              class="
+              page-header page-header-dark
+              bg-gradient-primary-to-secondary
+              pb-10
+            "
+      >
+        <div class="container-xl px-4">
+          <div class="page-header-content pt-4">
+            <div class="row align-items-center justify-content-between">
+              <div class="col-auto mt-4">
+                <h1 class="page-header-title">
+                  <div class="page-header-icon">
+                    <i data-feather="filter"></i>
+                  </div>
+                  Phân quyền
+                </h1>
+                <div class="page-header-subtitle">
+                  Phần quyền giúp cho người dùng bảo mật dữ liệu, tránh bị mất thông tin khách hàng.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+      <!-- Main page content-->
+      <div class="container-xl px-4 mt-n10">
+        <div class="card mb-4 card-header-actions mx-auto">
+          <div class="card-header">
+            Phòng ban (13)
+            <div>
+              <button form="decentralize-form" type="submit" class="btn btn-primary" id="update3">Cập nhật</button>
+              <a class="btn btn-outline-dark" th:href="@{/permission/home}">Trở về</a>
+            </div>
+
+          </div>
+          <form th:action="@{/permission/decentralize}" method="POST" id="decentralize-form">
+            <input type="hidden" name="pid" th:value="${permission.id}" />
+          </form>
+          <div class="card-body">
+            <p><strong>Nhóm quyền:</strong> Chăm sóc khách hàng</p>
+            <table id="datatablesSimple">
+              <colgroup>
+                <col width="10%">
+                <col width="90%">
+              </colgroup>
+              <thead>
+              <tr>
+                <th>HÀNH ĐỘNG</th>
+                <th>TÊN PHÒNG BAN</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr th:each="department : ${departments}">
+                <td>
+                  <input class="form-check-input" id="flexCheckSolidDefault" type="checkbox"
+                         th:value="${department.id}" name="department-id" form="decentralize-form"
+                         th:checked="${permission.departments.contains(department)}" />
+                </td>
+                <td th:text="${department.name}"></td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </main>
+    <footer class="footer-admin mt-auto footer-light">
+      <div class="container-xl px-4">
+        <div class="row">
+          <div class="col-md-6 small">
+            Copyright &copy; Your Website 2021
+          </div>
+          <div class="col-md-6 text-md-end small">
+            <a href="#!">Privacy Policy</a>
+            &middot;
+            <a href="#!">Terms &amp; Conditions</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </div>
+</div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+  <script type="text/javascript" th:src="@{/js/mainTH.js}"></script>
+  <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <!-- Latest compiled and minified JavaScript -->
+  <script type="text/javascript" th:src="@{/js/datatables/datatables-simple-demo.js}"></script>
+  <script th:inline="javascript">
+    document.getElementById("update3").onclick = function () {
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "Cập nhật thành công",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    };
+  </script>
+</body>
+</html>

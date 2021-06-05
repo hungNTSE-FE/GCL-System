@@ -1,5 +1,6 @@
 package com.gcl.crm.form;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class CampaignDetailForm {
@@ -13,9 +14,10 @@ public class CampaignDetailForm {
     private Long budget;
     private Long actualExpense;
     private Double averageExpense;
-    private Date startDate;
-    private Date endDate;
+    private String startDate;
+    private String endDate;
     private Date createDate;
+    private Integer result;
 
     public CampaignDetailForm(){};
 
@@ -83,19 +85,19 @@ public class CampaignDetailForm {
         this.averageExpense = averageExpense;
     }
 
-    public Date getStartDate() {
+    public String getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(String startDate) {
         this.startDate = startDate;
     }
 
-    public Date getEndDate() {
+    public String getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(Date endDate) {
+    public void setEndDate(String endDate) {
         this.endDate = endDate;
     }
 
@@ -113,5 +115,24 @@ public class CampaignDetailForm {
 
     public void setSourceName(String sourceName) {
         this.sourceName = sourceName;
+    }
+
+    public String formatDate(Date inDate) {
+        String outDate = "";
+        try {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            outDate = dateFormat.format(inDate);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return outDate;
+    }
+
+    public Integer getResult() {
+        return result;
+    }
+
+    public void setResult(Integer result) {
+        this.result = result;
     }
 }

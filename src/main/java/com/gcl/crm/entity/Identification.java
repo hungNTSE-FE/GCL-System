@@ -30,11 +30,11 @@ public class Identification {
     private Date issueDate;
 
     @Column(name = "date_of_birth", nullable = false)
-    private String birthDate;
+    private Date birthDate;
 
     @Column(name = "permanent_place", nullable = false)
     private String permanentPlace;
 
-    @OneToOne(mappedBy = "identification", fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "identification", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Employee employee;
 }

@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><title>
+    Page
+</title>
+
+    <!-- Bootstrap CSS -->
+    <!-- Required meta tags -->
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&amp;display=swap" rel="stylesheet">
+    <!-- MDB -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.5.0/mdb.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/resource/jquery-datatables-checkboxes-1.2.12/css/dataTables.checkboxes.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/v/dt/dt-1.10.16/sl-1.2.5/datatables.min.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/awesome-bootstrap-checkbox/0.3.7/awesome-bootstrap-checkbox.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/fixedcolumns/3.2.1/css/fixedColumns.dataTables.min.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+    <style>
+
+
+        #work {
+            margin-top: 8%;
+            margin-left: 5%;
+            height: 550px;
+            width: 80%;
+            border: 1px solid black;
+            position: relative;
+        }
+        #banner{
+            width: 100%;
+            height : 70px;
+            border-style: groove;
+        }
+        #navi{
+            width: 100%;
+            height:70px;
+            border-style: groove;
+            border-bottom: none;
+        }
+        #label {
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            height: 30px;
+            width: 300px;
+            margin-bottom: 30px;
+            background-color: gainsboro;
+            border: 2px solid black;
+            text-align: center;
+        }
+        .table-earnings {
+            background: #F3F5F6;
+        }
+        table {
+            display: block;
+            height: 200px;
+            margin-left: 20px;
+            overflow-y: auto;
+
+
+        }
+
+        legend{
+            color: cyan;
+        }
+        fieldset{
+            display: block;
+            height: 100px;
+        }
+        .table_column_name{
+            font-size: 12px;
+        }
+        #banner label{
+            font-size: 30px;
+            font-family: "Poor Richard";
+            margin-top: 10px;
+            margin-left:45px;
+        }
+        #title{
+            width: 100%;
+            height: 60px;
+            float: left;
+            border-style: groove;
+            border-top: none;
+
+        }
+
+
+        .TopButton{
+            position:  fixed;
+            width: 50px;
+            height: 50px;
+            background: yellow;
+            bottom: 40px;
+            right: 50px;
+            text-align: center ;
+            text-decoration: none;
+            line-height: 50px;
+            color: white;
+            font-size: 22px;
+        }
+
+        .title_name{
+            text-align: center;
+            width: 10%;
+            height : 60px;
+            float:left;
+            border-style: groove;
+            background-color: yellow;
+            border-radius: 10px;
+            margin-left: 5px;
+        }
+        .title_name label{
+            margin-top: 16px;
+        }
+
+        #createButton{
+            with:20%;
+            padding-top: 25px;
+            margin-left: 81%;
+        }
+        .container{
+            padding-bottom: 10px;
+            margin-top: 10px;
+        }
+
+        td i{
+            padding-left: 40px;
+        }
+    </style>
+</head>
+<body>
+<header>
+<!--    <th:block th:include="/common/nav-fixed.html"></th:block>-->
+
+<!--    <th:block th:include="/common/layoutSidenav.html"></th:block>-->
+</header>
+
+<div id="banner">
+    <label>CRM - GIA CAT LOI</label>
+</div>
+<div id="work">
+    <div id="label">Công Việc Hiện Tại</div>
+
+
+    <div id="createButton">
+        <a th:href="@{/task/showCreateForm}" class="btn btn-warning" style="color: white">
+            <i class="fa fa-shopping-cart"></i>
+
+            Thêm công việc
+        </a>
+    </div>
+
+
+    <div class="container">
+        <form id="frm-example">
+            <table id="example" class="display" cellspacing="0" width="100%">
+                <thead>
+                <tr>
+                    <th></th>
+
+                    <th>CÔNG VIỆC</th>
+                    <th>LIÊN HỆ</th>
+                    <th>ĐỐI TƯỢNG</th>
+                    <th>MỨC ƯU TIÊN</th>
+                    <th>CHI TIẾT</th>
+                    <th>XÓA</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                <tr th:each="task : ${listTasks}">
+                    <td th:text="${task.task_id}"></td>
+                    <td th:text="${task.name}"></td>
+                    <td th:text="${task.assign}"></td>
+                    <td th:text="${task.reporter}"></td>
+                    <td th:text="${task.priority}"></td>
+                    <td>
+
+                        <a th:href="@{'/task/showUpdateTaskForm/'+${task.task_id}}"><i class="fa fa-arrow-circle-right" aria-hidden="true"></i></a>
+
+                    </td>
+                    <td ><a th:href="@{'/task/deleteTask/'+${task.task_id}}"><i onclick="return confirm('Bạn có chắc muốn xóa')" class="fa fa-trash" aria-hidden="true"></i></a></td>
+                </tr>
+
+                </tbody>
+
+                <tfoot>
+                <tr>
+                    <th></th>
+                    <th>CÔNG VIỆC</th>
+                    <th>LIÊN HỆ</th>
+                    <th>ĐỐI TƯỢNG</th>
+                    <th>MỨC ƯU TIÊN</th>
+                    <th>CHI TIẾT</th>
+                    <th>XÓA</th>
+                </tr>
+                </tfoot>
+            </table>
+
+            <p>
+                Press <b>Submit</b> and check console for URL-encoded form data that
+                would be submitted.
+            </p>
+
+            <p><button>Submit</button></p>
+
+            <p><b>Selected rows data:</b></p>
+            <pre id="example-console-rows"></pre>
+
+            <p><b>Form data as submitted to the server:</b></p>
+            <pre id="example-console-form"></pre>
+        </form>
+    </div>
+
+
+
+
+</div>
+<a class="TopButton" href="#"><i class="fas fa-arrow-up"></i> </a>
+
+
+
+
+
+<!-- MDB -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://cdn.datatables.net/v/dt/dt-1.10.16/sl-1.2.5/datatables.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://cdn.datatables.net/v/dt/dt-1.10.16/sl-1.2.5/datatables.min.js"></script>
+<script src="https://gyrocode.github.io/jquery-datatables-checkboxes/1.2.12/js/dataTables.checkboxes.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        var table = $("#example").DataTable({
+            scrollY: "300px",
+            scrollX: true,
+            scrollCollapse: true,
+            paging: true,
+            columnDefs: [
+                {
+                    targets: 0,
+                    checkboxes: true,
+                },
+            ],
+        });
+
+        // Handle form submission event
+        $("#frm-example").on("submit", function (e) {
+            var form = this;
+
+            var rows_selected = table.column(0).checkboxes.selected();
+
+            // Iterate over all selected checkboxes
+            $.each(rows_selected, function (index, rowId) {
+                // Create a hidden element
+                $(form).append(
+                    $("<input>")
+                        .attr("type", "hidden")
+                        .attr("name", "id[]")
+                        .val(rowId)
+                );
+            });
+
+            // FOR DEMONSTRATION ONLY
+            // The code below is not needed in production
+
+            // Output form data to a console
+            $("#example-console-rows").text(rows_selected.join(","));
+
+            // Output form data to a console
+            $("#example-console-form").text($(form).serialize());
+
+            // Remove added elements
+            $('input[name="id[]"]', form).remove();
+
+            // Prevent actual form submission
+            e.preventDefault();
+        });
+    });
+</script>
+
+
+</body>
+</html>
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="en" xmlns:th="http://www.thymeleaf.org">-->
+<!--<head>-->
+<!--    <meta charset="utf-8" />-->
+<!--    <meta http-equiv="X-UA-Compatible" content="IE=edge" />-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>-->
+<!--    <meta name="description" content="" />-->
+<!--    <meta name="author" content="" />-->
+<!--    <title>Cơ cấu công ty</title>-->
+<!--    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet"/>-->
+<!--    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>-->
+<!--    <link rel="icon" type="image/x-icon" href="assets/img/favicon.png" />-->
+<!--    <script data-search-pseudo-elements defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>-->
+<!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js" crossorigin="anonymous"></script>-->
+<!--    <style>-->
+<!--        .user-info {-->
+<!--            transform: translateX(0px);-->
+<!--            right: 0 !important;-->
+<!--            left: auto;-->
+<!--            flex: 0 0 auto;-->
+<!--            right: auto;-->
+<!--            z-index: 1000 !important;-->
+<!--            align-self: auto !important;-->
+<!--            overflow: hidden;-->
+<!--            position: fixed;-->
+<!--            width: 0;-->
+<!--            margin: 0;-->
+<!--            padding: 0;-->
+<!--            border: 0;-->
+<!--            font-size: 100%;-->
+<!--            height: 100%;-->
+<!--            vertical-align: baseline;-->
+<!--            outline: none;-->
+<!--            background-color: #fff;-->
+<!--        }-->
+<!--        .user-info-in {-->
+<!--            background-color: #fff;-->
+<!--            width: 0;-->
+<!--            top: 0;-->
+<!--            z-index: 1000;-->
+<!--            display: flex;-->
+<!--            flex-direction: column;-->
+<!--            height: 100%;-->
+<!--            right: 0;-->
+<!--        }-->
+<!--    </style>-->
+<!--</head>-->
+<!--<body class="nav-fixed">-->
+<!--&lt;!&ndash;<th:block th:include="/common/nav-fixed.html"></th:block>&ndash;&gt;-->
+<!--<div id="layoutSidenav">-->
+<!--&lt;!&ndash;    <th:block th:include="/common/layoutSidenav.html"></th:block>&ndash;&gt;-->
+<!--    <div id="layoutSidenav_content">-->
+<!--        <main>-->
+<!--            <header-->
+<!--                    class="-->
+<!--              page-header page-header-dark-->
+<!--              bg-gradient-primary-to-secondary-->
+<!--              pb-10-->
+<!--            "-->
+<!--            >-->
+<!--                <div class="container-xl px-4">-->
+<!--                    <div class="page-header-content pt-4">-->
+<!--                        <div class="row align-items-center justify-content-between">-->
+<!--                            <div class="col-auto mt-4">-->
+<!--                                <h1 class="page-header-title">-->
+<!--                                    <div class="page-header-icon">-->
+<!--                                        <i data-feather="filter"></i>-->
+<!--                                    </div>-->
+<!--                                    Cơ cấu công ty-->
+<!--                                </h1>-->
+<!--                                <div class="page-header-subtitle">-->
+<!--                                    Cơ cấu công ty là nơi hiển thị chi tiết phòng ban, nhân-->
+<!--                                    viên nào của công ty.-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </header>-->
+<!--            &lt;!&ndash; Main page content&ndash;&gt;-->
+<!--            <div class="container-xl px-4 mt-n10">-->
+<!--                <div class="card mb-4">-->
+<!--                    <div class="card-header">Filter</div>-->
+<!--                    <div class="card-body">-->
+<!--                        <div class="mb-3">-->
+<!--&lt;!&ndash;                            <form id="go-update-form" th:action="@{/department/edit-v2}">&ndash;&gt;-->
+<!--&lt;!&ndash;                                <label for="exampleFormControlSelect1" class="form-label">Phòng ban</label>&ndash;&gt;-->
+<!--&lt;!&ndash;                                <select class="form-select form-control-solid" name="did"&ndash;&gt;-->
+<!--&lt;!&ndash;                                        id="exampleFormControlSelect1">&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <option th:each="department : ${departments}" th:value="${department.id}"&ndash;&gt;-->
+<!--&lt;!&ndash;                                            th:text="${department.name}"></option>&ndash;&gt;-->
+<!--&lt;!&ndash;                                </select>&ndash;&gt;-->
+<!--&lt;!&ndash;                            </form>&ndash;&gt;-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="card mb-4 card-header-actions mx-auto">-->
+<!--                    <div class="card-header">-->
+<!--                        Hiển Thị Phòng Ban-->
+<!--                        <div>-->
+<!--                            <button class="btn btn-primary clickshowinfo" data-id="100">-->
+<!--                                Thêm mới-->
+<!--                            </button>-->
+<!--                            <button form="go-update-form" class="btn btn-outline-dark" type="submit">Sửa</button>-->
+<!--                            <button class="btn btn-outline-dark">Chi tiết</button>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="card-body">-->
+<!--                        <table id="datatablesSimple">-->
+<!--                            <thead>-->
+<!--                            <tr>-->
+<!--                                <th>CÔNG VIỆC</th>-->
+<!--                                <th>LIÊN HỆ</th>-->
+<!--                                <th>ĐỐI TƯỢNG</th>-->
+<!--                                <th>MỨC ƯU TIÊN</th>-->
+<!--                                <th>CHI TIẾT</th>-->
+<!--                                <th>XÓA</th>-->
+<!--                            </tr>-->
+<!--                            </thead>-->
+<!--                            <tbody>-->
+<!--                            <tr th:each="task : ${listTasks}">-->
+<!--                                <td th:text="${task.task_id}"></td>-->
+<!--                                <td th:text="${task.name}"></td>-->
+<!--                                <td th:text="${task.assign}"></td>-->
+<!--                                <td th:text="${task.reporter}"></td>-->
+<!--                                <td th:text="${task.priority}"></td>-->
+<!--                                <td>-->
+
+<!--                                    <a th:href="@{'/task/showUpdateTaskForm/'+${task.task_id}}"><i class="fa fa-arrow-circle-right" aria-hidden="true"></i></a>-->
+
+<!--                                </td>-->
+<!--                                <td ><a th:href="@{'/task/deleteTask/'+${task.task_id}}"><i onclick="return confirm('Bạn có chắc muốn xóa')" class="fa fa-trash" aria-hidden="true"></i></a></td>-->
+<!--                            </tr>-->
+<!--                            </tbody>-->
+<!--                        </table>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </main>-->
+<!--        <th:block th:include="/common/footer.html"></th:block>-->
+<!--    </div>-->
+<!--    <div class="user-info">-->
+<!--        <div-->
+<!--                class="user-info-in card card-header-actions mx-auto"-->
+<!--                style="padding-top: 55px"-->
+<!--        >-->
+<!--            <div class="card-header">-->
+<!--                Thêm mới-->
+<!--                <a href="#" class="cc">-->
+<!--                    <i class="fas fa-times"></i>-->
+<!--                </a>-->
+<!--            </div>-->
+<!--&lt;!&ndash;            <div class="card-body">&ndash;&gt;-->
+<!--&lt;!&ndash;                <form th:action="@{/department/create}" method="POST" th:object="${departmentForm}">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <div class="mb-3">&ndash;&gt;-->
+<!--&lt;!&ndash;                        <label for="exampleInputEmail1" class="form-label"><strong>&ndash;&gt;-->
+<!--&lt;!&ndash;                            Phòng ban&ndash;&gt;-->
+<!--&lt;!&ndash;                        </strong>&ndash;&gt;-->
+<!--&lt;!&ndash;                            <span style="color: red">*</span></label>&ndash;&gt;-->
+<!--&lt;!&ndash;                        <input type="text" th:field="*{name}" class="form-control form-control-solid" id="exampleInputEmail1" aria-describedby="emailHelp">&ndash;&gt;-->
+<!--&lt;!&ndash;                    </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <div class="mb-3">&ndash;&gt;-->
+<!--&lt;!&ndash;                        <label for="textAreaExample" class="form-label"> <strong>&ndash;&gt;-->
+<!--&lt;!&ndash;                            Ghi chú&ndash;&gt;-->
+<!--&lt;!&ndash;                        </strong></label>&ndash;&gt;-->
+<!--&lt;!&ndash;                        <textarea th:field="*{note}" class="form-control form-control-solid" id="textAreaExample" rows="4"></textarea>&ndash;&gt;-->
+<!--&lt;!&ndash;                    </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <div class="mb-3">&ndash;&gt;-->
+<!--&lt;!&ndash;                        <label class="form-label">  Bắt buộc <span style="color: red">*</span></label>&ndash;&gt;-->
+<!--&lt;!&ndash;                    </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <button type="submit" class="btn btn-primary">LƯU</button>&ndash;&gt;-->
+<!--&lt;!&ndash;                </form>&ndash;&gt;-->
+<!--&lt;!&ndash;            </div>&ndash;&gt;-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+<!--<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>-->
+<!--<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>-->
+<!--<script type="text/javascript" th:src="@{/js/mainTH.js}"></script>-->
+<!--<script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>-->
+<!--&lt;!&ndash; Latest compiled and minified JavaScript &ndash;&gt;-->
+<!--<script type="text/javascript" th:src="@{/js/datatables/datatables-simple-demo.js}"></script>-->
+<!--</body>-->
+<!--</html>-->
+

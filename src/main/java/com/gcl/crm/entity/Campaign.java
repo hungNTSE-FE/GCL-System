@@ -1,15 +1,20 @@
 package com.gcl.crm.entity;
 
+import lombok.Data;
+
 import javax.persistence.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Entity
+@Data
 @Table(name = "CAMPAIGN")
 public class Campaign {
 
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
-    @Column(name = "CAMPAIGN_CODE", columnDefinition = "DECIMAL default 0")
+    @Column(name = "CAMPAIGN_CODE")
     private Integer campaignCode;
 
     @Column(name = "CONTENT")
@@ -41,6 +46,9 @@ public class Campaign {
 
     @Column(name = "CREATE_DATE", nullable = false)
     private Date createDate;
+
+    @Column(name = "RESULT")
+    private Integer result;
 
     public Integer getCampaignCode() {
         return campaignCode;
@@ -128,5 +136,13 @@ public class Campaign {
 
     public void setCreateDate(Date createDate) {
         this.createDate = createDate;
+    }
+
+    public Integer getResult() {
+        return result;
+    }
+
+    public void setResult(Integer result) {
+        this.result = result;
     }
 }

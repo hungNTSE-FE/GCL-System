@@ -1,5 +1,6 @@
 package com.gcl.crm.entity;
 
+import com.gcl.crm.enums.EmployeeStatus;
 import com.gcl.crm.enums.Gender;
 import lombok.Data;
 
@@ -51,14 +52,18 @@ public class Employee {
     @Column(name = "broker_code", unique = true)
     private Long brokerCode;
 
+    @Enumerated(EnumType.ORDINAL)
     @Column(name = "status", nullable = false)
-    private String status;
+    private EmployeeStatus status;
 
     @Column(name = "note", length = 1000)
     private String note;
 
     @Column(name = "tax_code", nullable = false)
     private String taxCode;
+
+    @OneToOne(mappedBy = "employee")
+    private AppUser appUser ;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "department_id")
@@ -68,4 +73,7 @@ public class Employee {
     @JoinTable(name = "employee_permission", joinColumns = @JoinColumn(name = "employee_id"),
             inverseJoinColumns = @JoinColumn(name = "permission_id"))
     private List<Permission> permissions;
+
+//    @OneToOne(mappedBy = "modifier", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    private Department manageDepartment;
 }

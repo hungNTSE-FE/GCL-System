@@ -11,6 +11,8 @@ import com.gcl.crm.repository.SourceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -26,58 +28,58 @@ public class CampaignService {
     public CampaignMaketingForm init() {
         CampaignMaketingForm campaignMaketingForm = new CampaignMaketingForm();
 
-        List<CampaignForm> listCampaignForm = getCampaignFormList();
+        // Get list campaign detail
+        List<CampaignDetailForm> campaignDetailFormList = getCampaignDetailFormList();
+
+        // Get map to compute group campaign
+        List<CampaignForm> campaignForms = getCampaignForm(campaignDetailFormList);
+
+        // Get list campaign report detail
         List<CampaignReportDetailForm> campaignReportDetailFormList = new ArrayList<>();
 
-        campaignMaketingForm.setListCampaignForm(listCampaignForm);
+        // Set list campaign maketing
+        campaignMaketingForm.setCampaignDetailFormList(campaignDetailFormList);
+        campaignMaketingForm.setCampaignForm(campaignForms);
         campaignMaketingForm.setListCampaignReportDetailForm(campaignReportDetailFormList);
         return campaignMaketingForm;
     }
 
-    public void saveCampaignDetail(CampaignDetailForm campaignDetailForm) {
-        Campaign campaign = new Campaign();
-
-        campaign.setContent(campaignDetailForm.getContent());
-        campaign.setAssumptionResult(campaignDetailForm.getAssumptionResult());
-        campaign.setStatus(campaignDetailForm.getStatus());
-        campaign.setSourceId(campaignDetailForm.getHdnSourceId());
-        campaign.setBudget(campaignDetailForm.getBudget());
-        campaign.setActualExpense(campaignDetailForm.getActualExpense());
-        campaign.setAverageExpense(campaignDetailForm.getAverageExpense());
-        campaign.setStartDate(campaignDetailForm.getStartDate());
-        campaign.setEndDate(campaignDetailForm.getEndDate());
-        campaign.setCreateDate(new Date());
-        campaignRepository.save(campaign);
-    }
-
-    private void updateCampaignDetail(List<CampaignForm> listCampaignForm) {
-        Optional.ofNullable(listCampaignForm)
-                .orElse(Collections.emptyList())
+    public CampaignDetailForm getCampaignFormByPK(String id) {
+        // Get Source Map
+        List<Source> sourceList = sourceRepository.getAll();
+        Map<Integer, String> sourceMap = sourceList
                 .stream()
-                .forEach(listCampaignDetail -> {
-                    Optional.ofNullable(listCampaignDetail.getCampaignDetailFormList())
-                            .orElse(Collections.emptyList())
-                            .stream()
-                            .forEach(campaignDetailForm -> {
-                                Campaign campaign = new Campaign();
-
-                                campaign.setContent(campaignDetailForm.getContent());
-                                campaign.setAssumptionResult(campaignDetailForm.getAssumptionResult());
-                                campaign.setStatus(campaignDetailForm.getStatus());
-                                campaign.setSourceId(campaignDetailForm.getHdnSourceId());
-                                campaign.setBudget(campaignDetailForm.getBudget());
-                                campaign.setActualExpense(campaignDetailForm.getActualExpense());
-                                campaign.setAverageExpense(campaignDetailForm.getAverageExpense());
-                                campaign.setStartDate(campaignDetailForm.getStartDate());
-                                campaign.setEndDate(campaignDetailForm.getEndDate());
-                                campaign.setCreateDate(new Date());
-                                campaignRepository.update(campaign);
-                            });
-                });
+                .collect(Collectors.toMap(Source::getSourceId, Source::getSourceName));
+        Campaign campaign = campaignRepository.findObjectByPrimaryKey(Integer.parseInt(id));
+        return convertToCampaginForm(campaign, sourceMap);
     }
 
-    private List<CampaignForm> getCampaignFormList() {
+    public boolean saveCampaignDetailForm(CampaignDetailForm form) {
+        try {
+            if (Objects.isNull(form.getHdnCampaignCode()) || form.getHdnCampaignCode().trim().isEmpty()) {
+                Campaign campaign = convertFormToDTO(form);
+                List<Source> sourceList = sourceRepository.getAll();
+                campaign.setSourceId(sourceList.stream()
+                                .filter(source -> source.getSourceName().equals(form.getSourceName()))
+                                .map(Source::getSourceId).findFirst().orElse(1));
+                campaignRepository.save(campaign);
+            } else {
+                Campaign campaign = convertFormToDTO(form);
+                campaign.setCampaignCode(Integer.parseInt(form.getHdnCampaignCode()));
+                campaignRepository.update(campaign);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
 
+    public boolean deleteCampaignDetailForm(Integer campaignCode) {
+        return campaignRepository.delete(campaignCode);
+    }
+
+    private List<CampaignDetailForm> getCampaignDetailFormList() {
         // Get Source Map
         List<Source> sourceList = sourceRepository.getAll();
         Map<Integer, String> sourceMap = sourceList
@@ -90,24 +92,26 @@ public class CampaignService {
                         .stream()
                         .map(campaign -> convertToCampaginForm(campaign, sourceMap))
                         .collect(Collectors.toList());
+        return campaignDetailFormList;
+    }
 
-        Map<String, List<CampaignDetailForm>> campaignFormMap =  campaignDetailFormList
+    private List<CampaignForm> getCampaignForm(List<CampaignDetailForm> campaignDetailFormList) {
+        Map<String, List<CampaignDetailForm>> campaignDetailFormMap =  campaignDetailFormList
                                                                                     .stream()
                                                                                     .collect(Collectors.groupingBy(
                                                                                             CampaignDetailForm::getSourceName));
 
-        List<CampaignForm> campaignFormList = campaignFormMap.entrySet().stream().map(entry -> {
+        List<CampaignForm> campaignForms = campaignDetailFormMap.entrySet().stream().map(entry -> {
             CampaignForm campaignForm = new CampaignForm();
             campaignForm.setSourceName(entry.getKey());
-            campaignForm.setCampaignDetailFormList(entry.getValue());
-            campaignForm.setTotalResult(1);
+            campaignForm.setTotalResult(entry.getValue().stream().mapToInt(CampaignDetailForm::getResult).sum());
             campaignForm.setTotalBudget(entry.getValue().stream().mapToLong(CampaignDetailForm::getBudget).sum());
             campaignForm.setTotalActualExpense(entry.getValue().stream().mapToLong(CampaignDetailForm::getActualExpense).sum());
             campaignForm.setTotalAverageExpense(entry.getValue().stream().mapToDouble(CampaignDetailForm::getAverageExpense).sum());
             return campaignForm;
         }).collect(Collectors.toList());
 
-        return campaignFormList;
+        return campaignForms;
     }
 
     private CampaignDetailForm convertToCampaginForm(Campaign campaign, Map<Integer, String> sourceMap){
@@ -116,15 +120,34 @@ public class CampaignService {
         campaignDetailForm.setContent(campaign.getContent());
         campaignDetailForm.setStatus(campaign.getStatus());
         campaignDetailForm.setAssumptionResult(campaign.getAssumptionResult());
+        campaignDetailForm.setResult(campaign.getResult());
         campaignDetailForm.setHdnSourceId(campaign.getSourceId());
         campaignDetailForm.setSourceName(sourceMap.get(campaign.getSourceId()));
         campaignDetailForm.setBudget(campaign.getBudget());
         campaignDetailForm.setActualExpense(campaign.getActualExpense());
         campaignDetailForm.setAverageExpense(campaign.getAverageExpense());
-        campaignDetailForm.setStartDate(campaign.getStartDate());
-        campaignDetailForm.setEndDate(campaign.getEndDate());
+        campaignDetailForm.setStartDate(campaignDetailForm.formatDate(campaign.getStartDate()));
+        campaignDetailForm.setEndDate(campaignDetailForm.formatDate(campaign.getEndDate()));
         campaignDetailForm.setCreateDate(campaign.getCreateDate());
         return campaignDetailForm;
     }
 
+    private Campaign convertFormToDTO (CampaignDetailForm form) throws Exception {
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        Date date = new Date();
+
+        Campaign campaign = new Campaign();
+        campaign.setContent(form.getContent());
+        campaign.setStatus(form.getStatus());
+        campaign.setAssumptionResult(form.getAssumptionResult());
+        campaign.setSourceId(form.getHdnSourceId());
+        campaign.setBudget(form.getBudget());
+        campaign.setActualExpense(form.getActualExpense());
+        campaign.setAverageExpense(form.getAverageExpense());
+        campaign.setResult(form.getResult());
+        campaign.setCreateDate(formatter.parse(formatter.format(date)));
+        campaign.setStartDate(formatter.parse(form.getStartDate()));
+        campaign.setEndDate(formatter.parse(form.getEndDate()));
+        return campaign;
+    }
 }

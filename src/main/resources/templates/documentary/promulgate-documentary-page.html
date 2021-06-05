@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Thêm mới phòng ban</title>
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet"/>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet"/>
+    <!-- MDB -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.5.0/mdb.min.css" rel="stylesheet"/>
+    <style>
+        .wrapper{
+            border : 1px solid black;
+            height: 200px;
+            width: 400px;
+            position: absolute;
+            margin: auto;
+            top : 0;
+            bottom: 0;
+            right: 0;
+            left: 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            outline: none;
+        }
+        input[type="checkbox"]{
+            appearance: none;
+            -webkit-appearance: none;
+            height: 30px;
+            width: 30px;
+            background-color: yellow;
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            outline: none;
+
+        }
+        label{
+            color: yellow;
+            font-size: 55px;
+            font-weight: 600;
+            cursor: pointer;
+
+        }
+        input[type="checkbox"]:after{
+            font-family: "Font Awesome 5 Free";
+            font-weight: 900;
+            content: "\f00c";
+            font-size: 20px;
+            color: white;
+            display : none ;
+        }
+        input [type="checkbox"]:hover{
+            background-color: #0b3d91;
+        }
+        input[type="checkbox"]:checked{
+            background-color: green;
+        }
+        input[type="checkbox"]:checked:after {
+        display: block;
+        }
+        .title_field{
+            align-items: center;
+
+        body{
+        margin:0;
+            padding: 0;
+            font-family: sans-serif;
+            background: linear-gradient(yellow,white);
+            height: 100vh;
+        }
+        .center,.content{
+        position: absolute;
+            top:50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+        }
+        .click-me{
+        display: block;
+            width : 160px;
+            height: 50px;
+            background: #00b8d4;
+            border :1px solid yellow;
+            color : white;
+            text-align: center;
+            font-size: 22px;
+            line-height: 50px;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: .5s;
+        }
+        #click{
+        display: none;
+        }
+        .click-me:hover{
+            background: #0d6efd;
+        }
+        .content{
+        opacity: 0;
+            visibility: hidden;
+        with:400px;
+            height: 350px;
+            background: white;
+            border-radius: 3px;
+            box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
+
+
+        }
+        .header{
+        height: 68px;
+            background :black;
+            overflow: hidden;
+            border-radius: 3px 3px 0 0 ;
+            box-shadow: 0 2px 3px 0 rgba(0,0,0,.2);
+        }
+        .header h2{
+        color:white;
+            padding-left: 32px;
+            font-weight: normal;
+        }
+        .fa-times{
+        position: absolute;
+            right: 20px;
+            top:20px;
+            color: #e8f5e9;
+            font-size: 20px;
+            font-weight: bold;
+            cursor : pointer;
+        }
+        .fa-check{
+            margin 30px 0 0 160px;
+            color: #2e7d32;
+            font-weight: bold;
+            height: 80px;
+            width: 80px;
+            border: 2px solid #2e7d32;
+            text-align: center;
+            padding-top: 13px;
+            border-radius: 50%;
+            box-sizing: border-box;
+            margin : 30px 0 0 160px;
+        }
+            p{
+            padding-top: 10px;
+                font-size: 19px;
+                color: #1abe5c;
+                text-align: center;
+
+            }
+            .line{
+
+            position: absolute;
+            bottom: 60px;
+                width: 100%;
+                height:1px;
+                background: silver;
+            }
+            .close-btn{
+            position: absolute;
+                bottom: 12px;
+                right: 25px;
+                border: 1px solid #00b8d4;
+                border-radius: 3px;
+                color: #00b8d4;
+                padding: 8px 10px;
+                font-size: 18px;
+                cursor: pointer;
+            }
+            .close-btn:hover{
+            background: #00b8d4;
+                color: white;
+                transition: .5s;
+        }
+            #click:checked ~.content{
+            opacity: 1;
+                visibility: visible;
+
+        }
+
+
+
+    </style>
+</head>
+<body>
+<!--Navbar-->
+
+<form method="POST" th:object="${documentary}" th:action="@{/documentary/promulgate}"  >
+    <div class="title">
+        <div class="title">
+            <label class="title_field">Công Văn</label>
+        </div>
+        <div class="input_field">
+            <input type="hidden" th:value="${documentary.getId()}" name="documentary_id">
+
+            <input required=""  th:field="*{name} "class="form-control" type="text" id="name" name="name" >
+
+        </div>
+    </div>
+<div class ="wrapper">
+    <th:block th:each="department: ${departmentList}">
+        <input type="checkbox" id="check" name="department_id_check"
+               th:value="${department.getId()}">
+        <label for="check">[[${department.name}]]</label>
+    </th:block>
+
+</div>
+    <input type="submit" value="Ban Hành" class="btn btn-primary"/>
+</form>
+<div class="center">
+    <input type="checkbox" id="click">
+    <label for="click" class="click-me">Click Me</label>
+    <div class="content">
+        <div class="header">
+            <h2>Modal Popup</h2>
+            <label for="click" class="fas fa-times"></label>
+        </div>
+        <label for="click" class="fas fa-check"></label>
+        <p>Công văn của bạn đã được đăng tải lên hệ thống </p>
+        <div class="line"></div>
+        <label for="click" class="close-btn"></label>
+    </div>
+</div>
+
+
+<!--Footer-->
+<!--<th:block th:include="/common/footer.html"></th:block>-->
+
+<!-- MDB -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.5.0/mdb.min.js"></script>
+</body>
+</html>
