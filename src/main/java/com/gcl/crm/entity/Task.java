@@ -34,6 +34,7 @@ public class Task {
     private String assign ;
 
     public Task() {
+
     }
 
     public Integer getTask_id() {

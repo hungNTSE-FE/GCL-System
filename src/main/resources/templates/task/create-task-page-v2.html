@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<!-- Created By CodingLab - www.codinglabweb.com -->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <!---<title> Responsive Registration Form | CodingLab </title>--->
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&amp;display=swap" rel="stylesheet">
+    <!-- MDB -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.5.0/mdb.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: sans-serif;
+        }
+        body{
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+
+        }
+        .container{
+            max-width: 700px;
+            width: 100%;
+            background-color: #fff;
+            padding: 25px 30px;
+            border-radius: 5px;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.15);
+            background: linear-gradient(125deg, #1abe5c, #00b8d4);
+
+        }
+        .container .title{
+            font-size: 25px;
+            font-weight: 500;
+            position: relative;
+        }
+        .container .title::before{
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            height: 3px;
+            width: 30px;
+            border-radius: 5px;
+            background: linear-gradient(135deg, #71b7e6, #9b59b6);
+        }
+        .content form .task-details{
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin: 20px 0 12px 0;
+        }
+        form .task-details .input-box{
+            margin-bottom: 15px;
+            width: calc(100% / 2 - 20px);
+        }
+        form .input-box span.details{
+            display: block;
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+        .task-details .input-box input{
+            height: 45px;
+            width: 100%;
+            outline: none;
+            font-size: 16px;
+            border-radius: 5px;
+            padding-left: 15px;
+            border: 1px solid #ccc;
+            border-bottom-width: 2px;
+            transition: all 0.3s ease;
+        }
+        .task-details .input-box input:focus,
+        .task-details .input-box input:valid{
+            border-color: #9b59b6;
+        }
+        .task-details .input-box select{
+            height: 45px;
+            width: 100%;
+            outline: none;
+            font-size: 16px;
+            border-radius: 5px;
+            padding-left: 15px;
+            border: 1px solid #ccc;
+            border-bottom-width: 2px;
+            transition: all 0.3s ease;
+        }
+        .task-details .input-box select:focus,
+        .task-details .input-box select:valid{
+            border-color: #9b59b6;
+        }
+        form .gender-details .gender-title{
+            font-size: 20px;
+            font-weight: 500;
+        }
+        form .category{
+            display: flex;
+            width: 80%;
+            margin: 14px 0 ;
+            justify-content: space-between;
+        }
+        form .category label{
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+        form .category label .dot{
+            height: 18px;
+            width: 18px;
+            border-radius: 50%;
+            margin-right: 10px;
+            background: #d9d9d9;
+            border: 5px solid transparent;
+            transition: all 0.3s ease;
+        }
+        #dot-1:checked ~ .category label .one,
+        #dot-2:checked ~ .category label .two,
+        #dot-3:checked ~ .category label .three{
+            background: #9b59b6;
+            border-color: #d9d9d9;
+        }
+        form input[type="radio"]{
+            display: none;
+        }
+        form .button{
+            height: 45px;
+            margin: 35px 0
+        }
+        form .button input{
+            height: 100%;
+            width: 100%;
+            border-radius: 5px;
+            border: none;
+            color: #fff;
+            font-size: 18px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: linear-gradient(135deg, tan, #ffee58);
+        }
+        form .button input:hover{
+            /* transform: scale(0.99); */
+            background: linear-gradient(-135deg, tan, #ffee58);
+        }
+        @media(max-width: 584px){
+            .container{
+                max-width: 100%;
+            }
+            form .task-details .input-box{
+                margin-bottom: 15px;
+                width: 100%;
+            }
+            form .category{
+                width: 100%;
+            }
+            .content form .task-details{
+                max-height: 300px;
+                overflow-y: scroll;
+            }
+            .task-details::-webkit-scrollbar{
+                width: 5px;
+            }
+        }
+        @media(max-width: 459px){
+            .container .content .category{
+                flex-direction: column;
+            }
+        }
+        .container i{
+            color :red;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a th:href="@{/task/viewAllTask}">
+            <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        </a>
+        <div class="title">Thêm công việc</div>
+        <div class="content">
+            <form method="POST" th:action="@{/task/saveTask}" th:object="${task}" >
+                <div class="task-details">
+                    <div class="input-box">
+                        <span class="details">Tên công việc</span>
+                        <input placeholder="Công việc" th:field="*{name}" type="text" id="name" name="name" value="">
+                    </div>
+                    <div class="input-box">
+                        <span class="details">Độ phức tạp</span>
+                        <select  th:field="*{complex}"  id="complexity" name="complex">
+                            <option value="Phức tạp">Phức tạp</option>
+                            <option value="Trung bình">Trung bình</option>
+                            <option value="Dễ">Dễ</option>
+                        </select>
+                    </div>
+                    <div class="input-box">
+                        <span class="details">Người báo cáo</span>
+
+                        <input placeholder="Người báo cáo" required th:field="*{reporter}"type="text" id="reporter" name="reporter" value="">
+
+                    </div>
+                    <div class="input-box">
+                        <span class="details">Độ ưu tiên</span>
+                        <select th:field="*{priority}" class="form-control" id="priority" name="priority">
+                            <option value="Cao">Cao</option>
+                            <option value="Trung bình">Trung Bình</option>
+                            <option value="Thấp">Thấp</option>
+                        </select>
+                    </div>
+                    <div class="input-box">
+                        <span class="details">Ngày bắt đầu</span>
+                        <input id="startField" th:field="*{startDate}" type="date" min="2021-05-27" pattern="yyyy-MM-dd" class="form-control"  value="">
+                    </div>
+                    <div class="input-box">
+                        <span class="details">Ngày kết thúc</span>
+                        <input id="endField" th:field="*{endDate}" min="2021-05-27" type="date" pattern="yyyy-MM-dd" class="form-control" name="endDate" value="">
+                    </div>
+                    <div class="input-box">
+                        <span class="details">Trạng thái</span>
+                        <input  placeholder="Trạng thái"type="text" th:field="*{status}" class="form-control" id="status" name="status" value="">
+
+
+                    </div>
+                    <div class="input-box">
+                        <span class="details">Người thực hiện</span>
+                        <input placeholder="Người thực hiện" type="text" class="form-control" th:field="*{assign}" id="assign" name="assign" value="">
+
+
+                    </div>
+                </div>
+
+                <div class="button">
+                    <input type="submit" value="Thêm công việc">
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <script>
+        type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.5.0/mdb.min.js"
+    </script>
+    <script>
+        var today = new Date();
+        var dd = today.getDate();
+        var mm = today.getMonth()+1; //January is 0!
+        var yyyy = today.getFullYear();
+        if(dd<10){
+            dd='0'+dd
+        }
+        if(mm<10){
+            mm='0'+mm
+        }
+
+        today = yyyy+'-'+mm+'-'+dd;
+        document.getElementById("startField").setAttribute("min", today);
+        document.getElementById("endField").setAttribute("min", today);
+
+    </script>
+
+</body>
+</html>
