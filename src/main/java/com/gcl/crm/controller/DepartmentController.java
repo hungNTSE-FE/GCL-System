@@ -14,6 +14,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
 import java.util.List;
@@ -87,11 +88,11 @@ public class DepartmentController {
     }
 
     @PostMapping({"/create"})
-    public String create(Model model, @ModelAttribute("departmentForm") Department department){
+    public String create(Model model, @ModelAttribute("departmentForm") Department department, RedirectAttributes redirectAttributes){
         String message = "Phòng ban đã được tạo thành công!";
         department.setStatus(Status.ACTIVE);
         boolean done = departmentService.createDepartment(department);
-        if (!done){
+        if (!done) {
             message = "Đã xảy ra lỗi! Tạo mới phòng ban thất bại.";
         }
         model.addAttribute("message", message);

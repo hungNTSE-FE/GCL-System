@@ -145,27 +145,9 @@
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/gh/hummingbird-dev/hummingbird-treeview@v2.1.7/hummingbird-treeview.min.js"></script>
 <script type="text/javascript" th:src="@{/js/mainTH.js}"></script>
+<script type="text/javascript" th:src="@{/js/sweetalert.js}"></script>
 <script th:inline="javascript">
   $("#treeview").hummingbird();
-  document.getElementById("update1").onclick = function () {
-    Swal.fire({
-      position: "top-end",
-      icon: "success",
-      title: "Cập nhật thành công",
-      showConfirmButton: false,
-      timer: 1500,
-    });
-  };
-
-  document.getElementById("delete1").onclick = function () {
-    Swal.fire({
-      position: "top-end",
-      icon: "success",
-      title: "Xoá thành công",
-      showConfirmButton: false,
-      timer: 1500,
-    });
-  };
 </script>
 </body>
 </html>

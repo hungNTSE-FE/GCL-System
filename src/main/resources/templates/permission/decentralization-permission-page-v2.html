@@ -50,7 +50,7 @@
           <div class="card-header">
             Phòng ban (13)
             <div>
-              <button form="decentralize-form" type="submit" class="btn btn-primary" id="update3">Cập nhật</button>
+              <button form="decentralize-form" type="submit" class="btn btn-primary" id="update1">Cập nhật</button>
               <a class="btn btn-outline-dark" th:href="@{/permission/home}">Trở về</a>
             </div>
 
@@ -109,16 +109,6 @@
   <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <!-- Latest compiled and minified JavaScript -->
   <script type="text/javascript" th:src="@{/js/datatables/datatables-simple-demo.js}"></script>
-  <script th:inline="javascript">
-    document.getElementById("update3").onclick = function () {
-      Swal.fire({
-        position: "top-end",
-        icon: "success",
-        title: "Cập nhật thành công",
-        showConfirmButton: false,
-        timer: 1500,
-      });
-    };
-  </script>
+<script type="text/javascript" th:src="@{/js/sweetalert.js}"></script>
 </body>
 </html>

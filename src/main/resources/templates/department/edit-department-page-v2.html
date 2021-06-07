@@ -157,6 +157,7 @@
     <th:block th:include="/common/footer.html"></th:block>
   </div>
 </div>
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 <script
         src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
         crossorigin="anonymous"
@@ -174,26 +175,35 @@
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <!-- Latest compiled and minified JavaScript -->
 <script type="text/javascript" th:src="@{/js/datatables/datatables-simple-demo.js}"></script>
-<script th:inline="javascript">
-  document.getElementById("update1").onclick = function () {
-    Swal.fire({
-      position: "top-end",
-      icon: "success",
-      title: "Cập nhật thành công",
-      showConfirmButton: false,
-      timer: 1500,
-    });
-  };
+<script type="text/javascript" th:src="@{/js/sweetalert.js}"></script>
+<!--<script th:inline="javascript">-->
+<!--  $('#update1').on('click',function(e){-->
+<!--    e.preventDefault();-->
+<!--    var form = $(this).parents('form');-->
+<!--    swal.fire({-->
+<!--      position: "top-end",-->
+<!--      icon: "success",-->
+<!--      title: "Cập nhật thành công",-->
+<!--      showConfirmButton: false,-->
+<!--      timer: 3000,-->
+<!--    }, function(isConfirm){-->
+<!--      if (isConfirm) form.submit();-->
+<!--    });-->
+<!--  });-->
 
-  document.getElementById("delete1").onclick = function () {
-    Swal.fire({
-      position: "top-end",
-      icon: "success",
-      title: "Xoá thành công",
-      showConfirmButton: false,
-      timer: 1500,
-    });
-  };
-</script>
+<!--  $('#delete1').on('click',function(e){-->
+<!--    e.preventDefault();-->
+<!--    var form = $(this).parents('form');-->
+<!--    swal.fire({-->
+<!--      position: "top-end",-->
+<!--      icon: "success",-->
+<!--      title: "Xoá thành công",-->
+<!--      showConfirmButton: false,-->
+<!--      timer: 3000,-->
+<!--    }, function(isConfirm){-->
+<!--      if (isConfirm) form.submit();-->
+<!--    });-->
+<!--  });-->
+<!--</script>-->
 </body>
 </html>
