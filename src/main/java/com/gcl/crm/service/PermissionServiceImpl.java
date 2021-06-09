@@ -34,7 +34,6 @@ public class PermissionServiceImpl implements PermissionService {
         } catch (NumberFormatException ex){
             return null;
         }
-
     }
 
     @Override

@@ -5,5 +5,5 @@ import com.gcl.crm.entity.Notification;
 import java.util.List;
 
 public interface NotificationService {
-    boolean createNotification(Notification notification);
+    boolean createNotification(Notification notification, List<Long> appUserIds);
 }

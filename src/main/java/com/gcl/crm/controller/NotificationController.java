@@ -2,14 +2,10 @@ package com.gcl.crm.controller;
 
 import com.gcl.crm.entity.AppUser;
 import com.gcl.crm.entity.Notification;
-import com.gcl.crm.entity.NotificationUser;
-import com.gcl.crm.enums.IsRead;
 import com.gcl.crm.repository.UserRepository2;
 import com.gcl.crm.service.NotificationService;
-import com.gcl.crm.service.NotificationUserService;
-import com.gcl.crm.service.UserDetailsServiceImpl;
+import com.gcl.crm.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -21,8 +17,8 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.Authentication;
 
 import java.security.Principal;
-import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 
 @Controller
 @RequestMapping("/notification")
@@ -35,38 +31,34 @@ public class NotificationController {
     NotificationService notificationService;
 
     @Autowired
-    NotificationUserService notificationUserService;
+    UserService userService;
+
 
     @RequestMapping(value = "/create", method = RequestMethod.GET)
     public String goCreatePage(Model model) {
+        List<AppUser> appUsers = userRepository2.findAllByEnabled(true);
+        model.addAttribute("appUsers", appUsers);
         return "/notification/insert_notification_page_V2";
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public String create(Model model,
-                         @ModelAttribute("notificationForm") Notification notification,
-                         RedirectAttributes redirectAttributes,
-                         @RequestParam("select2") String selectUser,
+                         @ModelAttribute("notification") Notification notification,
+                         @RequestParam("select2") List<Long> selectUser,
                          @RequestParam("topic") String topic,
                          @RequestParam("upload") String upload,
                          @RequestParam("describe") String describe,
-                         Principal principal
+                         Principal principal,
+                         RedirectAttributes redirectAttributes
     ) {
-        String message = "Thông báo đã được tạo thành công!";
         User loginedUser = (User) ((Authentication) principal).getPrincipal();
         AppUser appUser = userRepository2.findAppUserByUserName(loginedUser.getUsername());
         appUser.getUserId();
         notification.setAppUser(appUser);
-        System.out.println("user id:" + appUser.getUserId());
-
         notification.setCreated_at(getCurrentDate());
-        System.out.println("datetime:" + getCurrentDate());
-
         notification.setTopic(topic);
         notification.setMessage(describe);
-//        notificationUser.setIsRead(IsRead.NOT_READ);
-        boolean done = notificationService.createNotification(notification);
-//        boolean doneNotiUser = notificationUserService.addNotificationUser(notificationUser);
+        notificationService.createNotification(notification, selectUser);
         return "redirect:/notification/create";
     }
 

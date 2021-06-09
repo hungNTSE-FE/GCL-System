@@ -88,7 +88,7 @@
                     <div class="sbp-preview-code">
                       <!-- Tab panes-->
                       <div class="tab-content">
-                        <form id="insert-notification" th:action="@{/notification/create}" method="POST">
+                        <form id="insert-notification" th:action="@{/notification/create}" th:object="${notification}" method="POST">
 
                           <div class="form-group row mb-2">
                             <label class="col-sm-4"> Người nhận </label>
@@ -100,10 +100,7 @@
                                       required
                                       style="width: 100%"
                               >
-                                <option value="1">First</option>
-                                <option value="2">Second</option>
-                                <option value="3">Third</option>
-                                <option value="4">Fourth</option>
+                                <option th:each="users : ${appUsers}" th:value="${users.userId}" th:text="${users.employee.name}"></option>
                               </select>
                             </div>
                           </div>
@@ -144,7 +141,7 @@
                                   ></textarea>
                             </div>
                           </div>
-                          <button type="submit">Thong bao Test</button>
+<!--                          <button type="submit">Thong bao Test</button>-->
                         </form>
                       </div>
                     </div>
