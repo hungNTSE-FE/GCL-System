@@ -1,344 +1,334 @@
-<html xmlns:th="http://www.thymeleaf.org">
-<title>Create Task Page</title>
-<!-- Required meta tags -->
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<!DOCTYPE html>
+<!-- Created By CodingLab - www.codinglabweb.com -->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <!---<title> Responsive Registration Form | CodingLab </title>--->
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&amp;display=swap" rel="stylesheet">
+    <!-- MDB -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.5.0/mdb.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: sans-serif;
+        }
+        body{
+            height: 120vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
 
-<!-- Bootstrap CSS -->
-<!--  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">-->
-<!-- Font Awesome -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet">
-<!-- Google Fonts -->
-<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&amp;display=swap" rel="stylesheet">
-<!-- MDB -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.5.0/mdb.min.css" rel="stylesheet">
-<style>
-    #id_field{
+        }
+        .container{
+            max-width: 100%;
 
-        width: 100%;
-        height:50px;
+            width: 100%;
+            background-color: #fff;
+            padding: 25px 30px;
+            border-radius: 5px;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.15);
 
-    }
+        }
+        .container .title{
+            font-size: 25px;
+            font-weight: 500;
+            position: relative;
+        }
+        .container .title::before{
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            height: 3px;
+            width: 30px;
+            border-radius: 5px;
+            background: linear-gradient(135deg, #71b7e6, #9b59b6);
+        }
+        .content form .transaction-details{
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin: 20px 0 12px 0;
+        }
+        form .transaction-details .input-box{
+            margin-bottom: 30px;
+            width: calc(100% / 2 - 20px);
+        }
+        form .input-box span.details{
+            display: block;
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+        .transaction-details .input-box input{
+            height: 45px;
+            width: 80%;
+            outline: none;
+            font-size: 16px;
+            border-radius: 5px;
+            padding-left: 15px;
+            border: 1px solid #ccc;
+            border-bottom-width: 2px;
+            transition: all 0.3s ease;
+        }
+        .transaction-details .input-box input:focus,
+        .transaction-details .input-box input:valid{
 
-    .field{
+        }
+        .transaction-details .input-box select{
+            height: 45px;
+            width: 80%;
+            outline: none;
+            font-size: 16px;
+            border-radius: 5px;
+            padding-left: 15px;
+            border: 1px solid #ccc;
+            border-bottom-width: 2px;
+            transition: all 0.3s ease;
+        }
+        .transaction-details .input-box select:focus,
+        .transaction-details .input-box select:valid{
 
-        width: 100%;
-        height:50px;
-        margin-top: 5px;
+        }
+        form .gender-details .gender-title{
+            font-size: 20px;
+            font-weight: 500;
+        }
+        form .category{
+            display: flex;
+            width: 80%;
+            margin: 14px 0 ;
+            justify-content: space-between;
+        }
+        form .category label{
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+        form .category label .dot{
+            height: 18px;
+            width: 18px;
+            border-radius: 50%;
+            margin-right: 10px;
+            background: #d9d9d9;
+            border: 5px solid transparent;
+            transition: all 0.3s ease;
+        }
+        #dot-1:checked ~ .category label .one,
+        #dot-2:checked ~ .category label .two,
+        #dot-3:checked ~ .category label .three{
+            background: #9b59b6;
+            border-color: #d9d9d9;
+        }
+        form input[type="radio"]{
+            display: none;
+        }
+        form .button{
+            height: 45px;
+            margin: 35px 0
+        }
+        form .button input{
+            height: 100%;
+            width: 100%;
+            border-radius: 5px;
+            border: none;
+            color: #fff;
+            font-size: 18px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: linear-gradient(135deg, tan, #ffee58);
+        }
+        form .button input:hover{
+            /* transform: scale(0.99); */
+            background: linear-gradient(-135deg, tan, #ffee58);
+        }
+        @media(max-width: 584px){
+            .container{
+                max-width: 100%;
+            }
+            form .transaction-details .input-box{
+                margin-bottom: 15px;
+                width: 100%;
+            }
+            form .category{
+                width: 100%;
+            }
+            .content form .transaction-details{
+                max-height: 300px;
+                overflow-y: scroll;
+            }
+            .transaction-details::-webkit-scrollbar{
+                width: 5px;
+            }
+        }
+        @media(max-width: 459px){
+            .container .content .category{
+                flex-direction: column;
+            }
+        }
+
+        /*validate*/
+        form .transaction-details .input-box small{
+            visibility: hidden;
+            position: absolute;
+        }
+        form .transaction-details .input-box i{
+            visibility: hidden;
+        }
+        form .transaction-details .success input{
+            border-color: #00b8d4;
+        }
+        form .transaction-details .success .successIcon{
+            color: #00b8d4;
+            visibility: visible;
+            margin-left:20px;
+        }
+        form .transaction-details .error input{
+            border-color: red;
+        }
+        form .transaction-details .error .errorIcon{
+            color: red;
+            visibility: visible;
+
+        }
+        form .transaction-details .error small{
+            color: red;
+            visibility: visible;
+            font-size: 15px;
+
+        }
+        .TopButton{
+            position:  fixed;
+            width: 50px;
+            height: 50px;
+            background: yellow;
+            bottom: 60px;
+            right: 50px;
+            text-align: center ;
+            text-decoration: none;
+            line-height: 50px;
+            color: white;
+            font-size: 22px;
+        }
 
 
-    }
-    .field2{
-        width: 100%;
-        height:50px;
-    }
-    .field_button{
-        background-color: red;
-        width: 100%;
-        height:50px;
-
-
-
-    }
-    .title label{
-        margin-bottom: 10px;
-    }
-    .form{
-
-        height: 350px;
-        width: 40%;
-        margin-left: 5%;
-
-        float:left;
-    }
-
-    .title{
-        width: 40%;
-        height:50px;
-
-        float:left;
-    }
-    .title_field{
-        font-size: 15px;
-
-
-    }
-    .input_field{
-        width: 57%;
-        height: 50px;
-
-        float:left;
-
-
-    }
-
-
-    label{
-        padding-top :10px ;
-        padding-left:10px ;
-    }
-    input{
-        margin-top: 5px;
-    }
-    .add{
-        margin-top: 3px;
-    }
-
-    #banner{
-        width: 100%;
-        height: 130px;
-        margin-top:5%;
-        float:left
-    }
-    .banner_child{
-        height:130px;
-        width: 50%;
-        float:left;
-    }
-    #back{
-        height: 40px;
-    }
-    #back i{
-        margin-left: 25px;
-    }
-    #back label{
-        margin-left: 20px;
-    }
-    #banner_title{
-        height:90px;
-    }
-    #banner_title label{
-        font-size: 30px;
-        margin-left: 10px;
-    }
-    #banner_button{
-        margin-left: 50%;
-        margin-top: 40px;
-    }
-    #buttonCreate{
-        height: 50px;
-        width: 100%;
-
-        float:left;
-
-    }
-    #buttonCreate button{
-        margin-left: 40%;
-    }
-
-</style>
+    </style>
 </head>
 <body>
-<head>
-    <!--  <th:block th:include="/common/navbar.html"></th:block>-->
+<div class="container">
+    <a th:href="@{/transaction/home}">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+    </a>
+    <div class="title">Thêm giao dịch</div>
+    <div class="content">
+        <form method="POST" id="form" th:action="@{/transaction/saveTransaction}" th:object="${transaction}" >
+            <div class="transaction-details">
+                <div class="input-box">
+                    <span class="details">Giao dịch</span>
+                    <input placeholder="Giao dịch" th:field="*{name}" type="text" id="name" name="name" value="">
+                    <i class="fas fa-check-circle successIcon"></i>
+                    <i class="fas fa-exclamation-circle errorIcon"></i><br/>
+                    <small>Error message</small>
 
-</head>
-<form method="POST" th:action="@{/transaction/saveTransaction}" th:object="${transaction}" >
-    <div id="banner">
-        <div class="banner_child">
-            <div id="back">
-                <a th:href="@{/transaction/home}">
-                    <i class="fa fa-chevron-left" aria-hidden="true"></i>
-                </a>
-                <label>Giao dịch</label>
+                </div>
+                <div class="input-box">
+                    <span class="details">Mô tả</span>
+                    <input   id="description" placeholder="Mô tả"th:field="*{description}" type="text">
+                    <i class="fas fa-check-circle successIcon"></i>
+                    <i class="fas fa-exclamation-circle errorIcon"></i><br/>
+                    <small>Error message</small>
+
+                </div>
+                <div class="input-box">
+                    <span class="details">Người giao việc</span>
+
+                    <input placeholder="Người giao việc" id="contact"  th:field="*{contact}"type="text" >
+                    <i class="fas fa-check-circle successIcon"></i>
+                    <i class="fas fa-exclamation-circle errorIcon"></i><br/>
+                    <small>Error message</small>
+
+                </div>
+                <div class="input-box">
+                    <span class="details">Người phụ trách</span>
+                    <input placeholder="Người phụ trách"  id="manager" th:field="*{manager}"type="text"   value="">
+                    <i class="fas fa-check-circle successIcon"></i>
+                    <i class="fas fa-exclamation-circle errorIcon"></i><br/>
+                    <small>Error message</small>
+                </div>
+                <div class="input-box">
+                    <span class="details">Khách hàng</span>
+                    <input placeholder="Khách hàng"  id="customer" th:field="*{manager}"type="text"  value="">
+                    <i class="fas fa-check-circle successIcon"></i>
+                    <i class="fas fa-exclamation-circle errorIcon"></i><br/>
+                    <small>Error message</small>
+                </div>
+                <div class="input-box">
+                    <span class="details">Loại giao dịch</span>
+                    <select  th:field="*{transactionType}" class="form-control" >
+                        <option value="Mua">Mua</option>
+                        <option value="Bán">Bán</option>
+                        <option value="Trao đổi">Trao đổi</option>
+                    </select>
+                </div>
+                <div class="input-box">
+                    <span class="details">Độ ưu tiên</span>
+                    <select th:field="*{priority}" class="form-control" >
+                        <option value="Cao">Cao</option>
+                        <option value="Trung bình">Trung Bình</option>
+                        <option value="Thấp">Thấp</option>
+                    </select>
+                </div>
+                <div class="input-box">
+                    <span class="details">Ngày bắt đầu</span>
+                    <input id="startField"   type="date" min="2021-05-27" pattern="yyyy-MM-dd"   value="">
+                    <i class="fas fa-check-circle successIcon"></i>
+                    <i class="fas fa-exclamation-circle errorIcon"></i><br/>
+                    <small>Error message</small>
+                </div>
+                <div class="input-box">
+                    <span class="details">Ngày hoàn thành</span>
+                    <input id="endField"  min="2021-05-27" type="date" pattern="yyyy-MM-dd"  name="endDate" value="">
+                    <i class="fas fa-check-circle successIcon"></i>
+                    <i class="fas fa-exclamation-circle errorIcon"></i><br/>
+                    <small>Error message</small>
+                </div>
+                <div class="input-box">
+                    <span class="details">Trạng thái</span>
+                    <input  placeholder="Trạng thái"type="text" th:field="*{status}"  id="status" name="status" value="">
+                    <i class="fas fa-check-circle successIcon"></i>
+                    <i class="fas fa-exclamation-circle errorIcon"></i><br/>
+                    <small>Error message</small>
+
+                </div>
+                <div class="input-box">
+                    <span class="details">Kết quả</span>
+                    <input placeholder="Kết quả" type="text" th:field="*{result}" id="result" value="">
+                    <i class="fas fa-check-circle successIcon"></i>
+                    <i class="fas fa-exclamation-circle errorIcon"></i><br/>
+                    <small>Error message</small>
+
+                </div>
 
             </div>
-            <div id="banner_title">
-                <label>THÊM MỚI GIAO DỊCH</label>
 
+            <div class="button">
+                <input type="submit" value="Thêm giao dịch">
             </div>
-        </div>
-
+        </form>
     </div>
+</div>
+<a class="TopButton" href="#"><i class="fas fa-arrow-up"></i> </a>
 
 
-    <div class="form">
-        <div id="id_field">
-            <div class="title">
-                <label class="title_field">Giao dịch</label>
-            </div>
-            <div class="input_field">
-
-                <input class="form-control" th:field="" type="text" id="name" name="name" value="">
-
-            </div>
-
-        </div>
-            <div class="field">
-                <div class="title">
-                    <label class="title_field">Mô tả</label>
-                </div>
-                <div class="input_field">
-
-                    <input class="form-control" th:field=""type="text"  name="reporter" value="">
-
-                </div>
-
-
-            </div>
-            <div class="field">
-                <div class="title">
-                    <label class="title_field">Người giao việc</label>
-                </div>
-                <div class="input_field">
-
-                    <input class="form-control" th:field=""type="text"  name="reporter" value="">
-
-                </div>
-
-
-            </div>
-        <div class="field">
-            <div class="title">
-                <label class="title_field">Người phụ trách</label>
-            </div>
-            <div class="input_field">
-
-                <input class="form-control" th:field=""type="text"  name="reporter" value="">
-
-            </div>
-
-
-        </div>
-        <div class="field">
-            <div class="title">
-                <label class="title_field">Khách hàng</label>
-            </div>
-            <div class="input_field">
-
-                <input class="form-control" th:field=""type="text"  name="reporter" value="">
-
-            </div>
-
-
-        </div>
-
-
-        <div class="field">
-            <div class="title">
-                <label class="title_field">Loại giao dịch </label>
-            </div>
-            <div class="input_field">
-
-
-
-                <select  th:field="" class="form-control" id="complexity" name="complex">
-                    <option value="Mua">Mua</option>
-                    <option value="Bán">Bán</option>
-                    <option value="Trao đổi">Trao đổi</option>
-                </select>
-
-            </div>
-
-        </div>
-
-
-
-    </div>
-    <div class="form">
-        <div class="field">
-            <div class="title">
-                <label class="title_field">Độ ưu tiên</label>
-            </div>
-            <div class="input_field">
-
-                <select th:field="}" class="form-control" id="priority" name="priority">
-                    <option value="Cao">Cao</option>
-                    <option value="Trung bình">Trung Bình</option>
-                    <option value="Thấp">Thấp</option>
-                </select>
-
-            </div>
-
-        </div>
-
-
-        <div class="field">
-            <div class="title">
-                <label class="title_field">Trạng thái</label>
-            </div>
-            <div class="input_field">
-
-                <input type="text" th:field="" class="form-control" id="status" name="status" value="">
-
-            </div>
-
-
-        </div>
-        <div class="field">
-            <div class="title">
-                <label class="title_field">Kết quả</label>
-            </div>
-            <div class="input_field">
-
-                <input type="text" th:field="" class="form-control" id="result" name="status" value="">
-
-            </div>
-
-
-        </div>
-        <div class="field">
-            <div class="title">
-                <label class="title_field">Số ngày nhắc việc</label>
-            </div>
-            <div class="input_field">
-
-                <input type="text" th:field="" class="form-control" id="result" name="status" value="">
-
-            </div>
-
-
-        </div>
-
-
-        <div class="field">
-            <div class="title">
-                <label class="title_field">Ngày bắt đầu</label>
-            </div>
-            <div class="input_field">
-
-                <input id="startField" th:field="" type="date" min="2021-05-27" pattern="yyyy-MM-dd" class="form-control"  value="">
-
-
-            </div>
-
-
-
-
-
-        </div>
-        <div class="field">
-            <div class="title">
-                <label class="title_field">Ngày hoàn thành</label>
-            </div>
-            <div class="input_field">
-
-                <input id="endField" th:field="" min="2021-05-27" type="date" pattern="yyyy-MM-dd" class="form-control" name="endDate" value="">
-
-            </div>
-        </div>
-    </div>
-  <div id="buttonCreate">
-      <button type="submit" class="btn btn-info col-2 add">Tạo Giao Dịch</button>
-
-  </div>
-
-
-</form>
-<form th:action="@{/task/viewAllTask}" method="GET">
-
-</form>
-
-
-
-
-
-
-
-
-
-<!--  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>-->
-<!-- MDB -->
 <script>
     type="text/javascript"
     src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.5.0/mdb.min.js"
@@ -361,4 +351,93 @@
 
 </script>
 
-</body></html>
+<!--validate-->
+<script>
+    const form = document.getElementById('form');
+    const name = document.getElementById('name');
+    const description = document.getElementById('description');
+    const contact = document.getElementById('contact');
+    const manager = document.getElementById('manager');
+    const customer = document.getElementById('customer');
+    const start = document.getElementById('startField');
+    const end = document.getElementById('endField');
+    const result = document.getElementById('result');
+    const status = document.getElementById('status');
+    form.addEventListener('submit',(e) => {
+        e.preventDefault();
+        checkInputs();
+    });
+    function  checkInputs(){
+        const nameValue = name.value.trim();
+        const descriptionValue = description.value.trim();
+        const contactValue = contact.value.trim();
+        const managerValue = manager.value.trim();
+        const customerValue = customer.value.trim();
+        const startValue = start.value.trim();
+        const endValue = end.value.trim();
+        const statusValue = status.value.trim();
+        const  resultValue = result.value.trim();
+
+       const re = /^\d{1,2}\/\d{1,2}\/\d{4}$/;
+        if(nameValue ==''){
+            setErrorFor(name,"Tên không thể trống");
+        }else {
+            setSuccessFor(name);
+        }
+        if(descriptionValue ==''){
+            setErrorFor(description,"Mô tả không thể trống");
+        }else {
+            setSuccessFor(description);
+        }
+        if(contactValue ==''){
+            setErrorFor(contact,"Người liên hệ không thể trống");
+        }else {
+            setSuccessFor(contact);
+        }
+        if(managerValue ==''){
+            setErrorFor(manager,"Người quản lý  không thể trống");
+        }else {
+            setSuccessFor(manager);
+        }
+        if(customerValue ==''){
+            setErrorFor(customer,"Khách hàng  không thể trống");
+        }else {
+            setSuccessFor(customer);
+        }
+        if(customerValue ==''){
+            setErrorFor(customer,"Khách hàng  không thể trống");
+        }else {
+            setSuccessFor(customer);
+        }
+        if(statusValue ==''){
+            setErrorFor(status,"Trạng thái  không thể trống");
+        }else {
+            setSuccessFor(status);
+        }
+        if(resultValue ==''){
+            setErrorFor(result,"Kết quả  không thể trống");
+        }else {
+            setSuccessFor(result);
+        }
+
+
+
+    }
+    function setErrorFor(input,message) {
+        const  inputBox=input.parentElement;
+
+        const small = inputBox.querySelector('small');
+        small.innerText = message;
+        inputBox.className='input-box error';
+
+    }
+    function setSuccessFor(input) {
+        const  inputBox=input.parentElement;
+
+
+        inputBox.className='input-box success';
+
+    }
+</script>
+</body>
+</html>

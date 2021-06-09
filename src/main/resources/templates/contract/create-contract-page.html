@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<!-- Created By CodingLab - www.codinglabweb.com -->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <!---<title> Responsive Registration Form | CodingLab </title>--->
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&amp;display=swap" rel="stylesheet">
+    <!-- MDB -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.5.0/mdb.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: sans-serif;
+        }
+        body{
+            height: 200vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+
+        }
+        .container{
+            max-width: 100%;
+            height: 200vh;
+            width: 100%;
+            background-color: #fff;
+            padding: 25px 30px;
+            border-radius: 5px;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.15);
+            background: linear-gradient(125deg, #1abe5c, #00b8d4);
+
+        }
+        .container .title{
+            font-size: 25px;
+            font-weight: 500;
+            position: relative;
+        }
+        .container .title::before{
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            height: 3px;
+            width: 30px;
+            border-radius: 5px;
+            background: linear-gradient(135deg, #71b7e6, #9b59b6);
+        }
+        .content form .contract-details{
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin: 20px 0 12px 0;
+        }
+        form .contract-details .input-box{
+            margin-bottom: 15px;
+            width: calc(100% / 2 - 20px);
+        }
+        form .contract-details .input-box1{
+            margin-bottom: 15px;
+            width: calc(100% / 2 - 20px);
+        }
+
+        form .input-box span.details{
+            display: block;
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+        form .input-box1 span.details{
+            display: block;
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+        .contract-details .input-box input{
+            height: 45px;
+            width: 100%;
+            outline: none;
+            font-size: 16px;
+            border-radius: 5px;
+            padding-left: 15px;
+            border: 1px solid #ccc;
+            border-bottom-width: 2px;
+            transition: all 0.3s ease;
+        }
+
+        contract-details .input-box {
+            height: 45px;
+            width: 100%;
+            outline: none;
+            font-size: 16px;
+            border-radius: 5px;
+            padding-left: 15px;
+            border: 1px solid #ccc;
+            border-bottom-width: 2px;
+            transition: all 0.3s ease;
+        }
+        .contract-details .input-box1 #imageBefore{
+            height: 400px;
+            width: 100%;
+            outline: none;
+            font-size: 16px;
+            place-items: center;
+            text-align: center;
+            padding-left: 15px;
+            transition: all 0.3s ease;
+
+        }
+       .wrapper{
+            position: relative;
+            height: 300px;
+            width: 100%;
+            border-radius: 10px;
+            background: #fff;
+            border: 2px dashed #c2cdda;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        .wrapper .icon{
+            font-size: 50px;
+            color: #9658fe;
+        }
+        .wrapper #cancel-btn{
+            position: absolute;
+            right : 15px;
+            top : 15px;
+            font-size: 20px;
+            cursor: pointer;
+            display : none;
+        }
+        .wrapper.active:hover .file-name{
+            display: block;
+        }
+        .wrapper.active:hover #cancel-btn {
+            display: block;
+        }
+        .wrapper .file-name{
+            position: absolute;
+            bottom: 0px;
+            background: linear-gradient(135deg,#3a8ffe 0%,#9658fe 100%);
+            width : 100%;
+            color:#fff;
+            font-size : 18px;
+            display :none;
+
+        }
+        .wrapper .text{
+            font-size: 20px;
+            font-weight: 500;
+            color: #5B5B7B;
+        }
+
+        .wrapper .image{
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .wrapper img{
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+        }
+        #imageBefore #custom-btn{
+            margin-top: 20px;
+            display: block;
+            width: 100%;
+            height: 50px;
+            border: none;
+            outline: none;
+            border-radius: 25px;
+            color: #fff;
+            font-size: 18px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            cursor: pointer;
+            background: linear-gradient(135deg,#3a8ffe 0%,#9658fe 100%);
+        }
+
+
+        .contract-details .input-box input:focus,
+        .contract-details .input-box #imageBefore:focus,
+
+        .contract-details .input-box input:valid{
+            border-color: #9b59b6;
+        }
+        .contract-details .input-box select{
+            height: 45px;
+            width: 100%;
+            outline: none;
+            font-size: 16px;
+            border-radius: 5px;
+            padding-left: 15px;
+            border: 1px solid #ccc;
+            border-bottom-width: 2px;
+            transition: all 0.3s ease;
+        }
+        .contract-details .input-box select:focus,
+        .contract-details .input-box select:valid{
+            border-color: #9b59b6;
+        }
+        form .gender-details .gender-title{
+            font-size: 20px;
+            font-weight: 500;
+        }
+        form .category{
+            display: flex;
+            width: 80%;
+            margin: 14px 0 ;
+            justify-content: space-between;
+        }
+        form .category label{
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+        form .category label .dot{
+            height: 18px;
+            width: 18px;
+            border-radius: 50%;
+            margin-right: 10px;
+            background: #d9d9d9;
+            border: 5px solid transparent;
+            transition: all 0.3s ease;
+        }
+        #dot-1:checked ~ .category label .one,
+        #dot-2:checked ~ .category label .two,
+        #dot-3:checked ~ .category label .three{
+            background: #9b59b6;
+            border-color: #d9d9d9;
+        }
+        form input[type="radio"]{
+            display: none;
+        }
+        form .button{
+            height: 45px;
+            margin: 35px 0
+        }
+        form .button input{
+            height: 100%;
+            width: 100%;
+            border-radius: 5px;
+            border: none;
+            color: #fff;
+            font-size: 18px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: linear-gradient(135deg, tan, #ffee58);
+        }
+        form .button input:hover{
+            /* transform: scale(0.99); */
+            background: linear-gradient(-135deg, tan, #ffee58);
+        }
+        @media(max-width: 584px){
+            .container{
+                max-width: 100%;
+            }
+            form .contract-details .input-box{
+                margin-bottom: 15px;
+                width: 100%;
+            }
+            form .category{
+                width: 100%;
+            }
+            .content form .contract-details{
+                max-height: 300px;
+                overflow-y: scroll;
+            }
+            .contract-details::-webkit-scrollbar{
+                width: 5px;
+            }
+        }
+        @media(max-width: 459px){
+            .container .content .category{
+                flex-direction: column;
+            }
+        }
+        .container i{
+            color :red;
+        }
+        .show{
+            display: none;
+        }
+
+
+
+
+
+
+
+    </style>
+</head>
+<body>
+<div class="container">
+    <a th:href="@{/contract/home}">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+    </a>
+    <div class="title">Thêm hơp đồng</div>
+    <div class="content">
+        <form method="POST" th:action="@{/contract/savecontract}"  >
+            <div class="contract-details">
+                <div class="input-box">
+                    <span class="details">Giao dịch</span>
+                    <select  class="form-control" >
+                        <option value="Cá nhân">Tài khoản cá nhân</option>
+                        <option value="Doanh nghiệp">Tài khoản doanh nghiệp</option>
+                    </select>
+                </div>
+                <div class="input-box">
+                    <span class="details">Mã ID</span>
+                    <input class="form-control"  placeholder="Tùy chọn" type="text"  >
+
+                </div>
+                <div class="input-box">
+                    <span class="details">Họ và tên</span>
+                    <input class="form-control"  placeholder="In hoa chữ cái đầu" type="text"  >
+
+                </div>
+                <div class="input-box">
+                    <span class="details">Ngày tháng năm sinh</span>
+
+                    <input placeholder="Ngày tháng năm sinh" required type="text" >
+
+                </div>
+                <div class="input-box">
+                    <span class="details">&nbsp</span>
+
+                    <input placeholder="Email" class="form-control" type="text"  name="reporter" value="">
+
+                </div>
+                <div class="input-box">
+                    <span class="details">&nbsp</span>
+
+                    <input placeholder="Địa chỉ thường trú" class="form-control" type="text"  name="reporter" value="">
+
+                </div>
+                <div class="input-box">
+                    <span class="details">&nbsp</span>
+                    <input placeholder="Điện thoại" class="form-control" type="text"  name="reporter" value="">
+
+                </div>
+                <div class="input-box">
+                    <span class="details">Chọn CMND/CCCD/Hô chiếu</span>
+                    <select  class="form-control" >
+                        <option value="CMND">Chứng minh nhân dân</option>
+                        <option value="CCCD">Căn cước công dân</option>
+                        <option value="HC">Hộ chiếu</option>
+                    </select>
+                </div>
+
+                <div class="input-box">
+                    <span class="details">Số</span>
+                    <input placeholder="" class="form-control" type="text"  name="reporter" value="">
+                </div>
+                <div class="input-box">
+                    <span class="details">Ngày cấp</span>
+                    <input   min="2021-05-27" type="date" pattern="yyyy-MM-dd" class="form-control" name="endDate" value="">
+                </div>
+                <div class="input-box1">
+                    <span class="details"></span>
+                    <div id="imageBefore">
+                        <div class="wrapper">
+                            <div class="image">
+                                <img  alt="">
+                            </div>
+                            <div class="content">
+                                <div class="icon">
+                                    <i class="fas fa-cloud-upload-alt"></i>
+                                </div>
+                                <div class="text">
+                                    Chưa có hình ảnh
+                                </div>
+                            </div>
+                            <div id="cancel-btn">
+                                <i class="fas fa-times"></i>
+                            </div>
+                            <div class="file-name">
+                                Tên ảnh
+                            </div>
+                        </div>
+                        <button onclick="defaultBtnActive()" id="custom-btn">Chọn 1 ảnh</button>
+                        <input id="default-btn" type="file" hidden>
+                    </div>
+
+
+                </div>
+                <div class="input-box1">
+                    <span class="details"></span>
+                    <div id="imageBefore">
+                        <div class="wrapper">
+                            <div class="image">
+                                <img  alt="">
+                            </div>
+                            <div class="content">
+                                <div class="icon">
+                                    <i class="fas fa-cloud-upload-alt"></i>
+                                </div>
+                                <div class="text">
+                                    Chưa có hình ảnh
+                                </div>
+                            </div>
+                            <div id="cancel-btn">
+                                <i class="fas fa-times"></i>
+                            </div>
+                            <div class="file-name">
+                                Tên ảnh
+                            </div>
+                        </div>
+                        <button onclick="defaultBtnActive()" id="custom-btn">Chọn 1 ảnh</button>
+                        <input id="default-btn" type="file" hidden>
+                    </div>
+
+
+
+                </div>
+
+                <div class="input-box">
+                    <span class="details">Thông tin tài khoản ngân hàng (chính chủ)</span>
+                    <input class="form-control"  placeholder="Sô tài khoản ngân hàng" type="text"  >
+
+                </div>
+                <div class="input-box">
+                    <span class="details">&nbsp;</span>
+                    <input class="form-control"  placeholder="Tại ngân hàng" type="text"  >
+
+                </div>
+                <div class="input-box">
+                    <span class="details" >Tài khoản ngân hàng khác(chính chủ)</span>
+
+                    <input type="checkbox" class="onCheck">
+
+                </div>
+                <div class="input-box">
+                    <span class="details">&nbsp;</span>
+                    <input  type="hidden">
+                </div>
+
+                <div class="input-box show">
+                    <span class="details">&nbsp;</span>
+                    <input class="form-control"  placeholder="Sô tài khoản ngân hàng 1(chính chủ)" type="text"  >
+
+                </div>
+                <div class="input-box show">
+                    <span class="details">&nbsp;</span>
+                    <input class="form-control"  placeholder="Tại ngân hàng" type="text"  >
+
+                </div>
+                <div class="input-box show">
+                    <span class="details">&nbsp;</span>
+                    <input class="form-control"  placeholder="Sô tài khoản ngân hàng 2(chính chủ)" type="text"  >
+
+                </div>
+                <div class="input-box show">
+                    <span class="details">&nbsp;</span>
+                    <input class="form-control"  placeholder="Tại ngân hàng" type="text"  >
+
+                </div>
+            </div>
+
+
+            <div class="button">
+                <input type="submit" value="Gửi thông tin giao dịch">
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<script>
+    type="text/javascript"
+    src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.5.0/mdb.min.js"
+</script>
+<script>
+    const wrapper = document.querySelector(".wrapper");
+    const fileName = document.querySelector(".file-name");
+    const defaultBtn = document.querySelector("#default-btn");
+    const customBtn = document.querySelector("#custom-btn");
+    const cancelBtn = document.querySelector("#cancel-btn i");
+    const img = document.querySelector("img");
+    let regExp = /[0-9a-zA-Z\^\&\'\@\{\}\[\]\,\$\=\!\-\#\(\)\.\%\+\~\_ ]+$/;
+    function defaultBtnActive(){
+        defaultBtn.click();
+    }
+    defaultBtn.addEventListener("change", function(){
+        const file = this.files[0];
+        let valid=["image/png","image/jpg","image/jpeg"];
+        let fileType = file.type;
+        if(valid.includes(fileType)){
+            if(file){
+                const reader = new FileReader();
+                reader.onload = function(){
+                    const result = reader.result;
+                    img.src = result;
+                    wrapper.classList.add("active");
+                }
+                cancelBtn.addEventListener("click", function(){
+                    img.src = "";
+                    wrapper.classList.remove("active");
+                })
+                reader.readAsDataURL(file);
+            }
+            if(this.value){
+                let valueStore = this.value.match(regExp);
+                fileName.textContent = valueStore;
+            }
+        }else{
+        alert("Xin hay chon hinh anh")
+    }
+
+    });
+</script>
+<script>
+    const wrapper1 = document.querySelector(".wrapper1");
+    const fileName = document.querySelector(".file-name1");
+    const defaultBtn1 = document.querySelector("#default-btn1");
+    const customBtn = document.querySelector("#custom-btn1");
+    const cancelBtn = document.querySelector("#cancel-btn1 i");
+    const img = document.querySelector("#img1");
+    let regExp = /[0-9a-zA-Z\^\&\'\@\{\}\[\]\,\$\=\!\-\#\(\)\.\%\+\~\_ ]+$/;
+    function defaultBtnActive1(){
+        defaultBtn1.click();
+    }
+    defaultBtn1.addEventListener("change", function(){
+        const file = this.files[0];
+        let valid=["image/png","image/jpg","image/jpeg"];
+        let fileType = file.type;
+        if(valid.includes(fileType)){
+            if(file){
+                const reader = new FileReader();
+                reader.onload = function(){
+                    const result = reader.result;
+                    img.src = result;
+                    wrapper1.classList.add("active");
+                }
+                cancelBtn.addEventListener("click", function(){
+                    img.src = "";
+                    wrapper1.classList.remove("active");
+                })
+                reader.readAsDataURL(file);
+            }
+            if(this.value){
+                let valueStore = this.value.match(regExp);
+                fileName.textContent = valueStore;
+            }
+        }else{
+            alert("Xin hay chon hinh anh")
+        }
+
+    });
+</script>
+<script>
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth()+1; //January is 0!
+    var yyyy = today.getFullYear();
+    if(dd<10){
+        dd='0'+dd
+    }
+    if(mm<10){
+        mm='0'+mm
+    }
+
+    today = yyyy+'-'+mm+'-'+dd;
+    document.getElementById("startField").setAttribute("min", today);
+    document.getElementById("endField").setAttribute("min", today);
+
+</script>
+<script>
+
+</script>
+
+</body>
+</html>
