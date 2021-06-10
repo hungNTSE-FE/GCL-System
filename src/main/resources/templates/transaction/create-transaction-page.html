@@ -230,7 +230,7 @@
     </a>
     <div class="title">Thêm giao dịch</div>
     <div class="content">
-        <form method="POST" id="form" th:action="@{/transaction/saveTransaction}" th:object="${transaction}" >
+        <form method="POST"  id="form" th:action="@{/transaction/saveTransaction}" th:object="${transaction}" >
             <div class="transaction-details">
                 <div class="input-box">
                     <span class="details">Giao dịch</span>
@@ -266,7 +266,7 @@
                 </div>
                 <div class="input-box">
                     <span class="details">Khách hàng</span>
-                    <input placeholder="Khách hàng"  id="customer" th:field="*{manager}"type="text"  value="">
+                    <input placeholder="Khách hàng"  id="customer" th:field="*{userName}"type="text"  value="">
                     <i class="fas fa-check-circle successIcon"></i>
                     <i class="fas fa-exclamation-circle errorIcon"></i><br/>
                     <small>Error message</small>
@@ -289,14 +289,14 @@
                 </div>
                 <div class="input-box">
                     <span class="details">Ngày bắt đầu</span>
-                    <input id="startField"   type="date" min="2021-05-27" pattern="yyyy-MM-dd"   value="">
+                    <input id="startField"  th:field="*{requestDate}" type="date" min="2021-05-27" pattern="yyyy-MM-dd"   value="">
                     <i class="fas fa-check-circle successIcon"></i>
                     <i class="fas fa-exclamation-circle errorIcon"></i><br/>
                     <small>Error message</small>
                 </div>
                 <div class="input-box">
                     <span class="details">Ngày hoàn thành</span>
-                    <input id="endField"  min="2021-05-27" type="date" pattern="yyyy-MM-dd"  name="endDate" value="">
+                    <input id="endField"  min="2021-05-27" th:field="*{approveDate}"type="date" pattern="yyyy-MM-dd"  name="endDate" value="">
                     <i class="fas fa-check-circle successIcon"></i>
                     <i class="fas fa-exclamation-circle errorIcon"></i><br/>
                     <small>Error message</small>
@@ -363,11 +363,72 @@
     const end = document.getElementById('endField');
     const result = document.getElementById('result');
     const status = document.getElementById('status');
+   let isFormValid= true;
     form.addEventListener('submit',(e) => {
-        e.preventDefault();
-        checkInputs();
+
+        const nameValue = name.value.trim();
+        const descriptionValue = description.value.trim();
+        const contactValue = contact.value.trim();
+        const managerValue = manager.value.trim();
+        const customerValue = customer.value.trim();
+        const startValue = start.value.trim();
+        const endValue = end.value.trim();
+        const statusValue = status.value.trim();
+        const  resultValue = result.value.trim();
+
+        const re = /^\d{1,2}\/\d{1,2}\/\d{4}$/;
+        if(nameValue ==''){
+            setErrorFor(name,"Tên không thể trống");
+            e.preventDefault();
+
+        }else {
+            setSuccessFor(name);
+        }
+        if(descriptionValue ==''){
+            setErrorFor(description,"Mô tả không thể trống");
+            e.preventDefault();
+        }else {
+            setSuccessFor(description);
+        }
+        if(contactValue ==''){
+            setErrorFor(contact,"Người liên hệ không thể trống");
+            e.preventDefault();
+        }else {
+            setSuccessFor(contact);
+        }
+        if(managerValue ==''){
+            setErrorFor(manager,"Người quản lý  không thể trống");
+            e.preventDefault();
+        }else {
+            setSuccessFor(manager);
+        }
+        if(customerValue ==''){
+            setErrorFor(customer,"Khách hàng  không thể trống");
+            e.preventDefault();
+        }else {
+            setSuccessFor(customer);
+        }
+        if(customerValue ==''){
+            setErrorFor(customer,"Khách hàng  không thể trống");
+            e.preventDefault();
+        }else {
+            setSuccessFor(customer);
+        }
+        if(statusValue ==''){
+            setErrorFor(status,"Trạng thái  không thể trống");
+            e.preventDefault();
+        }else {
+            setSuccessFor(status);
+        }
+        if(resultValue ==''){
+            setErrorFor(result,"Kết quả  không thể trống");
+            e.preventDefault();
+        }else {
+            setSuccessFor(result);
+        }
     });
     function  checkInputs(){
+
         const nameValue = name.value.trim();
         const descriptionValue = description.value.trim();
         const contactValue = contact.value.trim();
@@ -381,6 +442,8 @@
        const re = /^\d{1,2}\/\d{1,2}\/\d{4}$/;
         if(nameValue ==''){
             setErrorFor(name,"Tên không thể trống");
+            isFormValid = false ;
+
         }else {
             setSuccessFor(name);
         }

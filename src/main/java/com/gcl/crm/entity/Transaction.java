@@ -30,6 +30,8 @@ public class Transaction {
     private String result ;
     @Column(name="transaction_type")
     private String transactionType ;
+    @Column(name="userName")
+    private String userName ;
     @Column(name="priority")
     private String priority;
 }
