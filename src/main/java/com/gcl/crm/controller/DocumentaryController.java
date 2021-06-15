@@ -44,10 +44,17 @@ public class DocumentaryController {
         model.addAttribute("listDocs",listDocs);
         return "documentary/documentary-home";
     }
+    @GetMapping({"/"})
+    public String showDocumentaryHomePagev2(Model model){
+        List<Documentary> listDocs = documentaryRepo.findAll();
+
+        model.addAttribute("listDocs",listDocs);
+        return "documentary/upload-documentary-v2";
+    }
     @GetMapping({"/uploadPage"})
     public String showUploadPage(Model model){
 
-        return "documentary/upload-documentary-page";
+        return "documentary/upload-documentary-v2";
     }
     @PostMapping({"/upload"})
     public String uploadDocumentary(@RequestParam("documentary") MultipartFile multipartFile, RedirectAttributes ra) throws IOException {

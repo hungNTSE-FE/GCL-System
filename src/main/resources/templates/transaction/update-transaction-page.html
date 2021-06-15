@@ -6,7 +6,6 @@
   <!---<title> Responsive Registration Form | CodingLab </title>--->
   <link rel="stylesheet" href="style.css">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet">
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&amp;display=swap" rel="stylesheet">
   <!-- MDB -->
@@ -21,7 +20,7 @@
       font-family: sans-serif;
     }
     body{
-      height: 100vh;
+      height: 120vh;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -29,14 +28,13 @@
 
     }
     .container{
-      max-width: 700px;
+      max-width: 100%;
 
       width: 100%;
       background-color: #fff;
       padding: 25px 30px;
       border-radius: 5px;
       box-shadow: 0 5px 10px rgba(0,0,0,0.15);
-      background: linear-gradient(125deg, #1abe5c, #00b8d4);
 
     }
     .container .title{
@@ -61,7 +59,7 @@
       margin: 20px 0 12px 0;
     }
     form .transaction-details .input-box{
-      margin-bottom: 15px;
+      margin-bottom: 30px;
       width: calc(100% / 2 - 20px);
     }
     form .input-box span.details{
@@ -71,7 +69,7 @@
     }
     .transaction-details .input-box input{
       height: 45px;
-      width: 100%;
+      width: 80%;
       outline: none;
       font-size: 16px;
       border-radius: 5px;
@@ -82,11 +80,11 @@
     }
     .transaction-details .input-box input:focus,
     .transaction-details .input-box input:valid{
-      border-color: #9b59b6;
+
     }
     .transaction-details .input-box select{
       height: 45px;
-      width: 100%;
+      width: 80%;
       outline: none;
       font-size: 16px;
       border-radius: 5px;
@@ -97,7 +95,7 @@
     }
     .transaction-details .input-box select:focus,
     .transaction-details .input-box select:valid{
-      border-color: #9b59b6;
+
     }
     form .gender-details .gender-title{
       font-size: 20px;
@@ -177,9 +175,51 @@
         flex-direction: column;
       }
     }
-    .container i{
-      color :red;
+
+    /*validate*/
+    form .transaction-details .input-box small{
+      visibility: hidden;
+      position: absolute;
     }
+    form .transaction-details .input-box i{
+      visibility: hidden;
+    }
+    form .transaction-details .success input{
+      border-color: #00b8d4;
+    }
+    form .transaction-details .success .successIcon{
+      color: #00b8d4;
+      visibility: visible;
+      margin-left:20px;
+    }
+    form .transaction-details .error input{
+      border-color: red;
+    }
+    form .transaction-details .error .errorIcon{
+      color: red;
+      visibility: visible;
+
+    }
+    form .transaction-details .error small{
+      color: red;
+      visibility: visible;
+      font-size: 15px;
+
+    }
+    .TopButton{
+      position:  fixed;
+      width: 50px;
+      height: 50px;
+      background: yellow;
+      bottom: 60px;
+      right: 50px;
+      text-align: center ;
+      text-decoration: none;
+      line-height: 50px;
+      color: white;
+      font-size: 22px;
+    }
+
 
   </style>
 </head>
@@ -190,36 +230,52 @@
   </a>
   <div class="title">Cập nhật giao dịch</div>
   <div class="content">
-    <form method="POST" th:action="@{/transaction/saveTransaction}" th:object="${transaction}" >
+    <form method="POST"  id="form" th:action="@{/transaction/saveTransaction}" th:object="${transaction}" >
+      <input type="hidden" th:field="*{transaction_id}"  >
+
       <div class="transaction-details">
         <div class="input-box">
           <span class="details">Giao dịch</span>
           <input placeholder="Giao dịch" th:field="*{name}" type="text" id="name" name="name" value="">
+          <i class="fas fa-check-circle successIcon"></i>
+          <i class="fas fa-exclamation-circle errorIcon"></i><br/>
+          <small>Error message</small>
+
         </div>
         <div class="input-box">
           <span class="details">Mô tả</span>
-          <input class="form-control"  placeholder="Mô tả"th:field="*{description}" type="text"  >
+          <input   id="description" placeholder="Mô tả"th:field="*{description}" type="text">
+          <i class="fas fa-check-circle successIcon"></i>
+          <i class="fas fa-exclamation-circle errorIcon"></i><br/>
+          <small>Error message</small>
 
         </div>
         <div class="input-box">
           <span class="details">Người giao việc</span>
 
-          <input placeholder="Người giao việc" required th:field="*{contact}"type="text" >
+          <input placeholder="Người giao việc" id="contact"  th:field="*{contact}"type="text" >
+          <i class="fas fa-check-circle successIcon"></i>
+          <i class="fas fa-exclamation-circle errorIcon"></i><br/>
+          <small>Error message</small>
 
         </div>
         <div class="input-box">
           <span class="details">Người phụ trách</span>
-          <input placeholder="Người phụ trách" class="form-control" th:field="*{manager}"type="text"  name="reporter" value="">
-
+          <input placeholder="Người phụ trách"  id="manager" th:field="*{manager}"type="text"   value="">
+          <i class="fas fa-check-circle successIcon"></i>
+          <i class="fas fa-exclamation-circle errorIcon"></i><br/>
+          <small>Error message</small>
         </div>
         <div class="input-box">
           <span class="details">Khách hàng</span>
-          <input placeholder="Khách hàng" class="form-control" th:field="*{manager}"type="text"  name="reporter" value="">
-
+          <input placeholder="Khách hàng"  id="customer" th:field="*{userName}"type="text"  value="">
+          <i class="fas fa-check-circle successIcon"></i>
+          <i class="fas fa-exclamation-circle errorIcon"></i><br/>
+          <small>Error message</small>
         </div>
         <div class="input-box">
           <span class="details">Loại giao dịch</span>
-          <select th:field="*{transactionType}" class="form-control" >
+          <select  th:field="*{transactionType}" class="form-control" >
             <option value="Mua">Mua</option>
             <option value="Bán">Bán</option>
             <option value="Trao đổi">Trao đổi</option>
@@ -235,33 +291,44 @@
         </div>
         <div class="input-box">
           <span class="details">Ngày bắt đầu</span>
-          <input id="startField"  type="date" min="2021-05-27" pattern="yyyy-MM-dd" class="form-control"  value="">
+          <input id="startField"  th:field="*{requestDate}" type="date" min="2021-05-27" pattern="yyyy-MM-dd"   value="">
+          <i class="fas fa-check-circle successIcon"></i>
+          <i class="fas fa-exclamation-circle errorIcon"></i><br/>
+          <small>Error message</small>
         </div>
         <div class="input-box">
           <span class="details">Ngày hoàn thành</span>
-          <input id="endField"  min="2021-05-27" type="date" pattern="yyyy-MM-dd" class="form-control" name="endDate" value="">
+          <input id="endField"  min="2021-05-27" th:field="*{approveDate}"type="date" pattern="yyyy-MM-dd"  name="endDate" value="">
+          <i class="fas fa-check-circle successIcon"></i>
+          <i class="fas fa-exclamation-circle errorIcon"></i><br/>
+          <small>Error message</small>
         </div>
         <div class="input-box">
           <span class="details">Trạng thái</span>
-          <input  placeholder="Trạng thái"type="text" th:field="*{status}" class="form-control" id="status" name="status" value="">
-
+          <input  placeholder="Trạng thái"type="text" th:field="*{status}"  id="status" name="status" value="">
+          <i class="fas fa-check-circle successIcon"></i>
+          <i class="fas fa-exclamation-circle errorIcon"></i><br/>
+          <small>Error message</small>
 
         </div>
         <div class="input-box">
           <span class="details">Kết quả</span>
-          <input placeholder="Kết quả" type="text" class="form-control" th:field="*{result}" id="assign" name="assign" value="">
-
+          <input placeholder="Kết quả" type="text" th:field="*{result}" id="result" value="">
+          <i class="fas fa-check-circle successIcon"></i>
+          <i class="fas fa-exclamation-circle errorIcon"></i><br/>
+          <small>Error message</small>
 
         </div>
 
       </div>
 
       <div class="button">
-        <input type="submit" value="Cập nhật">
+        <input type="submit" value="Cập nhật giao dịch">
       </div>
     </form>
   </div>
 </div>
+<a class="TopButton" href="#"><i class="fas fa-arrow-up"></i> </a>
 
 
 <script>
@@ -286,5 +353,156 @@
 
 </script>
 
+<!--validate-->
+<script>
+  const form = document.getElementById('form');
+  const name = document.getElementById('name');
+  const description = document.getElementById('description');
+  const contact = document.getElementById('contact');
+  const manager = document.getElementById('manager');
+  const customer = document.getElementById('customer');
+  const start = document.getElementById('startField');
+  const end = document.getElementById('endField');
+  const result = document.getElementById('result');
+  const status = document.getElementById('status');
+  let isFormValid= true;
+  form.addEventListener('submit',(e) => {
+
+    const nameValue = name.value.trim();
+    const descriptionValue = description.value.trim();
+    const contactValue = contact.value.trim();
+    const managerValue = manager.value.trim();
+    const customerValue = customer.value.trim();
+    const startValue = start.value.trim();
+    const endValue = end.value.trim();
+    const statusValue = status.value.trim();
+    const  resultValue = result.value.trim();
+
+    const re = /^\d{1,2}\/\d{1,2}\/\d{4}$/;
+    if(nameValue ==''){
+      setErrorFor(name,"Tên không thể trống");
+      e.preventDefault();
+
+    }else {
+      setSuccessFor(name);
+    }
+    if(descriptionValue ==''){
+      setErrorFor(description,"Mô tả không thể trống");
+      e.preventDefault();
+    }else {
+      setSuccessFor(description);
+    }
+    if(contactValue ==''){
+      setErrorFor(contact,"Người liên hệ không thể trống");
+      e.preventDefault();
+    }else {
+      setSuccessFor(contact);
+    }
+    if(managerValue ==''){
+      setErrorFor(manager,"Người quản lý  không thể trống");
+      e.preventDefault();
+    }else {
+      setSuccessFor(manager);
+    }
+    if(customerValue ==''){
+      setErrorFor(customer,"Khách hàng  không thể trống");
+      e.preventDefault();
+    }else {
+      setSuccessFor(customer);
+    }
+    if(customerValue ==''){
+      setErrorFor(customer,"Khách hàng  không thể trống");
+      e.preventDefault();
+    }else {
+      setSuccessFor(customer);
+    }
+    if(statusValue ==''){
+      setErrorFor(status,"Trạng thái  không thể trống");
+      e.preventDefault();
+    }else {
+      setSuccessFor(status);
+    }
+    if(resultValue ==''){
+      setErrorFor(result,"Kết quả  không thể trống");
+      e.preventDefault();
+    }else {
+      setSuccessFor(result);
+    }
+  });
+  function  checkInputs(){
+
+    const nameValue = name.value.trim();
+    const descriptionValue = description.value.trim();
+    const contactValue = contact.value.trim();
+    const managerValue = manager.value.trim();
+    const customerValue = customer.value.trim();
+    const startValue = start.value.trim();
+    const endValue = end.value.trim();
+    const statusValue = status.value.trim();
+    const  resultValue = result.value.trim();
+
+    const re = /^\d{1,2}\/\d{1,2}\/\d{4}$/;
+    if(nameValue ==''){
+      setErrorFor(name,"Tên không thể trống");
+      isFormValid = false ;
+
+    }else {
+      setSuccessFor(name);
+    }
+    if(descriptionValue ==''){
+      setErrorFor(description,"Mô tả không thể trống");
+    }else {
+      setSuccessFor(description);
+    }
+    if(contactValue ==''){
+      setErrorFor(contact,"Người liên hệ không thể trống");
+    }else {
+      setSuccessFor(contact);
+    }
+    if(managerValue ==''){
+      setErrorFor(manager,"Người quản lý  không thể trống");
+    }else {
+      setSuccessFor(manager);
+    }
+    if(customerValue ==''){
+      setErrorFor(customer,"Khách hàng  không thể trống");
+    }else {
+      setSuccessFor(customer);
+    }
+    if(customerValue ==''){
+      setErrorFor(customer,"Khách hàng  không thể trống");
+    }else {
+      setSuccessFor(customer);
+    }
+    if(statusValue ==''){
+      setErrorFor(status,"Trạng thái  không thể trống");
+    }else {
+      setSuccessFor(status);
+    }
+    if(resultValue ==''){
+      setErrorFor(result,"Kết quả  không thể trống");
+    }else {
+      setSuccessFor(result);
+    }
+
+
+
+  }
+  function setErrorFor(input,message) {
+    const  inputBox=input.parentElement;
+
+    const small = inputBox.querySelector('small');
+    small.innerText = message;
+    inputBox.className='input-box error';
+
+  }
+  function setSuccessFor(input) {
+    const  inputBox=input.parentElement;
+
+
+    inputBox.className='input-box success';
+
+  }
+</script>
 </body>
 </html>

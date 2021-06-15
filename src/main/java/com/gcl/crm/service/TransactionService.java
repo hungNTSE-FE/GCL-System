@@ -8,4 +8,6 @@ import java.util.List;
 public interface TransactionService {
     void createTransaction(Transaction transaction);
     List<Transaction> getAllTransaction();
+    Transaction findTransacionById(Long id);
+    void deleteTransactionByID(Long id);
 }

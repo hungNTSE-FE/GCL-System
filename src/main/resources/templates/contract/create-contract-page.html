@@ -20,7 +20,7 @@
             font-family: sans-serif;
         }
         body{
-            height: 200vh;
+            height: 220vh;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -29,7 +29,7 @@
         }
         .container{
             max-width: 100%;
-            height: 200vh;
+            height: 220vh;
             width: 100%;
             background-color: #fff;
             padding: 25px 30px;
@@ -108,7 +108,7 @@
             font-size: 16px;
             place-items: center;
             text-align: center;
-            padding-left: 15px;
+
             transition: all 0.3s ease;
 
         }
@@ -124,7 +124,23 @@
             justify-content: center;
             overflow: hidden;
         }
+        .wrapper1{
+            position: relative;
+            height: 300px;
+            width: 100%;
+            border-radius: 10px;
+            background: #fff;
+            border: 2px dashed #c2cdda;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
         .wrapper .icon{
+            font-size: 50px;
+            color: #9658fe;
+        }
+        .wrapper1 .icon{
             font-size: 50px;
             color: #9658fe;
         }
@@ -142,7 +158,31 @@
         .wrapper.active:hover #cancel-btn {
             display: block;
         }
+        .wrapper1 #cancel-btn1{
+            position: absolute;
+            right : 15px;
+            top : 15px;
+            font-size: 20px;
+            cursor: pointer;
+            display : none;
+        }
+        .wrapper1.active:hover .file-name1{
+            display: block;
+        }
+        .wrapper1.active:hover #cancel-btn1 {
+            display: block;
+        }
         .wrapper .file-name{
+            position: absolute;
+            bottom: 0px;
+            background: linear-gradient(135deg,#3a8ffe 0%,#9658fe 100%);
+            width : 100%;
+            color:#fff;
+            font-size : 18px;
+            display :none;
+
+        }
+        .wrapper1 .file-name1{
             position: absolute;
             bottom: 0px;
             background: linear-gradient(135deg,#3a8ffe 0%,#9658fe 100%);
@@ -157,8 +197,21 @@
             font-weight: 500;
             color: #5B5B7B;
         }
+        .wrapper1 .text1{
+            font-size: 20px;
+            font-weight: 500;
+            color: #5B5B7B;
+        }
 
         .wrapper .image{
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .wrapper1 .image1{
             position: absolute;
             height: 100%;
             width: 100%;
@@ -171,7 +224,28 @@
             width: 100%;
             object-fit: cover;
         }
+        .wrapper1 img{
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+        }
         #imageBefore #custom-btn{
+            margin-top: 20px;
+            display: block;
+            width: 100%;
+            height: 50px;
+            border: none;
+            outline: none;
+            border-radius: 25px;
+            color: #fff;
+            font-size: 18px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            cursor: pointer;
+            background: linear-gradient(135deg,#3a8ffe 0%,#9658fe 100%);
+        }
+        #imageBefore #custom-btn1{
             margin-top: 20px;
             display: block;
             width: 100%;
@@ -400,27 +474,27 @@
                 <div class="input-box1">
                     <span class="details"></span>
                     <div id="imageBefore">
-                        <div class="wrapper">
-                            <div class="image">
+                        <div class="wrapper1">
+                            <div class="image1">
                                 <img  alt="">
                             </div>
                             <div class="content">
                                 <div class="icon">
                                     <i class="fas fa-cloud-upload-alt"></i>
                                 </div>
-                                <div class="text">
+                                <div class="text1">
                                     Chưa có hình ảnh
                                 </div>
                             </div>
-                            <div id="cancel-btn">
+                            <div id="cancel-btn1">
                                 <i class="fas fa-times"></i>
                             </div>
-                            <div class="file-name">
+                            <div class="file-name1">
                                 Tên ảnh
                             </div>
                         </div>
-                        <button onclick="defaultBtnActive()" id="custom-btn">Chọn 1 ảnh</button>
-                        <input id="default-btn" type="file" hidden>
+                        <button onclick="defaultBtnActiveAfter()" id="custom-btn1">Chọn 1 ảnh</button>
+                        <input id="default-btnAfter" type="file" hidden>
                     </div>
 
 
@@ -438,9 +512,8 @@
 
                 </div>
                 <div class="input-box">
-                    <span class="details" >Tài khoản ngân hàng khác(chính chủ)</span>
+                    <span class="details" >Tài khoản ngân hàng chính chủ khác(nếu có)</span>
 
-                    <input type="checkbox" class="onCheck">
 
                 </div>
                 <div class="input-box">
@@ -448,26 +521,28 @@
                     <input  type="hidden">
                 </div>
 
-                <div class="input-box show">
-                    <span class="details">&nbsp;</span>
-                    <input class="form-control"  placeholder="Sô tài khoản ngân hàng 1(chính chủ)" type="text"  >
+                    <div class="input-box ">
+                        <span class="details">&nbsp;</span>
+                        <input class="form-control"  placeholder="Sô tài khoản ngân hàng 1(chính chủ)" type="text"  >
 
-                </div>
-                <div class="input-box show">
-                    <span class="details">&nbsp;</span>
-                    <input class="form-control"  placeholder="Tại ngân hàng" type="text"  >
+                    </div>
+                    <div class="input-box ">
+                        <span class="details">&nbsp;</span>
+                        <input class="form-control"  placeholder="Tại ngân hàng" type="text"  >
 
-                </div>
-                <div class="input-box show">
-                    <span class="details">&nbsp;</span>
-                    <input class="form-control"  placeholder="Sô tài khoản ngân hàng 2(chính chủ)" type="text"  >
+                    </div>
+                    <div class="input-box ">
+                        <span class="details">&nbsp;</span>
+                        <input class="form-control"  placeholder="Sô tài khoản ngân hàng 2(chính chủ)" type="text"  >
 
-                </div>
-                <div class="input-box show">
-                    <span class="details">&nbsp;</span>
-                    <input class="form-control"  placeholder="Tại ngân hàng" type="text"  >
+                    </div>
+                    <div class="input-box ">
+                        <span class="details">&nbsp;</span>
+                        <input class="form-control"  placeholder="Tại ngân hàng" type="text"  >
 
-                </div>
+                    </div>
+
+
             </div>
 
 
@@ -489,8 +564,10 @@
     const defaultBtn = document.querySelector("#default-btn");
     const customBtn = document.querySelector("#custom-btn");
     const cancelBtn = document.querySelector("#cancel-btn i");
-    const img = document.querySelector("img");
+    const img = document.querySelector(".image img");
     let regExp = /[0-9a-zA-Z\^\&\'\@\{\}\[\]\,\$\=\!\-\#\(\)\.\%\+\~\_ ]+$/;
+    //after
+
     function defaultBtnActive(){
         defaultBtn.click();
     }
@@ -524,36 +601,36 @@
 </script>
 <script>
     const wrapper1 = document.querySelector(".wrapper1");
-    const fileName = document.querySelector(".file-name1");
-    const defaultBtn1 = document.querySelector("#default-btn1");
+    const fileName1 = document.querySelector(".file-name1");
+    const defaultBtn1 = document.querySelector("#default-btnAfter");
     const customBtn = document.querySelector("#custom-btn1");
-    const cancelBtn = document.querySelector("#cancel-btn1 i");
-    const img = document.querySelector("#img1");
+    const cancelBtn1 = document.querySelector("#cancel-btn1 i");
+    const img1 = document.querySelector(".image1 img");
     let regExp = /[0-9a-zA-Z\^\&\'\@\{\}\[\]\,\$\=\!\-\#\(\)\.\%\+\~\_ ]+$/;
-    function defaultBtnActive1(){
+    function defaultBtnActiveAfter(){
         defaultBtn1.click();
     }
     defaultBtn1.addEventListener("change", function(){
-        const file = this.files[0];
-        let valid=["image/png","image/jpg","image/jpeg"];
-        let fileType = file.type;
-        if(valid.includes(fileType)){
-            if(file){
+        const file1 = this.files[0];
+        let valid1=["image/png","image/jpg","image/jpeg"];
+        let fileType1 = file1.type;
+        if(valid1.includes(fileType1)){
+            if(file1){
                 const reader = new FileReader();
                 reader.onload = function(){
                     const result = reader.result;
-                    img.src = result;
+                    img1.src = result;
                     wrapper1.classList.add("active");
                 }
-                cancelBtn.addEventListener("click", function(){
-                    img.src = "";
+                cancelBtn1.addEventListener("click", function(){
+                    img1.src = "";
                     wrapper1.classList.remove("active");
                 })
-                reader.readAsDataURL(file);
+                reader.readAsDataURL(file1);
             }
             if(this.value){
-                let valueStore = this.value.match(regExp);
-                fileName.textContent = valueStore;
+                let valueStore1 = this.value.match(regExp);
+                fileName1.textContent = valueStore1;
             }
         }else{
             alert("Xin hay chon hinh anh")
@@ -579,7 +656,16 @@
 
 </script>
 <script>
+const checkBox =document.querySelector('#buttonSubmit');
+const div= document.querySelector('.show');
+checkBox.addEventListener('click',()=>{
+if(div.style.display === 'none'){
+    div.style.display= 'block';
+}else{
+    div.style.display= 'none';
+}
 
+})
 </script>
 
 </body>

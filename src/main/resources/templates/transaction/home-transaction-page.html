@@ -117,6 +117,7 @@
                 <th>Loại giao dịch</th>
                 <th>Thời gian thực hiện</th>
                 <th>Trạng thái</th>
+                <th>Mô tả</th>
                 <th>Chi tiết</th>
                 <th>Xóa</th>
 
@@ -133,24 +134,12 @@
                 <td th:text="${transaction.description}"></td>
                 <td>
 
-                <!--                <div class="badge bg-primary text-white rounded-pill">-->
-                <!--                  Full-time-->
-                <!--                </div>-->
-                <td>
-                  <button
-                          class="
-                            btn btn-datatable btn-icon btn-transparent-dark
-                            me-2
-                          "
-                  >
-                    <i data-feather="more-vertical"></i>
-                  </button>
-                  </td>
-                <td>
-                  <button class="btn btn-datatable btn-icon btn-transparent-dark">
-                    <i data-feather="trash-2"></i>
-                  </button>
+                  <a th:href="@{'/transaction/showUpdateTransactionForm/'+${transaction.transaction_id}}"><i class="fa fa-arrow-circle-right" aria-hidden="true"></i></a>
+
                 </td>
+                <td ><a th:href="@{'/transaction/deleteTransaction/'+${transaction.transaction_id}}"><i onclick="return confirm('Bạn có chắc muốn xóa')" class="fa fa-trash" aria-hidden="true"></i></a>
+                </td>
+
               </tr>
               </tbody>
             </table>
