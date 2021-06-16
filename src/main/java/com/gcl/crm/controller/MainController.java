@@ -24,6 +24,10 @@ public class MainController {
     public String DefaultPage(Model model) {
         return "loginPage";
     }
+    @RequestMapping(value = "/test", method = RequestMethod.GET)
+    public String DefaultTest(Model model) {
+        return "department/test";
+    }
 
     @RequestMapping(value = "/admin", method = RequestMethod.GET)
     public String adminPage(Model model, Principal principal) {

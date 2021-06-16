@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<!-- Created By CodingLab - www.codinglabweb.com -->
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
@@ -11,6 +10,7 @@
     <!-- MDB -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.5.0/mdb.min.css" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
         *{
@@ -102,6 +102,17 @@
             transition: all 0.3s ease;
         }
         .contract-details .input-box1 #imageBefore{
+            height: 400px;
+            width: 100%;
+            outline: none;
+            font-size: 16px;
+            place-items: center;
+            text-align: center;
+
+            transition: all 0.3s ease;
+
+        }
+        .contract-details .input-box1 #imageAfter{
             height: 400px;
             width: 100%;
             outline: none;
@@ -245,7 +256,7 @@
             cursor: pointer;
             background: linear-gradient(135deg,#3a8ffe 0%,#9658fe 100%);
         }
-        #imageBefore #custom-btn1{
+        #imageAfter #custom-btn1{
             margin-top: 20px;
             display: block;
             width: 100%;
@@ -265,7 +276,7 @@
 
         .contract-details .input-box input:focus,
         .contract-details .input-box #imageBefore:focus,
-
+        .contract-details .input-box #imageAfter:focus,
         .contract-details .input-box input:valid{
             border-color: #9b59b6;
         }
@@ -427,11 +438,13 @@
 
                 </div>
                 <div class="input-box">
-                    <span class="details">Chọn CMND/CCCD/Hô chiếu</span>
+                    <span class="details">Chọn CMND/CCCD/Hộ chiếu</span>
                     <select  class="form-control" >
-                        <option value="CMND">Chứng minh nhân dân</option>
-                        <option value="CCCD">Căn cước công dân</option>
-                        <option value="HC">Hộ chiếu</option>
+
+                            <option value="CMND">Chứng Minh Nhân Dân</option>
+                            <option value="CCCD">Căn Cước Công Dân</option>
+                            <option value="Hộ Chiếu">Hộ Chiếu</option>
+
                     </select>
                 </div>
 
@@ -465,7 +478,7 @@
                                 Tên ảnh
                             </div>
                         </div>
-                        <button onclick="defaultBtnActive()" id="custom-btn">Chọn 1 ảnh</button>
+                        <button  th:onclick="defaultBtnActive()" id="custom-btn">Chọn 1 ảnh</button>
                         <input id="default-btn" type="file" hidden>
                     </div>
 
@@ -473,7 +486,7 @@
                 </div>
                 <div class="input-box1">
                     <span class="details"></span>
-                    <div id="imageBefore">
+                    <div id="imageAfter">
                         <div class="wrapper1">
                             <div class="image1">
                                 <img  alt="">
@@ -493,7 +506,7 @@
                                 Tên ảnh
                             </div>
                         </div>
-                        <button onclick="defaultBtnActiveAfter()" id="custom-btn1">Chọn 1 ảnh</button>
+                        <button  th:onclick="defaultBtnActiveAfter()" id="custom-btn1">Chọn 1 ảnh</button>
                         <input id="default-btnAfter" type="file" hidden>
                     </div>
 
@@ -508,8 +521,10 @@
                 </div>
                 <div class="input-box">
                     <span class="details">&nbsp;</span>
-                    <input class="form-control"  placeholder="Tại ngân hàng" type="text"  >
-
+                    <select  class="form-control" >
+                        <option th:each="payment : ${payments}" th:value="${payment.id}"
+                                th:text="${payment.bankName}"></option>
+                    </select>
                 </div>
                 <div class="input-box">
                     <span class="details" >Tài khoản ngân hàng chính chủ khác(nếu có)</span>
@@ -528,8 +543,10 @@
                     </div>
                     <div class="input-box ">
                         <span class="details">&nbsp;</span>
-                        <input class="form-control"  placeholder="Tại ngân hàng" type="text"  >
-
+                        <select  class="form-control" >
+                            <option th:each="payment : ${payments}" th:value="${payment.id}"
+                                    th:text="${payment.bankName}"></option>
+                        </select>
                     </div>
                     <div class="input-box ">
                         <span class="details">&nbsp;</span>
@@ -538,8 +555,10 @@
                     </div>
                     <div class="input-box ">
                         <span class="details">&nbsp;</span>
-                        <input class="form-control"  placeholder="Tại ngân hàng" type="text"  >
-
+                        <select  class="form-control" >
+                            <option th:each="payment : ${payments}" th:value="${payment.id}"
+                                    th:text="${payment.bankName}"></option>
+                        </select>
                     </div>
 
 
@@ -558,17 +577,23 @@
     type="text/javascript"
     src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.5.0/mdb.min.js"
 </script>
-<script>
+<script th:inline="javascript">
     const wrapper = document.querySelector(".wrapper");
     const fileName = document.querySelector(".file-name");
     const defaultBtn = document.querySelector("#default-btn");
     const customBtn = document.querySelector("#custom-btn");
     const cancelBtn = document.querySelector("#cancel-btn i");
     const img = document.querySelector(".image img");
+    const wrapper1 = document.querySelector(".wrapper1");
+    const fileName1 = document.querySelector(".file-name1");
+    const defaultBtn1 = document.querySelector("#default-btnAfter");
+    const customBtn1 = document.querySelector("#custom-btn1");
+    const cancelBtn1 = document.querySelector("#cancel-btn1 i");
+    const img1 = document.querySelector(".image1 img");
     let regExp = /[0-9a-zA-Z\^\&\'\@\{\}\[\]\,\$\=\!\-\#\(\)\.\%\+\~\_ ]+$/;
     //after
 
-    function defaultBtnActive(){
+    function  defaultBtnActive(){
         defaultBtn.click();
     }
     defaultBtn.addEventListener("change", function(){
@@ -598,15 +623,7 @@
     }
 
     });
-</script>
-<script>
-    const wrapper1 = document.querySelector(".wrapper1");
-    const fileName1 = document.querySelector(".file-name1");
-    const defaultBtn1 = document.querySelector("#default-btnAfter");
-    const customBtn = document.querySelector("#custom-btn1");
-    const cancelBtn1 = document.querySelector("#cancel-btn1 i");
-    const img1 = document.querySelector(".image1 img");
-    let regExp = /[0-9a-zA-Z\^\&\'\@\{\}\[\]\,\$\=\!\-\#\(\)\.\%\+\~\_ ]+$/;
+
     function defaultBtnActiveAfter(){
         defaultBtn1.click();
     }
@@ -616,17 +633,17 @@
         let fileType1 = file1.type;
         if(valid1.includes(fileType1)){
             if(file1){
-                const reader = new FileReader();
-                reader.onload = function(){
-                    const result = reader.result;
-                    img1.src = result;
+                const reader1 = new FileReader();
+                reader1.onload = function(){
+                    const result1 = reader1.result;
+                    img1.src = result1;
                     wrapper1.classList.add("active");
                 }
                 cancelBtn1.addEventListener("click", function(){
                     img1.src = "";
                     wrapper1.classList.remove("active");
                 })
-                reader.readAsDataURL(file1);
+                reader1.readAsDataURL(file1);
             }
             if(this.value){
                 let valueStore1 = this.value.match(regExp);
@@ -638,6 +655,45 @@
 
     });
 </script>
+<!--<script th:inline="javascript">-->
+<!--    const wrapper1 = document.querySelector(".wrapper1");-->
+<!--    const fileName1 = document.querySelector(".file-name1");-->
+<!--    const defaultBtn1 = document.querySelector("#default-btnAfter");-->
+<!--    const customBtn1 = document.querySelector("#custom-btn1");-->
+<!--    const cancelBtn1 = document.querySelector("#cancel-btn1 i");-->
+<!--    const img1 = document.querySelector(".image1 img");-->
+<!--    let regExp = /[0-9a-zA-Z\^\&\'\@\{\}\[\]\,\$\=\!\-\#\(\)\.\%\+\~\_ ]+$/;-->
+<!--    function defaultBtnActiveAfter(){-->
+<!--        defaultBtn1.click();-->
+<!--    }-->
+<!--    defaultBtn1.addEventListener("change", function(){-->
+<!--        const file1 = this.files[0];-->
+<!--        let valid1=["image/png","image/jpg","image/jpeg"];-->
+<!--        let fileType1 = file1.type;-->
+<!--        if(valid1.includes(fileType1)){-->
+<!--            if(file1){-->
+<!--                const reader = new FileReader();-->
+<!--                reader.onload = function(){-->
+<!--                    const result = reader.result;-->
+<!--                    img1.src = result;-->
+<!--                    wrapper1.classList.add("active");-->
+<!--                }-->
+<!--                cancelBtn1.addEventListener("click", function(){-->
+<!--                    img1.src = "";-->
+<!--                    wrapper1.classList.remove("active");-->
+<!--                })-->
+<!--                reader.readAsDataURL(file1);-->
+<!--            }-->
+<!--            if(this.value){-->
+<!--                let valueStore1 = this.value.match(regExp);-->
+<!--                fileName1.textContent = valueStore1;-->
+<!--            }-->
+<!--        }else{-->
+<!--            alert("Xin hay chon hinh anh")-->
+<!--        }-->
+
+<!--    });-->
+<!--</script>-->
 <script>
     var today = new Date();
     var dd = today.getDate();
@@ -654,18 +710,6 @@
     document.getElementById("startField").setAttribute("min", today);
     document.getElementById("endField").setAttribute("min", today);
 
-</script>
-<script>
-const checkBox =document.querySelector('#buttonSubmit');
-const div= document.querySelector('.show');
-checkBox.addEventListener('click',()=>{
-if(div.style.display === 'none'){
-    div.style.display= 'block';
-}else{
-    div.style.display= 'none';
-}
-
-})
 </script>
 
 </body>
