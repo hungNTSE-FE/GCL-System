@@ -11,6 +11,7 @@ import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -45,11 +46,14 @@ public class PermissionController {
 
     @PostMapping({"/create"})
     public String create(Model model, @Nullable @ModelAttribute("permission") Permission permission,
-                         @Nullable @RequestParam("action-id") List<Long> aidList){
+                         @Nullable @RequestParam("action-id") List<Long> aidList,
+                         RedirectAttributes redirectAttributes
+                         ){
         if (permission == null || permission.getId() == null){
             model.addAttribute("error", "Không tìm thấy thông tin phòng ban");
         }
         permissionService.createPermission(permission, aidList);
+        redirectAttributes.addFlashAttribute("flag","showAlert");
         return "redirect:/permission/create";
     }
 

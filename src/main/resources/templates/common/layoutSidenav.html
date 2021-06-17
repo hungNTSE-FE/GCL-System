@@ -170,6 +170,33 @@
             <a class="nav-link" href="#">Thông Tin Công Ty</a>
           </nav>
         </div>
+        <a
+                class="nav-link collapsed"
+                href="javascript:void(0);"
+                data-bs-toggle="collapse"
+                data-bs-target="#collapsePages2"
+                aria-expanded="false"
+                aria-controls="collapsePages2"
+        >
+          <div class="nav-link-icon"><i data-feather="bell"></i></div>
+          Thông báo, Công văn
+          <div class="sidenav-collapse-arrow">
+            <i class="fas fa-angle-down"></i>
+          </div>
+        </a>
+        <div
+                class="collapse"
+                id="collapsePages2"
+                data-bs-parent="#accordionSidenav"
+        >
+          <nav
+                  class="sidenav-menu-nested nav accordion"
+                  id="accordionSidenavPages"
+          >
+            <a class="nav-link" th:href="@{/notification/create}">Thông báo</a>
+            <a class="nav-link" th:href="@{/permission/home}">Công văn</a>
+          </nav>
+        </div>
       </div>
     </div>
     <!-- Sidenav Footer-->
