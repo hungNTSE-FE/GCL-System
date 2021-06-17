@@ -20530,3 +20530,61 @@ pre[class*=language-] {
 .hummingbird-base {
   white-space:nowrap;
 }
+/*validate*/
+.form-validate{
+  position: relative;
+}
+.form-validate label{
+  display: inline-block;
+  margin-bottom: 5px;
+
+}
+.form-validate input{
+  display: block;
+}
+.form-validate .fa-check-circle{
+  position: absolute;
+  top:40px;
+
+  right: 10px;
+  visibility: hidden;
+
+}
+.form-validate .fa-exclamation-circle{
+
+  position: absolute;
+  top:40px;
+  right:10px;
+  visibility: hidden;
+
+}
+.form-validate small{
+ visibility: hidden;
+
+}
+.success input{
+  border-color :#00ac69;
+}
+.success .fa-check-circle{
+  position: absolute;
+  top:40px;
+  right:10px;
+  visibility: visible;
+  color :#00ac69;
+}
+.error input{
+  border-color :red;
+}
+.error .fa-exclamation-circle{
+
+  position: absolute;
+  top:40px;
+  right:10px;
+  visibility: visible;
+  color :red;
+
+}
+.error small{
+  visibility: visible;
+  color:red;
+}

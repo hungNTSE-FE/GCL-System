@@ -1,135 +1,24 @@
 <!DOCTYPE html>
-<!-- Created By CodingLab - www.codinglabweb.com -->
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <!---<title> Responsive Registration Form | CodingLab </title>--->
-  <link rel="stylesheet" href="style.css">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet">
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&amp;display=swap" rel="stylesheet">
-  <!-- MDB -->
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.5.0/mdb.min.css" rel="stylesheet">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+  <title>Khách hàng - Gia Cát Lợi</title>
+  <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+  <link rel="icon" type="image/x-icon" href="assets/img/favicon.png" />
+  <script
+          data-search-pseudo-elements
+          defer
+          src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"
+          crossorigin="anonymous"
+  ></script>
+  <script
+          src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js"
+          crossorigin="anonymous"
+  ></script>
+
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
-    *{
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: sans-serif;
-    }
-    body{
-      height: 120vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 10px;
-
-    }
-    .container{
-      max-width: 100%;
-
-      width: 100%;
-      background-color: #fff;
-      padding: 25px 30px;
-      border-radius: 5px;
-      box-shadow: 0 5px 10px rgba(0,0,0,0.15);
-
-    }
-    .container .title{
-      font-size: 25px;
-      font-weight: 500;
-      position: relative;
-    }
-    .container .title::before{
-      content: "";
-      position: absolute;
-      left: 0;
-      bottom: 0;
-      height: 3px;
-      width: 30px;
-      border-radius: 5px;
-      background: linear-gradient(135deg, #71b7e6, #9b59b6);
-    }
-    .content form .transaction-details{
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      margin: 20px 0 12px 0;
-    }
-    form .transaction-details .input-box{
-      margin-bottom: 30px;
-      width: calc(100% / 2 - 20px);
-    }
-    form .input-box span.details{
-      display: block;
-      font-weight: 500;
-      margin-bottom: 5px;
-    }
-    .transaction-details .input-box input{
-      height: 45px;
-      width: 80%;
-      outline: none;
-      font-size: 16px;
-      border-radius: 5px;
-      padding-left: 15px;
-      border: 1px solid #ccc;
-      border-bottom-width: 2px;
-      transition: all 0.3s ease;
-    }
-    .transaction-details .input-box input:focus,
-    .transaction-details .input-box input:valid{
-
-    }
-    .transaction-details .input-box select{
-      height: 45px;
-      width: 80%;
-      outline: none;
-      font-size: 16px;
-      border-radius: 5px;
-      padding-left: 15px;
-      border: 1px solid #ccc;
-      border-bottom-width: 2px;
-      transition: all 0.3s ease;
-    }
-    .transaction-details .input-box select:focus,
-    .transaction-details .input-box select:valid{
-
-    }
-    form .gender-details .gender-title{
-      font-size: 20px;
-      font-weight: 500;
-    }
-    form .category{
-      display: flex;
-      width: 80%;
-      margin: 14px 0 ;
-      justify-content: space-between;
-    }
-    form .category label{
-      display: flex;
-      align-items: center;
-      cursor: pointer;
-    }
-    form .category label .dot{
-      height: 18px;
-      width: 18px;
-      border-radius: 50%;
-      margin-right: 10px;
-      background: #d9d9d9;
-      border: 5px solid transparent;
-      transition: all 0.3s ease;
-    }
-    #dot-1:checked ~ .category label .one,
-    #dot-2:checked ~ .category label .two,
-    #dot-3:checked ~ .category label .three{
-      background: #9b59b6;
-      border-color: #d9d9d9;
-    }
-    form input[type="radio"]{
-      display: none;
-    }
     form .button{
       height: 45px;
       margin: 35px 0
@@ -145,215 +34,300 @@
       letter-spacing: 1px;
       cursor: pointer;
       transition: all 0.3s ease;
-      background: linear-gradient(135deg, tan, #ffee58);
+      background: linear-gradient(135deg, #0e4db5,#0e4db5);
     }
     form .button input:hover{
       /* transform: scale(0.99); */
-      background: linear-gradient(-135deg, tan, #ffee58);
+      background: linear-gradient(-135deg, #fff3e0,#0e4db5);
     }
-    @media(max-width: 584px){
-      .container{
-        max-width: 100%;
-      }
-      form .transaction-details .input-box{
-        margin-bottom: 15px;
-        width: 100%;
-      }
-      form .category{
-        width: 100%;
-      }
-      .content form .transaction-details{
-        max-height: 300px;
-        overflow-y: scroll;
-      }
-      .transaction-details::-webkit-scrollbar{
-        width: 5px;
-      }
+    form .button button{
+      height: 100%;
+      width: 100%;
+      border-radius: 5px;
+      border: none;
+      color: #fff;
+      font-size: 18px;
+      font-weight: 500;
+      letter-spacing: 1px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      background: linear-gradient(135deg, red,red);
     }
-    @media(max-width: 459px){
-      .container .content .category{
-        flex-direction: column;
-      }
+    form .button button:hover{
+      /* transform: scale(0.99); */
+      background: linear-gradient(-135deg, #fff3e0,red);
     }
-
-    /*validate*/
-    form .transaction-details .input-box small{
-      visibility: hidden;
-      position: absolute;
-    }
-    form .transaction-details .input-box i{
-      visibility: hidden;
-    }
-    form .transaction-details .success input{
-      border-color: #00b8d4;
-    }
-    form .transaction-details .success .successIcon{
-      color: #00b8d4;
-      visibility: visible;
-      margin-left:20px;
-    }
-    form .transaction-details .error input{
-      border-color: red;
-    }
-    form .transaction-details .error .errorIcon{
-      color: red;
-      visibility: visible;
-
-    }
-    form .transaction-details .error small{
-      color: red;
-      visibility: visible;
-      font-size: 15px;
-
-    }
-    .TopButton{
-      position:  fixed;
-      width: 50px;
-      height: 50px;
-      background: yellow;
-      bottom: 60px;
-      right: 50px;
-      text-align: center ;
-      text-decoration: none;
-      line-height: 50px;
-      color: white;
-      font-size: 22px;
-    }
-
 
   </style>
+
+
+
 </head>
-<body>
-<div class="container">
-  <a th:href="@{/transaction/home}">
-    <i class="fa fa-chevron-left" aria-hidden="true"></i>
-  </a>
-  <div class="title">Cập nhật giao dịch</div>
-  <div class="content">
-    <form method="POST"  id="form" th:action="@{/transaction/saveTransaction}" th:object="${transaction}" >
-      <input type="hidden" th:field="*{transaction_id}"  >
+<body class="nav-fixed">
+<th:block th:include="/common/nav-fixed.html"></th:block>
+<div id="layoutSidenav">
+  <th:block th:include="/common/layoutSidenav.html"></th:block>
+  <div id="layoutSidenav_content">
+    <main>
+      <header
+              class="
+              page-header page-header-dark
+              bg-gradient-primary-to-secondary
+              pb-10
+            "
+      >
+        <div class="container-xl px-4">
+          <div class="page-header-content pt-4">
+            <div class="row align-items-center justify-content-between">
+              <div class="col-auto mt-4">
+                <h1 class="page-header-title">
+                  <div class="page-header-icon">
+                    <i data-feather="layout"></i>
+                  </div>
+                  Thêm mới giao dịch
+                </h1>
+              </div>
+            </div>
+            <nav class="mt-4 rounded" aria-label="breadcrumb">
+              <ol class="breadcrumb px-3 py-2 rounded mb-0">
+                <li class="breadcrumb-item">
+                  <a href="dashboard-1.html">Trang chủ</a>
+                </li>
+                <li class="breadcrumb-item active">Thêm mới giao dịch</li>
+              </ol>
+            </nav>
+          </div>
+        </div>
+      </header>
+      <!-- Main page content-->
 
-      <div class="transaction-details">
-        <div class="input-box">
-          <span class="details">Giao dịch</span>
-          <input placeholder="Giao dịch" th:field="*{name}" type="text" id="name" name="name" value="">
-          <i class="fas fa-check-circle successIcon"></i>
-          <i class="fas fa-exclamation-circle errorIcon"></i><br/>
-          <small>Error message</small>
+      <div class="container-xl px-4 mt-n10">
+        <div class="row">
+          <div class="col-lg-9">
+            <!-- Default Bootstrap Toasts-->
+            <div id="demo">
+              <div class="card mb-4">
 
-        </div>
-        <div class="input-box">
-          <span class="details">Mô tả</span>
-          <input   id="description" placeholder="Mô tả"th:field="*{description}" type="text">
-          <i class="fas fa-check-circle successIcon"></i>
-          <i class="fas fa-exclamation-circle errorIcon"></i><br/>
-          <small>Error message</small>
+                <div class="card-header">THÔNG TIN GIAO DỊCH</div>
+                <form method="POST"  id="form" th:action="@{/transaction/saveTransaction}" th:object="${transaction}" >
+                  <input type="hidden" th:field="*{transaction_id}"  >
 
-        </div>
-        <div class="input-box">
-          <span class="details">Người giao việc</span>
+                  <div class="card-body">
 
-          <input placeholder="Người giao việc" id="contact"  th:field="*{contact}"type="text" >
-          <i class="fas fa-check-circle successIcon"></i>
-          <i class="fas fa-exclamation-circle errorIcon"></i><br/>
-          <small>Error message</small>
+                    <div class="row gx-3 mb-3 ">
+                      <div class="col-md-6 form-validate ">
+                        <label class="small mb-1">
+                          Tên Giao Dịch
+                          <span style="color: red">*</span>
+                        </label>
+                        <input text="text" th:field="*{name}" class="form-control "  id="name">
+                        <i class="fas fa-check-circle "></i>
+                        <i class="fas fa-exclamation-circle"></i>
+                        <small>Error Message</small>
 
-        </div>
-        <div class="input-box">
-          <span class="details">Người phụ trách</span>
-          <input placeholder="Người phụ trách"  id="manager" th:field="*{manager}"type="text"   value="">
-          <i class="fas fa-check-circle successIcon"></i>
-          <i class="fas fa-exclamation-circle errorIcon"></i><br/>
-          <small>Error message</small>
-        </div>
-        <div class="input-box">
-          <span class="details">Khách hàng</span>
-          <input placeholder="Khách hàng"  id="customer" th:field="*{userName}"type="text"  value="">
-          <i class="fas fa-check-circle successIcon"></i>
-          <i class="fas fa-exclamation-circle errorIcon"></i><br/>
-          <small>Error message</small>
-        </div>
-        <div class="input-box">
-          <span class="details">Loại giao dịch</span>
-          <select  th:field="*{transactionType}" class="form-control" >
-            <option value="Mua">Mua</option>
-            <option value="Bán">Bán</option>
-            <option value="Trao đổi">Trao đổi</option>
-          </select>
-        </div>
-        <div class="input-box">
-          <span class="details">Độ ưu tiên</span>
-          <select th:field="*{priority}" class="form-control" >
-            <option value="Cao">Cao</option>
-            <option value="Trung bình">Trung Bình</option>
-            <option value="Thấp">Thấp</option>
-          </select>
-        </div>
-        <div class="input-box">
-          <span class="details">Ngày bắt đầu</span>
-          <input id="startField"  th:field="*{requestDate}" type="date" min="2021-05-27" pattern="yyyy-MM-dd"   value="">
-          <i class="fas fa-check-circle successIcon"></i>
-          <i class="fas fa-exclamation-circle errorIcon"></i><br/>
-          <small>Error message</small>
-        </div>
-        <div class="input-box">
-          <span class="details">Ngày hoàn thành</span>
-          <input id="endField"  min="2021-05-27" th:field="*{approveDate}"type="date" pattern="yyyy-MM-dd"  name="endDate" value="">
-          <i class="fas fa-check-circle successIcon"></i>
-          <i class="fas fa-exclamation-circle errorIcon"></i><br/>
-          <small>Error message</small>
-        </div>
-        <div class="input-box">
-          <span class="details">Trạng thái</span>
-          <input  placeholder="Trạng thái"type="text" th:field="*{status}"  id="status" name="status" value="">
-          <i class="fas fa-check-circle successIcon"></i>
-          <i class="fas fa-exclamation-circle errorIcon"></i><br/>
-          <small>Error message</small>
+                      </div>
+                      <div class="col-md-6 form-validate ">
+                        <label class="small mb-1">
+                          Mô tả
+                          <span style="color: red">*</span>
+                        </label>
+                        <input text="text"th:field="*{description}" class="form-control "  id="description">
+                        <i class="fas fa-check-circle "></i>
+                        <i class="fas fa-exclamation-circle"></i>
+                        <small>Error Message</small>
 
-        </div>
-        <div class="input-box">
-          <span class="details">Kết quả</span>
-          <input placeholder="Kết quả" type="text" th:field="*{result}" id="result" value="">
-          <i class="fas fa-check-circle successIcon"></i>
-          <i class="fas fa-exclamation-circle errorIcon"></i><br/>
-          <small>Error message</small>
+                      </div>
 
+                    </div>
+                    <div class="row gx-3 mb-3 ">
+                      <div class="col-md-6 form-validate ">
+                        <label class="small mb-1">
+                          Người giao việc
+                          <span style="color: red">*</span>
+                        </label>
+                        <input text="text" th:field="*{contact}" class="form-control "  id="contact">
+                        <i class="fas fa-check-circle "></i>
+                        <i class="fas fa-exclamation-circle"></i>
+                        <small>Error Message</small>
+
+                      </div>
+                      <div class="col-md-6 form-validate ">
+                        <label class="small mb-1">
+                          Người phụ trách
+                          <span style="color: red">*</span>
+                        </label>
+                        <input text="text"th:field="*{manager}" class="form-control "  id="manager">
+                        <i class="fas fa-check-circle "></i>
+                        <i class="fas fa-exclamation-circle"></i>
+                        <small>Error Message</small>
+
+                      </div>
+
+                    </div>
+                    <div class="row gx-3 mb-3 ">
+                      <div class="col-md-6 form-validate ">
+                        <label class="small mb-1">
+                          Khách hàng
+                          <span style="color: red">*</span>
+                        </label>
+                        <input text="text" th:field="*{userName}" class="form-control "  id="customer">
+                        <i class="fas fa-check-circle "></i>
+                        <i class="fas fa-exclamation-circle"></i>
+                        <small>Error Message</small>
+
+                      </div>
+                      <div class="col-md-6 form-validate ">
+                        <label class="small mb-1"> Loại giao dịch </label>
+                        <select th:field="*{transactionType}"
+                                class="form-select"
+                                id="exampleFormControlSelect1"
+                        >
+                          <option value="Mua">Mua</option>
+                          <option value="Bán">Bán</option>
+                          <option value="Trao đổi">Trao đổi</option>
+                        </select>
+
+                      </div>
+
+                    </div>
+                    <div class="row gx-3 mb-3 ">
+                      <div class="col-md-6 ">
+                        <label class="small mb-1">Độ ưu tiên</label>
+                        <select th:field="*{priority}"
+                                class="form-select"
+                                id="exampleFormControlSelect1"
+                        >
+                          <option value="Cao">Cao</option>
+                          <option value="Trung bình">Trung Bình</option>
+                          <option value="Thấp">Thấp</option>
+                        </select>
+
+                      </div>
+                      <div class="col-md-6">
+                        <label class="small mb-1">
+                          Ngày bắt đầu
+                        </label>
+                        <div class="input-group input-group-joined">
+                              <span class="input-group-text">
+                                <i data-feather="calendar"></i>
+                              </span>
+                          <input
+                                  class="form-control ps-0"
+                                  id="startField"
+                                  placeholder="Chọn ngày bắt đầu Giao Dịch"
+                                  th:field="*{requestDate}"
+                          />
+                        </div>
+                      </div>
+
+
+                    </div>
+                    <div class="row gx-3 mb-3">
+
+                      <div class="col-md-6">
+                        <label class="small mb-1">
+                          Ngày hoàn thành
+                        </label>
+                        <div class="input-group input-group-joined">
+                              <span class="input-group-text">
+                                <i data-feather="calendar"></i>
+                              </span>
+                          <input
+                                  class="form-control ps-0"
+                                  id="endField"
+                                  placeholder="Chọn ngày kết thúc Giao Dịch"
+                                  th:field="*{approveDate}"
+                          />
+                        </div>
+                      </div>
+                      <div class="col-md-6 form-validate ">
+                        <label class="small mb-1">
+                          Trạng thái
+                          <span style="color: red">*</span>
+                        </label>
+                        <input text="text"  th:field="*{status}" class="form-control "   id="status">
+                        <i class="fas fa-check-circle "></i>
+                        <i class="fas fa-exclamation-circle"></i>
+                        <small>Error Message</small>
+
+                      </div>
+                    </div>
+
+                    <div class="row gx-3 mb-3">
+                      <div class="col-md-6 form-validate ">
+                        <label class="small mb-1">
+                          Kết quả
+                          <span style="color: red">*</span>
+                        </label>
+                        <input text="text"th:field="*{result}" id="result" class="form-control " >
+                        <i class="fas fa-check-circle "></i>
+                        <i class="fas fa-exclamation-circle"></i>
+                        <small>Error Message</small>
+
+                      </div>
+                      <div class="col-md-6 form-validate ">
+                        <div class="button">
+                          <input type="submit" value="Cập nhật giao dịch">
+                        </div>
+                      </div>
+
+
+                    </div>
+
+
+
+
+                  </div>
+                </form>
+              </div>
+            </div>
+
+
+
+
+
+
+          </div>
+          <!-- Sticky Navigation-->
+          <div class="col-lg-3">
+            <div class="nav-sticky">
+              <div class="card">
+                <div class="card-body">
+                  <ul class="nav flex-column" id="stickyNav">
+                    <li class="nav-item">
+                      <a class="nav-link" href="#demo">Giao Dịch</a>
+                    </li>
+
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
       </div>
 
-      <div class="button">
-        <input type="submit" value="Cập nhật giao dịch">
-      </div>
-    </form>
+    </main>
+    <th:block th:include="/common/footer.html"></th:block>
   </div>
 </div>
-<a class="TopButton" href="#"><i class="fas fa-arrow-up"></i> </a>
-
-
-<script>
-  type="text/javascript"
-  src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.5.0/mdb.min.js"
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/litepicker/dist/litepicker.js"></script>
+<script type="text/javascript" th:src="@{/js/mainTH.js}"></script>
+<script th:inline="javascript">
+  const picker = new Litepicker({
+    element: document.getElementById("date"),
+    autoRefresh: true,
+  });
+  const picker2 = new Litepicker({
+    element: document.getElementById("date1"),
+    autoRefresh: true,
+  });
+  const picker3 = new Litepicker({
+    element: document.getElementById("date2"),
+    autoRefresh: true,
+  });
 </script>
-<script>
-  var today = new Date();
-  var dd = today.getDate();
-  var mm = today.getMonth()+1; //January is 0!
-  var yyyy = today.getFullYear();
-  if(dd<10){
-    dd='0'+dd
-  }
-  if(mm<10){
-    mm='0'+mm
-  }
-
-  today = yyyy+'-'+mm+'-'+dd;
-  document.getElementById("startField").setAttribute("min", today);
-  document.getElementById("endField").setAttribute("min", today);
-
-</script>
-
-<!--validate-->
 <script>
   const form = document.getElementById('form');
   const name = document.getElementById('name');
@@ -365,7 +339,7 @@
   const end = document.getElementById('endField');
   const result = document.getElementById('result');
   const status = document.getElementById('status');
-  let isFormValid= true;
+
   form.addEventListener('submit',(e) => {
 
     const nameValue = name.value.trim();
@@ -377,11 +351,12 @@
     const endValue = end.value.trim();
     const statusValue = status.value.trim();
     const  resultValue = result.value.trim();
-
-    const re = /^\d{1,2}\/\d{1,2}\/\d{4}$/;
+    //
+    //     const re = /^\d{1,2}\/\d{1,2}\/\d{4}$/;
     if(nameValue ==''){
       setErrorFor(name,"Tên không thể trống");
       e.preventDefault();
+
 
     }else {
       setSuccessFor(name);
@@ -393,13 +368,13 @@
       setSuccessFor(description);
     }
     if(contactValue ==''){
-      setErrorFor(contact,"Người liên hệ không thể trống");
+      setErrorFor(contact,"Người giao việc không thể trống");
       e.preventDefault();
     }else {
       setSuccessFor(contact);
     }
     if(managerValue ==''){
-      setErrorFor(manager,"Người quản lý  không thể trống");
+      setErrorFor(manager,"Người phụ trách không thể trống");
       e.preventDefault();
     }else {
       setSuccessFor(manager);
@@ -410,12 +385,12 @@
     }else {
       setSuccessFor(customer);
     }
-    if(customerValue ==''){
-      setErrorFor(customer,"Khách hàng  không thể trống");
-      e.preventDefault();
-    }else {
-      setSuccessFor(customer);
-    }
+
+
+
+
+
+
     if(statusValue ==''){
       setErrorFor(status,"Trạng thái  không thể trống");
       e.preventDefault();
@@ -428,81 +403,25 @@
     }else {
       setSuccessFor(result);
     }
+
   });
-  function  checkInputs(){
-
-    const nameValue = name.value.trim();
-    const descriptionValue = description.value.trim();
-    const contactValue = contact.value.trim();
-    const managerValue = manager.value.trim();
-    const customerValue = customer.value.trim();
-    const startValue = start.value.trim();
-    const endValue = end.value.trim();
-    const statusValue = status.value.trim();
-    const  resultValue = result.value.trim();
-
-    const re = /^\d{1,2}\/\d{1,2}\/\d{4}$/;
-    if(nameValue ==''){
-      setErrorFor(name,"Tên không thể trống");
-      isFormValid = false ;
-
-    }else {
-      setSuccessFor(name);
-    }
-    if(descriptionValue ==''){
-      setErrorFor(description,"Mô tả không thể trống");
-    }else {
-      setSuccessFor(description);
-    }
-    if(contactValue ==''){
-      setErrorFor(contact,"Người liên hệ không thể trống");
-    }else {
-      setSuccessFor(contact);
-    }
-    if(managerValue ==''){
-      setErrorFor(manager,"Người quản lý  không thể trống");
-    }else {
-      setSuccessFor(manager);
-    }
-    if(customerValue ==''){
-      setErrorFor(customer,"Khách hàng  không thể trống");
-    }else {
-      setSuccessFor(customer);
-    }
-    if(customerValue ==''){
-      setErrorFor(customer,"Khách hàng  không thể trống");
-    }else {
-      setSuccessFor(customer);
-    }
-    if(statusValue ==''){
-      setErrorFor(status,"Trạng thái  không thể trống");
-    }else {
-      setSuccessFor(status);
-    }
-    if(resultValue ==''){
-      setErrorFor(result,"Kết quả  không thể trống");
-    }else {
-      setSuccessFor(result);
-    }
-
-
-
-  }
+  //
   function setErrorFor(input,message) {
     const  inputBox=input.parentElement;
 
     const small = inputBox.querySelector('small');
     small.innerText = message;
-    inputBox.className='input-box error';
+    inputBox.className='col-md-6 form-validate error';
 
   }
   function setSuccessFor(input) {
     const  inputBox=input.parentElement;
 
 
-    inputBox.className='input-box success';
+    inputBox.className='col-md-6 form-validate success';
 
   }
 </script>
+
 </body>
 </html>

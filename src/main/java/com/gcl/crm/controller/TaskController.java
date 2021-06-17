@@ -24,7 +24,7 @@ public class TaskController {
     public String showTaskCreatePage(Model model){
         Task task = new Task();
         model.addAttribute("task",task);
-        return "task/create-task-page-v2";
+        return "task/create-task-page";
     }
     @PostMapping({"/saveTask"})
     public String saveTask(@ModelAttribute("task") Task task){

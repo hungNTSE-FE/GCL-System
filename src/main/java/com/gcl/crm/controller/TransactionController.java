@@ -25,7 +25,7 @@ public class TransactionController {
     public String showTransactionCreatePage(Model model){
         Transaction transaction = new Transaction();
         model.addAttribute("transaction",transaction);
-        return "transaction/create-transaction-page";
+        return "transaction/test";
     }
     @PostMapping({"/saveTransaction"})
     public String saveTask(@ModelAttribute("transaction") Transaction transaction){
