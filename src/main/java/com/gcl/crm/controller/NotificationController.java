@@ -1,11 +1,17 @@
 package com.gcl.crm.controller;
 
+import com.gcl.crm.constants.MyConstants;
 import com.gcl.crm.entity.AppUser;
+import com.gcl.crm.entity.Employee;
 import com.gcl.crm.entity.Notification;
+import com.gcl.crm.repository.EmployeeRepository;
 import com.gcl.crm.repository.UserRepository2;
+import com.gcl.crm.service.EmployeeService;
 import com.gcl.crm.service.NotificationService;
 import com.gcl.crm.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -33,6 +39,8 @@ public class NotificationController {
     @Autowired
     UserService userService;
 
+    @Autowired
+    public JavaMailSender emailSender;
 
     @RequestMapping(value = "/create", method = RequestMethod.GET)
     public String goCreatePage(Model model) {
@@ -41,7 +49,7 @@ public class NotificationController {
         return "/notification/insert_notification_page_V2";
     }
 
-    @RequestMapping(value = "/create", method = RequestMethod.POST)
+    @RequestMapping(value = "/create", method = RequestMethod.POST, params = "notification")
     public String create(Model model,
                          @ModelAttribute("notification") Notification notification,
                          @RequestParam("select2") List<Long> selectUser,
@@ -62,7 +70,23 @@ public class NotificationController {
         return "redirect:/notification/create";
     }
 
-
+    @RequestMapping(value = "/create", method = RequestMethod.POST, params = "sendemail")
+    public String sendEmail(Model model, @ModelAttribute("notification") Notification notification,
+                            @RequestParam("topic") String topic,
+                            @RequestParam("describe") String describe,
+                            @RequestParam("select2") List<Long> selectUser,
+                             Principal principal,
+                             RedirectAttributes redirectAttributes) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        List<AppUser> appUsers = userService.getAppUsersByIdList(selectUser);
+        for (int i = 0; i < appUsers.size(); i++) {
+            message.setTo(appUsers.get(i).getEmployee().getCompanyEmail());
+            message.setSubject(topic);
+            message.setText(describe);
+            this.emailSender.send(message);
+        }
+        return "redirect:/notification/create";
+    }
 
     private Date getCurrentDate() {
         return new Date(System.currentTimeMillis());
