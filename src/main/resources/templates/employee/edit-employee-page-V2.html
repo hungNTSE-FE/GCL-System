@@ -23,9 +23,7 @@
               page-header page-header-compact page-header-light
               border-bottom
               bg-white
-              mb-4
-            "
-            >
+              mb-4">
                 <div class="container-xl px-4">
                     <div class="page-header-content">
                         <div
@@ -80,30 +78,30 @@
                         <div class="card mb-4">
                             <div class="card-header">Thông tin nhân viên</div>
                             <div class="card-body">
-                                <form>
+                                <form method="POST" th:action="@{/employee/edit}" th:object="${employee}">
+                                    <input type="hidden" th:field="*{id}" />
                                     <!-- Form Row-->
                                     <div class="row gx-3 mb-3">
                                         <!-- Form Group (first name)-->
                                         <div class="col-md-6">
-                                            <label class="small mb-1" for="inputUsername"
-                                            >Tên đăng nhập
-                                                <span style="color: red">*</span></label
-                                            >
-                                            <input
+                                            <label class="small mb-1" for="inputUsername">
+                                                Tên đăng nhập
+                                                <span style="color: red">*</span>
+                                            </label>
+                                            <input th:value="${employee.appUser.userName}" disabled
                                                     class="form-control"
                                                     id="inputUsername"
-                                                    type="text"
+                                                    type="text" name="user-name"
                                                     placeholder="Nhập tên đăng nhập"
                                             />
                                         </div>
                                         <!-- Form Group (last name)-->
                                         <div class="col-md-6">
-                                            <label class="small mb-1" for="inputLastName"
+                                            <label class="small mb-1"
                                             >Mã số cá nhân</label
                                             >
-                                            <input
+                                            <input th:field="*{id}" disabled
                                                     class="form-control"
-                                                    id="inputAddress"
                                                     type="text"
                                                     placeholder="Nhập mã số"
                                             />
@@ -113,10 +111,10 @@
                                     <div class="row gx-3 mb-3">
                                         <!-- Form Group (first name)-->
                                         <div class="col-md-6">
-                                            <label class="small mb-1" for="inputFirstName"
+                                            <label class="small mb-1" for="inputPassword"
                                             >Mật khẩu <span style="color: red">*</span></label
                                             >
-                                            <input
+                                            <input name="password"
                                                     class="form-control"
                                                     id="inputPassword"
                                                     type="password"
@@ -125,10 +123,10 @@
                                         </div>
                                         <!-- Form Group (last name)-->
                                         <div class="col-md-6">
-                                            <label class="small mb-1" for="inputLastName"
+                                            <label class="small mb-1" for="inputAddress"
                                             >Địa chỉ</label
                                             >
-                                            <input
+                                            <input th:field="*{address}"
                                                     class="form-control"
                                                     id="inputAddress"
                                                     type="text"
@@ -140,26 +138,25 @@
                                     <div class="row gx-3 mb-3">
                                         <!-- Form Group (organization name)-->
                                         <div class="col-md-6">
-                                            <label class="small mb-1" for="inputOrgName"
+                                            <label class="small mb-1"
                                             >Tên người dùng
                                                 <span style="color: red">*</span></label
                                             >
-                                            <input
+                                            <input th:field="*{name}"
                                                     class="form-control"
-                                                    id="inputFullName"
                                                     type="text"
                                                     placeholder="Nhập tên người dùng"
                                             />
                                         </div>
                                         <!-- Form Group (location)-->
                                         <div class="col-md-6">
-                                            <label class="small mb-1" for="inputLocation"
+                                            <label class="small mb-1" for="inputPhone"
                                             >Điện thoại</label
                                             >
-                                            <input
+                                            <input th:field="*{phone}"
                                                     class="form-control"
                                                     id="inputPhone"
-                                                    type="text"
+                                                    type="number"
                                                     placeholder="Nhập số điện thoại"
                                             />
                                         </div>
@@ -175,7 +172,7 @@
                             <span class="input-group-text">
                               <i data-feather="calendar"></i>
                             </span>
-                                                <input
+                                                <input th:field="*{birthDate}"
                                                         class="form-control ps-0"
                                                         id="litepicker"
                                                         placeholder="Chọn ngày sinh"
@@ -184,10 +181,10 @@
                                         </div>
                                         <!-- Form Group (location)-->
                                         <div class="col-md-6">
-                                            <label class="small mb-1" for="inputLocation"
+                                            <label class="small mb-1" for="inputEmail"
                                             >Email</label
                                             >
-                                            <input
+                                            <input th:field="*{companyEmail}"
                                                     class="form-control"
                                                     id="inputEmail"
                                                     type="text"
@@ -199,34 +196,27 @@
                                     <div class="row gx-3 mb-3">
                                         <!-- Form Group (phone number)-->
                                         <div class="col-md-6">
-                                            <label class="small mb-1" for="inputPhone"
+                                            <label class="small mb-1"
                                             >Chức vụ</label
                                             >
-                                            <select
+                                            <select name="pid"
                                                     class="form-select"
-                                                    id="exampleFormControlSelect1"
                                             >
-                                                <option>1</option>
-                                                <option>2</option>
-                                                <option>3</option>
-                                                <option>4</option>
-                                                <option>5</option>
+                                                <option th:each="position : ${positions}" th:text="${position.name}"
+                                                        th:value="${position.id}" th:selected="${position.equals(employee.position)}"></option>
                                             </select>
                                         </div>
                                         <!-- Form Group (birthday)-->
                                         <div class="col-md-6">
-                                            <label class="small mb-1" for="inputBirthday"
+                                            <label class="small mb-1"
                                             >Phòng ban</label
                                             >
-                                            <select
+                                            <select name="did"
                                                     class="form-select"
-                                                    id="exampleFormControlSelect1"
                                             >
-                                                <option>1</option>
-                                                <option>2</option>
-                                                <option>3</option>
-                                                <option>4</option>
-                                                <option>5</option>
+                                                <option th:each="department : ${departments}"
+                                                        th:selected="${department.equals(employee.department)}"
+                                                        th:text="${department.name}" th:value="${department.id}"></option>
                                             </select>
                                         </div>
                                     </div>
@@ -241,7 +231,7 @@
                             <span class="input-group-text">
                               <i data-feather="calendar"></i>
                             </span>
-                                                <input
+                                                <input th:field="*{startDate}"
                                                         class="form-control ps-0"
                                                         id="litepicker-1"
                                                         placeholder="Chọn ngày vào công ty"
@@ -269,7 +259,7 @@
                                         <label class="small mb-1" for="inputUsername"
                                         >Mô tả <span style="color: red">*</span></label
                                         >
-                                        <textarea
+                                        <textarea th:field="*{note}"
                                                 class="form-control"
                                                 id="exampleFormControlTextarea1"
                                                 rows="3"
@@ -280,9 +270,9 @@
                                     <!-- Save changes button-->
                                     <button
                                             class="btn btn-primary"
-                                            type="button"
-                                            id="update1"
-                                    >
+                                            type="submit">
+<!--                                            id="update1"-->
+
                                         Cập nhật
                                     </button>
                                     <!-- Button trigger modal -->
@@ -299,9 +289,12 @@
                                                 <div class="modal-body text-dark">Bạn sẽ xoá tài khoản này. Bạn có chắn chắn?</div>
                                                 <div class="modal-footer">
                                                         <!--                        data-bs-dismiss="modal"-->
-                                                        <button class="btn btn-red" type="submit"  id="delete1">
+<!--                                                    id="delete1"-->
+
+                                                        <button class="btn btn-red" type="submit" form="delete-form" >
                                                             Xoá
                                                         </button>
+
                                                     <button class="btn btn-outline-dark" type="button" id>
                                                         Không
                                                     </button>
@@ -318,6 +311,7 @@
                                         Ngừng hoạt động
                                     </button>
                                 </form>
+                                <form id="delete-form" method="POST" th:action="@{/employee/delete(eid=${employee.id})}"></form>
                             </div>
                         </div>
                     </div>

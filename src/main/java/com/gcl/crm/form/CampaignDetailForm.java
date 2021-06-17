@@ -10,7 +10,7 @@ public class CampaignDetailForm {
     private String status;
     private String assumptionResult;
     private String sourceName;
-    private Integer hdnSourceId;
+    private Long hdnSourceId;
     private Long budget;
     private Long actualExpense;
     private Double averageExpense;
@@ -53,11 +53,11 @@ public class CampaignDetailForm {
         this.assumptionResult = assumptionResult;
     }
 
-    public Integer getHdnSourceId() {
+    public Long getHdnSourceId() {
         return hdnSourceId;
     }
 
-    public void setHdnSourceId(Integer hdnSourceId) {
+    public void setHdnSourceId(Long hdnSourceId) {
         this.hdnSourceId = hdnSourceId;
     }
 

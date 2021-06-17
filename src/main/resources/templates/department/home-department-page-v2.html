@@ -111,7 +111,6 @@
               <tr>
                 <th>TÊN ĐĂNG NHẬP</th>
                 <th>TÊN NGƯỜI DÙNG</th>
-                <th>TRƯỞNG PHÒNG</th>
                 <th>NGÀY SINH</th>
                 <th>PHÒNG BAN</th>
                 <th>ĐIỆN THOẠI</th>
@@ -123,8 +122,7 @@
               <tr th:each="employee : ${employees}" class="content">
                 <td th:text="${employee.appUser.userName}"></td>
                 <td th:text="${employee.name}"></td>
-                <td th:text="${employee.major}"></td>
-                <td th:text="${employee.identification.birthDate}"></td>
+                <td th:text="${employee.birthDate}"></td>
                 <td th:text="${employee.department.name}"></td>
                 <td th:text="${employee.phone}"></td>
                 <td th:text="${employee.companyEmail}"></td>

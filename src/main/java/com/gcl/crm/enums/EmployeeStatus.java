@@ -1,5 +1,5 @@
 package com.gcl.crm.enums;
 
 public enum EmployeeStatus {
-    WORKING, SUSPEND, PROBATION, OFF_WORKING
+    WORKING, SUSPENDED, PROBATION, OFF_WORKING
 }

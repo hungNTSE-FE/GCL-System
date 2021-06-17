@@ -47,7 +47,7 @@ public class CampaignService {
     public CampaignDetailForm getCampaignFormByPK(String id) {
         // Get Source Map
         List<Source> sourceList = sourceRepository.getAll();
-        Map<Integer, String> sourceMap = sourceList
+        Map<Long, String> sourceMap = sourceList
                 .stream()
                 .collect(Collectors.toMap(Source::getSourceId, Source::getSourceName));
         Campaign campaign = campaignRepository.findObjectByPrimaryKey(Integer.parseInt(id));
@@ -61,7 +61,7 @@ public class CampaignService {
                 List<Source> sourceList = sourceRepository.getAll();
                 campaign.setSourceId(sourceList.stream()
                                 .filter(source -> source.getSourceName().equals(form.getSourceName()))
-                                .map(Source::getSourceId).findFirst().orElse(1));
+                                .map(Source::getSourceId).findFirst().orElse(1L));
                 campaignRepository.save(campaign);
             } else {
                 Campaign campaign = convertFormToDTO(form);
@@ -82,7 +82,7 @@ public class CampaignService {
     private List<CampaignDetailForm> getCampaignDetailFormList() {
         // Get Source Map
         List<Source> sourceList = sourceRepository.getAll();
-        Map<Integer, String> sourceMap = sourceList
+        Map<Long, String> sourceMap = sourceList
                 .stream()
                 .collect(Collectors.toMap(Source::getSourceId, Source::getSourceName));
 
@@ -114,7 +114,7 @@ public class CampaignService {
         return campaignForms;
     }
 
-    private CampaignDetailForm convertToCampaginForm(Campaign campaign, Map<Integer, String> sourceMap){
+    private CampaignDetailForm convertToCampaginForm(Campaign campaign, Map<Long, String> sourceMap){
         CampaignDetailForm campaignDetailForm = new CampaignDetailForm();
         campaignDetailForm.setHdnCampaignCode(campaign.getCampaignCode().toString());
         campaignDetailForm.setContent(campaign.getContent());

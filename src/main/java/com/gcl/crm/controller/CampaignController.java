@@ -16,7 +16,7 @@ import java.util.*;
 @Controller
 public class CampaignController {
 
-    public static final String MAIN_PAGE = "campaign.html";
+    public static final String MAIN_PAGE = "campaign/campaign.html";
     public static final String CAMPAIGN_MAKETING_FORM = "CAMPAIGN_MAKETING_FORM";
 
     @Autowired

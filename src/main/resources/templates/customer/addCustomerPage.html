@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Tạo mới khách hàng</title>
+    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}"/>
+    <link rel="icon" type="image/x-icon" href="assets/img/favicon.png" />
+    <script data-search-pseudo-elements defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js" crossorigin="anonymous"></script>
+
+</head>
+<body class="nav-fixed">
+<th:block th:include="/common/nav-fixed.html"></th:block>
+<div id="layoutSidenav">
+    <th:block th:include="/common/layoutSidenav.html"></th:block>
+    <div id="layoutSidenav_content">
+        <main>
+            <header
+                    class="
+              page-header page-header-dark
+              bg-gradient-primary-to-secondary
+              pb-10
+            "
+            >
+                <div class="container-xl px-4">
+                    <div class="page-header-content pt-4">
+                        <div class="row align-items-center justify-content-between">
+                            <div class="col-auto mt-4">
+                                <h1 class="page-header-title">
+                                    <div class="page-header-icon">
+                                        <i data-feather="filter"></i>
+                                    </div>
+                                    Thêm mới khách hàng
+                                </h1>
+                                <div class="page-header-subtitle">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            <!-- Main page content-->
+            <div class="container-xl px-4 mt-n10">
+                <form class="row g-3"
+                      id="customerForm"
+                      action="#"
+                      th:object="${CustomerForm}"
+                      th:method="POST"
+                >
+                    <!-- Customer information -->
+                    <div class="card mb-4 card-header-actions">
+                    <div class="card-header">
+                        Thông tin cá nhân khách hàng
+                    </div>
+                    <div class="card-body">
+                            <div class="error-place">
+                                <div th:if="${#fields.hasAnyErrors()}">
+                                    <ul style="color: red">
+                                        <li th:each="err : ${#fields.allErrors()}" th:text="${err}" />
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-md-8">
+                                    <label for="customerName">Tên khách hàng</label>
+                                    <input type="text" class="form-control"
+                                           id="customerName"
+                                           placeholder="Tên khách hàng"
+                                           th:field="${CustomerForm.customerName}"
+                                           required
+                                    />
+                                </div>
+
+                                <div class="form-group col-md-2">
+                                    <label for="genderCmb">Giới tính</label>
+                                    <select id="genderCmb" class="form-control" required>
+                                        <option value="0">Nam</option>
+                                        <option value="1">Nữ</option>
+                                    </select>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-md-12">
+                                    <label for="address">Địa chỉ</label>
+                                    <input type="text" class="form-control"
+                                           id="address"
+                                           th:field="${CustomerForm.address}"
+                                           required
+                                    />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-md-4">
+                                    <label for="phoneNumber">Số điện thoại</label>
+                                    <input type="text" class="form-control"
+                                           id="phoneNumber"
+                                           min="0" maxlength="10" pattern="\d*"
+                                           th:field="${CustomerForm.phoneNumber}"
+                                           required
+                                    />
+                                </div>
+                                <div class="form-group col-md-8">
+                                    <label for="email">Email</label>
+                                    <input type="email" class="form-control"
+                                           id="email"
+                                           th:field="${CustomerForm.email}"
+                                           required
+                                    />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-md-4">
+                                    <label for="contractStatus">Tình trạng hợp đồng</label>
+                                    <input type="text" class="form-control"
+                                           id="contractStatus"
+                                           th:field="${CustomerForm.contractStatus}"
+                                           required
+                                    >
+                                </div>
+                                <div class="form-group col-md-2">
+                                    <label for="sourceCmb">Nguồn</label>
+                                    <select id="sourceCmb" class="form-control" required>
+                                        <option></option>
+                                        <option th:each="source : ${CustomerForm.comboboxForm.listSource}"
+                                                th:value="${source.key}"
+                                                th:utext="${source.value}"/>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="mb-2"></div>
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <button type="button" class="btn btn-primary" id="registerCustomer">Đăng kí</button>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+                    <!-- Trading account information-->
+                    <div class="card mb-4 card-header-actions">
+                        <div class="card-header">
+                            Thông tin tài khoản giao dịch khách hàng
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="form-group col-md-4">
+                                    <label for="tradingCode">Mã tài khoản giao dịch</label>
+                                    <input type="text" class="form-control"
+                                           id="tradingCode"
+                                           placeholder="Mã tài khoản giao dịch"
+                                           th:field="${CustomerForm.accountCode}"
+                                           required
+                                    />
+                                </div>
+                                <div class="form-group col-md-8">
+                                    <label for="tradingAccount">Tên tài khoản giao dịch</label>
+                                    <input type="text" class="form-control"
+                                           id="tradingAccount"
+                                           placeholder="Tên khoản giao dịch"
+                                           th:field="${CustomerForm.accountName}"
+                                           required
+                                    />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-md-8">
+                                    <label for="brokerCmb">Tên môi giới</label>
+                                    <select id="brokerCmb" class="form-control" required>
+                                        <option></option>
+                                        <option th:each="broker : ${CustomerForm.comboboxForm.listBrokerName}"
+                                                th:value="${broker.key}"
+                                                th:utext="${broker.value}"/>
+                                    </select>
+                                    <input type="hidden"
+                                           name="brokerName"
+                                           id="brokerName"
+                                           th:field="${CustomerForm.brokerName}"
+                                           required
+                                    />
+                                </div>
+
+                                <div class="form-group col-md-4">
+                                    <label for="brokerCode">Mã môi giới</label>
+                                    <input type="text"
+                                           class="form-control"
+                                           id="brokerCode"
+                                           placeholder="Mã môi giới"
+                                           th:field="${CustomerForm.brokerCode}"
+                                           required
+                                    />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <label for="createDatePicker">Ngày mở tài khoản</label>
+                                    <input type="date"
+                                           class="form-control"
+                                           id="createDatePicker"
+                                           th:field="${CustomerForm.accountCreateDate}"
+                                           required
+                                    />
+                                </div>
+                                <div class="form-group col-md-2">
+                                    <label for="customerStatus">Trạng thái</label>
+                                    <input type="text" class="form-control"
+                                           id="customerStatus"
+                                           th:field="${CustomerForm.status}"
+                                           required
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Indentification -->
+                    <div class="card mb-4 card-header-actions">
+                    <div class="card-header">
+                        Thông tin căn cước công dân
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="form-group col-md-4">
+                                <label for="identifyNumber">Căn cước công dân</label>
+                                <input type="text" pattern="\d*" class="form-control"
+                                       id="identifyNumber" placeholder="Số CMND"
+                                       min="0" maxlength="12"
+                                       th:field="${CustomerForm.identifyNumber}"
+                                       required
+                                />
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="dateOfIssuePicker">Ngày cấp</label>
+                                <input type="date" class="form-control"
+                                       id="dateOfIssuePicker"
+                                       th:field="${CustomerForm.dateOfIssue}"
+                                       required
+                                />
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="placeOfIssue">Nơi cấp</label>
+                                <input type="text" class="form-control"
+                                       id="placeOfIssue"
+                                       th:field="${CustomerForm.placeOfIssue}"
+                                       required
+                                />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-2">
+                                <label for="dateOfBirth">Ngày sinh</label>
+                                <input type="date"
+                                       class="form-control"
+                                       id="dateOfBirth"
+                                       th:field="${CustomerForm.dateOfBirth}"
+                                       required
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                    <!-- Banking information -->
+                    <div class="card mb-4 card-header-actions">
+                        <div class="card-header">
+                            Thông tin tài khoản ngân hàng
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="form-group col-md-4">
+                                    <label for="bank">Ngân hàng</label>
+                                    <input type="text" class="form-control"
+                                           id="bank"
+                                           th:field="${CustomerForm.bankName}"
+                                           required
+                                    />
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="bankAccount">Số tài khoản</label>
+                                    <input type="text" maxlength="20" min="0"
+                                           pattern="\d*" class="form-control"
+                                           id="bankAccount"
+                                           th:field="${CustomerForm.bankNumber}"
+                                           required
+                                    />
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="ownerBanking">Tên chủ khoản</label>
+                                    <input type="text" class="form-control"
+                                           id="ownerBanking"
+                                           th:field="${CustomerForm.ownerBankingName}"
+                                           required
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Hidden field -->
+                    <input type="hidden"
+                           id="gender"
+                           th:field="${CustomerForm.gender}"
+                    />
+                    <input type="hidden"
+                           id="hdnEmployeeId"
+                           th:field="${CustomerForm.hdnEmployeeId}"
+                    />
+                    <input type="hidden"
+                           id="hdnSourceId"
+                           th:field="${CustomerForm.hdnSourceId}"
+                    />
+                </form>
+            </div>
+        </main>
+        <div id="overlay">
+            <div class="cv-spinner">
+                <span class="spinner"></span>
+            </div>
+        </div>
+        <th:block th:include="/common/footer.html"></th:block>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+<script type="text/javascript" th:src="@{/js/mainTH.js}"></script>
+<script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
+<!-- Latest compiled and minified JavaScript -->
+<script type="text/javascript" th:src="@{/js/datatables/datatables-simple-demo.js}"></script>
+<script type="text/javascript" th:src="@{/js/customer.js}"></script>
+</body>
+</html>

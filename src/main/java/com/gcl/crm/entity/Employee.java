@@ -18,52 +18,55 @@ public class Employee {
     private Long id;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "identity_number", referencedColumnName = "identity_number", nullable = false)
+    @JoinColumn(name = "identity_number", referencedColumnName = "identity_number")
     private Identification identification;
 
-    @Column(name = "full_name", nullable = false)
+    @Column(name = "full_name")
     private String name;
 
     @Enumerated(EnumType.ORDINAL)
-    @Column(name = "gender", nullable = false)
+    @Column(name = "gender")
     private Gender gender;
 
-    @Column(name = "phone_number", nullable = false)
+    @Column(name = "phone_number")
     private String phone;
 
-    @Column(name = "address", nullable = false)
+    @Column(name = "address")
     private String address;
 
-    @Column(name = "academic_level", nullable = false)
+    @Column(name = "academic_level")
     private String academicLevel;
 
     @Column(name = "personal_email")
     private String personalEmail;
 
-    @Column(name = "company_email", nullable = false, unique = true)
+    @Column(name = "company_email", unique = true)
     private String companyEmail;
+
+    @Column(name = "date_of_birth")
+    private Date birthDate;
 
     @Column(name = "major")
     private String major;
 
-    @Column(name = "start_date", nullable = false)
+    @Column(name = "start_date")
     private Date startDate;
 
     @Column(name = "broker_code", unique = true)
     private Long brokerCode;
 
     @Enumerated(EnumType.ORDINAL)
-    @Column(name = "status", nullable = false)
+    @Column(name = "status")
     private EmployeeStatus status;
 
     @Column(name = "note", length = 1000)
     private String note;
 
-    @Column(name = "tax_code", nullable = false)
+    @Column(name = "tax_code")
     private String taxCode;
 
     @OneToOne(mappedBy = "employee")
-    private AppUser appUser ;
+    private AppUser appUser;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "department_id")
@@ -74,6 +77,18 @@ public class Employee {
             inverseJoinColumns = @JoinColumn(name = "permission_id"))
     private List<Permission> permissions;
 
-//    @OneToOne(mappedBy = "modifier", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "position_id")
+    private Position position;
+
+    public Employee() {
+    }
+
+    public Employee(Long id) {
+        this.id = id;
+    }
+
+    //    @OneToOne(mappedBy = "modifier", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 //    private Department manageDepartment;
+
 }

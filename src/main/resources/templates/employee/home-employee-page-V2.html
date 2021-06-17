@@ -50,7 +50,7 @@
                 <!-- Account page navigation-->
                 <nav class="nav nav-borders">
                     <a class="nav-link active" th:href="@{/employee/home}">Hiển thị</a>
-                    <a class="nav-link" th:href="@{/employee/insert}">Thêm mới</a>
+                    <a class="nav-link" th:href="@{/employee/create}">Thêm mới</a>
                     <a class="nav-link" href="#">Đặt chỉ tiêu cho nhân viên</a>
                 </nav>
                 <hr class="mt-0 mb-4" />
@@ -62,7 +62,7 @@
                                 <div class="small text-muted">Tổng số nhân viên</div>
                                 <div class="h3">
                                     <i data-feather="user"></i>
-                                    20
+                                    <span th:text="${employees.size()}"></span>
                                 </div>
                                 <a class="text-arrow-icon small" href="#!">
                                     Hiển thị toàn bộ nhân viên
@@ -86,13 +86,10 @@
                                             <select
                                                     class="form-select form-select-sm"
                                                     id="filterTextLevel"
-                                                    onchange="filterTextLevel()"
-                                            >
+                                                    onchange="filterTextLevel()">
                                                 <option value="all">Lựa chọn chức vụ</option>
-                                                <option value="Nhân viên">Nhân viên</option>
-                                                <option value="Trưởng phòng">Trưởng phòng</option>
-                                                <option value="Trưởng nhóm">Trưởng nhóm</option>
-                                                <option value="Admin">Admin</option>
+                                                <option th:each="position : ${positions}" th:text="${position.name}"
+                                                        th:value="${position.name}"></option>
                                             </select>
                                         </div>
                                         <div class="mb-3 px-1 flex-fill">
@@ -100,11 +97,10 @@
                                             <select
                                                     class="form-select form-select-sm"
                                                     id="filterText"
-                                                    onchange="filterText()"
-                                            >
+                                                    onchange="filterText()">
                                                 <option value="all">Lựa chọn phòng ban</option>
-                                                <option value="Marketing">Marketing</option>
-                                                <option value="Sales">Sales</option>
+                                                <option th:each="department : ${departments}" th:value="${department.name}"
+                                                        th:text="${department.name}"></option>
                                             </select>
                                         </div>
                                     </div>
@@ -131,519 +127,37 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr class="content">
+                            <tr th:each="employee : ${employees}" class="content">
                                 <td>
                                     <div class="dropdown no-caret">
                                         <button
-                                                class="
-                              btn btn-transparent-dark btn-icon
-                              dropdown-toggle
-                            "
+                                                class="btn btn-transparent-dark btn-icon dropdown-toggle"
                                                 id="dropdownMenuButton"
                                                 type="button"
                                                 data-bs-toggle="dropdown"
                                                 aria-haspopup="true"
-                                                aria-expanded="false"
-                                        >
+                                                aria-expanded="false">
                                             <i data-feather="more-vertical"></i>
                                         </button>
-                                        <div
-                                                class="
-                              dropdown-menu dropdown-menu-right
-                              animated--fade-in-up
-                            "
-                                                aria-labelledby="dropdownMenuButton"
-                                        >
+                                        <div class="dropdown-menu dropdown-menu-right animated--fade-in-up"
+                                             aria-labelledby="dropdownMenuButton">
                                             <a class="dropdown-item" href="#!" data-bs-toggle="modal" data-bs-target="#exampleModalCenter">
                                                 Đổi mật khẩu
                                             </a>
                                             <a class="dropdown-item" href="#!">Chỉ tiêu</a>
                                         </div>
-                                        <a
-                                                class="
-                              btn btn-datatable btn-icon btn-transparent-dark
-                            "
-                                                th:href="@{/employee/edit}"
-                                        >
+                                        <a class="btn btn-datatable btn-icon btn-transparent-dark"
+                                           th:href="@{/employee/edit(eid=${employee.id})}">
                                             <i data-feather="edit"></i>
                                         </a>
                                     </div>
                                 </td>
-                                <td>Tiger Nixon</td>
-                                <td>System Architect</td>
-                                <td>Edinburgh</td>
-                                <td>Sales</td>
-                                <td>2021-06-02</td>
-                                <td>Nhân viên</td>
-                            </tr>
-                            <tr class="content">
-                                <td>
-                                    <div class="dropdown no-caret">
-                                        <button
-                                                class="
-                              btn btn-transparent-dark btn-icon
-                              dropdown-toggle
-                            "
-                                                id="dropdownMenuButton"
-                                                type="button"
-                                                data-bs-toggle="dropdown"
-                                                aria-haspopup="true"
-                                                aria-expanded="false"
-                                        >
-                                            <i data-feather="more-vertical"></i>
-                                        </button>
-                                        <div
-                                                class="
-                              dropdown-menu dropdown-menu-right
-                              animated--fade-in-up
-                            "
-                                                aria-labelledby="dropdownMenuButton"
-                                        >
-                                            <a class="dropdown-item" href="#!" data-bs-toggle="modal" data-bs-target="#exampleModalCenter">
-                                                Đổi mật khẩu
-                                            </a>
-                                            <a class="dropdown-item" href="#!">Chỉ tiêu</a>
-                                        </div>
-                                        <a
-                                                class="
-                              btn btn-datatable btn-icon btn-transparent-dark
-                            "
-                                                th:href="@{/employee/edit}"
-                                        >
-                                            <i data-feather="edit"></i>
-                                        </a>
-                                    </div>
-                                </td>
-                                <td>Tiger Nixon</td>
-                                <td>System Architect</td>
-                                <td>Edinburgh</td>
-                                <td>Sales</td>
-                                <td>2021-06-02</td>
-                                <td>Nhân viên</td>
-                            </tr>
-                            <tr class="content">
-                                <td>
-                                    <div class="dropdown no-caret">
-                                        <button
-                                                class="
-                              btn btn-transparent-dark btn-icon
-                              dropdown-toggle
-                            "
-                                                id="dropdownMenuButton"
-                                                type="button"
-                                                data-bs-toggle="dropdown"
-                                                aria-haspopup="true"
-                                                aria-expanded="false"
-                                        >
-                                            <i data-feather="more-vertical"></i>
-                                        </button>
-                                        <div
-                                                class="
-                              dropdown-menu dropdown-menu-right
-                              animated--fade-in-up
-                            "
-                                                aria-labelledby="dropdownMenuButton"
-                                        >
-                                            <a class="dropdown-item" href="#!" data-bs-toggle="modal" data-bs-target="#exampleModalCenter">
-                                                Đổi mật khẩu
-                                            </a>
-                                            <a class="dropdown-item" href="#!">Chỉ tiêu</a>
-                                        </div>
-                                        <a
-                                                class="
-                              btn btn-datatable btn-icon btn-transparent-dark
-                            "
-                                                th:href="@{/employee/edit}"
-                                        >
-                                            <i data-feather="edit"></i>
-                                        </a>
-                                    </div>
-                                </td>
-                                <td>Tiger Nixon</td>
-                                <td>System Architect</td>
-                                <td>Edinburgh</td>
-                                <td>Marketing</td>
-                                <td>2021-06-03</td>
-                                <td>Trưởng phòng</td>
-                            </tr>
-                            <tr class="content">
-                                <td>
-                                    <div class="dropdown no-caret">
-                                        <button
-                                                class="
-                              btn btn-transparent-dark btn-icon
-                              dropdown-toggle
-                            "
-                                                id="dropdownMenuButton"
-                                                type="button"
-                                                data-bs-toggle="dropdown"
-                                                aria-haspopup="true"
-                                                aria-expanded="false"
-                                        >
-                                            <i data-feather="more-vertical"></i>
-                                        </button>
-                                        <div
-                                                class="
-                              dropdown-menu dropdown-menu-right
-                              animated--fade-in-up
-                            "
-                                                aria-labelledby="dropdownMenuButton"
-                                        >
-                                            <a class="dropdown-item" href="#!">Đổi mật khẩu</a>
-                                            <a class="dropdown-item" href="#!">Chỉ tiêu</a>
-                                        </div>
-                                        <a
-                                                class="
-                              btn btn-datatable btn-icon btn-transparent-dark
-                            "
-                                                th:href="@{/employee/edit}"
-                                        >
-                                            <i data-feather="edit"></i>
-                                        </a>
-                                    </div>
-                                </td>
-                                <td>Tiger Nixon</td>
-                                <td>System Architect</td>
-                                <td>Edinburgh</td>
-                                <td>61</td>
-                                <td>2021-06-04</td>
-                                <td>Trưởng nhóm</td>
-                            </tr>
-                            <tr class="content">
-                                <td>
-                                    <div class="dropdown no-caret">
-                                        <button
-                                                class="
-                              btn btn-transparent-dark btn-icon
-                              dropdown-toggle
-                            "
-                                                id="dropdownMenuButton"
-                                                type="button"
-                                                data-bs-toggle="dropdown"
-                                                aria-haspopup="true"
-                                                aria-expanded="false"
-                                        >
-                                            <i data-feather="more-vertical"></i>
-                                        </button>
-                                        <div
-                                                class="
-                              dropdown-menu dropdown-menu-right
-                              animated--fade-in-up
-                            "
-                                                aria-labelledby="dropdownMenuButton"
-                                        >
-                                            <a class="dropdown-item" href="#!">Đổi mật khẩu</a>
-                                            <a class="dropdown-item" href="#!">Chỉ tiêu</a>
-                                        </div>
-                                        <button
-                                                class="
-                              btn btn-datatable btn-icon btn-transparent-dark
-                            "
-                                        >
-                                            <i data-feather="edit"></i>
-                                        </button>
-                                    </div>
-                                </td>
-                                <td>Tiger Nixon</td>
-                                <td>System Architect</td>
-                                <td>Edinburgh</td>
-                                <td>2</td>
-                                <td>2011/04/25</td>
-                                <td>$320,800</td>
-                            </tr>
-                            <tr class="content">
-                                <td>
-                                    <div class="dropdown no-caret">
-                                        <button
-                                                class="
-                              btn btn-transparent-dark btn-icon
-                              dropdown-toggle
-                            "
-                                                id="dropdownMenuButton"
-                                                type="button"
-                                                data-bs-toggle="dropdown"
-                                                aria-haspopup="true"
-                                                aria-expanded="false"
-                                        >
-                                            <i data-feather="more-vertical"></i>
-                                        </button>
-                                        <div
-                                                class="
-                              dropdown-menu dropdown-menu-right
-                              animated--fade-in-up
-                            "
-                                                aria-labelledby="dropdownMenuButton"
-                                        >
-                                            <a class="dropdown-item" href="#!">Đổi mật khẩu</a>
-                                            <a class="dropdown-item" href="#!">Chỉ tiêu</a>
-                                        </div>
-                                        <button
-                                                class="
-                              btn btn-datatable btn-icon btn-transparent-dark
-                            "
-                                        >
-                                            <i data-feather="edit"></i>
-                                        </button>
-                                    </div>
-                                </td>
-                                <td>Tiger Nixon</td>
-                                <td>System Architect</td>
-                                <td>Edinburgh</td>
-                                <td>3</td>
-                                <td>2011/04/25</td>
-                                <td>$320,800</td>
-                            </tr>
-                            <tr class="content">
-                                <td>
-                                    <div class="dropdown no-caret">
-                                        <button
-                                                class="
-                              btn btn-transparent-dark btn-icon
-                              dropdown-toggle
-                            "
-                                                id="dropdownMenuButton"
-                                                type="button"
-                                                data-bs-toggle="dropdown"
-                                                aria-haspopup="true"
-                                                aria-expanded="false"
-                                        >
-                                            <i data-feather="more-vertical"></i>
-                                        </button>
-                                        <div
-                                                class="
-                              dropdown-menu dropdown-menu-right
-                              animated--fade-in-up
-                            "
-                                                aria-labelledby="dropdownMenuButton"
-                                        >
-                                            <a class="dropdown-item" href="#!">Đổi mật khẩu</a>
-                                            <a class="dropdown-item" href="#!">Chỉ tiêu</a>
-                                        </div>
-                                        <button
-                                                class="
-                              btn btn-datatable btn-icon btn-transparent-dark
-                            "
-                                        >
-                                            <i data-feather="edit"></i>
-                                        </button>
-                                    </div>
-                                </td>
-                                <td>Tiger Nixon</td>
-                                <td>System Architect</td>
-                                <td>Edinburgh</td>
-                                <td>4</td>
-                                <td>2011/04/25</td>
-                                <td>$320,800</td>
-                            </tr>
-                            <tr class="content">
-                                <td>
-                                    <div class="dropdown no-caret">
-                                        <button
-                                                class="
-                              btn btn-transparent-dark btn-icon
-                              dropdown-toggle
-                            "
-                                                id="dropdownMenuButton"
-                                                type="button"
-                                                data-bs-toggle="dropdown"
-                                                aria-haspopup="true"
-                                                aria-expanded="false"
-                                        >
-                                            <i data-feather="more-vertical"></i>
-                                        </button>
-                                        <div
-                                                class="
-                              dropdown-menu dropdown-menu-right
-                              animated--fade-in-up
-                            "
-                                                aria-labelledby="dropdownMenuButton"
-                                        >
-                                            <a class="dropdown-item" href="#!">Đổi mật khẩu</a>
-                                            <a class="dropdown-item" href="#!">Chỉ tiêu</a>
-                                        </div>
-                                        <button
-                                                class="
-                              btn btn-datatable btn-icon btn-transparent-dark
-                            "
-                                        >
-                                            <i data-feather="edit"></i>
-                                        </button>
-                                    </div>
-                                </td>
-                                <td>Tiger Nixon</td>
-                                <td>System Architect</td>
-                                <td>Edinburgh</td>
-                                <td>5</td>
-                                <td>2011/04/25</td>
-                                <td>$320,800</td>
-                            </tr>
-                            <tr class="content">
-                                <td>
-                                    <div class="dropdown no-caret">
-                                        <button
-                                                class="
-                              btn btn-transparent-dark btn-icon
-                              dropdown-toggle
-                            "
-                                                id="dropdownMenuButton"
-                                                type="button"
-                                                data-bs-toggle="dropdown"
-                                                aria-haspopup="true"
-                                                aria-expanded="false"
-                                        >
-                                            <i data-feather="more-vertical"></i>
-                                        </button>
-                                        <div
-                                                class="
-                              dropdown-menu dropdown-menu-right
-                              animated--fade-in-up
-                            "
-                                                aria-labelledby="dropdownMenuButton"
-                                        >
-                                            <a class="dropdown-item" href="#!">Đổi mật khẩu</a>
-                                            <a class="dropdown-item" href="#!">Chỉ tiêu</a>
-                                        </div>
-                                        <button
-                                                class="
-                              btn btn-datatable btn-icon btn-transparent-dark
-                            "
-                                        >
-                                            <i data-feather="edit"></i>
-                                        </button>
-                                    </div>
-                                </td>
-                                <td>Tiger Nixon</td>
-                                <td>System Architect</td>
-                                <td>Edinburgh</td>
-                                <td>5</td>
-                                <td>2011/04/25</td>
-                                <td>$320,800</td>
-                            </tr>
-                            <tr class="content">
-                                <td>
-                                    <div class="dropdown no-caret">
-                                        <button
-                                                class="
-                              btn btn-transparent-dark btn-icon
-                              dropdown-toggle
-                            "
-                                                id="dropdownMenuButton"
-                                                type="button"
-                                                data-bs-toggle="dropdown"
-                                                aria-haspopup="true"
-                                                aria-expanded="false"
-                                        >
-                                            <i data-feather="more-vertical"></i>
-                                        </button>
-                                        <div
-                                                class="
-                              dropdown-menu dropdown-menu-right
-                              animated--fade-in-up
-                            "
-                                                aria-labelledby="dropdownMenuButton"
-                                        >
-                                            <a class="dropdown-item" href="#!">Đổi mật khẩu</a>
-                                            <a class="dropdown-item" href="#!">Chỉ tiêu</a>
-                                        </div>
-                                        <button
-                                                class="
-                              btn btn-datatable btn-icon btn-transparent-dark
-                            "
-                                        >
-                                            <i data-feather="edit"></i>
-                                        </button>
-                                    </div>
-                                </td>
-                                <td>Tiger Nixon</td>
-                                <td>System Architect</td>
-                                <td>Edinburgh</td>
-                                <td>6</td>
-                                <td>2011/04/25</td>
-                                <td>$320,800</td>
-                            </tr>
-                            <tr class="content">
-                                <td>
-                                    <div class="dropdown no-caret">
-                                        <button
-                                                class="
-                              btn btn-transparent-dark btn-icon
-                              dropdown-toggle
-                            "
-                                                id="dropdownMenuButton"
-                                                type="button"
-                                                data-bs-toggle="dropdown"
-                                                aria-haspopup="true"
-                                                aria-expanded="false"
-                                        >
-                                            <i data-feather="more-vertical"></i>
-                                        </button>
-                                        <div
-                                                class="
-                              dropdown-menu dropdown-menu-right
-                              animated--fade-in-up
-                            "
-                                                aria-labelledby="dropdownMenuButton"
-                                        >
-                                            <a class="dropdown-item" href="#!">Đổi mật khẩu</a>
-                                            <a class="dropdown-item" href="#!">Chỉ tiêu</a>
-                                        </div>
-                                        <button
-                                                class="
-                              btn btn-datatable btn-icon btn-transparent-dark
-                            "
-                                        >
-                                            <i data-feather="edit"></i>
-                                        </button>
-                                    </div>
-                                </td>
-                                <td>Tiger Nixon</td>
-                                <td>System Architect</td>
-                                <td>Edinburgh</td>
-                                <td>6</td>
-                                <td>2011/04/25</td>
-                                <td>$320,800</td>
-                            </tr>
-                            <tr class="content">
-                                <td>
-                                    <div class="dropdown no-caret">
-                                        <button
-                                                class="
-                              btn btn-transparent-dark btn-icon
-                              dropdown-toggle
-                            "
-                                                id="dropdownMenuButton"
-                                                type="button"
-                                                data-bs-toggle="dropdown"
-                                                aria-haspopup="true"
-                                                aria-expanded="false"
-                                        >
-                                            <i data-feather="more-vertical"></i>
-                                        </button>
-                                        <div
-                                                class="
-                              dropdown-menu dropdown-menu-right
-                              animated--fade-in-up
-                            "
-                                                aria-labelledby="dropdownMenuButton"
-                                        >
-                                            <a class="dropdown-item" href="#!">Đổi mật khẩu</a>
-                                            <a class="dropdown-item" href="#!">Chỉ tiêu</a>
-                                        </div>
-                                        <button
-                                                class="
-                              btn btn-datatable btn-icon btn-transparent-dark
-                            "
-                                        >
-                                            <i data-feather="edit"></i>
-                                        </button>
-                                    </div>
-                                </td>
-                                <td>Tiger Nixon</td>
-                                <td>System Architect</td>
-                                <td>Edinburgh</td>
-                                <td>7</td>
-                                <td>2011/04/25</td>
-                                <td>$320,800</td>
+                                <td th:text="${employee.id}"></td>
+                                <td th:text="${employee.appUser.userName}"></td>
+                                <td th:text="${employee.name}"></td>
+                                <td th:text="${employee.department.name}"></td>
+                                <td th:text="${employee.startDate}"></td>
+                                <td th:text="${employee.position.name}"></td>
                             </tr>
                             </tbody>
                         </table>

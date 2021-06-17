@@ -27,7 +27,7 @@ public class Campaign {
     private String assumptionResult;
 
     @Column(name = "SOURCE_ID", nullable = false)
-    private Integer sourceId;
+    private Long sourceId;
 
     @Column(name = "BUDGET")
     private Long budget;
@@ -82,11 +82,11 @@ public class Campaign {
         this.assumptionResult = assumptionResult;
     }
 
-    public Integer getSourceId() {
+    public Long getSourceId() {
         return sourceId;
     }
 
-    public void setSourceId(Integer sourceId) {
+    public void setSourceId(Long sourceId) {
         this.sourceId = sourceId;
     }
 

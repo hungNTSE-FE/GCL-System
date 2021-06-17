@@ -80,27 +80,25 @@
             <div class="card mb-4">
               <div class="card-header">Thông tin nhân viên</div>
               <div class="card-body">
-                <form>
+                <form id="create-form" method="POST" th:action="@{/employee/create}" th:object="${employee}">
                   <!-- Form Row-->
                   <div class="row gx-3 mb-3">
                     <!-- Form Group (first name)-->
                     <div class="col-md-6">
-                      <label class="small mb-1" for="inputUsername"
-                      >Tên đăng nhập
-                        <span style="color: red">*</span></label
-                      >
-                      <input
+                      <label class="small mb-1" for="input-username">
+                        Tên đăng nhập
+                        <span style="color: red">*</span>
+                      </label>
+                      <input th:field="*{appUser.userName}"
                               class="form-control"
-                              id="inputUsername"
+                              id="input-username"
                               type="text"
                               placeholder="Nhập tên đăng nhập"
                       />
                     </div>
                     <!-- Form Group (last name)-->
                     <div class="col-md-6">
-                      <label class="small mb-1" for="inputLastName"
-                      >Mã số cá nhân</label
-                      >
+                      <label class="small mb-1" for="inputLastName">Mã số cá nhân</label>
                       <input
                               class="form-control"
                               id="inputAddress"
@@ -113,10 +111,11 @@
                   <div class="row gx-3 mb-3">
                     <!-- Form Group (first name)-->
                     <div class="col-md-6">
-                      <label class="small mb-1" for="inputFirstName"
-                      >Mật khẩu <span style="color: red">*</span></label
-                      >
-                      <input
+                      <label class="small mb-1" for="inputFirstName">
+                        Mật khẩu
+                        <span style="color: red">*</span>
+                      </label>
+                      <input th:field="*{appUser.encrytedPassword}"
                               class="form-control"
                               id="inputPassword"
                               type="password"
@@ -125,10 +124,8 @@
                     </div>
                     <!-- Form Group (last name)-->
                     <div class="col-md-6">
-                      <label class="small mb-1" for="inputLastName"
-                      >Địa chỉ</label
-                      >
-                      <input
+                      <label class="small mb-1" for="inputLastName">Địa chỉ</label>
+                      <input th:field="*{address}"
                               class="form-control"
                               id="inputAddress"
                               type="text"
@@ -140,11 +137,11 @@
                   <div class="row gx-3 mb-3">
                     <!-- Form Group (organization name)-->
                     <div class="col-md-6">
-                      <label class="small mb-1" for="inputOrgName"
-                      >Tên người dùng
-                        <span style="color: red">*</span></label
-                      >
-                      <input
+                      <label class="small mb-1" for="inputOrgName">
+                        Tên người dùng
+                        <span style="color: red">*</span>
+                      </label>
+                      <input th:field="*{name}"
                               class="form-control"
                               id="inputFullName"
                               type="text"
@@ -153,10 +150,8 @@
                     </div>
                     <!-- Form Group (location)-->
                     <div class="col-md-6">
-                      <label class="small mb-1" for="inputLocation"
-                      >Điện thoại</label
-                      >
-                      <input
+                      <label class="small mb-1" for="inputLocation">Điện thoại</label>
+                      <input th:field="*{phone}"
                               class="form-control"
                               id="inputPhone"
                               type="text"
@@ -168,14 +163,12 @@
                   <div class="row gx-3 mb-3">
                     <!-- Form Group (organization name)-->
                     <div class="col-md-6">
-                      <label class="small mb-1" for="inputEmailAddress"
-                      >Ngày sinh</label
-                      >
+                      <label class="small mb-1" for="inputEmailAddress">Ngày sinh</label>
                       <div class="input-group input-group-joined">
                             <span class="input-group-text">
                               <i data-feather="calendar"></i>
                             </span>
-                        <input
+                        <input th:field="*{birthDate}"
                                 class="form-control ps-0"
                                 id="litepicker"
                                 placeholder="Chọn ngày sinh"
@@ -184,13 +177,10 @@
                     </div>
                     <!-- Form Group (location)-->
                     <div class="col-md-6">
-                      <label class="small mb-1" for="inputLocation"
-                      >Email</label
-                      >
-                      <input
-                              class="form-control"
+                      <label class="small mb-1" for="inputLocation">Email</label>
+                      <input th:field="*{companyEmail}" class="form-control"
                               id="inputEmail"
-                              type="text"
+                              type="email"
                               placeholder="Nhập Email"
                       />
                     </div>
@@ -199,34 +189,18 @@
                   <div class="row gx-3 mb-3">
                     <!-- Form Group (phone number)-->
                     <div class="col-md-6">
-                      <label class="small mb-1" for="inputPhone"
-                      >Chức vụ</label
-                      >
-                      <select
-                              class="form-select"
-                              id="exampleFormControlSelect1"
-                      >
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option>5</option>
+                      <label class="small mb-1" for="inputPhone">Chức vụ</label>
+                      <select class="form-select" id="exampleFormControlSelect1" name="pid">
+                        <option th:each="position : ${positions}" th:text="${position.name}"
+                                th:value="${position.id}"></option>
                       </select>
                     </div>
                     <!-- Form Group (birthday)-->
                     <div class="col-md-6">
-                      <label class="small mb-1" for="inputBirthday"
-                      >Phòng ban</label
-                      >
-                      <select
-                              class="form-select"
-                              id="exampleFormControlSelect1"
-                      >
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option>5</option>
+                      <label class="small mb-1" for="inputBirthday">Phòng ban</label>
+                      <select class="form-select" id="exampleFormControlSelect1" name="did">
+                        <option th:each="department : ${departments}" th:text="${department.name}"
+                                th:value="${department.id}"></option>
                       </select>
                     </div>
                   </div>
@@ -234,25 +208,19 @@
                   <div class="row gx-3 mb-3">
                     <!-- Form Group (phone number)-->
                     <div class="col-md-6">
-                      <label class="small mb-1" for="inputPhone"
-                      >Ngày vào công ty</label
-                      >
+                      <label class="small mb-1" for="inputPhone">Ngày vào công ty</label>
                       <div class="input-group input-group-joined">
                             <span class="input-group-text">
                               <i data-feather="calendar"></i>
                             </span>
-                        <input
-                                class="form-control ps-0"
+                        <input class="form-control ps-0" th:field="*{startDate}"
                                 id="litepicker-1"
-                                placeholder="Chọn ngày vào công ty"
-                        />
+                                placeholder="Chọn ngày vào công ty" />
                       </div>
                     </div>
                     <!-- Form Group (birthday)-->
                     <div class="col-md-6">
-                      <label class="small mb-1" for="inputBirthday"
-                      >Ngày chính thức</label
-                      >
+                      <label class="small mb-1" for="inputBirthday">Ngày chính thức</label>
                       <div class="input-group input-group-joined">
                             <span class="input-group-text">
                               <i data-feather="calendar"></i>
@@ -266,25 +234,20 @@
                     </div>
                   </div>
                   <div class="mb-3">
-                    <label class="small mb-1" for="inputUsername"
-                    >Mô tả <span style="color: red">*</span></label
-                    >
-                    <textarea
-                            class="form-control"
+                    <label class="small mb-1" for="inputUsername">
+                      Mô tả
+                      <span style="color: red">*</span>
+                    </label>
+                    <textarea class="form-control" th:field="*{note}"
                             id="exampleFormControlTextarea1"
                             rows="3"
-                            placeholder="Nhập mô tả"
-                    ></textarea>
+                            placeholder="Nhập mô tả"></textarea>
                   </div>
 
-                  <!-- Save changes button-->
-                  <button
-                          class="btn btn-primary"
-                          type="button"
-                          id="insert1"
-                  >
-                    Lưu
-                  </button>
+                  <!-- Save changes button -->
+                  <button class="btn btn-primary" form="create-form"
+                          type="submit"
+                          >Lưu</button> <!-- id="insert1"-->
                 </form>
               </div>
             </div>

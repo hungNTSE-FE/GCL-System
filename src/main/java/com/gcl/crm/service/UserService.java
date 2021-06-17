@@ -6,4 +6,7 @@ import java.util.List;
 
 public interface UserService {
     List<AppUser> getAppUsersByIdList(List<Long> aidList);
+    AppUser getUserByEmployeeId(Long employeeId);
+    void disableUserByEmployeeId(Long employeeId);
+    boolean checkUsername(String userName);
 }

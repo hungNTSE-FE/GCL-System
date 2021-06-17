@@ -9,7 +9,7 @@ public class Source {
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     @Column(name = "SOURCE_ID")
-    private Integer sourceId;
+    private Long sourceId;
 
     @Column(name = "SOURCE_NAME")
     private String sourceName;
@@ -17,11 +17,11 @@ public class Source {
     @Column(name = "METHODS")
     private String methods;
 
-    public Integer getSourceId() {
+    public Long getSourceId() {
         return sourceId;
     }
 
-    public void setSourceId(Integer sourceId) {
+    public void setSourceId(Long sourceId) {
         this.sourceId = sourceId;
     }
 
