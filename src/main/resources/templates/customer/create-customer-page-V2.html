@@ -155,92 +155,93 @@
                             </div>
                         </div>
 
-                        <div id="tradingAccountInfo">
-                            <div class="card mb-4">
-                                <div class="card-header">ThÔNG TIN TÀI KHOẢN GIAO DỊCH</div>
-                                <div class="card-body">
-                                    <div class="row gx-3 mb-3">
-                                        <div class="col-md-6">
-                                            <label for="tradingCode" class="small mb-1">
-                                                Mã tài khoản giao dịch
-                                                <span style="color: red">*</span>
-                                            </label>
-                                            <input type="text" class="form-control"
-                                                   id="tradingCode"
-                                                   placeholder="Mã tài khoản giao dịch"
-                                                   th:field="${CustomerForm.accountCode}"
-                                            />
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label class="small mb-1">
-                                                Mã môi giới
-                                                <span style="color: red">*</span>
-                                            </label>
-                                            <input type="text"
-                                                   class="form-control"
-                                                   id="brokerCode"
-                                                   placeholder="Mã môi giới"
-                                                   th:field="${CustomerForm.brokerCode}"
-                                            />
-                                        </div>
-                                    </div>
+<!--                        <div id="tradingAccountInfo">-->
+<!--                            <div class="card mb-4">-->
+<!--                                <div class="card-header">ThÔNG TIN TÀI KHOẢN GIAO DỊCH</div>-->
+<!--                                <div class="card-body">-->
+<!--                                    <div class="row gx-3 mb-3">-->
+<!--                                        <div class="col-md-6">-->
+<!--                                            <label for="tradingCode" class="small mb-1">-->
+<!--                         '8513577', NULL, '0', 'ACB', '2021-06-18 23:30:02', 'Nguyễn Trịnh Đức Duy', '2021-06-18 23:30:02', NULL, NULL, '28'
+                       Mã tài khoản giao dịch-->
+<!--                                                <span style="color: red">*</span>-->
+<!--                                            </label>-->
+<!--                                            <input type="text" class="form-control"-->
+<!--                                                   id="tradingCode"-->
+<!--                                                   placeholder="Mã tài khoản giao dịch"-->
+<!--                                                   th:field="${CustomerForm.accountCode}"-->
+<!--                                            />-->
+<!--                                        </div>-->
+<!--                                        <div class="col-md-6">-->
+<!--                                            <label class="small mb-1">-->
+<!--                                                Mã môi giới-->
+<!--                                                <span style="color: red">*</span>-->
+<!--                                            </label>-->
+<!--                                            <input type="text"-->
+<!--                                                   class="form-control"-->
+<!--                                                   id="brokerCode"-->
+<!--                                                   placeholder="Mã môi giới"-->
+<!--                                                   th:field="${CustomerForm.brokerCode}"-->
+<!--                                            />-->
+<!--                                        </div>-->
+<!--                                    </div>-->
 
-                                    <div class="row gx-3 mb-3">
-                                        <div class="col-md-6">
-                                            <label for="" class="small mb-1">
-                                                Tên tài khoản giao dịch
-                                            </label>
-                                            <input
-                                                    class="form-control ps-0"
-                                                    type="text"
-                                                    aria-label="Search"
-                                                    th:field="${CustomerForm.accountName}"
-                                            />
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label class="small mb-1"> Tên môi giới </label>
-                                            <input
-                                                    class="form-control ps-0"
-                                                    type="text"
-                                                    aria-label="Search"
-                                                    th:field="${CustomerForm.brokerName}"
-                                            />
-                                        </div>
-                                    </div>
-                                    <div class="row gx-3 mb-3">
-                                        <div class="col-md-6">
-                                            <label for="" class="small mb-1">
-                                                Trạng thái
-                                            </label>
-                                            <!-- Joined input group prepend example-->
-                                            <select
-                                                    class="form-select"
-                                                    id="exampleFormControlSelect1"
-                                            >
-                                                <option>Active</option>
-                                                <option>Inactive</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label class="small mb-1">
-                                                Ngày mở tài khoản
-                                            </label>
-                                            <div class="input-group input-group-joined">
-                              <span class="input-group-text">
-                                <i data-feather="calendar"></i>
-                              </span>
-                                                <input
-                                                        class="form-control ps-0"
-                                                        id="date"
-                                                        placeholder="Chọn ngày mở tài khoản..."
-                                                        th:field="${CustomerForm.accountCreateDate}"
-                                                />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+<!--                                    <div class="row gx-3 mb-3">-->
+<!--                                        <div class="col-md-6">-->
+<!--                                            <label for="" class="small mb-1">-->
+<!--                                                Tên tài khoản giao dịch-->
+<!--                                            </label>-->
+<!--                                            <input-->
+<!--                                                    class="form-control ps-0"-->
+<!--                                                    type="text"-->
+<!--                                                    aria-label="Search"-->
+<!--                                                    th:field="${CustomerForm.accountName}"-->
+<!--                                            />-->
+<!--                                        </div>-->
+<!--                                        <div class="col-md-6">-->
+<!--                                            <label class="small mb-1"> Tên môi giới </label>-->
+<!--                                            <input-->
+<!--                                                    class="form-control ps-0"-->
+<!--                                                    type="text"-->
+<!--                                                    aria-label="Search"-->
+<!--                                                    th:field="${CustomerForm.brokerName}"-->
+<!--                                            />-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                    <div class="row gx-3 mb-3">-->
+<!--                                        <div class="col-md-6">-->
+<!--                                            <label for="" class="small mb-1">-->
+<!--                                                Trạng thái-->
+<!--                                            </label>-->
+<!--                                            &lt;!&ndash; Joined input group prepend example&ndash;&gt;-->
+<!--                                            <select-->
+<!--                                                    class="form-select"-->
+<!--                                                    id="exampleFormControlSelect1"-->
+<!--                                            >-->
+<!--                                                <option value="Active">Active</option>-->
+<!--                                                <option value="Inactive">Inactive</option>-->
+<!--                                            </select>-->
+<!--                                        </div>-->
+<!--                                        <div class="col-md-6">-->
+<!--                                            <label class="small mb-1">-->
+<!--                                                Ngày mở tài khoản-->
+<!--                                            </label>-->
+<!--                                            <div class="input-group input-group-joined">-->
+<!--                              <span class="input-group-text">-->
+<!--                                <i data-feather="calendar"></i>-->
+<!--                              </span>-->
+<!--                                                <input-->
+<!--                                                        class="form-control ps-0"-->
+<!--                                                        id="date"-->
+<!--                                                        placeholder="Chọn ngày mở tài khoản..."-->
+<!--                                                        th:field="${CustomerForm.accountCreateDate}"-->
+<!--                                                />-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
 
                         <div id="identity">
                             <div class="card mb-4">
@@ -252,7 +253,7 @@
                                                 Mã căn cước
                                                 <span style="color: red">*</span>
                                             </label>
-                                            <input text="text" class="form-control" id=""/>
+                                            <input th:field="${CustomerForm.identifyNumber}" text="text" class="form-control" id=""/>
                                         </div>
                                         <div class="col-md-6">
                                             <label class="small mb-1">
@@ -264,6 +265,7 @@
                                 <i data-feather="calendar"></i>
                               </span>
                                                 <input
+                                                        th:field="${CustomerForm.dateOfBirth}"
                                                         class="form-control ps-0"
                                                         id="date1"
                                                         placeholder="Chọn ngày sinh..."
@@ -276,13 +278,14 @@
                                         <div class="col-md-6">
                                             <label for="" class="small mb-1"> Nơi cấp </label>
                                             <select
+                                                    th:field="${CustomerForm.placeOfIssue}"
                                                     class="form-select"
                                                     id="exampleFormControlSelect1"
                                             >
-                                                <option>HCM</option>
-                                                <option>Hà Nội</option>
-                                                <option>Bình Dương</option>
-                                                <option>Đồng Nai</option>
+                                                <option value="HCM">HCM</option>
+                                                <option value="Hà Nội">Hà Nội</option>
+                                                <option value="Bình Dương">Bình Dương</option>
+                                                <option value="Đồng Nai">Đồng Nai</option>
                                             </select>
                                         </div>
                                         <div class="col-md-6">
@@ -292,6 +295,7 @@
                                 <i data-feather="calendar"></i>
                               </span>
                                                 <input
+                                                        th:field="${CustomerForm.dateOfIssue}"
                                                         class="form-control ps-0"
                                                         id="date2"
                                                         placeholder="Chọn ngày cấp..."
@@ -299,6 +303,122 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="row gx-3 mb-3">
+                                        <div class="col-md-6">
+                                            <label class="small mb-1"> Mặt trước</label>
+
+                                            <div id="imageBefore">
+                                                <div class="wrapper">
+                                                    <div class="image">
+                                                        <img  alt="">
+                                                    </div>
+                                                    <div class="content">
+                                                        <div class="icon">
+                                                            <i class="fas fa-cloud-upload-alt"></i>
+                                                        </div>
+                                                        <div class="text">
+                                                            Chưa có hình ảnh
+                                                        </div>
+                                                    </div>
+                                                    <div id="cancel-btn">
+                                                        <i class="fas fa-times"></i>
+                                                    </div>
+                                                    <div class="file-name">
+                                                        Tên ảnh
+                                                    </div>
+                                                </div>
+                                                <button  type="button" th:onclick="defaultBtnActive()" id="custom-btn">Chọn 1 ảnh</button>
+                                                <input id="default-btn" th:field="${CustomerForm.imageBefore}"type="file"  hidden>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="small mb-1"> Mặt sau </label>
+
+                                            <div id="imageAfter">
+                                                <div class="wrapper1">
+                                                    <div class="image1">
+                                                        <img  alt="">
+                                                    </div>
+                                                    <div class="content">
+                                                        <div class="icon">
+                                                            <i class="fas fa-cloud-upload-alt"></i>
+                                                        </div>
+                                                        <div class="text1">
+                                                            Chưa có hình ảnh
+                                                        </div>
+                                                    </div>
+                                                    <div id="cancel-btn1">
+                                                        <i class="fas fa-times"></i>
+                                                    </div>
+                                                    <div class="file-name1">
+                                                        Tên ảnh
+                                                    </div>
+                                                </div>
+                                                <button type="button" th:onclick="defaultBtnActiveAfter()" id="custom-btn1">Chọn 1 ảnh</button>
+                                                <input id="default-btnAfter"  th:field="${CustomerForm.imageAfter}"type="file"  hidden>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    <!--                                    <div class="row gx-3 mb-3">-->
+<!--                                        <div class="col-md-6">-->
+<!--                                            <label class="small mb-1"> Mặt trước</label>-->
+
+<!--                                            <div id="imageBefore">-->
+<!--                                                <div class="wrapper">-->
+<!--                                                    <div class="image">-->
+<!--                                                        <img  alt="">-->
+<!--                                                    </div>-->
+<!--                                                    <div class="content">-->
+<!--                                                        <div class="icon">-->
+<!--                                                            <i class="fas fa-cloud-upload-alt"></i>-->
+<!--                                                        </div>-->
+<!--                                                        <div class="text">-->
+<!--                                                            Chưa có hình ảnh-->
+<!--                                                        </div>-->
+<!--                                                    </div>-->
+<!--                                                    <div id="cancel-btn">-->
+<!--                                                        <i class="fas fa-times"></i>-->
+<!--                                                    </div>-->
+<!--                                                    <div class="file-name">-->
+<!--                                                        Tên ảnh-->
+<!--                                                    </div>-->
+<!--                                                </div>-->
+<!--                                                <button  th:onclick="defaultBtnActive()" id="custom-btn">Chọn 1 ảnh</button>-->
+<!--                                                <input id="default-btn" type="file"  hidden>-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+<!--                                        <div class="col-md-6">-->
+<!--                                            <label class="small mb-1"> Mặt sau </label>-->
+
+<!--                                            <div id="imageAfter">-->
+<!--                                                <div class="wrapper1">-->
+<!--                                                    <div class="image1">-->
+<!--                                                        <img  alt="">-->
+<!--                                                    </div>-->
+<!--                                                    <div class="content">-->
+<!--                                                        <div class="icon">-->
+<!--                                                            <i class="fas fa-cloud-upload-alt"></i>-->
+<!--                                                        </div>-->
+<!--                                                        <div class="text1">-->
+<!--                                                            Chưa có hình ảnh-->
+<!--                                                        </div>-->
+<!--                                                    </div>-->
+<!--                                                    <div id="cancel-btn1">-->
+<!--                                                        <i class="fas fa-times"></i>-->
+<!--                                                    </div>-->
+<!--                                                    <div class="file-name1">-->
+<!--                                                        Tên ảnh-->
+<!--                                                    </div>-->
+<!--                                                </div>-->
+<!--                                                <button  th:onclick="defaultBtnActiveAfter()" id="custom-btn1">Chọn 1 ảnh</button>-->
+<!--                                                <input id="default-btnAfter" type="file"  hidden>-->
+<!--                                            </div>-->
+
+<!--                                        </div>-->
+<!--                                    </div>-->
+
                                 </div>
                             </div>
                         </div>
@@ -445,6 +565,85 @@
         element: document.getElementById("date2"),
         autoRefresh: true,
     });
+</script><script th:inline="javascript">
+    const wrapper = document.querySelector(".wrapper");
+    const fileName = document.querySelector(".file-name");
+    const defaultBtn = document.querySelector("#default-btn");
+    const customBtn = document.querySelector("#custom-btn");
+    const cancelBtn = document.querySelector("#cancel-btn i");
+    const img = document.querySelector(".image img");
+    const wrapper1 = document.querySelector(".wrapper1");
+    const fileName1 = document.querySelector(".file-name1");
+    const defaultBtn1 = document.querySelector("#default-btnAfter");
+    const customBtn1 = document.querySelector("#custom-btn1");
+    const cancelBtn1 = document.querySelector("#cancel-btn1 i");
+    const img1 = document.querySelector(".image1 img");
+    let regExp = /[0-9a-zA-Z\^\&\'\@\{\}\[\]\,\$\=\!\-\#\(\)\.\%\+\~\_ ]+$/;
+    //after
+
+    function  defaultBtnActive(){
+        defaultBtn.click();
+    }
+    defaultBtn.addEventListener("change", function(){
+        const file = this.files[0];
+        let valid=["image/png","image/jpg","image/jpeg"];
+        let fileType = file.type;
+        if(valid.includes(fileType)){
+            if(file){
+                const reader = new FileReader();
+                reader.onload = function(){
+                    const result = reader.result;
+                    img.src = result;
+                    wrapper.classList.add("active");
+                }
+                cancelBtn.addEventListener("click", function(){
+                    img.src = "";
+                    wrapper.classList.remove("active");
+                })
+                reader.readAsDataURL(file);
+            }
+            if(this.value){
+                let valueStore = this.value.match(regExp);
+                fileName.textContent = valueStore;
+            }
+        }else{
+            alert("Xin hay chon hinh anh")
+        }
+
+    });
+
+    function defaultBtnActiveAfter(){
+        defaultBtn1.click();
+    }
+    defaultBtn1.addEventListener("change", function(){
+        const file1 = this.files[0];
+        let valid1=["image/png","image/jpg","image/jpeg"];
+        let fileType1 = file1.type;
+        if(valid1.includes(fileType1)){
+            if(file1){
+                const reader1 = new FileReader();
+                reader1.onload = function(){
+                    const result1 = reader1.result;
+                    img1.src = result1;
+                    wrapper1.classList.add("active");
+                }
+                cancelBtn1.addEventListener("click", function(){
+                    img1.src = "";
+                    wrapper1.classList.remove("active");
+                })
+                reader1.readAsDataURL(file1);
+            }
+            if(this.value){
+                let valueStore1 = this.value.match(regExp);
+                fileName1.textContent = valueStore1;
+            }
+        }else{
+            alert("Xin hay chon hinh anh")
+        }
+
+    });
 </script>
+
+
 </body>
 </html>

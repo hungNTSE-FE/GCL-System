@@ -35,6 +35,21 @@ public class Identification {
     @Column(name = "permanent_place")
     private String permanentPlace;
 
+    public Identification(String identityNumber, String issuePlace, String frontImageUrl, String backImageUrl, Date issueDate, Date birthDate) {
+        this.identityNumber = identityNumber;
+        this.issuePlace = issuePlace;
+        this.frontImageUrl = frontImageUrl;
+        this.backImageUrl = backImageUrl;
+        this.issueDate = issueDate;
+        this.birthDate = birthDate;
+    }
+
     @OneToOne(mappedBy = "identification", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Employee employee;
+    @OneToOne(mappedBy = "identification", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Customer customer;
+
+    public Identification() {
+
+    }
 }

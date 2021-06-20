@@ -1,8 +1,12 @@
+
+
 var URL_SAVE_CUSTOMER = '/customer/saveCustomer';
 var URL_REGISTER_CUSTOEMR = '/customer/registerCustomer';
+var URL_UPDATE_CUSTOEMR = '/customer/updateCustomer';
 
 var CUSTOMER_FORM_ID = '#customerForm';
 var BTN_REGISTER_CUSTOMER_ID = '#registerCustomer';
+var BTN_UPDATE_CUSTOMER_ID = '#updateCustomer';
 
 var CUSTOMER_FORM = {
     BROKER_CMB_ID : '#brokerCmb',
@@ -37,6 +41,10 @@ function init(){
 $(BTN_REGISTER_CUSTOMER_ID).on('click', function (){
     registerCustomer();
 });
+(BTN_UPDATE_CUSTOMER_ID).on('click', function (){
+    registerCustomer();
+});
+
 
 function registerCustomer(){
     setValueForm();

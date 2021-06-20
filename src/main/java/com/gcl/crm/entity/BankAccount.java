@@ -2,10 +2,7 @@ package com.gcl.crm.entity;
 
 import lombok.Data;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
@@ -35,13 +32,35 @@ public class BankAccount {
     @Column(name = "UPD_USER")
     private String updUser;
 
+    @Column(name="balance")
+    private double balance;
+
     public BankAccount() {
+    }
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "customer_code")
+    private Customer customer;
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 
     public BankAccount(String id, String bankName, String ownerName) {
         this.id = id;
         this.bankName = bankName;
         this.ownerName = ownerName;
+    }
+
+    public double getBalance() {
+        return balance;
+    }
+
+    public void setBalance(double balance) {
+        this.balance = balance;
     }
 
     public String getId() {

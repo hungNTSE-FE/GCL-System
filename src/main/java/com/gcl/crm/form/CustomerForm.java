@@ -1,6 +1,6 @@
 package com.gcl.crm.form;
 
-import java.util.Date;
+import java.sql.Date;
 import javax.validation.constraints.*;
 public class CustomerForm {
     private Long hdnCustomerCode;
@@ -42,13 +42,13 @@ public class CustomerForm {
     private String identifyNumber;
 
     @NotBlank(message = "Ngày cấp không thể bỏ trống")
-    private String dateOfIssue;
+    private Date dateOfIssue;
 
     @NotBlank(message = "Nơi cấp không thể bỏ trống")
     private String placeOfIssue;
 
     @NotBlank(message = "Ngày sinh không thể bỏ trống")
-    private String dateOfBirth;
+    private Date dateOfBirth;
 
     @NotBlank(message = "Tài khoản giao dịch không thể bỏ trống")
     private String accountCode;
@@ -58,6 +58,26 @@ public class CustomerForm {
 
     @NotBlank(message = "Mã môi giới không thể bỏ trống")
     private String brokerCode;
+
+    private String imageBefore ;
+
+    private String imageAfter ;
+
+    public String getImageBefore() {
+        return imageBefore;
+    }
+
+    public void setImageBefore(String imageBefore) {
+        this.imageBefore = imageBefore;
+    }
+
+    public String getImageAfter() {
+        return imageAfter;
+    }
+
+    public void setImageAfter(String imageAfter) {
+        this.imageAfter = imageAfter;
+    }
 
     private String brokerName;
 
@@ -214,13 +234,7 @@ public class CustomerForm {
         this.identifyNumber = identifyNumber;
     }
 
-    public String getDateOfIssue() {
-        return dateOfIssue;
-    }
 
-    public void setDateOfIssue(String dateOfIssue) {
-        this.dateOfIssue = dateOfIssue;
-    }
 
     public String getPlaceOfIssue() {
         return placeOfIssue;
@@ -278,13 +292,7 @@ public class CustomerForm {
         this.hdnEmployeeId = hdnEmployeeId;
     }
 
-    public String getDateOfBirth() {
-        return dateOfBirth;
-    }
 
-    public void setDateOfBirth(String dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
-    }
 
     public String getDescription() {
         return description;
@@ -292,5 +300,21 @@ public class CustomerForm {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Date getDateOfIssue() {
+        return dateOfIssue;
+    }
+
+    public void setDateOfIssue(Date dateOfIssue) {
+        this.dateOfIssue = dateOfIssue;
+    }
+
+    public Date getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(Date dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
     }
 }

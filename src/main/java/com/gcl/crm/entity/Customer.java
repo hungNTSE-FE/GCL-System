@@ -85,17 +85,41 @@ public class Customer {
     @JoinColumn(name = "LEVEL_ID")
     private Level level;
 
-    @OneToOne
-    @JoinColumn(name = "identity_number")
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "identity_number", referencedColumnName = "identity_number")
     private Identification identification;
 
     @ManyToMany
     @JoinColumn(name = "CAMPAIGN_CODE")
     private List<Campaign> campaignList;
 
+
+
+
+    @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<BankAccount> bankAccounts;
+
+    public List<BankAccount> getBankAccounts() {
+        return bankAccounts;
+    }
+
+    public void setBankAccounts(List<BankAccount> bankAccounts) {
+        this.bankAccounts = bankAccounts;
+    }
+
     @OneToOne
     @JoinColumn(name = "id")
     private Employee employee;
+    @OneToOne(mappedBy = "customer", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Contract contract;
+
+    public Contract getContract() {
+        return contract;
+    }
+
+    public void setContract(Contract contract) {
+        this.contract = contract;
+    }
 
     public Long getCustomerCode() {
         return customerCode;

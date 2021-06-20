@@ -9,36 +9,38 @@ import java.util.List;
 public class Contract {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id",nullable = false)
+    @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name="account_type",nullable = false)
-    private String accountType;
-
-    @Column(name="option_id",nullable = false)
-    private String optionID;
-
-    @Column(name="customer_name",nullable = false)
-    private String customerName;
-
-    @Column(name="birthday")
-    private Date birthday ;
-
-    @Column(name="address",nullable = false)
-    private String address;
-
-    @Column(name="phone_number",nullable = false)
-    private String phoneNumber;
-
-    @OneToMany(mappedBy = "contract", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<PaymentMethod> paymentMethods;
-
-    @OneToOne(fetch = FetchType.LAZY,
-            cascade =  CascadeType.ALL,
-            mappedBy = "contract")
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "CUSTOMER_CODE", referencedColumnName = "CUSTOMER_CODE")
+    private Customer customer;
 
 
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "account_number", referencedColumnName = "account_number")
+    private TradingAccount tradingAccount;
 
+    private String number;
+
+    public String getNumber() {
+        return number;
+    }
+
+    public void setNumber(String number) {
+        this.number = number;
+    }
+
+    @Column(name="broker_code")
+    private String brokerCode;
+    @Column(name = "account_name")
+    private String account_name;
+    @Column(name="broker_name")
+    private String broker_name;
+    @Column(name="status")
+    private String status;
+    @Column(name="create_date")
+    private Date createDate ;
 
     public Long getId() {
         return id;
@@ -48,59 +50,60 @@ public class Contract {
         this.id = id;
     }
 
-    public String getAccountType() {
-        return accountType;
+    public Customer getCustomer() {
+        return customer;
     }
 
-    public void setAccountType(String accountType) {
-        this.accountType = accountType;
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 
-    public String getOptionID() {
-        return optionID;
+
+    public TradingAccount getTradingAccount() {
+        return tradingAccount;
     }
 
-    public void setOptionID(String optionID) {
-        this.optionID = optionID;
+    public void setTradingAccount(TradingAccount tradingAccount) {
+        this.tradingAccount = tradingAccount;
     }
 
-    public String getCustomerName() {
-        return customerName;
+    public String getBrokerCode() {
+        return brokerCode;
     }
 
-    public void setCustomerName(String customerName) {
-        this.customerName = customerName;
+    public void setBrokerCode(String brokerCode) {
+        this.brokerCode = brokerCode;
     }
 
-    public Date getBirthday() {
-        return birthday;
+    public String getAccount_name() {
+        return account_name;
     }
 
-    public void setBirthday(Date birthday) {
-        this.birthday = birthday;
+    public void setAccount_name(String account_name) {
+        this.account_name = account_name;
     }
 
-    public String getAddress() {
-        return address;
+    public String getBroker_name() {
+        return broker_name;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setBroker_name(String broker_name) {
+        this.broker_name = broker_name;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
+    public String getStatus() {
+        return status;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
-    public List<PaymentMethod> getPaymentMethods() {
-        return paymentMethods;
+    public Date getCreateDate() {
+        return createDate;
     }
 
-    public void setPaymentMethods(List<PaymentMethod> paymentMethods) {
-        this.paymentMethods = paymentMethods;
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
     }
 }
