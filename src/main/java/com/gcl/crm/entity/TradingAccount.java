@@ -43,6 +43,10 @@ public class TradingAccount {
     @OneToOne(mappedBy = "tradingAccount", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Contract contract;
 
+    public TradingAccount() {
+
+    }
+
     public Contract getContract() {
         return contract;
     }

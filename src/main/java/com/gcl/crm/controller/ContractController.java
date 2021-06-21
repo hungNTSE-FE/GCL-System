@@ -43,6 +43,7 @@ public class ContractController {
         model.addAttribute("contract",contract);
         List<BankAccount> bankAccountList = customer.getBankAccounts();
         System.out.println(bankAccountList.size());
+        model.addAttribute("owner",bankAccountList.get(0).getOwnerName());
         model.addAttribute("bankAccount",bankAccountList);
         return "contract/create-contract-page";
     }
@@ -53,7 +54,7 @@ public class ContractController {
 
 
         Customer customer =customerProcessService.findCustomerByID(customerCode);
-        contract.setCustomer(customer);
+
         TradingAccount tradingAccount = new TradingAccount(contract.getNumber(),
                 0,"inactive",
                 contract.getAccount_name(),
@@ -62,10 +63,10 @@ public class ContractController {
                 contract.getCreateDate()
                 );
         contract.setTradingAccount(tradingAccount);
+        customer.setContract(contract);
 
 
-
-        contractService.createContract(contract);
+        customerProcessService.saveCustomer(customer);
         return "contract/view-customer-page";
     }
 

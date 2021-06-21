@@ -9,12 +9,10 @@ import java.util.List;
 public class Contract {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
+    @Column(name = "contract_id", nullable = false)
     private Long id;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "CUSTOMER_CODE", referencedColumnName = "CUSTOMER_CODE")
-    private Customer customer;
+
 
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -41,7 +39,8 @@ public class Contract {
     private String status;
     @Column(name="create_date")
     private Date createDate ;
-
+    @OneToOne(mappedBy = "contract", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Customer customer;
     public Long getId() {
         return id;
     }
@@ -50,13 +49,7 @@ public class Contract {
         this.id = id;
     }
 
-    public Customer getCustomer() {
-        return customer;
-    }
 
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
-    }
 
 
     public TradingAccount getTradingAccount() {

@@ -1,7 +1,7 @@
 package com.gcl.crm.controller;
 
-import com.gcl.crm.entity.Task;
-import com.gcl.crm.entity.Transaction;
+import com.gcl.crm.entity.*;
+import com.gcl.crm.service.CustomerProcessService;
 import com.gcl.crm.service.TaskService;
 import com.gcl.crm.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 @RequestMapping("/transaction")
 public class TransactionController {
+    @Autowired
+    private CustomerProcessService customerProcessService;
     @Autowired
     private TransactionService transactionService;
     @GetMapping({"/home"})
@@ -48,5 +50,37 @@ public class TransactionController {
         transactionService.deleteTransactionByID(id);
         return "redirect:/transaction/home";
 
+    }
+    @GetMapping({"/perform/{id}"})
+    public String showTransactionPerform(@PathVariable(name = "id") long id, Model model){
+        Customer customer = customerProcessService.findCustomerByID(id);
+        if(customer.
+                getContract().
+                getTradingAccount().
+                getStatus().equals("inactive")){
+
+            TradingAccount tradingAccount = customer.getContract().getTradingAccount();
+            model.addAttribute("tradingAccount",tradingAccount);
+            model.addAttribute("customer",customer);
+            return "transaction/active-account-page";
+        }
+        else{
+            model.addAttribute("customer",customer);
+            model.addAttribute("balance",customer.getContract().getTradingAccount().getBalance() + " " + "VND");
+            return "transaction/perform-transaction-page";
+        }
+
+    }
+    @PostMapping({"/active"})
+    public String activeAccount(@ModelAttribute("customer") Customer customer){
+        customer = customerProcessService.findCustomerByID(customer.getCustomerCode());
+        TradingAccount tradingAccount = customer.getContract().getTradingAccount();
+        tradingAccount.setStatus("active");
+        Contract contract = customer.getContract();
+        contract.setTradingAccount(tradingAccount);
+        customer.setContract(contract);
+
+        customerProcessService.saveCustomer(customer);
+    return "redirect:/transaction/perform/"+customer.getCustomerCode();
     }
 }

@@ -41,7 +41,8 @@ public class CustomerService {
     BankRepository bankRepository;
     @Autowired
     IdentificationRepository identificationRepository;
-
+    @Autowired
+    CustomerProcessService customerProcessService;
 
     public ComboboxForm initComboboxData() {
         ComboboxForm comboboxForm = new ComboboxForm();
@@ -77,8 +78,8 @@ public class CustomerService {
             customer.setIdentification(registerIdentification(customerForm));
             customer.setBankAccounts(bankAccountList);
 
-
-            customerRepository.register(customer);
+                customerProcessService.saveCustomer(customer);
+//            customerRepository.register(customer);
         } catch (Exception e) {
             e.printStackTrace();
         }
