@@ -17,7 +17,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -35,17 +34,27 @@ public class DocumentaryController {
     @Autowired
     private DocumentaryRepository documentaryRepo;
 
+
+
+
     @GetMapping({"/home"})
-    public String showDocumentaryHome(){
-
-        return "documentary/home";
-    }
-
-    @GetMapping({"/uploadPage"})
-    public String showDocumentaryUploadForm(Model model){
+    public String showDocumentaryHomePage(Model model){
         List<Documentary> listDocs = documentaryRepo.findAll();
+
         model.addAttribute("listDocs",listDocs);
-        return "documentary/upload-documentary-page";
+        return "documentary/documentary-home";
+    }
+    @GetMapping({"/"})
+    public String showDocumentaryHomePagev2(Model model){
+        List<Documentary> listDocs = documentaryRepo.findAll();
+
+        model.addAttribute("listDocs",listDocs);
+        return "documentary/upload-documentary-v2";
+    }
+    @GetMapping({"/uploadPage"})
+    public String showUploadPage(Model model){
+
+        return "documentary/upload-documentary-v2";
     }
     @PostMapping({"/upload"})
     public String uploadDocumentary(@RequestParam("documentary") MultipartFile multipartFile, RedirectAttributes ra) throws IOException {
@@ -57,7 +66,7 @@ public class DocumentaryController {
         documentary.setUploadTime(new Date());
         documentaryRepo.save(documentary);
         ra.addFlashAttribute("message","Công văn đã được gửi");
-        return "redirect:/documentary/uploadPage";
+        return "redirect:/documentary/home";
     }
     @GetMapping({"/download"})
     public void downloadDocumentary(@Param("id") int id, HttpServletResponse response) throws Exception {
@@ -87,18 +96,8 @@ public class DocumentaryController {
     }
     @PostMapping({"/promulgate"})
     public String promulgateDocumentary(@RequestParam(required=false,value="documentary_id") String docID,@RequestParam(required=false,value="department_id_check") List<String> departmentID){
-//        int docIDParse = Integer.parseInt(docID);
-//        List<Department> departmentList = new ArrayList<>();
-//        Documentary documentary = documentaryService.findByID(docIDParse);
-//        for(int i =0;i<departmentID.size();i++){
-//            departmentList.add(departmentService.findDepartmentById(Long.parseLong(departmentID.get(0).toString())
-//            ));
-//
-//        }
-//
-//        documentary.setDepartments(departmentList);
-//        documentaryRepo.save(documentary);
+
         documentaryService.promulgateDocumentary(docID,departmentID);
-        return "redirect:/task/viewAllTask";
+        return "redirect:/documentary/home";
     }
 }

@@ -96,54 +96,50 @@
         </div>
         <div class="card mb-4 card-header-actions mx-auto">
           <div class="card-header">
-            Hiển Thị Phòng Ban
+            Hiển Thị Giao Dịch
             <div>
-              <button class="btn btn-primary clickshowinfo" data-id="100">
-                Thêm mới
-              </button>
-              <button form="go-update-form" class="btn btn-outline-dark" type="submit">Sửa</button>
-              <button class="btn btn-outline-dark">Chi tiết</button>
+              <div id="createButton">
+                <a th:href="@{/transaction/showCreateForm}" class="btn btn-warning" style="color: white">
+                  <i class="fa fa-shopping-cart"></i>
+
+                  Thêm giao dịch
+                </a>
+              </div>
             </div>
           </div>
           <div class="card-body">
             <table id="datatablesSimple">
               <thead>
               <tr>
-                <th>TÊN ĐĂNG NHẬP</th>
-                <th>TÊN NGƯỜI DÙNG</th>
-                <th>TRƯỞNG PHÒNG</th>
-                <th>NGÀY SINH</th>
-                <th>PHÒNG BAN</th>
-                <th>ĐIỆN THOẠI</th>
-                <th>EMAIL</th>
-                <th>HÀNH ĐỘNG</th>
+                <th>Tên giao dịch</th>
+                <th>Người phụ trách</th>
+                <th>Người liên hệ</th>
+                <th>Loại giao dịch</th>
+                <th>Thời gian thực hiện</th>
+                <th>Trạng thái</th>
+                <th>Mô tả</th>
+                <th>Chi tiết</th>
+                <th>Xóa</th>
+
               </tr>
               </thead>
               <tbody>
-              <tr >
-                <td th:text="abc"></td>
-                <td th:text="abc"></td>
-                <td th:text="abc"></td>
-                <td th:text="abc"></td>
-                <td th:text="abc"></td>
-                <td th:text="abc"></td>
-                <td th:text="abc"></td>
-                <!--                <div class="badge bg-primary text-white rounded-pill">-->
-                <!--                  Full-time-->
-                <!--                </div>-->
+              <tr th:each="transaction : ${listTransactions}">
+                <td th:text="${transaction.name}"></td>
+                <td th:text="${transaction.manager}"></td>
+                <td th:text="${transaction.contact}"></td>
+                <td th:text="${transaction.transactionType}"></td>
+                <td th:text="${transaction.requestDate}"></td>
+                <td th:text="${transaction.status}"></td>
+                <td th:text="${transaction.description}"></td>
                 <td>
-                  <button
-                          class="
-                            btn btn-datatable btn-icon btn-transparent-dark
-                            me-2
-                          "
-                  >
-                    <i data-feather="more-vertical"></i>
-                  </button>
-                  <button class="btn btn-datatable btn-icon btn-transparent-dark">
-                    <i data-feather="trash-2"></i>
-                  </button>
+
+                  <a th:href="@{'/transaction/showUpdateTransactionForm/'+${transaction.transaction_id}}"><i class="fa fa-arrow-circle-right" aria-hidden="true"></i></a>
+
                 </td>
+                <td ><a th:href="@{'/transaction/deleteTransaction/'+${transaction.transaction_id}}"><i onclick="return confirm('Bạn có chắc muốn xóa')" class="fa fa-trash" aria-hidden="true"></i></a>
+                </td>
+
               </tr>
               </tbody>
             </table>
@@ -164,27 +160,7 @@
           <i class="fas fa-times"></i>
         </a>
       </div>
-<!--      <div class="card-body">-->
-<!--        <form th:action="@{/department/create}" method="POST" th:object="${departmentForm}">-->
-<!--          <div class="mb-3">-->
-<!--            <label for="exampleInputEmail1" class="form-label"><strong>-->
-<!--              Phòng ban-->
-<!--            </strong>-->
-<!--              <span style="color: red">*</span></label>-->
-<!--            <input type="text" th:field="*{name}" class="form-control form-control-solid" id="exampleInputEmail1" aria-describedby="emailHelp">-->
-<!--          </div>-->
-<!--          <div class="mb-3">-->
-<!--            <label for="textAreaExample" class="form-label"> <strong>-->
-<!--              Ghi chú-->
-<!--            </strong></label>-->
-<!--            <textarea th:field="*{note}" class="form-control form-control-solid" id="textAreaExample" rows="4"></textarea>-->
-<!--          </div>-->
-<!--          <div class="mb-3">-->
-<!--            <label class="form-label">  Bắt buộc <span style="color: red">*</span></label>-->
-<!--          </div>-->
-<!--          <button type="submit" class="btn btn-primary">LƯU</button>-->
-<!--        </form>-->
-<!--      </div>-->
+<
     </div>
   </div>
 </div>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -51,7 +51,7 @@
                       id="customerForm"
                       action="#"
                       th:object="${CustomerForm}"
-                      th:method="POST"
+
                 >
                     <!-- Customer information -->
                     <div class="card mb-4 card-header-actions">
@@ -241,6 +241,7 @@
                                        required
                                 />
                             </div>
+
                             <div class="form-group col-md-4">
                                 <label for="placeOfIssue">Nơi cấp</label>
                                 <input type="text" class="form-control"
@@ -248,9 +249,66 @@
                                        th:field="${CustomerForm.placeOfIssue}"
                                        required
                                 />
+                                </div>
+                            <div class="row gx-3 mb-3">
+                                <div class="col-md-6">
+                                    <label class="small mb-1"> Mặt trước</label>
+
+                                    <div id="imageBefore">
+                                        <div class="wrapper">
+                                            <div class="image">
+                                                <img  alt="">
+                                            </div>
+                                            <div class="content">
+                                                <div class="icon">
+                                                    <i class="fas fa-cloud-upload-alt"></i>
+                                                </div>
+                                                <div class="text">
+                                                    Chưa có hình ảnh
+                                                </div>
+                                            </div>
+                                            <div id="cancel-btn">
+                                                <i class="fas fa-times"></i>
+                                            </div>
+                                            <div class="file-name">
+                                                Tên ảnh
+                                            </div>
+                                        </div>
+                                        <button  th:onclick="defaultBtnActive()" id="custom-btn">Chọn 1 ảnh</button>
+                                        <input id="default-btn" type="file"  hidden>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="small mb-1"> Mặt sau </label>
+
+                                    <div id="imageAfter">
+                                        <div class="wrapper1">
+                                            <div class="image1">
+                                                <img  alt="">
+                                            </div>
+                                            <div class="content">
+                                                <div class="icon">
+                                                    <i class="fas fa-cloud-upload-alt"></i>
+                                                </div>
+                                                <div class="text1">
+                                                    Chưa có hình ảnh
+                                                </div>
+                                            </div>
+                                            <div id="cancel-btn1">
+                                                <i class="fas fa-times"></i>
+                                            </div>
+                                            <div class="file-name1">
+                                                Tên ảnh
+                                            </div>
+                                        </div>
+                                        <button  th:onclick="defaultBtnActiveAfter()" id="custom-btn1">Chọn 1 ảnh</button>
+                                        <input id="default-btnAfter" type="file"  hidden>
+                                    </div>
+
+                                </div>
                             </div>
-                        </div>
-                        <div class="row">
+
+                            <div class="row">
                             <div class="form-group col-md-2">
                                 <label for="dateOfBirth">Ngày sinh</label>
                                 <input type="date"
@@ -311,6 +369,9 @@
                            id="hdnSourceId"
                            th:field="${CustomerForm.hdnSourceId}"
                     />
+
+
+            </div>
                 </form>
             </div>
         </main>
@@ -329,5 +390,150 @@
 <!-- Latest compiled and minified JavaScript -->
 <script type="text/javascript" th:src="@{/js/datatables/datatables-simple-demo.js}"></script>
 <script type="text/javascript" th:src="@{/js/customer.js}"></script>
+<script>
+    const form = document.getElementById('customerForm');
+
+    form.addEventListener('submit',(e) => {
+        e.preventDefault()
+        // const nameValue = name.value.trim();
+        // const descriptionValue = description.value.trim();
+        // const contactValue = contact.value.trim();
+        // const managerValue = manager.value.trim();
+        // const customerValue = customer.value.trim();
+        // const startValue = start.value.trim();
+        // const endValue = end.value.trim();
+        // const statusValue = status.value.trim();
+        // const  resultValue = result.value.trim();
+
+        const re = /^\d{1,2}\/\d{1,2}\/\d{4}$/;
+        if(nameValue ==''){
+            setErrorFor(name,"Tên không thể trống");
+            e.preventDefault();
+
+        }else {
+            setSuccessFor(name);
+        }
+        if(descriptionValue ==''){
+            setErrorFor(description,"Mô tả không thể trống");
+            e.preventDefault();
+        }else {
+            setSuccessFor(description);
+        }
+        if(contactValue ==''){
+            setErrorFor(contact,"Người liên hệ không thể trống");
+            e.preventDefault();
+        }else {
+            setSuccessFor(contact);
+        }
+        if(managerValue ==''){
+            setErrorFor(manager,"Người quản lý  không thể trống");
+            e.preventDefault();
+        }else {
+            setSuccessFor(manager);
+        }
+        if(customerValue ==''){
+            setErrorFor(customer,"Khách hàng  không thể trống");
+            e.preventDefault();
+        }else {
+            setSuccessFor(customer);
+        }
+        if(customerValue ==''){
+            setErrorFor(customer,"Khách hàng  không thể trống");
+            e.preventDefault();
+        }else {
+            setSuccessFor(customer);
+        }
+        if(statusValue ==''){
+            setErrorFor(status,"Trạng thái  không thể trống");
+            e.preventDefault();
+        }else {
+            setSuccessFor(status);
+        }
+        if(resultValue ==''){
+            setErrorFor(result,"Kết quả  không thể trống");
+            e.preventDefault();
+        }else {
+            setSuccessFor(result);
+        }
+    });</script>
+<script th:inline="javascript">
+    const wrapper = document.querySelector(".wrapper");
+    const fileName = document.querySelector(".file-name");
+    const defaultBtn = document.querySelector("#default-btn");
+    const customBtn = document.querySelector("#custom-btn");
+    const cancelBtn = document.querySelector("#cancel-btn i");
+    const img = document.querySelector(".image img");
+    const wrapper1 = document.querySelector(".wrapper1");
+    const fileName1 = document.querySelector(".file-name1");
+    const defaultBtn1 = document.querySelector("#default-btnAfter");
+    const customBtn1 = document.querySelector("#custom-btn1");
+    const cancelBtn1 = document.querySelector("#cancel-btn1 i");
+    const img1 = document.querySelector(".image1 img");
+    let regExp = /[0-9a-zA-Z\^\&\'\@\{\}\[\]\,\$\=\!\-\#\(\)\.\%\+\~\_ ]+$/;
+    //after
+
+    function  defaultBtnActive(){
+        defaultBtn.click();
+    }
+    defaultBtn.addEventListener("change", function(){
+        const file = this.files[0];
+        let valid=["image/png","image/jpg","image/jpeg"];
+        let fileType = file.type;
+        if(valid.includes(fileType)){
+            if(file){
+                const reader = new FileReader();
+                reader.onload = function(){
+                    const result = reader.result;
+                    img.src = result;
+                    wrapper.classList.add("active");
+                }
+                cancelBtn.addEventListener("click", function(){
+                    img.src = "";
+                    wrapper.classList.remove("active");
+                })
+                reader.readAsDataURL(file);
+            }
+            if(this.value){
+                let valueStore = this.value.match(regExp);
+                fileName.textContent = valueStore;
+            }
+        }else{
+            alert("Xin hay chon hinh anh")
+        }
+
+    });
+
+    function defaultBtnActiveAfter(){
+        defaultBtn1.click();
+    }
+    defaultBtn1.addEventListener("change", function(){
+        const file1 = this.files[0];
+        let valid1=["image/png","image/jpg","image/jpeg"];
+        let fileType1 = file1.type;
+        if(valid1.includes(fileType1)){
+            if(file1){
+                const reader1 = new FileReader();
+                reader1.onload = function(){
+                    const result1 = reader1.result;
+                    img1.src = result1;
+                    wrapper1.classList.add("active");
+                }
+                cancelBtn1.addEventListener("click", function(){
+                    img1.src = "";
+                    wrapper1.classList.remove("active");
+                })
+                reader1.readAsDataURL(file1);
+            }
+            if(this.value){
+                let valueStore1 = this.value.match(regExp);
+                fileName1.textContent = valueStore1;
+            }
+        }else{
+            alert("Xin hay chon hinh anh")
+        }
+
+    });
+</script>
+
 </body>
 </html>

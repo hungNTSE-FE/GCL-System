@@ -2,7 +2,7 @@ package com.gcl.crm.entity;
 
 import com.gcl.crm.enums.Gender;
 import com.gcl.crm.form.CustomerStatusForm;
-import com.gcl.crm.form.CustomerStatusReportForm;
+import com.gcl.crm.form.CustomerStatusEvaluationForm;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -23,15 +23,13 @@ import java.util.List;
                 @ColumnResult(name = "level_5", type = String.class),
                 @ColumnResult(name = "level_6", type = String.class),
                 @ColumnResult(name = "level_7", type = String.class),
-                @ColumnResult(name = "numOfRegisteredAccount", type = String.class),
-                @ColumnResult(name = "numOfTopUp", type = String.class)
         }
         )
 )
 @SqlResultSetMapping(
         name = "getCustomerStatusReportListMapping",
         classes = @ConstructorResult(
-                targetClass = CustomerStatusReportForm.class
+                targetClass = CustomerStatusEvaluationForm.class
                 , columns = {
                 @ColumnResult(name = "employee_name", type = String.class),
                 @ColumnResult(name = "level_6", type = Integer.class),
@@ -65,6 +63,9 @@ public class Customer {
     @Column(name = "STATUS")
     private String status;
 
+    @Column(name = "DESCRIPTION")
+    private String description;
+
     @Column(name = "ACCOUNT_REGISTER_DATE")
     private Date accountRegisterDate;
 
@@ -84,17 +85,39 @@ public class Customer {
     @JoinColumn(name = "LEVEL_ID")
     private Level level;
 
-    @OneToOne
-    @JoinColumn(name = "identity_number")
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "identity_number", referencedColumnName = "identity_number")
     private Identification identification;
 
     @ManyToMany
     @JoinColumn(name = "CAMPAIGN_CODE")
     private List<Campaign> campaignList;
 
+    @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<BankAccount> bankAccounts;
+
     @OneToOne
     @JoinColumn(name = "id")
     private Employee employee;
+
+    @OneToOne(mappedBy = "customer", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Contract contract;
+
+    public List<BankAccount> getBankAccounts() {
+        return bankAccounts;
+    }
+
+    public void setBankAccounts(List<BankAccount> bankAccounts) {
+        this.bankAccounts = bankAccounts;
+    }
+
+    public Contract getContract() {
+        return contract;
+    }
+
+    public void setContract(Contract contract) {
+        this.contract = contract;
+    }
 
     public Long getCustomerCode() {
         return customerCode;
@@ -222,5 +245,13 @@ public class Customer {
 
     public void setCreateDate(Date createDate) {
         this.createDate = createDate;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

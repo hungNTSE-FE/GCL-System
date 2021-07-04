@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Cơ cấu công văn</title>
+    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+    <link rel="icon" type="image/x-icon" href="assets/img/favicon.png" />
+    <script data-search-pseudo-elements defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js" crossorigin="anonymous"></script>
+    <style>
+        .user-info {
+            transform: translateX(0px);
+            right: 0 !important;
+            left: auto;
+            flex: 0 0 auto;
+            right: auto;
+            z-index: 1000 !important;
+            align-self: auto !important;
+            overflow: hidden;
+            position: fixed;
+            width: 0;
+            margin: 0;
+            padding: 0;
+            border: 0;
+            font-size: 100%;
+            height: 100%;
+            vertical-align: baseline;
+            outline: none;
+            background-color: #fff;
+        }
+        .user-info-in {
+            background-color: #fff;
+            width: 0;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            right: 0;
+        }
+       /*input[type="checkbox"]{*/
+       /*    display: none;*/
+       /*}*/
+        .container{
+            heigh :350px;
+            width:430px;
+            display:none;
+        }
+        .container .wrapper{
+            height: 300px;
+            width: 100%;
+            border:2px dashed #00b8d4;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+
+        }
+        .wrapper .icon{
+            font-size: 100px;
+            color: #00b8d4;
+        }
+        .wrapper .text{
+            font-size: 20px;
+            font-weight: 50;
+            color: #00bcd4;
+
+        }
+
+        .wrapper #cancel-btn{
+            position: absolute;
+            right: 15px;
+            top : 15px;
+            font-size: 20px;
+            cursor: pointer;
+            color: firebrick;
+            display: none;
+        }
+        .wrapper .file-name{
+            position: absolute;
+            bottom: 0px;
+            width: 100%;
+            font-size: 18px;
+            color: #fff3e0;
+            padding: 8px 0;
+            text-align: center;
+
+            background: linear-gradient(135deg,yellow 0%,springgreen 100%);
+        }
+
+        .container #custom-btn{
+            margin-top: 30px;
+            width: 100%;
+            height: 50px;
+            display: block;
+            border: none;
+            outline: none;
+            border-radius: 25px;
+            color: #fff3e0;
+            font-size: 18px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            cursor: pointer;
+            background: linear-gradient(135deg,yellow 0%,springgreen 100%);
+
+        }
+        #file{
+            display: none;
+        }
+        #show:checked ~.container{
+            display: block;
+        }
+
+
+    </style>
+</head>
+<body class="nav-fixed">
+<th:block th:include="/common/nav-fixed.html"></th:block>
+<div id="layoutSidenav">
+    <th:block th:include="/common/layoutSidenav.html"></th:block>
+    <div id="layoutSidenav_content">
+        <main>
+            <header
+                    class="
+              page-header page-header-dark
+              bg-gradient-primary-to-secondary
+              pb-10
+            "
+            >
+                <div class="container-xl px-4">
+                    <div class="page-header-content pt-4">
+                        <div class="row align-items-center justify-content-between">
+                            <div class="col-auto mt-4">
+                                <h1 class="page-header-title">
+                                    <div class="page-header-icon">
+                                        <i data-feather="filter"></i>
+                                    </div>
+                                    Cơ cấu công văn
+                                </h1>
+                                <div class="page-header-subtitle">
+                                    Cơ cấu công văn là nơi hiển thị chi tiết các công văn
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            <!-- Main page content-->
+            <div class="container-xl px-4 mt-n10">
+                <div class="card mb-4">
+                    <div class="card-header">Filter</div>
+                    <div class="card-body">
+                        <div class="mb-3">
+<!--                            <form id="go-update-form" th:action="@{/department/edit-v2}">-->
+<!--                                <label for="exampleFormControlSelect1" class="form-label">Phòng ban</label>-->
+<!--                                <select class="form-select form-control-solid" name="did"-->
+<!--                                        id="exampleFormControlSelect1">-->
+<!--                                    <option th:each="department : ${departments}" th:value="${department.id}"-->
+<!--                                            th:text="${department.name}"></option>-->
+<!--                                </select>-->
+<!--                            </form>-->
+                        </div>
+                    </div>
+                </div>
+                <div class="card mb-4 card-header-actions mx-auto">
+                    <div class="card-header">
+                        Hiển thị công văn
+                        <div>
+
+                            <a th:href="@{/documentary/uploadPage}" class="btn btn-primary clickshowinfo" data-id="100" style="color: white">
+                                <i class="fa fa-plus-circle"></i>
+
+                                Thêm công văn
+                            </a>
+<!--                            <button form="go-update-form" class="btn btn-outline-dark" type="submit">Sửa</button>-->
+
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <table id="datatablesSimple">
+                            <thead>
+                            <tr>
+                                <th>Tệp tin</th>
+                                <th>Kích thước</th>
+                                <th>Ngày đăng tải</th>
+                                <th>Ban Hành</th>
+
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="doc: ${listDocs}">
+                                <td th:text="${doc.name}"></td>
+                                <td th:text="${doc.size}"></td>
+                                <td th:text="${doc.uploadTime}"></td>
+                                <td>
+
+                                    <a th:href="@{'/documentary/promulgatePage/'+${doc.id}}"><i class="fa fa-share-alt" aria-hidden="true"></i></a>
+
+                                </td>
+
+                                <!--                <div class="badge bg-primary text-white rounded-pill">-->
+                                <!--                  Full-time-->
+                                <!--                </div>-->
+
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <th:block th:include="/common/footer.html"></th:block>
+    </div>
+    <div class="user-info">
+        <div
+                class="user-info-in card card-header-actions mx-auto"
+                style="padding-top: 55px"
+        >
+            <div class="card-header">
+                Thêm mới
+                <a href="#" class="cc">
+                    <i class="fas fa-times"></i>
+                </a>
+            </div>
+            <div class="card-body">
+<!--                <form th:action="@{/department/create}" method="POST" th:object="${departmentForm}">-->
+<!--                    <div class="mb-3">-->
+<!--                        <label for="exampleInputEmail1" class="form-label"><strong>-->
+<!--                            Phòng ban-->
+<!--                        </strong>-->
+<!--                            <span style="color: red">*</span></label>-->
+<!--                        <input type="text" th:field="*{name}" class="form-control form-control-solid" id="exampleInputEmail1" aria-describedby="emailHelp">-->
+<!--                    </div>-->
+<!--                    <div class="mb-3">-->
+<!--                        <label for="textAreaExample" class="form-label"> <strong>-->
+<!--                            Ghi chú-->
+<!--                        </strong></label>-->
+<!--                        <textarea th:field="*{note}" class="form-control form-control-solid" id="textAreaExample" rows="4"></textarea>-->
+<!--                    </div>-->
+<!--                    <div class="mb-3">-->
+<!--                        <label class="form-label">  Bắt buộc <span style="color: red">*</span></label>-->
+<!--                    </div>-->
+<!--                    <button type="submit" class="btn btn-primary">LƯU</button>-->
+<!--                </form>-->
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+<form th:action="@{/documentary/upload}" method="post" enctype="multipart/form-data" style="max-width: 600px;margin: 0 auto">
+
+    <div id="file">
+        <input id="default-btn"  name="documentary" type="file" hidden="">
+    </div>
+
+    <input type="submit" value="Tải Lên" class="btn btn-primary"/>
+
+</form>
+
+    <div class="wrapper">
+
+        <div class="content">
+            <div class="icon"><i class="fas fa-cloud-upload-alt"></i></div>
+            <div class="text">Chưa có tập tin nào được chọn </div>
+
+
+        </div>
+        <div id="cancel-btn"><i class="fas fa-times"></i></div>
+        <div class="file-name">
+
+            Tên tập tin
+        </div>
+
+    </div>
+    <button onclick="defaultBtnActive()" id="custom-btn">Chọn tập tin</button>
+
+</form>
+</div>
+<script>
+    const noFile =document.querySelector(".text")
+    const fileName = document.querySelector(".file-name");
+    const defaultBtn = document.querySelector("#default-btn");
+    const customBtn = document.querySelector("#custom-btn");
+
+    let inputGet = document.querySelector("#documentary");
+
+    let regExp= /[0-9a-zA-Z\^\&\'\@\{\}\[\]\,\$\=\!\-\#\(\)\.\%\+\~\_ ]+$/;
+    function defaultBtnActive(){
+        defaultBtn.click();
+    }
+
+    defaultBtn.addEventListener("change",function (){
+        const file = this.files[0];
+        let fileType = file.type;
+        let valid=["application/pdf"];
+        if(valid.includes(fileType)){
+            if(this.value){
+
+                let valueStore = this.value.match(regExp);
+                fileName.textContent= valueStore;
+                noFile.textContent = "";
+
+
+            }
+
+        }else{
+            alert("Tệp là pdf")
+        }
+    });
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+<script type="text/javascript" th:src="@{/js/mainTH.js}"></script>
+<script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
+<!-- Latest compiled and minified JavaScript -->
+<script type="text/javascript" th:src="@{/js/datatables/datatables-simple-demo.js}"></script>
+</body>
+</html>

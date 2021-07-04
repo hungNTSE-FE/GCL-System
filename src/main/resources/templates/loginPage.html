@@ -1,90 +1,143 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="utf-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
-  <meta name="description" content="" />
-  <meta name="author" content="" />
-  <title>Đăng nhập - Gia Cát Lợi</title>
-  <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
-  <link rel="icon" type="image/x-icon" href="assets/img/favicon.png" />
+  <meta charset="UTF-8" />
+  <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1, shrink-to-fit=no"
+  />
+  <meta http-equiv="x-ua-compatible" content="ie=edge" />
+  <title>Signin Page</title>
+  <!-- Font Awesome -->
+  <link
+          rel="stylesheet"
+          href="https://use.fontawesome.com/releases/v5.11.2/css/all.css"
+  />
+  <!-- Google Fonts Roboto -->
+  <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"
+  />
+
+  <!-- Google Fonts Roboto Slab -->
+  <link
+          href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@500&display=swap"
+          rel="stylesheet"
+  />
+
+  <!-- MDB -->
+  <!-- MDB -->
+  <link
+          href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.5.0/mdb.min.css"
+          rel="stylesheet"
+  />
 </head>
-<body class="bg-primary">
-<div id="layoutAuthentication">
-  <div id="layoutAuthentication_content">
-    <main>
-      <div class="container-xl px-4">
+<body>
+<!--Main Navigation-->
+<header>
+  <style>
+    #intro {
+      background-image: url(https://mdbootstrap.com/img/new/fluid/city/008.jpg);
+      height: 100vh;
+    }
+
+    .navbar .nav-link {
+      color: #fff !important;
+    }
+  </style>
+
+  <!-- Background image -->
+  <div id="intro" class="bg-image shadow-2-strong">
+    <div
+            class="mask d-flex align-items-center h-100"
+            style="background-color: rgba(0, 0, 0, 0.8)"
+    >
+      <div class="container">
         <div class="row justify-content-center">
-          <div class="col-lg-5">
-            <!-- Basic login form-->
-            <div class="card shadow-lg border-0 rounded-lg mt-5">
-              <div class="card-header justify-content-center">
-                <h1 class="fw-bold my-2 text-center">GIA CÁT LỢI</h1>
+          <div class="col-xl-5 col-md-8">
+            <form class="bg-white rounded shadow-5-strong p-5" th:action="@{/j_spring_security_check}" method="POST">
+              <!-- /login?error=true -->
+              <div th:if="${#request.getParameter('error') == 'true'}"
+                   style="color:red;margin:10px 0px;">
+                Login Failed!!!<br />
               </div>
-              <div class="card-body">
-                <!-- Login form-->
-                <form th:action="@{/j_spring_security_check}" method="POST">
-                  <!-- Form Group (email address)-->
-                  <div class="mb-3">
-                    <label class="small mb-1" for="inputEmailAddress">
-                      User name
-                    </label>
-                    <input class="form-control" id="inputEmailAddress" type="text" placeholder="Enter user name" name="username"/>
-                  </div>
-                  <!-- Form Group (password)-->
-                  <div class="mb-3">
-                    <label class="small mb-1" for="inputPassword">
-                      Password
-                    </label>
-                    <input class="form-control" id="inputPassword" type="password" placeholder="Enter password" name="password"/>
-                  </div>
-                  <!-- Form Group (remember password checkbox)-->
-                  <div class="mb-3">
-                    <div class="form-check">
-                      <input class="form-check-input" id="rememberPasswordCheck" type="checkbox" value=""/>
-                      <label class="form-check-label" for="rememberPasswordCheck">
-                        Remember password
-                      </label>
-                    </div>
-                  </div>
-                  <!-- Form Group (login box)-->
-                  <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
-                    <a class="small" href="auth-password-basic.html">
-                      Forgot Password?
-                    </a>
-                    <button name="submit" type="submit" class="btn btn-primary">
-                      Login
-                    </button>
-                  </div>
-                </form>
+              <div class="text-center bg-light">
+                <h1 class="mb-2" style="font-family: 'Roboto Slab', serif">
+                  GIA CAT LOI
+                </h1>
               </div>
-            </div>
+              <!-- Email input -->
+              <div class="form-outline mb-4">
+                <input
+                        type="text"
+                        id="form1Example1"
+                        class="form-control"
+                        name="username"
+                />
+                <label class="form-label" for="form1Example1"
+                >User name</label
+                >
+              </div>
+
+              <!-- Password input -->
+              <div class="form-outline mb-4">
+                <input
+                        type="password"
+                        id="form1Example2"
+                        class="form-control"
+                        name="password"
+                />
+                <label class="form-label" for="form1Example2"
+                >Password</label
+                >
+              </div>
+
+              <!-- 2 column grid layout for inline styling -->
+              <div class="row mb-4">
+                <div class="col d-flex justify-content-between">
+                  <!-- Checkbox -->
+                  <div class="form-check">
+                    <input
+                            class="form-check-input"
+                            type="checkbox"
+                            value=""
+                            id="form1Example3"
+                            name="remember-me"
+                            checked
+                    />
+                    <label class="form-check-label" for="form1Example3">
+                      Remember me
+                    </label>
+                  </div>
+                </div>
+
+                <div class="col text-end">
+                  <!-- Simple link -->
+                  <a href="#!">Forgot password?</a>
+                </div>
+              </div>
+
+              <!-- Submit button -->
+              <button
+                      name="submit"
+                      type="submit"
+                      class="btn btn-primary btn-block btn-lg"
+              >
+                Sign in
+              </button>
+            </form>
           </div>
         </div>
       </div>
-    </main>
+    </div>
   </div>
-  <div id="layoutAuthentication_footer">
-    <footer class="footer-admin mt-auto footer-dark">
-      <div class="container-xl px-4">
-        <div class="row">
-          <div class="col-md-6 small">
-            Copyright &copy; Your Website 2021
-          </div>
-          <div class="col-md-6 text-md-end small">
-            <a href="#!">Privacy Policy</a>
-            &middot;
-            <a href="#!">Terms &amp; Conditions</a>
-          </div>
-        </div>
-      </div>
-    </footer>
-  </div>
-</div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js" crossorigin="anonymous"></script>
-<script type="text/javascript" th:src="@{/js/mainTH.js}"></script>
+  <!-- Background image -->
+</header>
+
+<!-- MDB -->
+<script
+        type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.5.0/mdb.min.js"
+></script>
 </body>
 </html>

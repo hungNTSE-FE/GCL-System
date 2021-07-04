@@ -1,0 +1,5 @@
+amazonProperties:
+  endpointUrl: https://s3.us-west-2.amazonaws.com
+  accessKey: AKIA4E3Z2SPVDIMWAWU6
+  secretKey: 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
+  bucketName: my-bucket-gcl

@@ -1,57 +1,33 @@
 package com.gcl.crm.form;
 
-public class CustomerStatusReportForm {
+import java.util.Collections;
+import java.util.List;
 
-    private String emp_name;
-    private Integer num_of_registered_account;
-    private Integer num_of_top_up_account;
-    private Integer num_of_lot;
+public class CustomerStatusReportForm {
+    List<CustomerStatusEvaluationForm> customerStatusEvaluationFormList;
+    List<CustomerStatusForm> customerStatusFormList;
 
     public CustomerStatusReportForm() {
     }
 
-    public CustomerStatusReportForm(String emp_name, Integer num_of_registered_account, Integer num_of_top_up_account) {
-        this.emp_name = emp_name;
-        this.num_of_registered_account = num_of_registered_account;
-        this.num_of_top_up_account = num_of_top_up_account;
+    public CustomerStatusReportForm(List<CustomerStatusEvaluationForm> customerStatusEvaluationFormList, List<CustomerStatusForm> customerStatusFormList) {
+        this.customerStatusEvaluationFormList = customerStatusEvaluationFormList;
+        this.customerStatusFormList = customerStatusFormList;
     }
 
-    public CustomerStatusReportForm(String emp_name, Integer num_of_registered_account, Integer num_of_top_up_account, Integer num_of_lot) {
-        this.emp_name = emp_name;
-        this.num_of_registered_account = num_of_registered_account;
-        this.num_of_top_up_account = num_of_top_up_account;
-        this.num_of_lot = num_of_lot;
+    public List<CustomerStatusEvaluationForm> getCustomerStatusEvaluationFormList() {
+        return Collections.unmodifiableList(customerStatusEvaluationFormList);
     }
 
-    public String getEmp_name() {
-        return emp_name;
+    public void setCustomerStatusEvaluationFormList(List<CustomerStatusEvaluationForm> customerStatusEvaluationFormList) {
+        this.customerStatusEvaluationFormList = customerStatusEvaluationFormList;
     }
 
-    public void setEmp_name(String emp_name) {
-        this.emp_name = emp_name;
+    public List<CustomerStatusForm> getCustomerStatusFormList() {
+        return Collections.unmodifiableList(customerStatusFormList);
     }
 
-    public Integer getNum_of_registered_account() {
-        return num_of_registered_account;
-    }
-
-    public void setNum_of_registered_account(Integer num_of_registered_account) {
-        this.num_of_registered_account = num_of_registered_account;
-    }
-
-    public Integer getNum_of_top_up_account() {
-        return num_of_top_up_account;
-    }
-
-    public void setNum_of_top_up_account(Integer num_of_top_up_account) {
-        this.num_of_top_up_account = num_of_top_up_account;
-    }
-
-    public Integer getNum_of_lot() {
-        return num_of_lot;
-    }
-
-    public void setNum_of_lot(Integer num_of_lot) {
-        this.num_of_lot = num_of_lot;
+    public void setCustomerStatusFormList(List<CustomerStatusForm> customerStatusFormList) {
+        this.customerStatusFormList = customerStatusFormList;
     }
 }

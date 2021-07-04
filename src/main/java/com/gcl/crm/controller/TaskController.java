@@ -16,8 +16,10 @@ public class TaskController {
     @GetMapping({"/viewAllTask"})
     public  String viewTaskPage(Model model){
         model.addAttribute("listTasks",taskService.getAllTask());
-        return "task/view-task-page";
+        return "task/task-home";
     }
+
+
     @GetMapping({"/showCreateForm"})
     public String showTaskCreatePage(Model model){
         Task task = new Task();
@@ -27,7 +29,7 @@ public class TaskController {
     @PostMapping({"/saveTask"})
     public String saveTask(@ModelAttribute("task") Task task){
         taskService.createTask(task);
-        return "redirect:/task/viewAllTask";
+        return  "redirect:/task/viewAllTask";
     }
     @GetMapping({"/showUpdateTaskForm/{id}"})
     public String showTaskUpdateForm(@PathVariable(name = "id") int id, Model model){

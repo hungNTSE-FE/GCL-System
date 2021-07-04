@@ -1,280 +1,367 @@
-<html lang="en" xmlns="http://www.w3.org/1999/html"><head>
-  <title>Create Task Page</title>
-  <!-- Required meta tags -->
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+  <title>Khách hàng - Gia Cát Lợi</title>
+  <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+  <link rel="icon" type="image/x-icon" href="assets/img/favicon.png" />
+  <script
+          data-search-pseudo-elements
+          defer
+          src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"
+          crossorigin="anonymous"
+  ></script>
+  <script
+          src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js"
+          crossorigin="anonymous"
+  ></script>
 
-  <!-- Bootstrap CSS -->
-  <!--  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">-->
-  <!-- Font Awesome -->
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet">
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&amp;display=swap" rel="stylesheet">
-  <!-- MDB -->
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.5.0/mdb.min.css" rel="stylesheet">
   <style>
-    #id_field{
-
+    form .button{
+      height: 45px;
+      margin: 35px 0
+    }
+    form .button input{
+      height: 100%;
       width: 100%;
-      height:50px;
-
+      border-radius: 5px;
+      border: none;
+      color: #fff;
+      font-size: 18px;
+      font-weight: 500;
+      letter-spacing: 1px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      background: linear-gradient(135deg, #0e4db5,#0e4db5);
     }
-
-    .field{
-
+    form .button input:hover{
+      /* transform: scale(0.99); */
+      background: linear-gradient(-135deg, #fff3e0,#0e4db5);
+    }
+    form .button button{
+      height: 100%;
       width: 100%;
-      height:50px;
-      margin-top: 5px;
-
-
+      border-radius: 5px;
+      border: none;
+      color: #fff;
+      font-size: 18px;
+      font-weight: 500;
+      letter-spacing: 1px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      background: linear-gradient(135deg, red,red);
     }
-    .title label{
-      margin-bottom: 10px;
-    }
-    .form{
-
-      height: 500px;
-      width: 40%;
-      margin-left: 5%;
-
-      float:left;
-    }
-
-    .title{
-      width: 40%;
-      height:50px;
-
-      float:left;
-    }
-    .title_field{
-      font-size: 15px;
-
-
-    }
-    .input_field{
-      width: 57%;
-      height: 50px;
-
-      float:left;
-
-
-    }
-
-
-    label{
-      padding-top :10px ;
-      padding-left:10px ;
-    }
-    input{
-      margin-top: 5px;
-    }
-
-    #banner{
-      width: 100%;
-      height: 130px;
-      margin-top:5%;
-      float:left
-    }
-    .banner_child{
-      height:130px;
-      width: 50%;
-      float:left;
-    }
-    #back{
-      height: 40px;
-    }
-    #back i{
-      margin-left: 25px;
-    }
-    #back label{
-      margin-left: 20px;
-    }
-    #banner_title{
-      height:90px;
-    }
-    #banner_title label{
-      font-size: 30px;
-      margin-left: 10px;
-    }
-    #banner_button{
-      margin-left: 50%;
-      margin-top: 40px;
+    form .button button:hover{
+      /* transform: scale(0.99); */
+      background: linear-gradient(-135deg, #fff3e0,red);
     }
   </style>
+
+
+
 </head>
-<body>
-<header>
-  <th:block th:include="/common/navbar.html"></th:block>
+<body class="nav-fixed">
+<th:block th:include="/common/nav-fixed.html"></th:block>
+<div id="layoutSidenav">
+  <th:block th:include="/common/layoutSidenav.html"></th:block>
+  <div id="layoutSidenav_content">
+    <main>
+      <header
+              class="
+              page-header page-header-dark
+              bg-gradient-primary-to-secondary
+              pb-10
+            "
+      >
+        <div class="container-xl px-4">
+          <div class="page-header-content pt-4">
+            <div class="row align-items-center justify-content-between">
+              <div class="col-auto mt-4">
+                <h1 class="page-header-title">
+                  <div class="page-header-icon">
+                    <i data-feather="layout"></i>
+                  </div>
+                  Thêm mới công việc
+                </h1>
+              </div>
+            </div>
+            <nav class="mt-4 rounded" aria-label="breadcrumb">
+              <ol class="breadcrumb px-3 py-2 rounded mb-0">
+                <li class="breadcrumb-item">
+                  <a href="dashboard-1.html">Trang chủ</a>
+                </li>
+                <li class="breadcrumb-item active">Thêm mới công việc</li>
+              </ol>
+            </nav>
+          </div>
+        </div>
+      </header>
+      <!-- Main page content-->
 
-</header>
-<header>
-<!--  <th:block th:include="/common/navbar.html"></th:block>-->
+      <div class="container-xl px-4 mt-n10">
+        <div class="row">
+          <div class="col-lg-9">
+            <!-- Default Bootstrap Toasts-->
+            <div id="demo">
+              <div class="card mb-4">
+                <div class="card-header">ThÔNG TIN CÔNG VIỆC</div>
+                <form class="row g-3"
+                      id="form"
+                      th:action="@{/task/saveTask}"
+                      th:object="${task}"
+                      th:method="POST"
+                >
+                  <input type="hidden" th:field="*{task_id}">
+                  <div class="card-body">
 
-</header>
-<form method="POST" th:object="${task}" th:action="@{/task/updateTask}"  >
-  <input type="hidden" th:field="*{task_id}"  >
-  <div id="banner">
-    <div class="banner_child">
-      <div id="back">
-        <a th:href="@{/task/viewAllTask}">
-          <i class="fa fa-chevron-left" aria-hidden="true"></i>
-        </a>
-        <label>Công Việc</label>
+                    <div class="row gx-3 mb-3 ">
+                      <div class="col-md-6 form-validate ">
+                        <label class="small mb-1">
+                          Tên công việc
+                          <span style="color: red">*</span>
+                        </label>
+                        <input text="text" th:field="*{name}" class="form-control "  id="name">
+                        <i class="fas fa-check-circle "></i>
+                        <i class="fas fa-exclamation-circle"></i>
+                        <small>Error Message</small>
+
+                      </div>
+                      <div class="col-md-6 form-validate ">
+                        <label class="small mb-1">
+                          Người báo cáo
+                          <span style="color: red">*</span>
+                        </label>
+                        <input text="text" th:field="*{reporter}" class="form-control "  id="reporter">
+                        <i class="fas fa-check-circle "></i>
+                        <i class="fas fa-exclamation-circle"></i>
+                        <small>Error Message</small>
+
+                      </div>
+
+                    </div>
+                    <div class="row gx-3 mb-3 ">
+                      <div class="col-md-6">
+                        <label class="small mb-1"> Độ phức tạp </label>
+                        <select th:field="*{complex}"
+                                class="form-select"
+                                id="exampleFormControlSelect1"
+                        >
+                          <option value="Phức tạp">Phức tạp</option>
+                          <option value="Trung bình">Trung bình</option>
+                          <option value="Dễ">Dễ</option>
+                        </select>
+                      </div>
+                      <div class="col-md-6">
+                        <label class="small mb-1"> Mức độ ưu tiên</label>
+                        <select th:field="*{priority}"
+                                class="form-select"
+                                id="exampleFormControlSelect1"
+                        >
+                          <option value="Cao">Cao</option>
+                          <option value="Trung bình">Trung Bình</option>
+                          <option value="Thấp">Thấp</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="row gx-3 mb-3">
+                      <div class="col-md-6">
+                        <label class="small mb-1">
+                          Ngày bắt đầu
+                        </label>
+                        <div class="input-group input-group-joined">
+                              <span class="input-group-text">
+                                <i data-feather="calendar"></i>
+                              </span>
+                          <input
+                                  class="form-control ps-0"
+                                  id="date"
+                                  placeholder="Chọn ngày bắt đầu công việc"
+                                  th:field="*{startDate}"
+                          />
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <label class="small mb-1">
+                          Ngày kết thúc
+                        </label>
+                        <div class="input-group input-group-joined">
+                              <span class="input-group-text">
+                                <i data-feather="calendar"></i>
+                              </span>
+                          <input
+                                  class="form-control ps-0"
+                                  id="date"
+                                  placeholder="Chọn ngày kết thúc công việc"
+                                  th:field="*{endDate}"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row gx-3 mb-3">
+                      <div class="col-md-6 form-validate ">
+                        <label class="small mb-1">
+                          Trạng thái
+                          <span style="color: red">*</span>
+                        </label>
+                        <input text="text" th:field="*{status}" class="form-control "  id="status">
+                        <i class="fas fa-check-circle "></i>
+                        <i class="fas fa-exclamation-circle"></i>
+                        <small>Error Message</small>
+
+                      </div>
+                      <div class="col-md-6 form-validate ">
+                        <label class="small mb-1">
+                          Người thực hiện
+                          <span style="color: red">*</span>
+                        </label>
+                        <input text="text"  th:field="*{assign}" id="assign" class="form-control " >
+                        <i class="fas fa-check-circle "></i>
+                        <i class="fas fa-exclamation-circle"></i>
+                        <small>Error Message</small>
+
+                      </div>
+                    </div>
+                    <div class="row gx-3 mb-3">
+                      <div class="col-md-6 form-validate ">
+                        <div class="button">
+                          <input type="submit" value="Cập nhật công việc">
+                        </div>
+                      </div>
+                      <div class="col-md-6 form-validate ">
+                        <div class="button">
+                          <a th:href="@{/task/viewAllTask}">
+                            <button>Quay Lại</button>
+                          </a>
+                        </div>
+                      </div>
+
+                    </div>
+
+
+
+
+                  </div>
+                </form>
+              </div>
+            </div>
+
+
+
+
+
+
+          </div>
+          <!-- Sticky Navigation-->
+          <div class="col-lg-3">
+            <div class="nav-sticky">
+              <div class="card">
+                <div class="card-body">
+                  <ul class="nav flex-column" id="stickyNav">
+                    <li class="nav-item">
+                      <a class="nav-link" href="#demo">Công việc</a>
+                    </li>
+
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
       </div>
-      <div id="banner_title">
-        <label>CẬP NHẬT CÔNG VIỆC</label>
 
-      </div>
-    </div>
-
-
+    </main>
+    <th:block th:include="/common/footer.html"></th:block>
   </div>
-
-
-  <div class="form">
-    <div id="id_field">
-      <div class="title">
-        <label class="title_field">Tên công việc</label>
-      </div>
-      <div class="input_field">
-
-        <input required=""  th:field="*{name} "class="form-control" type="text" id="name" name="name" >
-
-      </div>
-
-
-
-
-    </div>
-    <div class="field">
-      <div class="title">
-        <label class="title_field">Mức độ phức tạp</label>
-      </div>
-      <div class="input_field">
-
-
-
-        <select  th:field="*{complex} " class="form-control" id="complexity" name="complex">
-          <option value="Phức tạp">Phức tạp</option>
-          <option value="Trung bình">Trung bình</option>
-          <option value="Dễ" selected="selected">Dễ</option>
-        </select>
-
-      </div>
-
-    </div>
-    <div class="field">
-      <div class="title">
-        <label class="title_field">Độ ưu tiên</label>
-      </div>
-      <div class="input_field">
-
-        <select  th:field="*{priority}" class="form-control" id="priority" name="priority">
-          <option value="Cao">Cao</option>
-          <option value="Trung bình">Trung Bình</option>
-          <option value="Thấp" selected="selected">Thấp</option>
-        </select>
-
-      </div>
-
-    </div>
-    <div class="field">
-      <div class="title">
-        <label class="title_field">Người báo cáo</label>
-      </div>
-      <div class="input_field">
-
-        <input required="" th:field="*{reporter}" class="form-control" type="text" id="reporter" name="reporter" value="Duy ">
-
-      </div>
-
-
-    </div>
-
-    <div class="field">
-      <div class="title">
-        <label class="title_field">Ngày bắt đầu</label>
-      </div>
-      <div class="input_field">
-
-        <input type="date" id="startField"th:field="*{startDate}" pattern="yyyy-MM-dd" class="form-control" name="startDate" value="2021-05-29" min="2021-05-27">
-
-
-      </div>
-
-
-      <div class="title">
-        <label class="title_field">Ngày kết thúc</label>
-      </div>
-      <div class="input_field">
-
-        <input id="endField" type="date" pattern="yyyy-MM-dd" th:field="*{endDate}"class="form-control" name="endDate" value="2021-05-20" min="2021-05-27">
-
-      </div>
-
-
-    </div>
-    <div class="field">
-      <div class="title">
-        <label class="title_field">Trạng Thái</label>
-      </div>
-      <div class="input_field">
-
-        <input required="" type="text" class="form-control" id="status" th:field="*{status}"name="status" value="Chua Hoan Thanh">
-
-      </div>
-
-
-    </div>
-    <div class="field">
-      <div class="title">
-        <label class="title_field">Người thực hiện</label>
-      </div>
-      <div class="input_field">
-
-        <input required="" type="text" class="form-control" id="assign" name="assign" th:field="*{assign}"value="Duy">
-
-      </div>
-
-    </div>
-
-  </div>
-  <button type="submit" class="btn btn-info col-2">Cập Nhật</button>
-</form>
-<form th:action="@{/task/viewAllTask}" method="GET">
-  <button type="submit" class="btn btn-primary col-2">Quay Lại</button>
-
-</form>
-
-
-
-
-
-
-
-
-<!--  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>-->
-<!-- MDB -->
-<script>
-  type="text/javascript"
-  src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.5.0/mdb.min.js"
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/litepicker/dist/litepicker.js"></script>
+<script type="text/javascript" th:src="@{/js/mainTH.js}"></script>
+<script th:inline="javascript">
+  const picker = new Litepicker({
+    element: document.getElementById("date"),
+    autoRefresh: true,
+  });
+  const picker2 = new Litepicker({
+    element: document.getElementById("date1"),
+    autoRefresh: true,
+  });
+  const picker3 = new Litepicker({
+    element: document.getElementById("date2"),
+    autoRefresh: true,
+  });
 </script>
 <script>
-  var today = new Date();
-  var dd = today.getDate();
-  var mm = today.getMonth()+1; //January is 0!
-  var yyyy = today.getFullYear();
-  if(dd<10){
-    dd='0'+dd
-  }
-  if(mm<10){
-    mm='0'+mm
-  }
+  const form = document.getElementById('form');
+  const name = document.getElementById('name');
+  const reporter = document.getElementById('reporter');
+  const status = document.getElementById('status');
+  const assign = document.getElementById('assign');
 
-  today = yyyy+'-'+mm+'-'+dd;
-  document.getElementById("startField").setAttribute("min", today);
-  document.getElementById("endField").setAttribute("min", today);
+
+  form.addEventListener('submit',(e) => {
+
+    const nameValue = name.value.trim();
+    const reporterValue = reporter.value.trim();
+    const statusValue = status.value.trim();
+    const  assginValue = assign.value.trim();
+    //
+    //     const re = /^\d{1,2}\/\d{1,2}\/\d{4}$/;
+    if(nameValue ==''){
+      setErrorFor(name,"Tên không thể trống");
+      e.preventDefault();
+
+
+    }else {
+      setSuccessFor(name);
+    }
+    if(reporterValue ==''){
+      setErrorFor(reporter,"Người báo cáo không thể trống");
+      e.preventDefault();
+
+
+    }else {
+      setSuccessFor(reporter);
+    }
+    if(statusValue ==''){
+      setErrorFor(status,"Trạng thái không thể trống");
+      e.preventDefault();
+
+
+    }else {
+      setSuccessFor(status);
+    }
+    if(assginValue ==''){
+      setErrorFor(assign,"Tên không thể trống");
+      e.preventDefault();
+
+
+    }else {
+      setSuccessFor(assign);
+    }
+
+
+  });
+  //
+  function setErrorFor(input,message) {
+    const  inputBox=input.parentElement;
+
+    const small = inputBox.querySelector('small');
+    small.innerText = message;
+    inputBox.className='col-md-6 form-validate error';
+
+  }
+  function setSuccessFor(input) {
+    const  inputBox=input.parentElement;
+
+
+    inputBox.className='col-md-6 form-validate success';
+
+  }
 </script>
 
-</body></html>
+
+</body>
+</html>

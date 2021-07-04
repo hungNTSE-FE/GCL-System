@@ -17,12 +17,16 @@ public class MainController {
     public String welcomePage(Model model) {
         model.addAttribute("title", "Welcome");
         model.addAttribute("message", "This is welcome page!");
-        return "redirect:/department/home";
+        return "/department/home-department-page";
     }
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String DefaultPage(Model model) {
         return "loginPage";
+    }
+    @RequestMapping(value = "/test", method = RequestMethod.GET)
+    public String DefaultTest(Model model) {
+        return "department/test";
     }
 
     @RequestMapping(value = "/admin", method = RequestMethod.GET)

@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
+    <title>Quản lý data khách hàng</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+    <link rel="icon" type="image/x-icon" href="assets/img/favicon.png"/>
+    <link href="https://unpkg.com/multiple-select@1.5.2/dist/multiple-select.min.css" rel="stylesheet"/>
+</head>
+<body class="nav-fixed">
+<th:block th:include="/common/nav-fixed.html"></th:block>
+<div id="layoutSidenav">
+    <th:block th:include="/common/layoutSidenav.html"></th:block>
+    <div id="layoutSidenav_content">
+        <main>
+            <header
+                    class="
+              page-header page-header-dark
+              bg-gradient-primary-to-secondary
+              pb-10
+            "
+            >
+                <div class="container-xl px-4">
+                    <div class="page-header-content pt-4">
+                        <div class="row align-items-center justify-content-between">
+                            <div class="col-auto mt-4">
+                                <h1 class="page-header-title">
+                                    <div class="page-header-icon">
+                                        <i data-feather="bell"></i>
+                                    </div>
+                                    Quản lý - phân bổ data khách hàng
+                                </h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            <!-- Main page content-->
+            <div class="container-xl px-4 mt-n10">
+                <form id="customerDistributionForm" th:action="@{/marketing/divideDataCustomer}"
+                      th:object="${CustomerForm}" method="POST">
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <!-- Default Bootstrap Tooltips-->
+<!--                            <div id="tooltips">-->
+                                <div class="card mb-4">
+                                    <div class="card-header">Data chưa phân bổ</div>
+                                    <div class="card-body">
+                                        <!-- Component Preview-->
+                                        <div class="sbp-preview">
+                                            <div class="sbp-preview-content py-3">
+                                                <div class="row">
+                                                    <div class="col-auto my-2">
+                                                        <button
+                                                                class="btn btn-outline-dark me-2 mb-2 mb-xl-0"
+                                                                type="submit"
+                                                                form="customerDistributionForm"
+                                                                name="notification"
+                                                        >
+                                                            Phân bổ
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="sbp-preview-code">
+                                                <!-- Tab panes-->
+                                                <div class="tab-content">
+                                                    <div class="form-group row mb-2">
+                                                        <label class="col-sm-4"> Người nhận </label>
+                                                        <div class="col-sm-7">
+                                                            <select
+                                                                    class="multiple-select"
+                                                                    name="select2"
+                                                                    multiple
+                                                                    required
+                                                                    style="width: 100%"
+                                                            >
+                                                                <option th:each="users : ${appUsers}"
+                                                                        th:value="${users.userId}"
+                                                                        th:text="${users.employee.name}">
+                                                                </option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row mb-2">
+                                                        <label class="col-sm-4">
+                                                            Ghi chú
+                                                        </label>
+                                                        <div class="col-sm-7">
+                                                            <textarea
+                                                                    class="form-control"
+                                                                    id="exampleFormControlTextarea1"
+                                                                    rows="3"
+                                                                    name="note">
+                                                            </textarea>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <table id="notDividedDataCustomer"
+                                               class="table row-border cell-border hover order-column">
+                                            <thead>
+                                            <tr>
+                                                <th style="width: 5%">
+                                                    <input type="checkbox"
+                                                           name="ckb_customer_all"
+                                                           class="form-control ckb_customer_all"
+                                                           id="chk_all_customer"/>
+                                                </th>
+                                                <th style="width: 25%">Tên</th>
+                                                <th style="width: 20%">Số điện thoại</th>
+                                                <th style="width: 25%">Email</th>
+                                                <th style="width: 25%">Mô tả</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr th:each="wkCustomer,inter : ${wkCustomerList}">
+                                                <td>
+                                                    <input type="checkbox"
+                                                           name="ckb_customer"
+                                                           class="form-control ckb_customer"
+                                                           id="ckb_customer_${inter.index}"
+                                                           value="${wkCustomer.customerCode}"
+                                                    />
+                                                </td>
+                                                <td th:text="${wkCustomer.customerName}"></td>
+                                                <td th:text="${wkCustomer.phoneNumber}"></td>
+                                                <td th:text="${wkCustomer.email}"></td>
+                                                <td th:text="${wkCustomer.description}"></td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+<!--                            </div>-->
+                        </div>
+                        <!-- Sticky Navigation-->
+                        <div class="col-lg-4">
+                            <div class="card">
+                                <div class="card-header">Gán nhân sự phụ trách</div>
+                                <div class="card-body">
+                                    <div class="form-group">
+                                        <label>
+                                            Danh sách sales chính
+                                            <i class="fas fa-plus-circle" id="sales_plus_icon"></i>
+                                        </label>
+                                    </div>
+                                    <div class="form-group">
+                                        <select class="form-select sales_distribution">
+                                            <option th:each="employee : ${CustomerForm.comboboxForm.listBrokerName}"
+                                                    th:value="${employee.key}"
+                                                    th:utext="${employee.value}"/>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="card mb-4">
+                            <div class="card-header">Data đã phân bổ</div>
+                            <div class="card-body"></div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </main>
+        <th:block th:include="/common/footer.html"></th:block>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<script src="https://unpkg.com/multiple-select@1.5.2/dist/multiple-select.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+        crossorigin="anonymous"></script>
+<script type="text/javascript" th:src="@{/js/mainTH.js}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.17.1/components/prism-core.min.js"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.17.1/plugins/autoloader/prism-autoloader.min.js"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
+
+<script data-search-pseudo-elements defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js"
+        crossorigin="anonymous"></script>
+<!-- Latest compiled and minified JavaScript -->
+<script type="text/javascript" th:src="@{/js/datatables/datatables-simple-demo.js}"></script>
+<script th:inline="javascript">
+    $(function () {
+        $(".multiple-select").multipleSelect();
+
+        // $("form").submit(function () {
+        //   alert($(this).serialize());
+        //   return false;
+        // });
+    });
+</script>
+</body>
+</html>
