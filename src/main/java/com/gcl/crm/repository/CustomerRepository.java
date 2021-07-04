@@ -17,8 +17,6 @@ public class CustomerRepository {
         return customer;
     }
 
-    
-
     public void update(Customer customer) { entityManager.merge(customer); }
 
 }

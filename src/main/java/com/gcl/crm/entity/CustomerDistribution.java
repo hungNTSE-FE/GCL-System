@@ -5,7 +5,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "CUSTOMER_DISTRIBUTION")
-public class Customer_Distribution {
+public class CustomerDistribution {
 
     @Column(name = "SEQ_NO")
     @Id

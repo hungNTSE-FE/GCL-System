@@ -14,7 +14,6 @@ public class TradingAccount {
     @Column(name = "account_number", length = 20)
     private String accountNumber;
 
-
     @Column(name="balance")
     private double balance;
 
@@ -24,16 +23,19 @@ public class TradingAccount {
     @Column(name="account_name")
     private String accountName ;
 
+    @Column(name = "customer_code")
+    private String customerCode;
+
     public TradingAccount(){};
 
-    public TradingAccount(String accountNumber, double balance, String status, String accountName, String brokerCode, String brokerName, Date createDay) {
+    public TradingAccount(String accountNumber, double balance, String status, String accountName, String brokerCode, String brokerName, Date createDate) {
         this.accountNumber = accountNumber;
         this.balance = balance;
         this.status = status;
         this.accountName = accountName;
         this.brokerCode = brokerCode;
         this.brokerName = brokerName;
-        this.createDay = createDay;
+        this.createDate = createDate;
     }
 
     @Column(name="broker_code")
@@ -41,7 +43,7 @@ public class TradingAccount {
     @Column(name="broker_name")
     private  String brokerName ;
     @Column(name="create_date")
-    private Date createDay ;
+    private Date createDate;
     @OneToOne(mappedBy = "tradingAccount", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Contract contract;
 
@@ -101,13 +103,19 @@ public class TradingAccount {
         this.brokerName = brokerName;
     }
 
-    public Date getCreateDay() {
-        return createDay;
+    public Date getCreateDate() {
+        return createDate;
     }
 
-    public void setCreateDay(Date createDay) {
-        this.createDay = createDay;
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
     }
 
+    public String getCustomerCode() {
+        return customerCode;
+    }
 
+    public void setCustomerCode(String customerCode) {
+        this.customerCode = customerCode;
+    }
 }

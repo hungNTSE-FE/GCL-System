@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Nhóm quyền</title>
+    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="https://jqueryui.com/resources/demos/style.css">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+    <link rel="icon" type="image/x-icon" href="assets/img/favicon.png" />
+    <script data-search-pseudo-elements defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js" crossorigin="anonymous"></script>
+
+</head>
+<body class="nav-fixed">
+<th:block th:include="/common/nav-fixed.html"></th:block>
+<div id="layoutSidenav">
+    <th:block th:include="/common/layoutSidenav.html"></th:block>
+    <div id="layoutSidenav_content">
+        <main>
+            <header
+                    class="
+              page-header page-header-dark
+              bg-gradient-primary-to-secondary
+              pb-10
+            "
+            >
+                <div class="container-xl px-4">
+                    <div class="page-header-content pt-4">
+                        <div class="row align-items-center justify-content-between">
+                            <div class="col-auto mt-4">
+                                <h1 class="page-header-title">
+                                    <div class="page-header-icon">
+                                        <i data-feather="filter"></i>
+                                    </div>
+                                    Thống kê KPI nhân viên sales
+                                </h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            <!-- Main page content-->
+            <div class="container-xl px-4 mt-n10">
+                <form id="form" name="form" class="form-inline"
+                      method="GET" th:action="@{/marketing/employeeKPIEvaluation}">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <div class="row mb-3">
+                                <div class="form-group col-md-3 form-validate">
+                                    <label for="startDate">Từ ngày</label>
+                                    <input id="startDate" name="startDate" type="text"
+                                           class="form-control" th:field="${KPI_EMPLOYEE_EVALUATION.startDate}" />
+                                </div>
+                                <div class="form-group col-md-3 form-validate">
+                                    <label for="endDate">Đến ngày</label>
+                                    <input id="endDate" name="endDate" type="text"
+                                           class="form-control" th:field="${KPI_EMPLOYEE_EVALUATION.endDate}"  />
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-md-2">
+                                    <button type="button" class="btn btn-primary" id="searchDate">Tìm kiếm</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card mb-4 card-header-actions">
+                        <div class="card-body">
+                            <table id="datatablesSimple">
+                                <colgroup>
+                                    <col class="col-2">
+                                    <col class="col-3">
+                                    <col class="col-3">
+                                    <col class="col-2">
+                                    <col class="col-2">
+                                </colgroup>
+                                <thead>
+                                <tr>
+                                    <th>Mã nhân viên</th>
+                                    <th>Tên nhân viên</th>
+                                    <th>Số lượng data đầu mối</th>
+                                    <th>Số LOT</th>
+                                    <th>Doanh số</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="employeeKPI : ${KPI_EMPLOYEE_EVALUATION.tmpKpiEmployeeList}">
+                                    <td th:text="${employeeKPI.employeeId}"></td>
+                                    <td th:text="${employeeKPI.employeeName}"></td>
+                                    <td th:text="${employeeKPI.numCustomerData}"></td>
+                                    <td th:text="${employeeKPI.numLot}"></td>
+                                    <td th:text="${employeeKPI.KPI}" class ="kpi"></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </main>
+        <th:block th:include="/common/footer.html"></th:block>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.js"
+        integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+        crossorigin="anonymous">
+</script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js">
+</script>
+
+<script type="text/javascript" th:src="@{/js/mainTH.js}"></script>
+<script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
+
+<!-- Latest compiled and minified JavaScript -->
+<script type="text/javascript" th:src="@{/js/datatables/datatables-simple-demo.js}"></script>
+<script type="text/javascript" th:src="@{/js/marketing.js}"></script>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    $(document).ready(function() {
+        var showtext = [[${flag}]];
+        if (showtext === 'showAlert') {
+            new Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "Lưu thành công",
+                showConfirmButton: false,
+                timer: 3000,
+            });
+        }
+    })
+    /*]]>*/
+</script>
+</body>
+</html>

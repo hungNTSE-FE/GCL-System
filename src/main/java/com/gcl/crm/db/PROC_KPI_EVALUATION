@@ -1,0 +1,62 @@
+DELIMITER $$
+DROP PROCEDURE IF EXISTS PROC_KPI_EVALUATION;
+CREATE PROCEDURE PROC_KPI_EVALUATION(IN START_DATE DATETIME, IN END_DATE DATETIME)
+BEGIN
+    DECLARE SUM_DATA DOUBLE;
+    DECLARE SUM_KPI DOUBLE;
+#Tổng Data được phân bổ
+SELECT COUNT(customer_code)
+INTO SUM_DATA
+FROM customer_distribution
+WHERE date_distribution BETWEEN START_DATE AND END_DATE
+;
+
+DROP TEMPORARY TABLE IF EXISTS TMP_SUM_KPI;
+CREATE TEMPORARY TABLE TMP_SUM_KPI
+SELECT emp.id
+     ,  emp.full_name
+     , case
+           when tmp.SUM_DATA_CUS is null then 0
+           else (sum(COALESCE(T.amount, 0))) / (tmp.SUM_DATA_CUS/SUM_DATA)
+    end as KPI # convert sang cùng 1 đơn vị đo lường
+    , sum(COALESCE(T.amount, 0)) as SUM_LOT
+    , coalesce(tmp.SUM_DATA_CUS, 0) as SUM_DATA_CUS
+FROM employee emp
+         LEFT JOIN customer_distribution cd on emp.id = cd.employee_id
+         LEFT JOIN customer ON cd.customer_code = customer.customer_code
+         LEFT JOIN trading_account ta on customer.customer_code = ta.customer_code
+         LEFT JOIN transaction t on ta.account_number = t.trading_account_number
+         LEFT JOIN
+     (
+         SELECT employee_id, count(customer_code) as SUM_DATA_CUS # Tổng data được phân bổ của từng sales
+         FROM customer_distribution
+         WHERE date_distribution BETWEEN START_DATE AND END_DATE
+         GROUP BY employee_id
+     ) tmp
+     ON tmp.employee_id = emp.id
+WHERE cd.date_distribution BETWEEN START_DATE AND END_DATE
+GROUP BY emp.id
+;
+
+#Tính tổng của đơn vị sau khi đã convert
+SELECT SUM(KPI) INTO SUM_KPI
+FROM TMP_SUM_KPI
+;
+
+CALL PROC_CREATE_TMP_TABLE('TMP_KPI_EMPLOYEE');
+#Tính KPI
+INSERT
+INTO TMP_KPI_EMPLOYEE
+    (EMPLOYEE_ID
+    , EMPLOYEE_NAME
+    , SUM_CUS_DATA
+    , SUM_LOT
+    , KPI)
+SELECT id
+     , full_name
+     , SUM_DATA_CUS
+     , SUM_LOT
+     , round(KPI / SUM_KPI, 2) AS KPI
+FROM TMP_SUM_KPI;
+END $$ DELIMITER
+;

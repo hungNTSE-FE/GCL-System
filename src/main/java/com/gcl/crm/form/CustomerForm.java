@@ -4,7 +4,7 @@ import java.sql.Date;
 import javax.validation.constraints.*;
 public class CustomerForm {
 
-    private Long hdnCustomerCode;
+    private String hdnCustomerCode;
 
     @NotBlank(message = "Tên khách hàng không thẻ bỏ trống")
     @Size(min = 3, max = 50, message = "Độ dài tên khách hàng phải ở khoảng 3 đến 50 ký tự")
@@ -99,11 +99,11 @@ public class CustomerForm {
 
     private ComboboxForm comboboxForm;
 
-    public Long getHdnCustomerCode() {
+    public String getHdnCustomerCode() {
         return hdnCustomerCode;
     }
 
-    public void setHdnCustomerCode(Long hdnCustomerCode) {
+    public void setHdnCustomerCode(String hdnCustomerCode) {
         this.hdnCustomerCode = hdnCustomerCode;
     }
 

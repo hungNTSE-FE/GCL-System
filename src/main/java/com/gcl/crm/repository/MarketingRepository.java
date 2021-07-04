@@ -1,11 +1,14 @@
 package com.gcl.crm.repository;
 
+import com.gcl.crm.entity.TMP_KPI_EMPLOYEE;
 import com.gcl.crm.form.CustomerStatusForm;
 import com.gcl.crm.form.CustomerStatusEvaluationForm;
+import com.gcl.crm.form.KPIEmployeeForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.*;
+import javax.transaction.Transactional;
 import java.io.Serializable;
 import java.util.List;
 
@@ -54,6 +57,26 @@ public class MarketingRepository {
         query.setParameter("end_date", endDate);
         List<CustomerStatusEvaluationForm> customerStatusReportFormList = query.getResultList();
         return customerStatusReportFormList;
+    }
+
+    public List<TMP_KPI_EMPLOYEE> getKPIEmployeeReport(String fromDate, String toDate) {
+        StoredProcedureQuery storedProcedureQuery = entityManager.createStoredProcedureQuery("PROC_KPI_EVALUATION");
+        storedProcedureQuery.registerStoredProcedureParameter("START_DATE", String.class, ParameterMode.IN);
+        storedProcedureQuery.registerStoredProcedureParameter("END_DATE", String.class, ParameterMode.IN);
+        storedProcedureQuery.setParameter("START_DATE", fromDate);
+        storedProcedureQuery.setParameter("END_DATE", toDate);
+        storedProcedureQuery.execute();
+
+        String sql = "select\n" +
+                    "EMPLOYEE_ID\n" +
+                    ", EMPLOYEE_NAME\n" +
+                    ", SUM_CUS_DATA\n" +
+                    ", SUM_LOT\n" +
+                    ", KPI\n" +
+                    "FROM tmp_kpi_employee\n" +
+                    "ORDER BY KPI desc";
+        Query query = entityManager.createNativeQuery(sql, TMP_KPI_EMPLOYEE.class);
+        return query.getResultList();
     }
 
 }

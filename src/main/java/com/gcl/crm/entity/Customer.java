@@ -41,9 +41,9 @@ import java.util.List;
 public class Customer {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "CUSTOMER_CODE")
-    private Long customerCode;
+    private String customerCode;
 
     @Column(name = "CUSTOMER_NAME")
     private String customerName;
@@ -119,11 +119,11 @@ public class Customer {
         this.contract = contract;
     }
 
-    public Long getCustomerCode() {
+    public String getCustomerCode() {
         return customerCode;
     }
 
-    public void setCustomerCode(Long customerCode) {
+    public void setCustomerCode(String customerCode) {
         this.customerCode = customerCode;
     }
 

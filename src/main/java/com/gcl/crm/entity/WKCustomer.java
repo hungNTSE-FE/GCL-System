@@ -11,7 +11,7 @@ public class WKCustomer {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "CUSTOMER_CODE")
-    private Long customerCode;
+    private String customerCode;
 
     @Column(name = "CUSTOMER_NAME")
     private String customerName;
@@ -76,11 +76,11 @@ public class WKCustomer {
     @Column(name = "FLAG_DIVIDED")
     private String flagDivided;
 
-    public Long getCustomerCode() {
+    public String getCustomerCode() {
         return customerCode;
     }
 
-    public void setCustomerCode(Long customerCode) {
+    public void setCustomerCode(String customerCode) {
         this.customerCode = customerCode;
     }
 

@@ -3,8 +3,32 @@ var CUSTOMER_STS_EST_TABLE_ID = '#customerStatusEvaluationTable';
 var SEARCH_DATE = '#searchDate';
 var FROM_DATE = '#fromDate';
 var TO_DATE = '#toDate';
+var fromDate, toDate;
 $(document).ready(function (){
+    $(FROM_DATE).datepicker({
+        pickTime: false,
+        changeMonth: true,
+        changeYear: true,
+        dateFormat: "yy-mm-dd",
+        maxDate: new Date(),
+        onClose: function (){
+            fromDate = $(FROM_DATE).val();
+            if (fromDate != null && fromDate !=='')
+                $(TO_DATE).datepicker('option', 'minDate', new Date(fromDate));
+        }
+    });
 
+    $(TO_DATE).datepicker({
+        pickTime: false,
+        changeMonth: true,
+        changeYear: true,
+        dateFormat: "yy-mm-dd",
+        onClose: function (){
+            toDate = $(TO_DATE).val();
+            if (toDate != null && toDate !=='')
+                $(FROM_DATE).datepicker('option', 'maxDate', new Date(toDate));
+        }
+    })
 })
 
 $(SEARCH_DATE).on('click', function (){

@@ -1,10 +1,12 @@
 package com.gcl.crm.controller;
 
 import com.gcl.crm.entity.AppUser;
+import com.gcl.crm.entity.TMP_KPI_EMPLOYEE;
 import com.gcl.crm.entity.WKCustomer;
 import com.gcl.crm.form.ComboboxForm;
 import com.gcl.crm.form.CustomerForm;
 import com.gcl.crm.form.CustomerStatusReportForm;
+import com.gcl.crm.form.KPIEmployeeForm;
 import com.gcl.crm.repository.UserRepository2;
 import com.gcl.crm.service.MarketingServices;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +25,10 @@ public class MarketingController {
     public static final String MAIN_PAGE = "marketing/marketing.html";
     public static final String CUSTOMER_REPORT_PAGE = "marketing/customerStatusReport.html";
     public static final String CUSTOMER_DISTRIBUTION_MNG_PAGE = "marketing/customerDistributionManagement.html";
+    public static final String EMPLOYEE_KPI_EVALUATION_REPORT_PAGE = "marketing/employeeKPIReport.html";
     public static final String APP_USER = "appUsers";
     public static final String LIST_WK_CUSTOMER = "wkCustomerList";
+
 
     @Autowired
     MarketingServices maketingServices;
@@ -59,4 +63,15 @@ public class MarketingController {
         model.addAttribute(LIST_WK_CUSTOMER, wkCustomerList);
         return CUSTOMER_DISTRIBUTION_MNG_PAGE;
     }
+
+    @GetMapping(value = "/employeeKPIEvaluation")
+    public String initEmployeeKPIEvaluation(Model model, @ModelAttribute KPIEmployeeForm kpiEmployeeForm) {
+        String startDate = kpiEmployeeForm.getStartDate();
+        String endDate = kpiEmployeeForm.getEndDate();
+        List<TMP_KPI_EMPLOYEE> tmp_kpi_employeeList = maketingServices.getKPIEmployeeReport(startDate, endDate);
+        kpiEmployeeForm.setTmpKpiEmployeeList(tmp_kpi_employeeList);
+        model.addAttribute("KPI_EMPLOYEE_EVALUATION" , kpiEmployeeForm);
+        return EMPLOYEE_KPI_EVALUATION_REPORT_PAGE;
+    }
+
 }

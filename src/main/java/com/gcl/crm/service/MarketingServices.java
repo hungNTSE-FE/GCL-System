@@ -2,17 +2,18 @@ package com.gcl.crm.service;
 
 import com.gcl.crm.dto.SelectItem;
 import com.gcl.crm.entity.AppUser;
+import com.gcl.crm.entity.TMP_KPI_EMPLOYEE;
 import com.gcl.crm.entity.WKCustomer;
-import com.gcl.crm.form.ComboboxForm;
-import com.gcl.crm.form.CustomerStatusEvaluationForm;
-import com.gcl.crm.form.CustomerStatusForm;
-import com.gcl.crm.form.CustomerStatusReportForm;
+import com.gcl.crm.form.*;
 import com.gcl.crm.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -82,5 +83,10 @@ public class MarketingServices {
         comboboxForm.setListBrokerName(brokerNameList);
         comboboxForm.setListSource(sourceList);
         return comboboxForm;
+    }
+
+    @Transactional
+    public List<TMP_KPI_EMPLOYEE> getKPIEmployeeReport(String fromDate, String toDate) {
+        return marketingRepository.getKPIEmployeeReport(fromDate, toDate);
     }
 }
