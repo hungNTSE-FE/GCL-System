@@ -108,13 +108,13 @@ public class Customer {
     @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<BankAccount> bankAccounts;
     @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<TransactionHisstory> transactionHisstories;
+    private List<TransactionHistory> transactionHisstories;
 
-    public List<TransactionHisstory> getTransactionHisstories() {
+    public List<TransactionHistory> getTransactionHisstories() {
         return transactionHisstories;
     }
 
-    public void setTransactionHisstories(List<TransactionHisstory> transactionHisstories) {
+    public void setTransactionHisstories(List<TransactionHistory> transactionHisstories) {
         this.transactionHisstories = transactionHisstories;
     }
 

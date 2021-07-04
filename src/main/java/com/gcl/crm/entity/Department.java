@@ -30,6 +30,8 @@ public class Department {
 
 //    @Column(name = "last_update", nullable = false)
 //    private Timestamp lastModified;
+    @OneToMany(mappedBy = "department", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Task> tasks;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "departments")
     private List<Permission> permissions;

@@ -1,6 +1,9 @@
 package com.gcl.crm.entity;
 
+import com.gcl.crm.enums.Status;
+
 import javax.persistence.*;
+
 import java.util.Date;
 import java.util.List;
 
@@ -20,8 +23,18 @@ public class Documentary {
     private Date uploadTime ;
     @Column(name = "content")
     private byte content[];
-
+    @Column(name = "active", nullable = false)
+    @Enumerated(EnumType.ORDINAL)
+    private Status active;
     public Documentary() {
+    }
+
+    public Status getActive() {
+        return active;
+    }
+
+    public void setActive(Status active) {
+        this.active = active;
     }
 
     public Documentary(int id, String name, long size) {

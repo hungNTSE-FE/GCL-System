@@ -62,12 +62,13 @@ public class ContractController {
                 contract.getBroker_name(),
                 contract.getCreateDate()
                 );
+        tradingAccount.setContract(contract);
         contract.setTradingAccount(tradingAccount);
         customer.setContract(contract);
 
 
         customerProcessService.saveCustomer(customer);
-        return "contract/view-customer-page";
+        return "redirect:/contract/manageCustomer";
     }
 
 }

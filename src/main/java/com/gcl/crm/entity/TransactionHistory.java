@@ -3,12 +3,12 @@ package com.gcl.crm.entity;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.sql.Date;
+import java.util.Date;
 
 @Entity
 @Data
 @Table(name="transaction_history")
-public class TransactionHisstory {
+public class TransactionHistory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long history_id;
@@ -24,12 +24,22 @@ public class TransactionHisstory {
 
     @Column(name="fee")
     private double fee;
-
+    @Column(name="bank_name")
+    private String bankName;
     @Column(name = "account_number")
     private String  accountNumber  ;
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_code")
     private Customer customer;
+    @Column(name = "customer_name")
+    private  String customerName ;
+    public String getBankName() {
+        return bankName;
+    }
+
+    public void setBankName(String bankName) {
+        this.bankName = bankName;
+    }
 
     public Long getHistory_id() {
         return history_id;
@@ -76,7 +86,7 @@ public class TransactionHisstory {
     }
 
     public void setAccountNumber(String accountNumber) {
-        this.accountNumber = customer.getContract().getTradingAccount().getAccountNumber();
+        this.accountNumber = accountNumber;
     }
 
     public Customer getCustomer() {
@@ -87,6 +97,6 @@ public class TransactionHisstory {
         this.customer = customer;
     }
 
-    public TransactionHisstory() {
+    public TransactionHistory() {
     }
 }

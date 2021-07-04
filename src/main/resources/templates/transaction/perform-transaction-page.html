@@ -12,6 +12,46 @@
             crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js"
             crossorigin="anonymous"></script>
+    <style>
+        form .button{
+            height: 45px;
+            margin: 35px 0
+        }
+        form .button input{
+            height: 100%;
+            width: 100%;
+            border-radius: 5px;
+            border: none;
+            color: #fff;
+            font-size: 18px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: linear-gradient(135deg, #0e4db5,#0e4db5);
+        }
+        form .button input:hover{
+            /* transform: scale(0.99); */
+            background: linear-gradient(-135deg, #fff3e0,#0e4db5);
+        }
+        form .button button{
+            height: 100%;
+            width: 100%;
+            border-radius: 5px;
+            border: none;
+            color: #fff;
+            font-size: 18px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: linear-gradient(135deg, red,red);
+        }
+        form .button button:hover{
+            /* transform: scale(0.99); */
+            background: linear-gradient(-135deg, #fff3e0,red);
+        }
+    </style>
 </head>
 <body class="nav-fixed">
 <th:block th:include="/common/nav-fixed.html"></th:block>
@@ -57,10 +97,10 @@
                         <div class="col-lg-9">
                             <!-- Default Bootstrap Toasts-->
                             <form class="row g-3"
-                                  id="customerForm"
-                                  th:action="@{/transaction/deposit}"
-                                  th:object="${customer}"
 
+                                  th:action="@{/transaction/deposit}"
+                                  th:object="${tradingForm}"
+                                    id="formDeposit"
                                   method="post"
                             >
                             <div id="deposit">
@@ -75,40 +115,57 @@
                                                 </label>
                                                 <input type="text" class="form-control"
                                                        id="customerName"
-                                                       placeholder="Tên khách hàng"
-                                                       th:field="${customer.contract.tradingAccount.accountNumber}"
+                                                        readonly
+                                                       th:field="*{tradingNumber}"
                                                 />
+                                                <input type="hidden" th:field="*{customerCode}">
                                             </div>
                                             <div class="col-md-6">
                                                 <label class="small mb-1"> Nguồn </label>
-                                                <select
+                                                <select th:field="*{bankName}"
                                                         class="form-select"
-                                                        id="sourceCmb"
+                                                        id="bankSrc"
                                                 >
-                                                    <option></option>
+
                                                     <option th:each="account : ${customer.bankAccounts}"
                                                             th:value="${account.id}"
-                                                            th:utext="${account.bankName}"/>
+                                                            th:utext="${account.bankName} + ${account.id}"/>                                                    </select>
                                                 </select>
                                             </div>
                                         </div>
 
                                         <div class="row gx-3 mb-3">
-                                            <div class="col-md-6">
+                                            <div class="col-md-6 form-validate ">
                                                 <label for="" class="small mb-1">
                                                     Số tiền muốn nạp
                                                 </label>
                                                 <!-- Joined input group prepend example-->
                                                 <div class="input-group input-group-joined">
                               <span class="input-group-text">
-                                <i data-feather="phone"></i>
+                                <i data-feather="dollar-sign"></i>
                               </span>
-                                                    <input type="text" class="form-control ps-0"
-                                                           id="phoneNumber"
-                                                           min="0" maxlength="10" pattern="\d*"
+                                                    <input th:field="*{money}" type="text" class="form-control ps-0"
+                                                           id="moneyDeposit"
+
 
                                                     />
+
                                                 </div>
+                                                <i class="fas fa-check-circle "></i>
+                                                <i class="fas fa-exclamation-circle"></i>
+                                                <small>Error Message</small>
+                                            </div>
+
+
+
+                                        </div>
+                                        <div class="row gx-3 mb-3">
+
+                                            <div class="button">
+
+
+                                                <input type="submit" value="Nạp tiền">
+
                                             </div>
 
                                         </div>
@@ -118,14 +175,13 @@
                             </div>
                             </form>
                             <form class="row g-3"
-
+                                  id="formWithdraw"
                                   th:action="@{/transaction/withdraw}"
-                                  th:object="${customer}"
-
+                                  th:object="${tradingForm}"
 
                                   method="post"
                             >
-                                <div id="withdraw">
+                                <div id="#withdraw">
                                     <div class="card mb-4">
                                         <div class="card-header">Thông tin rút tiền</div>
                                         <div class="card-body">
@@ -138,41 +194,66 @@
                                                     <input type="text" class="form-control"
                                                            id="customerName"
                                                            readonly
-                                                           placeholder="Tên khách hàng"
-                                                           th:field="${customer.contract.tradingAccount.accountNumber}"
+                                                           th:field="*{tradingNumber}"
                                                     />
+                                                    <input type="hidden" th:field="*{customerCode}">
                                                 </div>
                                                 <div class="col-md-6">
                                                     <label class="small mb-1"> Nguồn </label>
-                                                    <select
+                                                    <select th:field="*{bankName}"
                                                             class="form-select"
                                                             id="sourceCmb"
                                                     >
 
                                                         <option th:each="account : ${customer.bankAccounts}"
                                                                 th:value="${account.id}"
-                                                                th:utext="${account.bankName} "/>
-                                                    </select>
+                                                                th:utext="${account.bankName} + ${account.id}"/>                                                    </select>
                                                 </div>
                                             </div>
-
+                                            <h3>[[${message}]]</h3>
                                             <div class="row gx-3 mb-3">
-                                                <div class="col-md-6">
+                                                <div class="col-md-6 form-validate">
                                                     <label for="" class="small mb-1">
                                                         Số tiền muốn rút
                                                     </label>
                                                     <!-- Joined input group prepend example-->
                                                     <div class="input-group input-group-joined">
                               <span class="input-group-text">
-                                <i data-feather="money"></i>
+                                <i data-feather="dollar-sign"></i>
                               </span>
-                                                        <input type="text" class="form-control ps-0"
-
+                                                        <input th:field="*{money}" type="text" class="form-control ps-0"
+                                                               id="moneyWithdraw"
                                                                min="0" maxlength="10" pattern="\d*"
 
                                                         />
+                                                       >
                                                     </div>
+                                                    <i class="fas fa-check-circle "></i>
+                                                    <i class="fas fa-exclamation-circle"></i>
+                                                    <small>Error Message</small>
                                                 </div>
+                                                <div class="col-md-6">
+                                                    <h3>[[${message}]]</h3>
+                                                </div>
+
+
+                                            </div>
+                                            <div class="row gx-3 mb-3">
+
+                                                    <div class="button">
+                                                        <h3>[[${message}]]</h3>
+
+                                                        <input type="submit" value="Rút tiền">
+
+                                                </div>
+
+                                            </div>
+                                            <div class="row gx-3 mb-3">
+
+                                                <button class="btn btn-outline-dark mx-1"  data-bs-toggle="modal" data-bs-target="#exampleModalCenter">
+                                                    <i class="fas fa-plus" style="padding-right: 2px"></i>
+                                                    Xem lịch sử
+                                                </button>
 
                                             </div>
 
@@ -180,12 +261,116 @@
                                     </div>
                                 </div>
                             </form>
+<!--                            <form class="row g-3"-->
+
+<!--                                 th:object="${listTransactionHistories}"-->
+
+<!--                                  method="post"-->
+<!--                            >-->
+<!--                            </form>-->
+<!--                            <div id="history">-->
+<!--                                <div class="card mb-4">-->
+<!--                                    <div class="card-header">Lịch sử giao dịch</div>-->
+<!--                                    <div class="card-body">-->
+<!--                                        <table id="datatablesSimple">-->
+<!--                                            <thead>-->
+<!--                                            <tr>-->
+
+<!--                                                <th>Ngân hàng</th>-->
+<!--                                                <th>Số tiền</th>-->
+<!--                                                <th>Loại giao dịch</th>-->
+<!--                                                <th>Phí</th>-->
+
+<!--                                                <th>Ngày giao dịch</th>-->
+
+
+
+<!--                                            </tr>-->
+<!--                                            </thead>-->
+<!--                                            <tbody>-->
+<!--                                            <tr th:each="transactionHistory : ${listTransactionHistories}">-->
+<!--                                                <td th:text="${ transactionHistory.bankName}"></td>-->
+<!--                                                <td th:text="${transactionHistory.money}"></td>-->
+<!--                                                <td th:text="${transactionHistory.transactionType}"></td>-->
+<!--                                                <td th:text="${transactionHistory.fee}"></td>-->
+<!--                                                <td th:text="${transactionHistory.createDate}"></td>-->
+<!--                                            </tr>-->
+<!--                                            </tbody>-->
+<!--                                        </table>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
 
 
 
 
 
-                            <
+
+
+
+                        </div>
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <form class="ui form segment">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalCenterTitle">
+                                            Lịch sử giao dịch
+
+
+                                        </h5>
+                                        <button
+                                                class="btn-close"
+                                                type="button"
+                                                data-bs-dismiss="modal"
+                                                aria-label="Close"
+                                        ></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="card-body">
+                                            <table id="datatablesSimple">
+                                                <thead>
+                                                <tr>
+
+                                                    <th>Ngân hàng</th>
+                                                    <th>Số tiền</th>
+                                                    <th>Loại giao dịch</th>
+                                                    <th>Phí</th>
+
+                                                    <th>Ngày giao dịch</th>
+
+
+
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr th:each="transactionHistory : ${listTransactionHistories}">
+                                                    <td th:text="${ transactionHistory.bankName}"></td>
+                                                    <td th:text="${transactionHistory.money}"></td>
+                                                    <td th:text="${transactionHistory.transactionType}"></td>
+                                                    <td th:text="${transactionHistory.fee}"></td>
+                                                    <td th:text="${transactionHistory.createDate}"></td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+                                    </div>
+                                    <div class="modal-footer">
+<!--                                        <button class="ui blue submit button" type="button">-->
+<!--                                            Lưu-->
+<!--                                        </button>-->
+<!--                                        <button-->
+<!--                                                class="ui reset button"-->
+<!--                                                type="button"-->
+<!--                                                data-bs-dismiss="modal"-->
+<!--                                        >-->
+<!--                                            Huỷ-->
+<!--                                        </button>-->
+                                        Tổng số giao dịch :[[${size}]]
+                                    </div>
+                                    <div class="ui error message"></div>
+                                </form>
+                            </div>
                         </div>
                         <!-- Sticky Navigation-->
                         <div class="col-lg-3">
@@ -201,9 +386,10 @@
                                                 <a class="nav-link" href="#deposit">Nạp tiền </a>
                                             </li>
                                             <li class="nav-item">
-                                                <a class="nav-link" href="#withdraw"
-                                                >Rút tiền</a
-                                                >
+                                                <a class="nav-link" href="#withdraw">Rút tiền </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="#history">Lịch sử giao dịch </a>
                                             </li>
 
 
@@ -245,6 +431,45 @@
         element: document.getElementById("date2"),
         autoRefresh: true,
     });
+</script>
+<script th:inline="javascript">
+    const form = document.getElementById('formDeposit');
+    const money = document.getElementById('moneyDeposit');
+
+
+
+    form.addEventListener('submit',(e) => {
+
+        const moneyValue = money.value.trim();
+
+        //     const re = /^\d{1,2}\/\d{1,2}\/\d{4}$/;
+        if(moneyValue ==''){
+            setErrorFor(money,"Xin hãy nhập  số tiền cần nạp");
+            e.preventDefault();
+
+
+        }else {
+            setSuccessFor(money);
+        }
+
+
+    });
+    //
+    function setErrorFor(input,message) {
+        const  inputBox=input.parentElement;
+
+        const small = inputBox.querySelector('small');
+        small.innerText = message;
+        inputBox.className='col-md-6 form-validate error';
+
+    }
+    function setSuccessFor(input) {
+        const  inputBox=input.parentElement;
+
+
+        inputBox.className='col-md-6 form-validate success';
+
+    }
 </script>
 
 

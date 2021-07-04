@@ -111,6 +111,7 @@
                 <th>Ngày tạo </th>
 
                 <th>Mở tài khoản </th>
+                <th>Giao dịch</th>
 
 
               </tr>
@@ -127,7 +128,10 @@
                   <a th:href="@{'/contract/showCreateForm/'+${customer.customerCode}}"><i class="fa fa-arrow-circle-right" aria-hidden="true"></i></a>
 
                 </td>
+                <td>
+                  <a th:href="@{'/transaction/perform/'+${customer.customerCode}}"><i class="fa fa-usd" aria-hidden="true"></i></a>
 
+                </td>
 
               </tr>
               </tbody>

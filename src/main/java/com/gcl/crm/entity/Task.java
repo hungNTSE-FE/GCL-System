@@ -1,5 +1,6 @@
 package com.gcl.crm.entity;
 
+import com.gcl.crm.enums.Status;
 import lombok.Data;
 import net.bytebuddy.dynamic.loading.InjectionClassLoader;
 
@@ -22,16 +23,47 @@ public class Task {
 
     @Column(name="priority")
     private String priority;
-    @Column(name="reporter")
-    private String reporter ;
+
     @Column(name="startDate")
     private Date startDate ;
     @Column(name="endDate")
     private Date endDate ;
     @Column (name = "status")
     private String status;
-    @Column(name="assign")
-    private String assign ;
+
+    @Column(name="description")
+    private String description ;
+
+
+    @Column(name = "active", nullable = false)
+    @Enumerated(EnumType.ORDINAL)
+    private Status active;
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "department_id")
+    private Department department;
+    public Status getActive() {
+        return active;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public Department getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(Department department) {
+        this.department = department;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setActive(Status active) {
+        this.active = active;
+    }
 
     public Task() {
 
@@ -69,13 +101,7 @@ public class Task {
         this.priority = priority;
     }
 
-    public String getReporter() {
-        return reporter;
-    }
 
-    public void setReporter(String reporter) {
-        this.reporter = reporter;
-    }
 
     public Date getStartDate() {
         return startDate;
@@ -101,13 +127,7 @@ public class Task {
         this.status = status;
     }
 
-    public String getAssign() {
-        return assign;
-    }
 
-    public void setAssign(String assign) {
-        this.assign = assign;
-    }
 
 
 

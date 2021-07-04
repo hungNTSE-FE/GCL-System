@@ -12,6 +12,47 @@
             crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js"
             crossorigin="anonymous"></script>
+    <style>
+        form .button{
+            height: 45px;
+            margin: 35px 0
+        }
+        form .button input{
+            height: 100%;
+            width: 100%;
+            border-radius: 5px;
+            border: none;
+            color: #fff;
+            font-size: 18px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: linear-gradient(135deg, #0e4db5,#0e4db5);
+        }
+        form .button input:hover{
+            /* transform: scale(0.99); */
+            background: linear-gradient(-135deg, #fff3e0,#0e4db5);
+        }
+        form .button button{
+            height: 100%;
+            width: 100%;
+            border-radius: 5px;
+            border: none;
+            color: #fff;
+            font-size: 18px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: linear-gradient(135deg, red,red);
+        }
+        form .button button:hover{
+            /* transform: scale(0.99); */
+            background: linear-gradient(-135deg, #fff3e0,red);
+        }
+    </style>
+
 </head>
 <body class="nav-fixed">
 <th:block th:include="/common/nav-fixed.html"></th:block>
@@ -156,11 +197,11 @@
                                         </div>
                                         <div class="row gx-3 mb-3">
 
-                                            <div class="col-md-6">
+
                                                 <div class="button">
                                                     <input type="submit" value="Tạo mới hợp đồng">
                                                 </div>
-                                            </div>
+
                                         </div>
 
                                     </div>
@@ -185,7 +226,7 @@
                                                     Tên
                                                     <span style="color: red">*</span>
                                                 </label>
-                                                <input type="text" class="form-control"
+                                                <input readonly type="text" class="form-control"
                                                        id="customerName"
                                                        placeholder="Tên khách hàng"
                                                        th:field="${customer.customerName}"
@@ -193,7 +234,7 @@
                                             </div>
                                             <div class="col-md-6">
                                                 <label class="small mb-1" for="genderCmb">Giới tính</label>
-                                                <select th:field="${customer.gender}" id="genderCmb" class="form-control">
+                                                <select  readonly th:field="${customer.gender}" id="genderCmb" class="form-control">
                                                     <option value="0">Nam</option>
                                                     <option value="1">Nữ</option>
                                                 </select>
@@ -211,7 +252,7 @@
                               <span class="input-group-text">
                                 <i data-feather="phone"></i>
                               </span>
-                                                    <input type="text" class="form-control ps-0"
+                                                    <input readonly type="text" class="form-control ps-0"
                                                            id="phoneNumber"
                                                            min="0" maxlength="10" pattern="\d*"
                                                            th:field="${customer.phoneNumber}"
@@ -220,7 +261,7 @@
                                             </div>
                                             <div class="col-md-6">
                                                 <label class="small mb-1" for="customerStatusCmb"> Tình trạng </label>
-                                                <select th:field="${customer.status}" id="customerStatusCmb" class="form-select">
+                                                <select readonly th:field="${customer.status}" id="customerStatusCmb" class="form-select">
                                                     <option value="1">Active</option>
                                                     <option value="0">Inactive</option>
                                                 </select>
@@ -235,7 +276,7 @@
                               <span class="input-group-text">
                                 <i data-feather="mail"></i>
                               </span>
-                                                    <input
+                                                    <input readonly
                                                             class="form-control ps-0"
                                                             type="text"
                                                             aria-label="Search"
@@ -250,6 +291,7 @@
                                             >Mô tả <!--<span style="color: red">*</span> --></label
                                             >
                                             <textarea
+                                                    readonly
                                                     class="form-control"
                                                     id="customerDescription"
                                                     rows="3"
@@ -272,7 +314,7 @@
                                                     Mã căn cước
                                                     <span style="color: red">*</span>
                                                 </label>
-                                                <input th:field="${customer.identification.identityNumber}" text="text" class="form-control" id=""/>
+                                                <input readonly th:field="${customer.identification.identityNumber}" text="text" class="form-control" id=""/>
                                             </div>
                                             <div class="col-md-6">
                                                 <label class="small mb-1">
@@ -285,6 +327,7 @@
                                 <i data-feather="calendar"></i>
                               </span>
                                                     <input
+                                                            readonly
                                                             th:field="${customer.identification.birthDate}"
                                                             class="form-control ps-0"
                                                             id="date1"
@@ -300,6 +343,7 @@
                                                 <select
                                                         th:field="${customer.identification.issuePlace}"
                                                         class="form-select"
+                                                        readonly
                                                         id="exampleFormControlSelect1"
                                                 >
                                                     <option value="HCM">HCM</option>
@@ -315,6 +359,7 @@
                                 <i data-feather="calendar"></i>
                               </span>
                                                     <input
+                                                            readonly
                                                             th:field="${customer.identification.issueDate}"
                                                             class="form-control ps-0"
                                                             id="date2"
@@ -332,6 +377,7 @@
                                 <i data-feather="calendar"></i>
                               </span>
                                                     <input
+                                                            readonly
                                                             th:field="${customer.identification.issueDate}"
                                                             class="form-control ps-0"
                                                             id="date2"
@@ -355,7 +401,7 @@
                                                 >Tên chủ tài khoản
                                                     <span style="color: red">*</span></label
                                                 >
-                                                <input class="form-control" type="text" id="ownerBanking"
+                                                <input  readonly class="form-control" type="text" id="ownerBanking"
                                                        th:field="${customer.customerName}"/>
 
                                             </div>

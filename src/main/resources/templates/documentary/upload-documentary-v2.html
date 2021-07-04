@@ -84,7 +84,6 @@
             display: none;
         }
         .wrapper .file-name{
-            position: absolute;
             bottom: 0px;
             width: 100%;
             font-size: 18px;
@@ -113,7 +112,7 @@
         }
         .container #submitButton{
             margin-top: 20px;
-            width: 100%;
+            width: 400px;
             height: 50px;
             display: block;
             border: none;
@@ -176,34 +175,44 @@
                     </div>
                 </div>
 <!--                table-->
-                <div class="container">
-                    <div class="wrapper">
+<!--                <div class="container">-->
+<!--                    <div class="wrapper">-->
 
-                        <div class="content">
-                            <div class="icon"><i class="fas fa-cloud-upload-alt"></i></div>
-                            <div class="text">Chưa có tập tin nào được chọn </div>
+<!--                        <div class="content">-->
+<!--                            <div class="icon"><i class="fas fa-cloud-upload-alt"></i></div>-->
+<!--                            <div class="text">Chưa có tập tin nào được chọn </div>-->
 
 
-                        </div>
-                        <div id="cancel-btn"><i class="fas fa-times"></i></div>
-                        <div class="file-name">
+<!--                        </div>-->
+<!--                        <div id="cancel-btn"><i class="fas fa-times"></i></div>-->
+<!--                        <div class="file-name">-->
 
-                            Tên tập tin
-                        </div>
+<!--                            Tên tập tin-->
+<!--                        </div>-->
 
-                    </div>
-                    <button onclick="defaultBtnActive()" id="custom-btn">Choose a file</button>
-                    <form th:action="@{/documentary/upload}" method="post" enctype="multipart/form-data" style="max-width: 600px;margin: 0 auto">
+<!--                    </div>-->
+<!--                    <button onclick="defaultBtnActive()" id="custom-btn">Choose a file</button>-->
+<!--                    <form th:action="@{/documentary/upload}" method="post" enctype="multipart/form-data" style="max-width: 600px;margin: 0 auto">-->
 
-                        <div id="file">
-                            <input id="default-btn"  name="documentary" type="file" hidden="">
-                        </div>
+<!--                        <div id="file">-->
+<!--                            <input id="default-btn"  name="documentary" type="file" hidden="">-->
+<!--                        </div>-->
 
+<!--                        <input type="submit" value="Tải Lên" id="submitButton"/>-->
+
+<!--                    </form>-->
+
+<!--                </div>-->
+                <form th:action="@{/documentary/upload}" method="post" enctype="multipart/form-data" style="max-width: 600px;margin: 0 auto">
+                    <div class="container">
+                <div class="drop-zone">
+                    <span class="drop-zone__prompt">Kéo thả hoặc nhấp để chọn file(.pdf)</span>
+                    <input type="file" name="documentary" class="drop-zone__input">
+                </div>
                         <input type="submit" value="Tải Lên" id="submitButton"/>
 
-                    </form>
-
-                </div>
+                    </div>
+                </form>
             </div>
         </main>
         <th:block th:include="/common/footer.html"></th:block>

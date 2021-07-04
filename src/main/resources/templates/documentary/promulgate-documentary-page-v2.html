@@ -52,7 +52,6 @@
       background: linear-gradient(-135deg, #fff3e0,red);
     }
   </style>
-
 </head>
 <body class="nav-fixed">
 <th:block th:include="/common/nav-fixed.html"></th:block>
@@ -75,16 +74,17 @@
                   <div class="page-header-icon">
                     <i data-feather="layout"></i>
                   </div>
-                  Kích hoạt tài khoản
+                  Ban hành công văn
                 </h1>
               </div>
             </div>
             <nav class="mt-4 rounded" aria-label="breadcrumb">
               <ol class="breadcrumb px-3 py-2 rounded mb-0">
                 <li class="breadcrumb-item">
-                  <a href="dashboard-1.html">Trang chủ</a>
+                  <a href="dashboard-1.html">Công văn </a>
                 </li>
-                <li class="breadcrumb-item active">Kích hoạt tài khoản </li>
+                <li  class="breadcrumb-item active">
+                </li>
               </ol>
             </nav>
           </div>
@@ -92,155 +92,99 @@
       </header>
       <!-- Main page content-->
 
-        <div class="container-xl px-4 mt-n10">
-          <div class="row">
-            <div class="col-lg-9">
-              <!-- Default Bootstrap Toasts-->
-              <div id="tradingAccountInfo">
+      <div class="container-xl px-4 mt-n10">
+        <div class="row">
+          <div class="col-lg-9">
+            <!-- Default Bootstrap Toasts-->
+
+
+
+            <form  class="row g-3"method="POST" th:object="${documentary}" th:action="@{/documentary/promulgate}"  >
+              <div id="#withdraw">
                 <div class="card mb-4">
-
-                  <div class="card-header">Tài khoản giao dịch</div>
+                  <div class="card-header">Thông tin công văn</div>
                   <div class="card-body">
-                    <form class="row g-3"
-                          id="customerForm"
-
-                          th:object="${tradingAccount}"
-                          th:method="POST"
-
-                    >
                     <div class="row gx-3 mb-3">
                       <div class="col-md-6">
-                        <label for="tradingCode" class="small mb-1">
-                          Mã tài khoản giao dịch
+                        <label class="small mb-1">
+                          Tên công văn
                           <span style="color: red">*</span>
                         </label>
-                        <input type="text" class="form-control" readonly
-                               id="tradingCode"
-                               placeholder="Mã tài khoản giao dịch"
-                               th:field="${tradingAccount.accountNumber}"
-
+                        <input type="text" class="form-control"
+                               id="customerName"
+                               readonly
+                               th:field="*{name}"
                         />
+                        <input type="hidden" th:value="${documentary.getId()}" name="documentary_id">
+
                       </div>
                       <div class="col-md-6">
                         <label class="small mb-1">
-                          Mã môi giới
-                          <span style="color: red">*</span>
-                        </label>
-                        <input type="text" readonly
-                               class="form-control"
-                               id="brokerCode"
-                               placeholder="Mã môi giới"
-                               th:field="${tradingAccount.brokerCode}"
-
-                        />
-                      </div>
-                    </div>
-
-                    <div class="row gx-3 mb-3">
-                      <div class="col-md-6">
-                        <label for="" class="small mb-1">
-                          Tên tài khoản giao dịch
-                        </label>
-                        <input
-                                class="form-control ps-0"
-                                type="text" readonly
-                                aria-label="Search"
-                                th:field="${tradingAccount.accountName}"
-
-                        />
-                      </div>
-                      <div class="col-md-6">
-                        <label class="small mb-1"> Tên môi giới </label>
-                        <input
-                                class="form-control ps-0"
-                                type="text" readonly
-                                aria-label="Search"
-                                th:field="${tradingAccount.brokerName}"
-
-                        />
-                      </div>
-                    </div>
-                    <div class="row gx-3 mb-3">
-                      <div class="col-md-6">
-                        <label for="" class="small mb-1">
-                          Trạng thái
-                        </label>
-                        <!-- Joined input group prepend example-->
-                        <input
-                                th:field="${tradingAccount.status}"
-                                readonly
-                                class="form-control ps-0"
-                                id="text"
-                                placeholder=""
-
-                        />
-                      </div>
-                      <div class="col-md-6">
-                        <label class="small mb-1">
-                          Ngày mở tài khoản
+                          Ngày đăng tải công văn
                         </label>
                         <div class="input-group input-group-joined">
                               <span class="input-group-text">
                                 <i data-feather="calendar"></i>
                               </span>
                           <input
-                                  th:field="${tradingAccount.createDay}"
-                                  readonly
+                                  th:field="${documentary.uploadTime}"
+
                                   class="form-control ps-0"
                                   id="date"
-                                  placeholder="Chọn ngày mở tài khoản..."
+                                  readonly
 
                           />
                         </div>
                       </div>
+
                     </div>
-                    </form>
-                    <form class="row g-3"
-                          th:action="@{/transaction/active}"
-
-                          th:object="${customer}"
-                          th:method="POST"
-
-                    >
-                      <input type="hidden"  th:field="${customer.customerCode}">
-                      <div class="row gx-3 mb-3">
-
-                        <div class="button">
-
-                          <input type="submit" value="Kích hoạt tài khoản">
-
-                        </div>
-
+                    <th:block th:each="department: ${departmentList}">
+                    <div class="row gx-3 mb-3">
+                      <div class="col-md-6">
+                      <label class="small mb-1">
+                        [[${department.name}]]
+                        <span style="color: red">*</span>
+                      </label>
                       </div>
-                    </form>
+                      <div class="col-md-6">
+
+                          <input  type="checkbox" id="check" name="department_id_check"
+                                  th:value="${department.getId()}"><br/>
+                      </div>
+
+
+
+
+                    </div>
+                    </th:block>
+                    <div class="row gx-3 mb-3">
+                      <input type="submit" value="Ban Hành" class="btn btn-primary"/>
+
+
+
+
+
+                    </div>
+
                   </div>
                 </div>
               </div>
+            </form>
 
-              `
 
-            </div>
-            <!-- Sticky Navigation-->
-            <div class="col-lg-3">
-              <div class="nav-sticky">
-                <div class="card">
-                  <div class="card-body">
-                    <ul class="nav flex-column" id="stickyNav">
 
-                      <li class="nav-item">
-                        <a class="nav-link" href="#tradingAccountInfo"
-                        >Kích hoạt tài khoản</a
-                        >
 
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
+
+
+
+
           </div>
+          <!-- Sticky Navigation-->
 
         </div>
-        <!-- Hidden field -->
+
+      </div>
+      <!-- Hidden field -->
 
 
     </main>
