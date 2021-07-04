@@ -1,10 +1,13 @@
 package com.gcl.crm.controller;
 
+import com.gcl.crm.entity.Employee;
 import com.gcl.crm.entity.Level;
 import com.gcl.crm.entity.Potential;
 import com.gcl.crm.entity.Source;
+import com.gcl.crm.form.CustomerDistributionForm;
 import com.gcl.crm.form.PotentialSearchForm;
 import com.gcl.crm.repository.SourceRepository;
+import com.gcl.crm.service.EmployeeService;
 import com.gcl.crm.service.LevelService;
 import com.gcl.crm.service.PotentialService;
 import com.gcl.crm.utils.ExcelReader;
@@ -34,16 +37,25 @@ public class PotentialController {
     @Autowired
     LevelService levelService;
 
+    @Autowired
+    EmployeeService employeeService;
+
     @RequestMapping(value = "/home", method = RequestMethod.GET)
     public String goHomePage(Model model) {
         List<Source> sources = sourceRepository.getAll();
         List<Level> levels = levelService.getAll();
         List<Potential> potentials = potentialService.getAllPotentials();
+        List<Employee> employees = employeeService.getAllWorkingEmployees();
+        List<Potential> potentialsSharing = potentialService.getListPotentialToShare();
         PotentialSearchForm searchForm = new PotentialSearchForm();
+        CustomerDistributionForm customerDistributionForm = new CustomerDistributionForm();
         model.addAttribute("sources", sources);
         model.addAttribute("levels", levels);
         model.addAttribute("potentials", potentials);
         model.addAttribute("searchForm", searchForm);
+        model.addAttribute("employees", employees);
+        model.addAttribute("potentialsSharing", potentialsSharing);
+        model.addAttribute("customerDistributionForm", customerDistributionForm);
         return "/potential/home-potential-hungNT-V2";
     }
 

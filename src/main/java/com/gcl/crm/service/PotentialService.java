@@ -6,6 +6,7 @@ import com.gcl.crm.entity.Source;
 import com.gcl.crm.enums.Status;
 import com.gcl.crm.form.PotentialSearchForm;
 import com.gcl.crm.repository.PotentialRepository;
+import com.gcl.crm.repository.PotentialRepository2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +22,9 @@ public class PotentialService {
 
     @Autowired
     PotentialRepository potentialRepository;
+
+    @Autowired
+    PotentialRepository2 potentialRepository2;
 
     @Autowired
     LevelService levelService;
@@ -176,5 +180,9 @@ public class PotentialService {
         Potential potential = (id != null) ? potentialRepository.findPotentialByEmailAndIdNot(email, id)
                 : potentialRepository.findPotentialByEmail(email);
         return potential != null;
+    }
+
+    public List<Potential> getListPotentialToShare() {
+        return potentialRepository2.getListPotentialToShare();
     }
 }

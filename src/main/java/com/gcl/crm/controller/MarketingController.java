@@ -3,10 +3,7 @@ package com.gcl.crm.controller;
 import com.gcl.crm.entity.AppUser;
 import com.gcl.crm.entity.TMP_KPI_EMPLOYEE;
 import com.gcl.crm.entity.WKCustomer;
-import com.gcl.crm.form.ComboboxForm;
-import com.gcl.crm.form.CustomerForm;
-import com.gcl.crm.form.CustomerStatusReportForm;
-import com.gcl.crm.form.KPIEmployeeForm;
+import com.gcl.crm.form.*;
 import com.gcl.crm.repository.UserRepository2;
 import com.gcl.crm.service.MarketingServices;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,6 +69,12 @@ public class MarketingController {
         kpiEmployeeForm.setTmpKpiEmployeeList(tmp_kpi_employeeList);
         model.addAttribute("KPI_EMPLOYEE_EVALUATION" , kpiEmployeeForm);
         return EMPLOYEE_KPI_EVALUATION_REPORT_PAGE;
+    }
+
+    @PostMapping(value = "/distributionPotential")
+    public String distributionPotential(@ModelAttribute CustomerDistributionForm customerDistributionForm) {
+        maketingServices.distributeCustomerData(customerDistributionForm);
+        return "redirect:/potential/home";
     }
 
 }

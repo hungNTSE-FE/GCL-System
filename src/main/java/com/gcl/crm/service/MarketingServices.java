@@ -1,11 +1,10 @@
 package com.gcl.crm.service;
 
 import com.gcl.crm.dto.SelectItem;
-import com.gcl.crm.entity.AppUser;
-import com.gcl.crm.entity.TMP_KPI_EMPLOYEE;
-import com.gcl.crm.entity.WKCustomer;
+import com.gcl.crm.entity.*;
 import com.gcl.crm.form.*;
 import com.gcl.crm.repository.*;
+import com.gcl.crm.utils.WebUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +13,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 @Service
@@ -32,7 +32,13 @@ public class MarketingServices {
     WKCustomerRepository wkCustomerRepository;
 
     @Autowired
+    PotentialRepository2 potentialRepository2;
+
+    @Autowired
     SourceRepository sourceRepository;
+
+    @Autowired
+    CustomerDistributionRepository customerDistributionRepository;
 
     @Autowired
     EmployeeService employeeService;
@@ -89,4 +95,30 @@ public class MarketingServices {
     public List<TMP_KPI_EMPLOYEE> getKPIEmployeeReport(String fromDate, String toDate) {
         return marketingRepository.getKPIEmployeeReport(fromDate, toDate);
     }
+
+    @Transactional
+    public void distributeCustomerData(CustomerDistributionForm customerDistributionForm) {
+        try{
+            List<Long> empId = customerDistributionForm.getEmpIdList();
+            List<Potential> potentialList = potentialRepository2.getListPotentialToShare();
+            Random random = new Random();
+            Date systemDate = WebUtils.getSystemDate();
+            int i = 0;
+            for (Potential potential : potentialList) {
+                int randomIndex = random.nextInt(empId.size());
+                CustomerDistribution customerDistribution = new CustomerDistribution();
+                customerDistribution.setCustomer_code(potential.getId());
+                customerDistribution.setEmployee_id(empId.get(i++));
+                customerDistribution.setAdd_date(systemDate);
+                customerDistribution.setDate_distribution(systemDate);
+                customerDistribution.setUpd_date(systemDate);
+                customerDistributionRepository.insertDataCustomer(customerDistribution);
+                if (i == empId.size()) i = 0;
+            }
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
 }

@@ -363,10 +363,10 @@
               </tr>
               </thead>
               <tbody>
-              <tr>
-                <td>Nguyen Van A</td>
-                <td>0123456789</td>
-                <td>a@gmail.com</td>
+              <tr th:each="potential : ${potentialsSharing}">
+                <td th:text="${potential.name}"></td>
+                <td th:text="${potential.phoneNumber}"></td>
+                <td th:text="${potential.email}"></td>
               </tr>
               </tbody>
             </table>
@@ -381,9 +381,9 @@
                         class="form-control"
                         size="10"
                 >
-                  <option value="1">Test 1</option>
-                  <option value="2">Test 2</option>
-                  <option value="3">Test 3</option>
+                  <option th:each="employee : ${employees}"
+                          th:value="${employee.id}"
+                          th:utext="${employee.name}"/>
                 </select>
               </div>
 
@@ -437,10 +437,17 @@
             /> -->
           </div>
           <div class="modal-footer">
-            <button class="btn btn-primary" type="button">Lưu</button>
+            <button class="btn btn-primary" id="sharingLeads" type="button">Chia sẻ</button>
             <button class="btn btn-outline-dark" type="button">
               Bỏ qua
             </button>
+          </div>
+          <div>
+            <form action="#" id ="customerDistributionForm" method="POST" th:action="@{/marketing/distributionPotential}"
+                  th:object="${customerDistributionForm}">
+              <input type="hidden" id="empIdList" th:field="${customerDistributionForm.empIdList}">
+              <input type="hidden" id="potentialIdList" th:field="${customerDistributionForm.potentialIdList}">
+            </form>
           </div>
         </div>
       </div>
@@ -673,6 +680,21 @@
       e.preventDefault();
       updateIDs();
     });
+
+    $('#sharingLeads').on('click', function(){
+      var optsListBox2 = $('#lstBox2 option:not([disabled])');
+      if (optsListBox2.length === 0) {
+        alert("Vui lòng chọn nhân viên để chia");
+        return;
+      }
+      var listSelectedEmployeId = [];
+
+      $.each(optsListBox2, function(){
+        listSelectedEmployeId.push(Number($(this).val()));
+      })
+      $('#empIdList').val(listSelectedEmployeId.join());
+      $('#customerDistributionForm').submit();
+    })
   });
 
   function updateIDs() {

@@ -87,4 +87,12 @@ public class Potential {
         return this.phoneNumber.equals(potential.getPhoneNumber())
                 || this.email.equals(potential.getEmail());
     }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 }
