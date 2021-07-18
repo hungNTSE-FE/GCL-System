@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+  <title>Khách hàng - Gia Cát Lợi</title>
+  <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+  <link rel="icon" type="image/x-icon" href="assets/img/favicon.png"/>
+  <script data-search-pseudo-elements defer
+          src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"
+          crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js"
+          crossorigin="anonymous"></script>
+  <style>
+    form .button{
+      height: 45px;
+      margin: 35px 0
+    }
+    form .button input{
+      height: 100%;
+      width: 100%;
+      border-radius: 5px;
+      border: none;
+      color: #fff;
+      font-size: 18px;
+      font-weight: 500;
+      letter-spacing: 1px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      background: linear-gradient(135deg, #0e4db5,#0e4db5);
+    }
+    form .button input:hover{
+      /* transform: scale(0.99); */
+      background: linear-gradient(-135deg, #fff3e0,#0e4db5);
+    }
+    form .button button{
+      height: 100%;
+      width: 100%;
+      border-radius: 5px;
+      border: none;
+      color: #fff;
+      font-size: 18px;
+      font-weight: 500;
+      letter-spacing: 1px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      background: linear-gradient(135deg, red,red);
+    }
+    form .button button:hover{
+      /* transform: scale(0.99); */
+      background: linear-gradient(-135deg, #fff3e0,red);
+    }
+  </style>
+</head>
+<body class="nav-fixed">
+<th:block th:include="/common/nav-fixed.html"></th:block>
+<div id="layoutSidenav">
+  <th:block th:include="/common/layoutSidenav.html"></th:block>
+  <div id="layoutSidenav_content">
+    <main>
+      <header
+              class="
+              page-header page-header-dark
+              bg-gradient-primary-to-secondary
+              pb-10
+            "
+      >
+        <div class="container-xl px-4">
+          <div class="page-header-content pt-4">
+            <div class="row align-items-center justify-content-between">
+              <div class="col-auto mt-4">
+                <h1 class="page-header-title">
+                  <div class="page-header-icon">
+                    <i data-feather="layout"></i>
+                  </div>
+                  Ban hành công văn
+                </h1>
+              </div>
+            </div>
+            <nav class="mt-4 rounded" aria-label="breadcrumb">
+              <ol class="breadcrumb px-3 py-2 rounded mb-0">
+                <li class="breadcrumb-item">
+                  <a href="dashboard-1.html">Công văn </a>
+                </li>
+                <li  class="breadcrumb-item active">
+                </li>
+              </ol>
+            </nav>
+          </div>
+        </div>
+      </header>
+      <!-- Main page content-->
+
+      <div class="container-xl px-4 mt-n10">
+        <div class="row">
+          <div class="col-lg-9">
+            <!-- Default Bootstrap Toasts-->
+
+
+
+            <form  class="row g-3"method="POST" th:object="${documentary}" th:action="@{/documentary/promulgate}"  >
+              <div id="#withdraw">
+                <div class="card mb-4">
+                  <div class="card-header">Thông tin công văn</div>
+                  <div class="card-body">
+                    <div class="row gx-3 mb-3">
+                      <div class="col-md-6">
+                        <label class="small mb-1">
+                          Tên công văn
+                          <span style="color: red">*</span>
+                        </label>
+                        <input type="text" class="form-control"
+                               id="customerName"
+                               readonly
+                               th:field="*{name}"
+                        />
+                        <input type="hidden" th:value="${documentary.getId()}" name="documentary_id">
+
+                      </div>
+                      <div class="col-md-6">
+                        <label class="small mb-1">
+                          Ngày đăng tải công văn
+                        </label>
+                        <div class="input-group input-group-joined">
+                              <span class="input-group-text">
+                                <i data-feather="calendar"></i>
+                              </span>
+                          <input
+                                  th:field="${documentary.uploadTime}"
+
+                                  class="form-control ps-0"
+                                  id="date"
+                                  readonly
+
+                          />
+                        </div>
+                      </div>
+
+                    </div>
+                    <th:block th:each="department: ${departmentList}">
+                    <div class="row gx-3 mb-3">
+                      <div class="col-md-6">
+                      <label class="small mb-1">
+                        [[${department.name}]]
+                        <span style="color: red">*</span>
+                      </label>
+                      </div>
+                      <div class="col-md-6">
+
+                          <input  type="checkbox" id="check" name="department_id_check"
+                                  th:value="${department.getId()}"><br/>
+                      </div>
+
+
+
+
+                    </div>
+                    </th:block>
+                    <div class="row gx-3 mb-3">
+                      <input type="submit" value="Ban Hành" class="btn btn-primary"/>
+
+
+
+
+
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            </form>
+
+
+
+
+
+
+
+
+          </div>
+          <!-- Sticky Navigation-->
+
+        </div>
+
+      </div>
+      <!-- Hidden field -->
+
+
+    </main>
+    <th:block th:include="/common/footer.html"></th:block>
+  </div>
+</div>
+<script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+        crossorigin="anonymous"
+></script>
+<script src="https://cdn.jsdelivr.net/npm/litepicker/dist/litepicker.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.js"
+        integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+        crossorigin="anonymous"></script>
+<script type="text/javascript" th:src="@{/js/mainTH.js}"></script>
+<script type="text/javascript" th:src="@{/js/customer.js}"></script>
+<script th:inline="javascript">
+  const picker = new Litepicker({
+    element: document.getElementById("date"),
+    autoRefresh: true,
+  });
+  const picker2 = new Litepicker({
+    element: document.getElementById("date1"),
+    autoRefresh: true,
+  });
+  const picker3 = new Litepicker({
+    element: document.getElementById("date2"),
+    autoRefresh: true,
+  });
+</script>
+
+
+</body>
+</html>

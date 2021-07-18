@@ -67,15 +67,18 @@ public class CustomerService {
     public void registerCustomer(CustomerForm customerForm) {
         try {
             Customer customer = convertToCustomerEntity(customerForm);
-            customer.setEmployee(new Employee(1L));
-
+            customer.setEmployee(new Employee(6L));
+            customer.setCustomerCode(customerForm.getCustomerName());
             // Set level 6 as default of customer when register customer successfully
             customer.setLevel(new Level(LevelEnum.LEVEL_6.getValue()));
             //Identification
-
-             List<BankAccount> bankAccountList = new ArrayList<>();
-             bankAccountList.add(registerBanking(customerForm));
-
+            //kh-ng depar-docu
+            customer.setNumber("none");
+            customer.setContractNumber("none");
+            BankAccount bankAccount = registerBanking(customerForm);
+            bankAccount.setCustomer(customer);
+            List<BankAccount> bankAccountList = new ArrayList<>();
+             bankAccountList.add(bankAccount);
             customer.setIdentification(registerIdentification(customerForm));
             customer.setBankAccounts(bankAccountList);
 
@@ -127,6 +130,7 @@ public class CustomerService {
 
         bankAccount.setCreateDate(WebUtils.getSystemDate());
         bankAccount.setUpdDate(WebUtils.getSystemDate());
+
         return  bankAccount;
     }
 

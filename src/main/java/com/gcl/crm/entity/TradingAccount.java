@@ -3,7 +3,8 @@ package com.gcl.crm.entity;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.sql.Date;
+import java.util.Date;
+
 
 @Entity
 @Data
@@ -23,10 +24,12 @@ public class TradingAccount {
     @Column(name="account_name")
     private String accountName ;
 
-    @Column(name = "customer_code")
-    private String customerCode;
 
-    public TradingAccount(){};
+    @OneToOne(mappedBy = "tradingAccount", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Customer customer;
+    public TradingAccount(){
+
+    };
 
     public TradingAccount(String accountNumber, double balance, String status, String accountName, String brokerCode, String brokerName, Date createDate) {
         this.accountNumber = accountNumber;
@@ -44,15 +47,27 @@ public class TradingAccount {
     private  String brokerName ;
     @Column(name="create_date")
     private Date createDate;
-    @OneToOne(mappedBy = "tradingAccount", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Contract contract;
+    @Column(name="active_date")
+    private Date activeDate ;
+    @Column (name="update_date")
+    private Date updateDate;
+    @Column(name = "update_type")
+    private String updateType;
 
-    public Contract getContract() {
-        return contract;
+    public Date getActiveDate() {
+        return activeDate;
     }
 
-    public void setContract(Contract contract) {
-        this.contract = contract;
+    public void setActiveDate(Date activeDate) {
+        this.activeDate = activeDate;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 
     public String getAccountNumber() {
@@ -111,11 +126,19 @@ public class TradingAccount {
         this.createDate = createDate;
     }
 
-    public String getCustomerCode() {
-        return customerCode;
+    public Date getUpdateDate() {
+        return updateDate;
     }
 
-    public void setCustomerCode(String customerCode) {
-        this.customerCode = customerCode;
+    public void setUpdateDate(Date updateDate) {
+        this.updateDate = updateDate;
+    }
+
+    public String getUpdateType() {
+        return updateType;
+    }
+
+    public void setUpdateType(String updateType) {
+        this.updateType = updateType;
     }
 }

@@ -41,7 +41,6 @@ import java.util.List;
 public class Customer {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "CUSTOMER_CODE")
     private String customerCode;
 
@@ -71,6 +70,10 @@ public class Customer {
 
     @Column(name = "CREATE_DATE")
     private Date createDate;
+    @Column(name="trading_account")
+    private String number;
+    @Column(name="contract_number")
+    private String contractNumber;
 
     @Column(name = "ADD_USER")
     private String addUser;
@@ -96,12 +99,42 @@ public class Customer {
     @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<BankAccount> bankAccounts;
 
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "account_number", referencedColumnName = "account_number")
+    private TradingAccount tradingAccount;
+
+
     @OneToOne
     @JoinColumn(name = "id")
     private Employee employee;
 
-    @OneToOne(mappedBy = "customer", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "contract_id", referencedColumnName = "contract_id")
     private Contract contract;
+
+    public String getContractNumber() {
+        return contractNumber;
+    }
+
+    public void setContractNumber(String contractNumber) {
+        this.contractNumber = contractNumber;
+    }
+
+    public TradingAccount getTradingAccount() {
+        return tradingAccount;
+    }
+
+    public void setTradingAccount(TradingAccount tradingAccount) {
+        this.tradingAccount = tradingAccount;
+    }
+
+    public String getNumber() {
+        return number;
+    }
+
+    public void setNumber(String number) {
+        this.number = number;
+    }
 
     public List<BankAccount> getBankAccounts() {
         return bankAccounts;

@@ -129,15 +129,16 @@
                                             </div>
                                             <div class="col-md-6 form-validate ">
                                                 <label class="small mb-1">
-                                                    Người báo cáo
+                                                    Trạng thái
                                                     <span style="color: red">*</span>
                                                 </label>
-                                                <input text="text" th:field="*{reporter}" class="form-control "  id="reporter">
+                                                <input text="text" th:field="*{status}" class="form-control "  id="status">
                                                 <i class="fas fa-check-circle "></i>
                                                 <i class="fas fa-exclamation-circle"></i>
                                                 <small>Error Message</small>
 
                                             </div>
+
 
                                         </div>
                                          <div class="row gx-3 mb-3 ">
@@ -191,7 +192,7 @@
                               </span>
                                                 <input
                                                         class="form-control ps-0"
-                                                        id="date"
+                                                        id="date1"
                                                         placeholder="Chọn ngày kết thúc công việc"
                                                         th:field="*{endDate}"
                                                 />
@@ -199,29 +200,75 @@
                                         </div>
                                     </div>
                                     <div class="row gx-3 mb-3">
-                                        <div class="col-md-6 form-validate ">
-                                            <label class="small mb-1">
-                                                Trạng thái
-                                                <span style="color: red">*</span>
-                                            </label>
-                                            <input text="text" th:field="*{status}" class="form-control "  id="status">
-                                            <i class="fas fa-check-circle "></i>
-                                            <i class="fas fa-exclamation-circle"></i>
-                                            <small>Error Message</small>
+                                        <label class="small mb-1" for="customerDescription"
+                                        >Mô tả <!--<span style="color: red">*</span> --></label
+                                        >
+                                        <textarea
+                                                class="form-control"
+                                                id="customerDescription"
+                                                rows="3"
+                                                placeholder="Nhập mô tả"
+                                                th:field="*{description}"
+                                        ></textarea>
 
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-3" style="width: 25%">
+                                            <select
+                                                    id="lstBox1"
+                                                    multiple="multiple"
+                                                    class="form-control"
+                                                    size="10"
+                                            >
+<!--                                                <option th:each="employee : ${employees}"-->
+<!--                                                        th:value="${employee.id}"-->
+<!--                                                        th:utext="${employee.name}"/>-->
+                                            </select>
                                         </div>
-                                        <div class="col-md-6 form-validate ">
-                                            <label class="small mb-1">
-                                                Người thực hiện
-                                                <span style="color: red">*</span>
-                                            </label>
-                                            <input text="text"  th:field="*{assign}" id="assign" class="form-control " >
-                                            <i class="fas fa-check-circle "></i>
-                                            <i class="fas fa-exclamation-circle"></i>
-                                            <small>Error Message</small>
 
+                                        <div class="d-flex flex-column py-3" style="width: 10%">
+                                            <a
+                                                    id="btnRight"
+                                                    class="btn btn-block btn-sm btn-primary mb-1"
+                                            >Add</a
+                                            >
+                                            <a
+                                                    id="btnLeft"
+                                                    class="btn btn-block btn-sm btn-primary mb-1"
+                                            >Remove</a
+                                            >
+                                            <a
+                                                    id="btnRightall"
+                                                    class="btn btn-block btn-sm btn-primary mb-1"
+                                            >Add all</a
+                                            >
+                                            <a id="btnLeftall" class="btn btn-block btn-sm btn-primary"
+                                            >Remove all</a
+                                            >
+                                        </div>
+                                        <div class="col-xs-3" style="width: 25%">
+                                            <select
+                                                    id="lstBox2"
+                                                    multiple="multiple"
+                                                    class="form-control"
+                                                    size="10"
+                                            ></select>
+                                        </div>
+                                        <div class="col-xs-3" style="width: 40%">
+                                            <div class="form-check">
+                                                <input
+                                                        class="form-check-input"
+                                                        id="flexCheckDefault"
+                                                        type="checkbox"
+                                                        value=""
+                                                />
+                                                <label class="form-check-label" for="flexCheckDefault"
+                                                >Chia sẻ ngẫu nhiên toàn bộ đầu mối</label
+                                                >
+                                            </div>
                                         </div>
                                     </div>
+
                                     <div class="row gx-3 mb-3">
                                         <div class="col-md-6 form-validate ">
                                             <div class="button">

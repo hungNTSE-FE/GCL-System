@@ -148,29 +148,29 @@ function validateDateTime() {
     var currentDate = new Date();
     var parentSelector;
     var errMessage;
-    if ( Date.parse(birthDate) >= issueDate || Date.parse(birthDate) >= Date.parse(currentDate)) {
-        errMessage = 'Ngày sinh phải nhỏ hơn ngày cấp và ngày hiện tại';
-        parentSelector = $(CUSTOMER_FORM.DATE_OF_BIRTH_ID).closest('.form-validate');
-        if (parentSelector.hasClass('error')) {
-            parentSelector.append('<small class="showErr">' + errMessage + '</small>');
-        } else {
-            parentSelector.addClass('error');
-            parentSelector.append('<small class="showErr">' + errMessage + '</small>');
-        }
-        return false;
-    }
+    // if ( Date.parse(birthDate) >= issueDate || Date.parse(birthDate) >= Date.parse(currentDate)) {
+    //     errMessage = 'Ngày sinh phải nhỏ hơn ngày cấp và ngày hiện tại';
+    //     parentSelector = $(CUSTOMER_FORM.DATE_OF_BIRTH_ID).closest('.form-validate');
+    //     if (parentSelector.hasClass('error')) {
+    //         parentSelector.append('<small class="showErr">' + errMessage + '</small>');
+    //     } else {
+    //         parentSelector.addClass('error');
+    //         parentSelector.append('<small class="showErr">' + errMessage + '</small>');
+    //     }
+    //     return false;
+    // }
 
-    if ( Date.parse(issueDate) > Date.parse(currentDate)) {
-        errMessage = 'Ngày ngày cấp phải nhỏ hơn ngày hiện tại';
-        parentSelector = $(CUSTOMER_FORM.DATE_OF_BIRTH_ID).closest('.form-validate');
-        if (parentSelector.hasClass('error')) {
-            parentSelector.append('<small class="showErr">' + errMessage + '</small>');
-        } else {
-            parentSelector.addClass('error');
-            parentSelector.append('<small class="showErr">' + errMessage + '</small>');
-        }
-        return false;
-    }
+    // if ( Date.parse(issueDate) > Date.parse(currentDate)) {
+    //     errMessage = 'Ngày ngày cấp phải nhỏ hơn ngày hiện tại';
+    //     parentSelector = $(CUSTOMER_FORM.DATE_OF_BIRTH_ID).closest('.form-validate');
+    //     if (parentSelector.hasClass('error')) {
+    //         parentSelector.append('<small class="showErr">' + errMessage + '</small>');
+    //     } else {
+    //         parentSelector.addClass('error');
+    //         parentSelector.append('<small class="showErr">' + errMessage + '</small>');
+    //     }
+    //     return false;
+    // }
 
     return true;
 }

@@ -47,13 +47,12 @@
         /*    display: none;*/
         /*}*/
         .container{
-            height :550px;
-            width:500px;
-            place-items: center;
-            text-align: center;
+            heigh :350px;
+            width:430px;
+            display:none;
         }
         .container .wrapper{
-            height: 350px;
+            height: 300px;
             width: 100%;
             border:2px dashed #00b8d4;
             display: flex;
@@ -62,10 +61,9 @@
             position: relative;
 
         }
-        .icon{
+        .wrapper .icon{
             font-size: 100px;
             color: #00b8d4;
-
         }
         .wrapper .text{
             font-size: 20px;
@@ -73,10 +71,10 @@
             color: #00bcd4;
 
         }
+
         .wrapper #cancel-btn{
             position: absolute;
             right: 15px;
-
             top : 15px;
             font-size: 20px;
             cursor: pointer;
@@ -84,6 +82,7 @@
             display: none;
         }
         .wrapper .file-name{
+            position: absolute;
             bottom: 0px;
             width: 100%;
             font-size: 18px;
@@ -93,6 +92,7 @@
 
             background: linear-gradient(135deg,yellow 0%,springgreen 100%);
         }
+
         .container #custom-btn{
             margin-top: 30px;
             width: 100%;
@@ -110,27 +110,14 @@
             background: linear-gradient(135deg,yellow 0%,springgreen 100%);
 
         }
-        .container #submitButton{
-            margin-top: 20px;
-            width: 400px;
-            height: 50px;
-            display: block;
-            border: none;
-            outline: none;
-            border-radius: 25px;
-            color: #fff3e0;
-            font-size: 18px;
-            font-weight: 500;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            cursor: pointer;
-            background: linear-gradient(135deg,yellow 0%,springgreen 100%);
-
-        }
-
         #file{
             display: none;
         }
+        #show:checked ~.container{
+            display: block;
+        }
+
+
     </style>
 </head>
 <body class="nav-fixed">
@@ -157,7 +144,7 @@
                                     Cơ cấu công văn
                                 </h1>
                                 <div class="page-header-subtitle">
-                                    Cơ cấu công văn là nơi hiển thị chi tiết các công văn
+                                    Cơ cấu công văn là nơi hiển thị chi tiết các công văn của các phòng ban
                                 </div>
                             </div>
                         </div>
@@ -167,52 +154,60 @@
             <!-- Main page content-->
             <div class="container-xl px-4 mt-n10">
                 <div class="card mb-4">
-                    <div class="card-header">Thêm mới công văn</div>
+                    <div class="card-header">Filter</div>
                     <div class="card-body">
                         <div class="mb-3">
-
+                            <!--                            <form id="go-update-form" th:action="@{/department/edit-v2}">-->
+                            <!--                                <label for="exampleFormControlSelect1" class="form-label">Phòng ban</label>-->
+                            <!--                                <select class="form-select form-control-solid" name="did"-->
+                            <!--                                        id="exampleFormControlSelect1">-->
+                            <!--                                    <option th:each="department : ${departments}" th:value="${department.id}"-->
+                            <!--                                            th:text="${department.name}"></option>-->
+                            <!--                                </select>-->
+                            <!--                            </form>-->
                         </div>
                     </div>
                 </div>
-<!--                table-->
-<!--                <div class="container">-->
-<!--                    <div class="wrapper">-->
-
-<!--                        <div class="content">-->
-<!--                            <div class="icon"><i class="fas fa-cloud-upload-alt"></i></div>-->
-<!--                            <div class="text">Chưa có tập tin nào được chọn </div>-->
+                <div class="card mb-4 card-header-actions mx-auto">
+                    <div class="card-header">
+                        Các công văn của phòng ban
+                        <div>
 
 
-<!--                        </div>-->
-<!--                        <div id="cancel-btn"><i class="fas fa-times"></i></div>-->
-<!--                        <div class="file-name">-->
 
-<!--                            Tên tập tin-->
-<!--                        </div>-->
-
-<!--                    </div>-->
-<!--                    <button onclick="defaultBtnActive()" id="custom-btn">Choose a file</button>-->
-<!--                    <form th:action="@{/documentary/upload}" method="post" enctype="multipart/form-data" style="max-width: 600px;margin: 0 auto">-->
-
-<!--                        <div id="file">-->
-<!--                            <input id="default-btn"  name="documentary" type="file" hidden="">-->
-<!--                        </div>-->
-
-<!--                        <input type="submit" value="Tải Lên" id="submitButton"/>-->
-
-<!--                    </form>-->
-
-<!--                </div>-->
-                <form th:action="@{/documentary/upload}" method="post" enctype="multipart/form-data" style="max-width: 600px;margin: 0 auto">
-                    <div class="container">
-                <div class="drop-zone">
-                    <span class="drop-zone__prompt">Kéo thả hoặc nhấp để chọn file(.pdf)</span>
-                    <input type="file" name="documentary" class="drop-zone__input">
-                </div>
-                        <input type="submit" value="Tải Lên" id="submitButton"/>
-
+                        </div>
                     </div>
-                </form>
+                    <div class="card-body">
+                        <table id="datatablesSimple">
+                            <thead>
+                            <tr>
+                                <th>Tệp tin</th>
+<!--                                <th>Kích thước</th>-->
+                                <th>Ngày đăng tải</th>
+                                <th>Tải xuống</th>
+
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="doc: ${listDocs}">
+                                <td th:text="${doc.name}"></td>
+<!--                                <td th:text="${doc.size}"></td>-->
+                                <td th:text="${doc.uploadTime}"></td>
+                                <td>
+
+                                    <a th:href="@{'/documentary/downloadDocumentary/'+${doc.id}}"><i class="fa fa-download" aria-hidden="true"></i></a>
+
+                                </td>
+
+                                <!--                <div class="badge bg-primary text-white rounded-pill">-->
+                                <!--                  Full-time-->
+                                <!--                </div>-->
+
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </main>
         <th:block th:include="/common/footer.html"></th:block>
@@ -229,13 +224,60 @@
                 </a>
             </div>
             <div class="card-body">
-
+                <!--                <form th:action="@{/department/create}" method="POST" th:object="${departmentForm}">-->
+                <!--                    <div class="mb-3">-->
+                <!--                        <label for="exampleInputEmail1" class="form-label"><strong>-->
+                <!--                            Phòng ban-->
+                <!--                        </strong>-->
+                <!--                            <span style="color: red">*</span></label>-->
+                <!--                        <input type="text" th:field="*{name}" class="form-control form-control-solid" id="exampleInputEmail1" aria-describedby="emailHelp">-->
+                <!--                    </div>-->
+                <!--                    <div class="mb-3">-->
+                <!--                        <label for="textAreaExample" class="form-label"> <strong>-->
+                <!--                            Ghi chú-->
+                <!--                        </strong></label>-->
+                <!--                        <textarea th:field="*{note}" class="form-control form-control-solid" id="textAreaExample" rows="4"></textarea>-->
+                <!--                    </div>-->
+                <!--                    <div class="mb-3">-->
+                <!--                        <label class="form-label">  Bắt buộc <span style="color: red">*</span></label>-->
+                <!--                    </div>-->
+                <!--                    <button type="submit" class="btn btn-primary">LƯU</button>-->
+                <!--                </form>-->
             </div>
         </div>
     </div>
 </div>
 
+<div class="container">
+    <form th:action="@{/documentary/upload}" method="post" enctype="multipart/form-data" style="max-width: 600px;margin: 0 auto">
 
+        <div id="file">
+            <input id="default-btn"  name="documentary" type="file" hidden="">
+        </div>
+
+        <input type="submit" value="Tải Lên" class="btn btn-primary"/>
+
+    </form>
+
+    <div class="wrapper">
+
+        <div class="content">
+            <div class="icon"><i class="fas fa-cloud-upload-alt"></i></div>
+            <div class="text">Chưa có tập tin nào được chọn </div>
+
+
+        </div>
+        <div id="cancel-btn"><i class="fas fa-times"></i></div>
+        <div class="file-name">
+
+            Tên tập tin
+        </div>
+
+    </div>
+    <button onclick="defaultBtnActive()" id="custom-btn">Chọn tập tin</button>
+
+    </form>
+</div>
 <script>
     const noFile =document.querySelector(".text")
     const fileName = document.querySelector(".file-name");

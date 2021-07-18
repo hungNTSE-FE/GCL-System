@@ -41,12 +41,14 @@ public class DocumentaryServiceImpl implements DocumentaryService{
         int docIDParse = Integer.parseInt(docID);
         List<Department> departmentList = new ArrayList<>();
         Documentary documentary = documentaryService.findByID(docIDParse);
+        Department department = null;
         for(int i =0;i<departmentID.size();i++){
-            departmentList.add(departmentService.findDepartmentById(departmentID.get(0).toString()));
-
+            department = departmentService.findDepartmentById(departmentID.get(i).toString());
+//            departmentList.add(departmentService.findDepartmentById(departmentID.get(i).toString()));
+                documentary.getDepartments().add(department);
+                department.getDocumentaries().add(documentary);
         }
 
-        documentary.setDepartments(departmentList);
         documentRepository.save(documentary);
     }
 }

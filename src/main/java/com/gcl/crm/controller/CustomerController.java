@@ -41,7 +41,7 @@ public class CustomerController {
         return "customer/view-customer-page";
     }
     @GetMapping({"/showUpdateForm/{id}"})
-    public String showContractCreatePage(@PathVariable(name="id") long id ,Model model){
+    public String showContractCreatePage(@PathVariable(name="id") String id ,Model model){
         Customer customer = customerProcessService.findCustomerByID(id);
         List<BankAccount> bankAccountList = customer.getBankAccounts();
         System.out.println(bankAccountList.size());

@@ -6,6 +6,7 @@ import com.gcl.crm.repository.CustomerProcessRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,20 +20,31 @@ public class CustomerProcessServiceImpl implements CustomerProcessService{
     }
 
     @Override
-    public Customer findCustomerByID(long id) {
-        Optional<Customer> option = customerProcessRepository.findById(id);
-        Customer customer = null ;
-        if(option.isPresent()){
-            customer = option.get();
-        }else {
-            throw new RuntimeException("Task not found for id  :"+id);
+    public Customer findCustomerByID(String id) {
+        List<Customer> customerList = getAllCustomer();
+        for(int i = 0 ; i < customerList.size();i++){
+            if(customerList.get(i).getCustomerCode().equals(id)){
+                return customerList.get(i);
+            }
         }
-        return customer;
+        return null;
     }
 
     @Override
     public void saveCustomer(Customer customer) {
         customerProcessRepository.save(customer);
+    }
+
+    @Override
+    public List<Customer> getCustomerHaveTradingAccount() {
+        List<Customer> customerList = getAllCustomer();
+        List<Customer> result = new ArrayList<>();
+        for(int i = 0 ; i < customerList.size();i++){
+            if(!customerList.get(i).getNumber().equals("none")){
+                result.add(customerList.get(i));
+            }
+        }
+        return  result;
     }
 
     @Override

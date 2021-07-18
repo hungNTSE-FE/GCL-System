@@ -282,9 +282,8 @@
                             <thead>
                             <tr>
                                 <th>CÔNG VIỆC</th>
-                                <th>LIÊN HỆ</th>
-                                <th>ĐỐI TƯỢNG</th>
                                 <th>MỨC ƯU TIÊN</th>
+                                <th>Độ phức tạp</th>
                                 <th>CHI TIẾT</th>
                                 <th>XÓA</th>
                             </tr>
@@ -293,9 +292,9 @@
                             <tr th:each="task : ${listTasks}">
 
                                 <td th:text="${task.name}"></td>
-                                <td th:text="${task.assign}"></td>
-                                <td th:text="${task.reporter}"></td>
+
                                 <td th:text="${task.priority}"></td>
+                                <td th:text="${task.complex}"></td>
                                 <td>
 
                                     <a th:href="@{'/task/showUpdateTaskForm/'+${task.task_id}}"><i class="fa fa-arrow-circle-right" aria-hidden="true"></i></a>

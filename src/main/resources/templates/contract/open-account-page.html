@@ -75,7 +75,7 @@
                                     <div class="page-header-icon">
                                         <i data-feather="layout"></i>
                                     </div>
-                                    Tạo mới hợp đồng
+                                    Tạo mới tài khoản
                                 </h1>
                             </div>
                         </div>
@@ -93,80 +93,20 @@
             <!-- Main page content-->
 
 
-            <div class="container-xl px-4 mt-n10">
-                <div class="row">
-                    <div class="col-lg-9">
-                        <form class="row g-3"
-                              id="contractForm"
-                              th:action="@{/contract/createContract}"
-                              th:object="${contract}"
+                <div class="container-xl px-4 mt-n10">
+                    <div class="row">
+                        <div class="col-lg-9">
+                            <form class="row g-3"
+                                  id="customerForm"
+                                  th:action="@{/contract/createAccount}"
+                                  th:object="${tradingAccount}"
 
-                              method="post"
-                        >
-                            <input type="hidden"  name="customerCode" th:field="${customer.customerCode}">
-                            <div id="contractInfo">
-                                <div class="card mb-4">
-                                    <div class="card-header">Tạo mới hợp đồng</div>
-                                    <div class="card-body">
-                                        <div class="row gx-3 mb-3">
-                                            <div class="col-md-6 form-validate">
-                                                <label for="tradingCode" class="small mb-1">
-                                                    Mã hợp đồng
-                                                    <span style="color: red">*</span>
-                                                </label>
-                                                <input type="text" class="form-control"
-                                                       id="contractID"
-                                                       placeholder="Mã hợp đồng"
-                                                       th:field="${contract.id}"
-
-                                                />
-                                                <i class="fas fa-check-circle "></i>
-                                                <i class="fas fa-exclamation-circle"></i>
-                                                <small>Error Message</small>
-                                            </div>
-                                            <div class="col-md-6 form-validate">
-                                                <label class="small mb-1">
-                                                    Trạng thái
-                                                    <span style="color: red">*</span>
-                                                </label>
-                                                <input type="text"
-                                                       class="form-control"
-                                                       id="status"
-                                                       th:field="${contract.status}"
-
-
-                                                />
-                                                <i class="fas fa-check-circle "></i>
-                                                <i class="fas fa-exclamation-circle"></i>
-                                                <small>Error Message</small>
-                                            </div>
-                                        </div>
-
-
-
-                                        <div class="row gx-3 mb-3">
-
-
-                                            <div class="button">
-                                                <input type="submit" value="Tạo hợp đồng">
-                                            </div>
-
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                        <!-- Default Bootstrap Toasts-->
-                        <form class="row g-3"
-                              id="customerForm"
-
-                              th:object="${customer}"
-                              method="post"
-                        >
+                                  method="post"
+                            >
+                                <input type="hidden"  name="customerCode" th:field="${customer.customerCode}">
                             <div id="tradingAccountInfo">
                                 <div class="card mb-4">
-                                    <div class="card-header">Thông tin tài khoản giao dịch</div>
+                                    <div class="card-header">Mở tài khoản giao dịch</div>
                                     <div class="card-body">
                                         <div class="row gx-3 mb-3">
                                             <div class="col-md-6">
@@ -177,8 +117,8 @@
                                                 <input type="text" class="form-control"
                                                        id="tradingCode"
                                                        placeholder="Mã tài khoản giao dịch"
-                                                       th:field="${customer.number}"
                                                        readonly
+                                                       th:field="${tradingAccount.accountNumber}"
 
                                                 />
                                             </div>
@@ -191,8 +131,8 @@
                                                        class="form-control"
                                                        id="brokerCode"
                                                        placeholder="Mã môi giới"
-                                                       readonly
-                                                       th:field="${customer.tradingAccount.brokerCode}"
+                                                       th:field="${tradingAccount.brokerCode}"
+
                                                 />
                                             </div>
                                         </div>
@@ -202,12 +142,12 @@
                                                 <label for="" class="small mb-1">
                                                     Tên tài khoản giao dịch
                                                 </label>
-                                                <input
-                                                        class="form-control ps-0"
-                                                        type="text"
-                                                        aria-label="Search"
-                                                        th:field="${customer.tradingAccount.accountName}"
+
+                                                <input type="text" class="form-control"
+
                                                         readonly
+                                                        th:field="${customer.customerName}"
+
                                                 />
                                             </div>
                                             <div class="col-md-6">
@@ -216,8 +156,8 @@
                                                         class="form-control ps-0"
                                                         type="text"
                                                         aria-label="Search"
-                                                        th:field="${customer.tradingAccount.brokerName}"
-                                                        readonly
+                                                        th:field="${tradingAccount.brokerName}"
+
 
                                                 />
                                             </div>
@@ -229,50 +169,38 @@
                                                 </label>
                                                 <!-- Joined input group prepend example-->
                                                 <select
-                                                        th:field="${customer.tradingAccount.status}"
+                                                        th:field="${tradingAccount.status}"
 
                                                         class="form-select"
                                                         id="exampleFormControlSelect1"
-                                                        readonly
-
                                                 >
                                                     <option value="Active">Active</option>
                                                     <option value="Inactive">Inactive</option>
                                                 </select>
                                             </div>
-                                            <div class="col-md-6 ">
-                                                <label class="small mb-1">
-                                                    Ngạy tạo tài khoản
-                                                    <span style="color: red">*</span>
-                                                </label>
-                                                <div class="input-group">
-                                                    <div class="input-group-prepend">
-                                                    <span class="input-group-text" id="iconDateOfBirth">
-                                                        <i data-feather="calendar"></i>
-                                                    </span>
-                                                    </div>
-                                                    <input
-                                                            th:field="*{createDate}"
-                                                            class="form-control ps-0"
-                                                            id="dateOfBirth"
-                                                            readonly
-                                                    />
-                                                </div>
 
-                                            </div>
                                         </div>
                                         <div class="row gx-3 mb-3">
 
 
-
+                                                <div class="button">
+                                                    <input type="submit" value="Tạo tài khoản giao dịch">
+                                                </div>
 
                                         </div>
 
                                     </div>
                                 </div>
                             </div>
+                            </form>
+                            <!-- Default Bootstrap Toasts-->
+                            <form class="row g-3"
+                                  id="customerForm"
 
-                            <input type="hidden" th:field="${customer.customerCode}"  >
+                                  th:object="${customer}"
+                                  method="post"
+                            >
+                                <input type="hidden" th:field="${customer.customerCode}"  >
                             <div id="customerInformation">
                                 <div class="card mb-4">
                                     <div class="card-header">ThÔNG TIN ĐẦU MỐI</div>
@@ -334,10 +262,10 @@
                                 <i data-feather="mail"></i>
                               </span>
                                                     <input readonly
-                                                           class="form-control ps-0"
-                                                           type="text"
-                                                           aria-label="Search"
-                                                           th:field="${customer.email}"
+                                                            class="form-control ps-0"
+                                                            type="text"
+                                                            aria-label="Search"
+                                                            th:field="${customer.email}"
                                                     />
                                                 </div>
                                             </div>
@@ -449,75 +377,98 @@
 
                             </div>
 
-                            <div id="bankingInformation">
-                                <div class="card mb-4">
-                                    <div class="card-header">ThÔNG TIN TÀI KHOẢN NGÂN HÀNG</div>
+                                <div id="bankingInformation">
+                                    <div class="card mb-4">
+                                        <div class="card-header">ThÔNG TIN TÀI KHOẢN NGÂN HÀNG</div>
+                                        <div class="card-body">
+                                            <div class="mb-3">
+                                                <label class="small mb-1" for="ownerBanking"
+                                                >Tên chủ tài khoản
+                                                    <span style="color: red">*</span></label
+                                                >
+                                                <input  readonly class="form-control" type="text" id="ownerBanking"
+                                                       th:field="${customer.customerName}"/>
+
+                                            </div>
+                                            <!-- Form Row-->
+                                            <div class="col-md-6">
+                                                <select class="form-select form-control-solid" name="did"
+                                                        id="filterDropdown123">
+                                                    <option th:each="bankAccounts: ${customer.bankAccounts}" th:value="${bankAccounts.bankName}"
+                                                            th:text="${bankAccounts.bankName} +   ${bankAccounts.id}"></option>
+                                                </select>
+                                            </div>
+
+<!--                                            <form class="row g-3"-->
+
+<!--                                                  th:each="account: ${bankAccount}"-->
+
+
+<!--                                            >-->
+<!--                                            <div class="row gx-3 mb-3">-->
+<!--                                                &lt;!&ndash; Form Group (first name)&ndash;&gt;-->
+<!--                                                <div class="col-md-6">-->
+<!--                                                    <label class="small mb-1">-->
+<!--                                                        Ngân hàng-->
+<!--                                                        <span style="color: red">*</span>-->
+<!--                                                    </label>-->
+<!--                                                    <input type="text" class="form-control"-->
+<!--                                                           id="bank"-->
+<!--                                                           th:field="${account.bankName}"-->
+<!--                                                    />-->
+<!--                                                </div>-->
+<!--                                                &lt;!&ndash; Form Group (last name)&ndash;&gt;-->
+<!--                                                <div class="col-md-6">-->
+<!--                                                    <label class="small mb-1" for="bankNumber"-->
+<!--                                                    >Số tài khoản-->
+<!--                                                        <span style="color: red">*</span></label-->
+<!--                                                    >-->
+<!--                                                    <input class="form-control" type="text" id="bankNumber"-->
+<!--                                                           th:field="${account.id}"/>-->
+<!--                                                </div>-->
+<!--                                            </div>-->
+<!--                                            </form>-->
+
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </form>
+
+                                <!-- Sticky Navigation-->
+
+
+
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="nav-sticky">
+                                <div class="card">
                                     <div class="card-body">
-                                        <div class="mb-3">
-                                            <label class="small mb-1" for="ownerBanking"
-                                            >Tên chủ tài khoản
-                                                <span style="color: red">*</span></label
-                                            >
-                                            <input  readonly class="form-control" type="text" id="ownerBanking"
-                                                    th:field="${customer.customerName}"/>
-
-                                        </div>
-                                        <!-- Form Row-->
-                                        <div class="col-md-6">
-                                            <select class="form-select form-control-solid" name="did"
-                                                    id="filterDropdown123">
-                                                <option th:each="bankAccounts: ${customer.bankAccounts}" th:value="${bankAccounts.bankName}"
-                                                        th:text="${bankAccounts.bankName} +  ${bankAccounts.id}"></option>
-                                            </select>
-                                        </div>
-
-
+                                        <ul class="nav flex-column" id="stickyNav">
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="#customerInformation">Đầu mối</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="#tradingAccountInfo"
+                                                >Tài khoản giao dịch</a
+                                                >
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="#identity"
+                                                >Căn cước công dân</a
+                                                >
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="#bankingInformation"
+                                                >Tài khoản ngân hàng</a
+                                                >
+                                            </li>
+                                        </ul>
                                     </div>
                                 </div>
                             </div>
-
-
-                        </form>
-
-                        <!-- Sticky Navigation-->
-
-
-
-                    </div>
-                    <div class="col-lg-3">
-                        <div class="nav-sticky">
-                            <div class="card">
-                                <div class="card-body">
-                                    <ul class="nav flex-column" id="stickyNav">
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="#contractInfo"
-                                            >Hợp đồng</a
-                                            >
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="#tradingAccountInfo"
-                                            >Tài khoản giao dịch</a
-                                            >
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="#customerInformation">Đầu mối</a>
-                                        </li>
-
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="#identity"
-                                            >Căn cước công dân</a
-                                            >
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="#bankingInformation"
-                                            >Tài khoản ngân hàng</a
-                                            >
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
                         </div>
-                    </div>
                 </div>
                 <!-- Hidden field -->
                 <input type="hidden"
@@ -565,60 +516,5 @@
         autoRefresh: true,
     });
 </script>
-<script>
-    const form = document.getElementById('contractForm');
-    const id = document.getElementById('contractID');
-
-    const status = document.getElementById('status');
-
-
-
-    form.addEventListener('submit',(e) => {
-
-
-        const  idValue = id.value.trim();
-        const statusValue  = status.value.trim();
-        //
-            const re = /^GCL[0-9]{4}^HCM[0-9]{4};
-
-        if(idValue ==''){
-            setErrorFor(id,"Mã hợp đồng không thể trống");
-            e.preventDefault();
-
-
-        }else {
-            setSuccessFor(id);
-        }
-        if(!idValue.matches(re)){
-            setErrorFor(id,"Mã hợp đồng có dạng GCLXXXX/HCMXXXX");
-            e.preventDefault();
-        }
-        if(statusValue ==''){
-            setErrorFor(status,"Trạng thái không thể trống");
-            e.preventDefault();
-        }else {
-            setSuccessFor(status);
-        }
-
-
-    });
-    //
-    function setErrorFor(input,message) {
-        const  inputBox=input.parentElement;
-
-        const small = inputBox.querySelector('small');
-        small.innerText = message;
-        inputBox.className='col-md-6 form-validate error';
-
-    }
-    function setSuccessFor(input) {
-        const  inputBox=input.parentElement;
-
-
-        inputBox.className='col-md-6 form-validate success';
-
-    }
-</script>
-
 </body>
 </html>
