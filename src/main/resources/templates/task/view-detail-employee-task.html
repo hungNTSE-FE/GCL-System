@@ -7,8 +7,11 @@
     <title>Khách hàng - Gia Cát Lợi</title>
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
     <link rel="icon" type="image/x-icon" href="assets/img/favicon.png" />
+    <link rel="icon" type="image/x-icon" href="assets/img/favicon.png" />
+    <script data-search-pseudo-elements defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"/>
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css"/>
-
     <script
             data-search-pseudo-elements
             defer
@@ -21,11 +24,11 @@
     ></script>
 
     <style>
-        form .button{
+        .button{
             height: 45px;
             margin: 35px 0
         }
-        form .button input{
+         .button input{
             height: 100%;
             width: 100%;
             border-radius: 5px;
@@ -38,11 +41,11 @@
             transition: all 0.3s ease;
             background: linear-gradient(135deg, #0e4db5,#0e4db5);
         }
-        form .button input:hover{
+       .button input:hover{
             /* transform: scale(0.99); */
             background: linear-gradient(-135deg, #fff3e0,#0e4db5);
         }
-        form .button button{
+        .button button{
             height: 100%;
             width: 100%;
             border-radius: 5px;
@@ -55,7 +58,7 @@
             transition: all 0.3s ease;
             background: linear-gradient(135deg, red,red);
         }
-        form .button button:hover{
+       .button button:hover{
             /* transform: scale(0.99); */
             background: linear-gradient(-135deg, #fff3e0,red);
         }
@@ -86,7 +89,7 @@
                                     <div class="page-header-icon">
                                         <i data-feather="layout"></i>
                                     </div>
-                                    Thêm mới công việc
+                                    Cập nhật công việc
                                 </h1>
                             </div>
                         </div>
@@ -95,7 +98,7 @@
                                 <li class="breadcrumb-item">
                                     <a th:href="@{/task/viewAllTask}">Quay lại</a>
                                 </li>
-                                <li class="breadcrumb-item active">Thêm mới công việc</li>
+                                <li class="breadcrumb-item active">Cập nhật công việc</li>
                             </ol>
                         </nav>
                     </div>
@@ -111,11 +114,12 @@
                             <div class="card mb-4">
                                 <div class="card-header">ThÔNG TIN CÔNG VIỆC</div>
                                 <form class="row g-3"
-                                      id="form"
-                                      th:action="@{/task/saveTask}"
+                                      id="taskForm"
+
                                       th:object="${task}"
-                                      th:method="POST"
+
                                 >
+                                    <input type="hidden" th:field="*{task_id}">
                                     <div class="card-body">
 
                                         <div class="row gx-3 mb-3 ">
@@ -169,7 +173,7 @@
                                             </div>
                                         </div>
                                         <div class="row gx-3 mb-3">
-                                            <div class="col-md-6 form-validate">
+                                            <div class="col-md-6">
                                                 <label class="small mb-1">
                                                     Ngày bắt đầu
                                                 </label>
@@ -183,12 +187,9 @@
                                                             placeholder="Chọn ngày bắt đầu công việc"
                                                             th:field="*{startDate}"
                                                     />
-
                                                 </div>
-                                                <i class="fas fa-check-circle "></i>
-                                                <i class="fas fa-exclamation-circle"></i>
                                             </div>
-                                            <div class="col-md-6 form-validate">
+                                            <div class="col-md-6">
                                                 <label class="small mb-1">
                                                     Ngày kết thúc
                                                 </label>
@@ -202,10 +203,7 @@
                                                             placeholder="Chọn ngày kết thúc công việc"
                                                             th:field="*{endDate}"
                                                     />
-
                                                 </div>
-                                                <i class="fas fa-check-circle "></i>
-                                                <i class="fas fa-exclamation-circle"></i>
                                             </div>
                                         </div>
                                         <div class="row gx-3 mb-3">
@@ -220,75 +218,50 @@
                                                     th:field="*{description}"
                                             ></textarea>
 
-
                                         </div>
                                         <hr class="mt-0 mb-4" />
-                                        <div class="row mb-3">
-                                            <div class="col-md-3">
-                                                <label class="text-small">Phòng ban</label>
-                                                <select class="ui fluid dropdown" id="selectDepartment">
-                                                    <option value="">Lựa chọn</option>
-                                                    <option th:each="department : ${departments}"
-                                                            th:value="${department.id}"
-                                                            th:text="${department.name}"
-                                                    ></option>
-                                                </select>
-                                            </div>
-                                        </div>
+
 
                                         <div class="row selectEmp">
-                                            <div class="col-xs-3" style="width: 25%">
-                                                <select
-                                                        id="lstBox1"
-                                                        multiple="multiple"
-                                                        class="form-control"
-                                                        size="10"
-                                                >
-                                                </select>
-                                            </div>
 
-                                            <div class="d-flex flex-column py-3" style="width: 10%">
-                                                <a id="btnRight" class="btn btn-block btn-sm btn-primary mb-1">Add</a>
-                                                <a id="btnLeft" class="btn btn-block btn-sm btn-primary mb-1">Remove</a>
-                                                <a id="btnRightall" class="btn btn-block btn-sm btn-primary mb-1">Add all</a>
-                                                <a id="btnLeftall" class="btn btn-block btn-sm btn-primary">Remove all</a>
-                                            </div>
-                                            <div class="col-xs-3" style="width: 25%">
+
+
+                                            <div class="col-xs-3" style="width: 100%">
+                                                <label class="text-small">Các nhân viên tham gia</label>
+                                                <label class="text-small"></label>
+
                                                 <select
+
                                                         id="lstBox2"
                                                         multiple="multiple"
                                                         class="form-control"
                                                         size="10"
-                                                ></select>
+                                                >
+                                                    <option th:each="employee: ${employeeHaveTask}"
+                                                            th:value="${employee.id}"
+                                                            th:text="${employee.name}"></option>
+                                                </select>
                                             </div>
 
                                         </div>
-
-
-
 
 
 
 
                                     </div>
-                                    <input type="hidden" id="empIdList" th:field="${task.employees}">
-                                    <div class="row gx-3 mb-3">
-                                        <div class="col-md-6 form-validate">
-                                            <div class="button">
-                                                <input id="createTask" type="button" value="Thêm công việc">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 form-validate ">
-                                            <div class="button">
-                                                <a th:href="@{/task/viewAllTask}">
-                                                    <button>Quay Lại</button>
-                                                </a>
-                                            </div>
-                                        </div>
+                                    <input type="hidden" id="empIdList" th:field="${task.employees}" >
 
-                                    </div>
 
                                 </form>
+                                <div class="row gx-3 mb-3">
+
+                                    <div class="button">
+                                        <a th:href="@{/task/viewEmployeeTask}">
+                                            <button>Quay Lại</button>
+                                        </a>
+                                    </div>
+
+                                </div>
                             </div>
                         </div>
 
@@ -335,7 +308,6 @@
 <script type="text/javascript" th:src="@{/js/listbox/main.js}"></script>
 <script type="text/javascript" th:src="@{/js/modules/checkbox/main.js}"></script>
 <script type="text/javascript" th:src="@{/js/task.js}"></script>
-
 <script th:inline="javascript">
     const picker = new Litepicker({
         element: document.getElementById("date"),
@@ -353,55 +325,53 @@
 <script>
     const form = document.getElementById('form');
     const name = document.getElementById('name');
+    const reporter = document.getElementById('reporter');
     const status = document.getElementById('status');
-    const  startDate = document.getElementById('date')
-    const endDate = document.getElementById('date1');
+    const assign = document.getElementById('assign');
+    const startDate = document.getElementById('startDate');
+    const endDate = document.getElementById('endDate');
 
     form.addEventListener('submit',(e) => {
 
         const nameValue = name.value.trim();
-        const  statusValue = status.value.trim();
-        const startDateValue = startDate.value.trim();
-        const endDateValue = endDate.value.trim();
+        const reporterValue = reporter.value.trim();
+        const statusValue = status.value.trim();
+        const  assginValue = assign.value.trim();
+
+        //
+        //     const re = /^\d{1,2}\/\d{1,2}\/\d{4}$/;
         if(nameValue ==''){
-            setErrorFor(name,"Hãy nhập tên công việc");
+            setErrorFor(name,"Tên không thể trống");
             e.preventDefault();
 
 
         }else {
             setSuccessFor(name);
         }
+        if(reporterValue ==''){
+            setErrorFor(reporter,"Người báo cáo không thể trống");
+            e.preventDefault();
+
+
+        }else {
+            setSuccessFor(reporter);
+        }
         if(statusValue ==''){
-            setErrorFor(status,"Hãy nhập trạng thái");
+            setErrorFor(status,"Trạng thái không thể trống");
             e.preventDefault();
 
 
         }else {
             setSuccessFor(status);
         }
-        if(startDateValue ==''){
-            setErrorFor(startDate,"Hãy nhập ngày bắt đầu");
+        if(assginValue ==''){
+            setErrorFor(assign,"Tên không thể trống");
             e.preventDefault();
 
 
         }else {
-            setSuccessFor(startDate);
+            setSuccessFor(assign);
         }
-        if(endDateValue == ''){
-            setErrorFor(endDate,"Hãy nhập ngày kết thúc");
-            e.preventDefault();
-
-
-        }else {
-            setSuccessFor(endDate);
-        }
-
-
-
-
-
-
-
 
 
     });
@@ -422,6 +392,7 @@
 
     }
 </script>
+
 
 </body>
 </html>

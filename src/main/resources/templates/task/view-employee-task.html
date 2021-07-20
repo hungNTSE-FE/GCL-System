@@ -235,7 +235,7 @@
                                     Cơ cấu công việc
                                 </h1>
                                 <div class="page-header-subtitle">
-                                    Cơ cấu công việc là nơi hiển thị các tác vụ của công việc
+                                    Cơ cấu công việc là nơi hiển thị các tác vụ nhân viên phải thực hiện
                                 </div>
                             </div>
                         </div>
@@ -249,25 +249,14 @@
                     <div class="card-header">Filter</div>
                     <div class="card-baody">
                         <div class="mb-3">
+
                         </div>
                     </div>
                 </div>
                 <div class="card mb-4 card-header-actions mx-auto">
                     <div class="card-header">
                         Hiển Thị Công Việc
-                        <div>
-                            <form >
 
-
-                                <a th:href="@{/task/showCreateForm}" class="btn btn-primary clickshowinfo" data-id="100" style="color: white">
-                                    <i class="fa fa-plus-circle"></i>
-
-                                    Thêm công việc
-                                </a>
-                            </form>
-
-
-                        </div>
                     </div>
                     <div class="card-body">
                         <table id="datatablesSimple">
@@ -275,10 +264,12 @@
                             <tr>
                                 <th>CÔNG VIỆC</th>
                                 <th>MỨC ƯU TIÊN</th>
-                                <th>Độ phức tạp</th>
+                                <th>Ngày bắt đầu</th>
+                                <th>Ngày kết thúc</th>
                                 <th>Trạng thái</th>
-                                <th>CHI TIẾT</th>
-                                <th>XÓA</th>
+                                <th>Chi tiết</th>
+                                <th>Hoàn thành</th>
+
                             </tr>
                             </thead>
                             <tbody>
@@ -287,33 +278,45 @@
                                 <td th:text="${task.name}"></td>
 
                                 <td th:text="${task.priority}"></td>
-                                <td th:text="${task.complex}"></td>
+                                <td th:text="${task.startDate}"></td>
+                                <td th:text="${task.endDate}"></td>
+
+                                <td th:text="${task.submitStatus}"></td>
+                                <td>
+
+                                    <a th:href="@{'/task/showTaskDetail/'+${task.task_id}}"><i class="fa fa-arrow-circle-right" aria-hidden="true"></i></a>
+
+                                </td>
                                 <th:block th:switch="${task.status}">
                                     <th:block th:case="'Chưa hoàn thành'">
-                                        <th:block  th:switch="${task.submitStatus}">
+                                        <th:block th:switch="${task.submitStatus}">
                                             <th:block th:case="'Đang tiến hành'">
-                                                <th>Đang tiến hành</th>
-                                            </th:block>
-                                            <th:block th:case="'Đúng hạn'">
-                                                <td> <a th:href="@{'/task/finishCheck/'+${task.task_id}}"><i class="fa fa-arrow-circle-right" aria-hidden="true"></i>Kiểm duyệt</a></td>
+                                                <td>
+                                                    <a th:href="@{'/task/submitTask/'+${task.task_id}}"><i class="fa fa-check" aria-hidden="true"></i>Cập nhật</a>
+
+
+                                                </td>
                                             </th:block>
                                             <th:block th:case="'Trễ hạn'">
-                                                <td> <a th:href="@{'/task/finishCheck/'+${task.task_id}}"><i class="fa fa-arrow-circle-right" aria-hidden="true"></i>Kiểm duyệt</a></td>
+                                                <td>
+                                                    Đang kiểm duyệt
+
+                                                </td>
+                                            </th:block>
+                                            <th:block th:case="'Đúng hạn'">
+                                                <td>
+                                                    Đang kiểm duyệt
+
+                                                </td>
                                             </th:block>
                                         </th:block>
 
                                     </th:block>
                                     <th:block th:case="'Hoàn thành'">
-                                        <td>Đã kiểm duyệt</td>
+                                        <th>Đã hoàn thành</th>
                                     </th:block>
-
                                 </th:block>
-                                <td>
 
-                                    <a th:href="@{'/task/showUpdateTaskForm/'+${task.task_id}}"><i class="fa fa-arrow-circle-right" aria-hidden="true"></i></a>
-
-                                </td>
-                                <td ><a th:href="@{'/task/deleteTask/'+${task.task_id}}"><i onclick="return confirm('Bạn có chắc muốn xóa')" class="fa fa-trash" aria-hidden="true"></i></a></td>
                             </tr>
                             </tbody>
                         </table>

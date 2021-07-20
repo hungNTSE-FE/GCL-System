@@ -2,18 +2,19 @@ package com.gcl.crm.entity;
 
 import com.gcl.crm.enums.Status;
 import lombok.Data;
-import net.bytebuddy.dynamic.loading.InjectionClassLoader;
 
 import javax.persistence.*;
 import java.sql.Date;
 
+import java.util.List;
+
 @Entity
 @Data
 @Table(name="task")
-public class Task {
+public class    Task {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer task_id;
+    private long task_id;
 
     @Column(name = "name", nullable = false)
     private String name;
@@ -33,14 +34,72 @@ public class Task {
 
     @Column(name="description")
     private String description ;
+    @Column(name="departmentName")
+    private String departmentName;
+    @Column(name="createDate")
+    private Date createDate;
+    @Column(name="submitEmployee")
+    private  Long employeeID ;
+    @Column(name ="submitDate")
+    private Date submitDate ;
+    @Column(name="submitStatus")
+    private String submitStatus;
 
+
+    public java.util.Date getCreateDate() {
+        return createDate;
+    }
+
+
+
+    public java.util.Date getSubmitDate() {
+        return submitDate;
+    }
+
+
+
+    public void setSubmitDate(Date submitDate) {
+        this.submitDate = submitDate;
+    }
+
+    public String getSubmitStatus() {
+        return submitStatus;
+    }
+
+    public void setSubmitStatus(String submitStatus) {
+        this.submitStatus = submitStatus;
+    }
+
+    public Long getEmployeeID() {
+        return employeeID;
+    }
+
+    public void setEmployeeID(Long employeeID) {
+        this.employeeID = employeeID;
+    }
+
+
+
+    public void setSumbitDate(Date sumbitDate) {
+        this.submitDate = sumbitDate;
+    }
+
+    public String getDepartmentName() {
+        return departmentName;
+    }
+
+    public void setDepartmentName(String departmentName) {
+        this.departmentName = departmentName;
+    }
 
     @Column(name = "active", nullable = false)
     @Enumerated(EnumType.ORDINAL)
     private Status active;
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "department_id")
-    private Department department;
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name="task_employee",joinColumns = @JoinColumn(name="task_id"),inverseJoinColumns = @JoinColumn(name="employee_id"))
+    private List<Employee> employees;
+
     public Status getActive() {
         return active;
     }
@@ -49,13 +108,7 @@ public class Task {
         return description;
     }
 
-    public Department getDepartment() {
-        return department;
-    }
 
-    public void setDepartment(Department department) {
-        this.department = department;
-    }
 
     public void setDescription(String description) {
         this.description = description;
@@ -69,8 +122,20 @@ public class Task {
 
     }
 
-    public Integer getTask_id() {
+    public long getTask_id() {
         return task_id;
+    }
+
+    public void setTask_id(long task_id) {
+        this.task_id = task_id;
+    }
+
+    public List<Employee> getEmployees() {
+        return employees;
+    }
+
+    public void setEmployees(List<Employee> employees) {
+        this.employees = employees;
     }
 
     public void setTask_id(Integer task_id) {

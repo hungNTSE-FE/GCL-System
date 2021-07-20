@@ -2,8 +2,10 @@ package com.gcl.crm.service;
 
 import com.gcl.crm.entity.Company;
 import com.gcl.crm.entity.Department;
+import com.gcl.crm.entity.Employee;
 import com.gcl.crm.enums.Status;
 import com.gcl.crm.repository.DepartmentRepository;
+import com.gcl.crm.repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -17,7 +19,8 @@ public class DepartmentServiceImpl implements DepartmentService{
 
     @Autowired
     DepartmentRepository departmentRepository;
-
+    @Autowired
+    TaskRepository taskRepository;
     @Override
     public List<Department> findAllDepartments() {
         return departmentRepository.findAllByStatus(Status.ACTIVE);
@@ -79,5 +82,31 @@ public class DepartmentServiceImpl implements DepartmentService{
             }
         }
         return departments;
+    }
+
+    @Override
+    public List<Department> findDepartmentsByTask(Long departmentID,List<Employee> employees) {
+        List<Department> departments = findAllDepartments();
+        List<Department> result = new ArrayList<>();
+
+        for(int i = 0 ;i<departments.size();i++){
+            if(departments.get(i).getId().equals(departmentID)){
+                result.add(departments.get(i));
+                departments.remove(departments.get(i));
+            }
+        }
+        for(int i = 0 ;i<departments.size();i++){
+                result.add(departments.get(i));
+        }
+        for(int i = 0 ; i <result.size();i++){
+                    if(result.get(i).getId().equals(departmentID)){
+                        for(int j = 0 ; j <employees.size();j++){
+                           result.get(i).getEmployees().remove(employees.get(j));
+                        }
+                    }
+        }
+
+
+        return  result ;
     }
 }
