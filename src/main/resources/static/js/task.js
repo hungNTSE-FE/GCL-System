@@ -28,8 +28,76 @@ $('#createTask').on('click', function(){
         listSelectedEmployeId.push(Number($(this).val()));
     })
     $('#empIdList').val(listSelectedEmployeId.join());
+
+        let checkValidate = true;
+        const nameValue = name.value.trim();
+        const  statusValue = status.value.trim();
+        const startDateValue = startDate.value.trim();
+        const endDateValue = endDate.value.trim();
+        if(nameValue ==''){
+            setErrorFor(name,"Hãy nhập tên công việc");
+            checkValidate = false;
+
+
+        }else {
+            setSuccessFor(name);
+        }
+        if(statusValue ==''){
+            checkValidate = false;
+
+            setErrorFor(status,"Hãy nhập trạng thái");
+
+
+        }else {
+            setSuccessFor(status);
+        }
+        if(startDateValue ==''){
+            checkValidate = false;
+            setErrorFor(startDate,"Hãy nhập ngày bắt đầu");
+
+
+        }else {
+            setSuccessFor(startDate);
+        }
+        if(endDateValue == ''){
+            setErrorFor(endDate,"Hãy nhập ngày kết thúc");
+            checkValidate = false
+
+        }else {
+            setSuccessFor(endDate);
+        }
+
+
+
+
+
+
+
+    if(checkValidate == false){
+       return;
+    }
     $('#form').submit();
+
+
+    //
+
+
 })
+function setErrorFor(input,message) {
+    const  inputBox=input.parentElement;
+
+    const small = inputBox.querySelector('small');
+    small.innerText = message;
+    inputBox.className='col-md-6 form-validate error';
+
+}
+function setSuccessFor(input) {
+    const  inputBox=input.parentElement;
+
+
+    inputBox.className='col-md-6 form-validate success';
+
+}
 $('#updateTask').on('click', function(){
     var optsListBox2 = $('#lstBox2 option:not([disabled])');
     if (optsListBox2.length === 0) {
