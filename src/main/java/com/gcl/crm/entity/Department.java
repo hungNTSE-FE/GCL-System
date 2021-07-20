@@ -29,8 +29,7 @@ public class Department {
     @Column(name = "note", length = 1000)
     private String note;
 
-    @OneToMany(mappedBy = "department", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Task> tasks;
+
 
     @OneToMany(mappedBy = "department", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Employee> employees;
