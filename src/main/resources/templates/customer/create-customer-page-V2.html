@@ -242,19 +242,14 @@
 
                                     <div class="row gx-3 mb-3">
                                         <div class="col-md-6 form-validate">
-                                            <label for="exampleFormControlSelect1" class="small mb-1"> Nơi cấp
+                                            <label class="small mb-1">
+                                                Nơi cấp
                                                 <span style="color: red">*</span>
                                             </label>
-                                            <select
-                                                    th:field="${CustomerForm.placeOfIssue}"
-                                                    class="form-select"
-                                                    id="exampleFormControlSelect1"
-                                            >
-                                                <option value="HCM">HCM</option>
-                                                <option value="Hà Nội">Hà Nội</option>
-                                                <option value="Bình Dương">Bình Dương</option>
-                                                <option value="Đồng Nai">Đồng Nai</option>
-                                            </select>
+                                            <input type="text"
+                                                   class="form-control"
+                                                   th:field="${CustomerForm.placeOfIssue}"
+                                            />
                                         </div>
                                         <div class="col-md-6 form-validate">
                                             <label class="small mb-1"> Ngày cấp

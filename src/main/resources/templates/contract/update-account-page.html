@@ -103,7 +103,7 @@
 
                   method="post"
             >
-              <input type="hidden"  name="customerCode" th:field="${customer.customerCode}">
+              <input type="hidden"  th:field="${tradingAccount.customerID}">
 
               <div id="tradingAccountInfo">
                 <div class="card mb-4">
@@ -132,6 +132,7 @@
                                class="form-control"
                                id="brokerCode"
                                placeholder="Mã môi giới"
+                               readonly
                                th:field="${tradingAccount.brokerCode}"
 
                         />
@@ -140,7 +141,7 @@
 
                     <div class="row gx-3 mb-3">
                       <div class="col-md-6">
-                        <label for="" class="small mb-1">
+                        <label  class="small mb-1">
                           Tên tài khoản giao dịch
                         </label>
 
@@ -154,8 +155,9 @@
                       <div class="col-md-6">
                         <label class="small mb-1"> Tên môi giới </label>
                         <input
-                                class="form-control ps-0"
+                                class="form-control "
                                 type="text"
+                                readonly
                                 aria-label="Search"
                                 th:field="${tradingAccount.brokerName}"
 
@@ -165,7 +167,7 @@
                     </div>
                     <div class="row gx-3 mb-3">
                       <div class="col-md-6">
-                        <label for="" class="small mb-1">
+                        <label  class="small mb-1">
                           Trạng thái
                         </label>
                         <!-- Joined input group prepend example-->

@@ -292,19 +292,22 @@
                                     <th:block th:case="'Chưa hoàn thành'">
                                         <th:block  th:switch="${task.submitStatus}">
                                             <th:block th:case="'Đang tiến hành'">
-                                                <th>Đang tiến hành</th>
+                                                <td> <i data-feather="clock"></i> Đang tiến hành</td>
                                             </th:block>
                                             <th:block th:case="'Đúng hạn'">
-                                                <td> <a th:href="@{'/task/finishCheck/'+${task.task_id}}"><i class="fa fa-arrow-circle-right" aria-hidden="true"></i>Kiểm duyệt</a></td>
+                                                <td> <a th:href="@{'/task/finishCheck/'+${task.task_id}}"><i data-feather="edit"></i> Kiểm duyệt</a></td>
                                             </th:block>
                                             <th:block th:case="'Trễ hạn'">
-                                                <td> <a th:href="@{'/task/finishCheck/'+${task.task_id}}"><i class="fa fa-arrow-circle-right" aria-hidden="true"></i>Kiểm duyệt</a></td>
+                                                <td> <a th:href="@{'/task/finishCheck/'+${task.task_id}}"><i data-feather="edit"></i> Kiểm duyệt</a></td>
                                             </th:block>
                                         </th:block>
 
                                     </th:block>
                                     <th:block th:case="'Hoàn thành'">
                                         <td>Đã kiểm duyệt</td>
+                                    </th:block>
+                                    <th:block th:case="'Lên kế hoạch'">
+                                        <td>Lên kế hoạch</td>
                                     </th:block>
 
                                 </th:block>

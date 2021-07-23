@@ -92,8 +92,13 @@ public class TaskController {
     }
     @PostMapping({"/updateTask"})
     public String updateTask(@ModelAttribute("task") Task task){
+        Task tmp = taskService.findTaskByID(task.getTask_id());
         task.setActive(Status.ACTIVE);
+        task.setCreateDate((Date) tmp.getCreateDate());
+        task.setSubmitStatus(tmp.getSubmitStatus());
         task.setDepartmentName(task.getEmployees().get(0).getDepartment().getName());
+        task.setUpdateDate(Date.valueOf(LocalDate.now()));
+
         taskService.createTask(task);
         return "redirect:/task/viewAllTask";
 

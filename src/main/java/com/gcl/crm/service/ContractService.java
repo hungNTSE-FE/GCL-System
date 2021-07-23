@@ -12,4 +12,6 @@ public interface ContractService {
     void createContract(Contract contract);
 
     Contract findContractByID(Long id);
+    int cowContractRowData();
+    String getContractID();
 }

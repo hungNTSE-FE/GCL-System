@@ -17,21 +17,10 @@ $('#selectDepartment').on('change', function(){
     });
 })
 $('#createTask').on('click', function(){
-    var optsListBox2 = $('#lstBox2 option:not([disabled])');
-    if (optsListBox2.length === 0) {
-        alert("Vui lòng chọn nhân viên để chia");
-        return;
-    }
-    var listSelectedEmployeId = [];
 
-    $.each(optsListBox2, function(){
-        listSelectedEmployeId.push(Number($(this).val()));
-    })
-    $('#empIdList').val(listSelectedEmployeId.join());
 
         let checkValidate = true;
         const nameValue = name.value.trim();
-        const  statusValue = status.value.trim();
         const startDateValue = startDate.value.trim();
         const endDateValue = endDate.value.trim();
         if(nameValue ==''){
@@ -42,15 +31,7 @@ $('#createTask').on('click', function(){
         }else {
             setSuccessFor(name);
         }
-        if(statusValue ==''){
-            checkValidate = false;
 
-            setErrorFor(status,"Hãy nhập trạng thái");
-
-
-        }else {
-            setSuccessFor(status);
-        }
         if(startDateValue ==''){
             checkValidate = false;
             setErrorFor(startDate,"Hãy nhập ngày bắt đầu");
@@ -71,11 +52,22 @@ $('#createTask').on('click', function(){
 
 
 
+    var optsListBox2 = $('#lstBox2 option:not([disabled])');
+    if (optsListBox2.length === 0) {
+        alert("Vui lòng chọn nhân viên để chia");
+        return;
+    }
+    var listSelectedEmployeId = [];
 
+    $.each(optsListBox2, function(){
+        listSelectedEmployeId.push(Number($(this).val()));
+    })
+    $('#empIdList').val(listSelectedEmployeId.join());
 
     if(checkValidate == false){
        return;
     }
+
     $('#form').submit();
 
 
@@ -83,6 +75,65 @@ $('#createTask').on('click', function(){
 
 
 })
+$('#updateTask').on('click', function(){
+    let checkValidate = true;
+    const nameValue = name.value.trim();
+    const startDateValue = startDate.value.trim();
+    const endDateValue = endDate.value.trim();
+    if(nameValue ==''){
+        setErrorFor(name,"Hãy nhập tên công việc");
+        checkValidate = false;
+
+
+    }else {
+        setSuccessFor(name);
+    }
+
+    if(startDateValue ==''){
+        checkValidate = false;
+        setErrorFor(startDate,"Hãy nhập ngày bắt đầu");
+
+
+    }else {
+        setSuccessFor(startDate);
+    }
+    if(endDateValue == ''){
+        setErrorFor(endDate,"Hãy nhập ngày kết thúc");
+        checkValidate = false
+
+    }else {
+        setSuccessFor(endDate);
+    }
+
+
+
+
+
+    var optsListBox2 = $('#lstBox2 option:not([disabled])');
+    if (optsListBox2.length === 0) {
+        alert("Vui lòng chọn nhân viên để chia");
+        return;
+    }
+    var listSelectedEmployeId = [];
+
+    $.each(optsListBox2, function(){
+        listSelectedEmployeId.push(Number($(this).val()));
+    })
+    $('#empIdList').val(listSelectedEmployeId.join());
+
+    if(checkValidate == false){
+        return;
+    }
+
+
+
+
+    //
+
+
+    $('#form').submit();
+})
+
 function setErrorFor(input,message) {
     const  inputBox=input.parentElement;
 
@@ -98,20 +149,6 @@ function setSuccessFor(input) {
     inputBox.className='col-md-6 form-validate success';
 
 }
-$('#updateTask').on('click', function(){
-    var optsListBox2 = $('#lstBox2 option:not([disabled])');
-    if (optsListBox2.length === 0) {
-        alert("Vui lòng chọn nhân viên để chia");
-        return;
-    }
-    var listSelectedEmployeId = [];
-
-    $.each(optsListBox2, function(){
-        listSelectedEmployeId.push(Number($(this).val()));
-    })
-    $('#empIdList').val(listSelectedEmployeId.join());
-    $('#taskForm').submit();
-})
 function render_data_employee(data) {
     $.each(data, function (index, emp){
         $('#lstBox1').append(`<option value="${emp.id}">${emp.name}</option>`);

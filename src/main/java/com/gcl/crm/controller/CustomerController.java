@@ -38,7 +38,7 @@ public class CustomerController {
         return "customer/view-customer-page";
     }
     @GetMapping({"/showUpdateForm/{id}"})
-    public String showContractCreatePage(@PathVariable(name="id") String id ,Model model){
+    public String showContractCreatePage(@PathVariable(name="id") int id ,Model model){
         Customer customer = customerProcessService.findCustomerByID(id);
         List<BankAccount> bankAccountList = customer.getBankAccounts();
         System.out.println(bankAccountList.size());
@@ -71,7 +71,7 @@ public class CustomerController {
 
     @GetMapping({"/deleteCustomer/{id}"})
     public String deleteCustomer(@PathVariable(value ="id") long id){
-        customerProcessService.deleteCustomer(id);
+//        customerProcessService.deleteCustomer(id);
         return "redirect:/customer/manageCustomer";
     }
 

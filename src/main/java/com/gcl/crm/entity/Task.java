@@ -45,6 +45,20 @@ public class    Task {
     @Column(name="submitStatus")
     private String submitStatus;
 
+    @Column(name="updateDate")
+    private Date updateDate;
+
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+    }
+
+    public Date getUpdateDate() {
+        return updateDate;
+    }
+
+    public void setUpdateDate(Date updateDate) {
+        this.updateDate = updateDate;
+    }
 
     public java.util.Date getCreateDate() {
         return createDate;

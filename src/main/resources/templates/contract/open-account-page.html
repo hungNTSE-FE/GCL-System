@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+    <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8"/>
@@ -97,46 +97,17 @@
                     <div class="row">
                         <div class="col-lg-9">
                             <form class="row g-3"
-                                  id="customerForm"
+                                  id="form"
                                   th:action="@{/contract/createAccount}"
                                   th:object="${tradingAccount}"
 
                                   method="post"
                             >
-                                <input type="hidden"  name="customerCode" th:field="${customer.customerCode}">
-                            <div id="tradingAccountInfo">
+    <input type="hidden" th:field="${tradingAccount.customerID}">
+                                <div id="tradingAccountInfo">
                                 <div class="card mb-4">
                                     <div class="card-header">Mở tài khoản giao dịch</div>
                                     <div class="card-body">
-                                        <div class="row gx-3 mb-3">
-                                            <div class="col-md-6">
-                                                <label for="tradingCode" class="small mb-1">
-                                                    Mã tài khoản giao dịch
-                                                    <span style="color: red">*</span>
-                                                </label>
-                                                <input type="text" class="form-control"
-                                                       id="tradingCode"
-                                                       placeholder="Mã tài khoản giao dịch"
-                                                       readonly
-                                                       th:field="${tradingAccount.accountNumber}"
-
-                                                />
-                                            </div>
-                                            <div class="col-md-6">
-                                                <label class="small mb-1">
-                                                    Mã môi giới
-                                                    <span style="color: red">*</span>
-                                                </label>
-                                                <input type="text"
-                                                       class="form-control"
-                                                       id="brokerCode"
-                                                       placeholder="Mã môi giới"
-                                                       th:field="${tradingAccount.brokerCode}"
-
-                                                />
-                                            </div>
-                                        </div>
-
                                         <div class="row gx-3 mb-3">
                                             <div class="col-md-6">
                                                 <label for="" class="small mb-1">
@@ -145,24 +116,29 @@
 
                                                 <input type="text" class="form-control"
 
-                                                        readonly
-                                                        th:field="${customer.customerName}"
+                                                       readonly
+                                                       th:field="${customer.customerName}"
 
                                                 />
                                             </div>
                                             <div class="col-md-6">
-                                                <label class="small mb-1"> Tên môi giới </label>
-                                                <input
-                                                        class="form-control ps-0"
-                                                        type="text"
-                                                        aria-label="Search"
-                                                        th:field="${tradingAccount.brokerName}"
+                                                <label for="tradingCode" class="small mb-1">
+                                                    Mã tài khoản giao dịch
+                                                    <span style="color: red">*</span>
+                                                </label>
+                                                <input type="text" class="form-control"
+                                                       id="tradingCode"
+                                                       placeholder="Mã tài khoản giao dịch"
 
+                                                       th:field="${tradingAccount.accountNumber}"
 
                                                 />
                                             </div>
+
                                         </div>
+
                                         <div class="row gx-3 mb-3">
+
                                             <div class="col-md-6">
                                                 <label for="" class="small mb-1">
                                                     Trạng thái
@@ -174,8 +150,9 @@
                                                         class="form-select"
                                                         id="exampleFormControlSelect1"
                                                 >
-                                                    <option value="Active">Active</option>
                                                     <option value="Inactive">Inactive</option>
+
+                                                    <option value="Active">Active</option>
                                                 </select>
                                             </div>
 
@@ -237,23 +214,13 @@
                               <span class="input-group-text">
                                 <i data-feather="phone"></i>
                               </span>
-                                                    <input readonly type="text" class="form-control ps-0"
+                                                    <input readonly type="text" class="form-control ="
                                                            id="phoneNumber"
                                                            min="0" maxlength="10" pattern="\d*"
                                                            th:field="${customer.phoneNumber}"
                                                     />
                                                 </div>
                                             </div>
-                                            <div class="col-md-6">
-                                                <label class="small mb-1" for="customerStatusCmb"> Tình trạng </label>
-                                                <select readonly th:field="${customer.status}" id="customerStatusCmb" class="form-select">
-                                                    <option value="1">Active</option>
-                                                    <option value="0">Inactive</option>
-                                                </select>
-
-                                            </div>
-                                        </div>
-                                        <div class="row gx-3 mb-3">
                                             <div class="col-md-6">
                                                 <label for="" class="small mb-1"> Email </label>
                                                 <!-- Joined input group prepend example-->
@@ -262,12 +229,42 @@
                                 <i data-feather="mail"></i>
                               </span>
                                                     <input readonly
-                                                            class="form-control ps-0"
-                                                            type="text"
-                                                            aria-label="Search"
-                                                            th:field="${customer.email}"
+                                                           class="form-control ="
+                                                           type="text"
+                                                           aria-label="Search"
+                                                           th:field="${customer.email}"
                                                     />
                                                 </div>
+                                            </div>
+
+
+                                        </div>
+                                        <div class="row gx-3 mb-3">
+                                            <div class="col-md-6">
+                                                <label class="small mb-1">
+                                                    Mã môi giới
+                                                    <span style="color: red">*</span>
+                                                </label>
+                                                <input type="text"
+                                                       class="form-control"
+                                                       id="brokerCode"
+                                                       placeholder="Mã môi giới"
+                                                       th:field="${customer.employee.id}"
+
+                                                />
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="small mb-1">
+                                                    Tên môi giới
+                                                    <span style="color: red">*</span>
+                                                </label>
+                                                <input type="text"
+                                                       class="form-control"
+                                                       id="brokerCode"
+                                                       placeholder="Mã môi giới"
+                                                       th:field="${customer.employee.name}"
+
+                                                />
                                             </div>
 
                                         </div>
@@ -313,10 +310,9 @@
                               </span>
                                                     <input
                                                             readonly
-                                                            th:field="${customer.identification.birthDate}"
-                                                            class="form-control ps-0"
+                                                            th:field="${customer.birthDate}"
+                                                            class="form-control ="
                                                             id="date1"
-                                                            placeholder="Chọn ngày sinh..."
                                                     />
                                                 </div>
                                             </div>
@@ -324,18 +320,16 @@
 
                                         <div class="row gx-3 mb-3">
                                             <div class="col-md-6">
-                                                <label for="" class="small mb-1"> Nơi cấp </label>
-                                                <select
-                                                        th:field="${customer.identification.issuePlace}"
-                                                        class="form-select"
-                                                        readonly
-                                                        id="exampleFormControlSelect1"
-                                                >
-                                                    <option value="HCM">HCM</option>
-                                                    <option value="Hà Nội">Hà Nội</option>
-                                                    <option value="Bình Dương">Bình Dương</option>
-                                                    <option value="Đồng Nai">Đồng Nai</option>
-                                                </select>
+                                                <label class="small mb-1">
+                                                    Nơi cấp
+                                                    <span style="color: red">*</span>
+                                                </label>
+                                                <input type="text"
+                                                       class="form-control"
+                                                       th:readonly="true"
+                                                       th:field="${customer.identification.issuePlace}"
+
+                                                />
                                             </div>
                                             <div class="col-md-6">
                                                 <label class="small mb-1"> Ngày cấp </label>
@@ -345,37 +339,21 @@
                               </span>
                                                     <input
                                                             readonly
-                                                            th:field="${customer.identification.issueDate}"
-                                                            class="form-control ps-0"
+                                                            th:field="${customer.issueDate}"
+                                                            class="form-control ="
                                                             id="date2"
-                                                            placeholder="Chọn ngày cấp..."
                                                     />
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="row gx-3 mb-3">
 
-                                            <div class="col-md-6">
-                                                <label class="small mb-1"> Ngày cấp </label>
-                                                <div class="input-group input-group-joined">
-                              <span class="input-group-text">
-                                <i data-feather="calendar"></i>
-                              </span>
-                                                    <input
-                                                            readonly
-                                                            th:field="${customer.identification.issueDate}"
-                                                            class="form-control ps-0"
-                                                            id="date2"
-                                                            placeholder="Chọn ngày cấp..."
-                                                    />
-                                                </div>
-                                            </div>
+
+                                        </div>
                                         </div>
 
                                     </div>
                                 </div>
 
-                            </div>
+
 
                                 <div id="bankingInformation">
                                     <div class="card mb-4">

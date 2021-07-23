@@ -7,6 +7,7 @@ import com.gcl.crm.repository.ContractRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,5 +35,24 @@ public class ContractServiceImpl implements ContractService{
             throw new RuntimeException("Task not found for id  :"+id);
         }
         return contract;
+    }
+
+    @Override
+    public int cowContractRowData() {
+        return contractRepository.countContractById()+1;
+    }
+
+    @Override
+    public String getContractID() {
+        String company = "GCL";
+        String city = "HCM";
+        String contractID = cowContractRowData()+"";
+        String numberConcat ;
+        while(contractID.length()<5){
+            numberConcat = "0";
+            contractID = numberConcat.concat(contractID);
+        }
+        String year = Calendar.getInstance().get(Calendar.YEAR)+"";
+        return  company+contractID+city+year;
     }
 }

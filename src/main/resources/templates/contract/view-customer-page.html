@@ -128,13 +128,13 @@
               <tbody>
               <tr th:each="customer : ${listCustomers}">
                 <td th:text="${customer.customerName}"></td>
-                <td th:text="${customer.email}"></td>
+                <td th:text="${customer.email}"></td>care
                 <td th:text="${customer.phoneNumber}"></td>
                 <td th:text="${customer.description}"></td>
                 <th:block th:switch="${customer.number}">
                   <th:block th:case="'none'">
                     <td>
-                      <a th:href="@{'/contract/openAccount/'+${customer.customerCode}}"><i class="fa fa-arrow-circle-right" aria-hidden="true"></i>&nbsp;Mở tài khoản</a>
+                      <a th:href="@{'/contract/openAccount/'+${customer.customerId}}"><i class="fa fa-arrow-circle-right" aria-hidden="true"></i>&nbsp;Mở tài khoản</a>
 
                     </td>
                   </th:block>
@@ -159,7 +159,7 @@
                     <th:block th:switch="${customer.contractNumber}">
                       <th:block th:case="'none'">
                         <td>
-                          <a th:href="@{'/contract/showCreateContract/'+${customer.customerCode}}"> <i data-feather="edit"></i>&nbsp;Ký hợp đồng</a>
+                          <a th:href="@{'/contract/showCreateContract/'+${customer.customerId}}"> <i data-feather="edit"></i>&nbsp;Ký hợp đồng</a>
 
 
 

@@ -125,7 +125,7 @@
                                 <th:block th:switch="${customer.tradingAccount.status}">
                                     <th:block th:case="'Inactive'">
                                         <td>
-                                            <a th:href="@{'/contract/active/'+${customer.customerCode}}"><i  onclick="return confirm('Sau khi kích hoạt tài khoản sẽ có thể ký quỹ')" class="fa fa-arrow-circle-right" aria-hidden="true"></i>&nbsp;Kích Hoạt</a>
+                                            <a th:href="@{'/contract/active/'+${customer.customerId}}"><i  onclick="return confirm('Sau khi kích hoạt tài khoản sẽ có thể ký quỹ')" class="fa fa-arrow-circle-right" aria-hidden="true"></i>&nbsp;Kích Hoạt</a>
 
                                         </td>
                                     </th:block>
@@ -155,7 +155,7 @@
                                     </th:block>
                                 </th:block>
                                 <td>
-                                    <a th:href="@{'/contract/showUpdateAccountForm/'+${customer.customerCode}}"><i data-feather="edit"></i>&nbsp;Cập nhật</a>
+                                    <a th:href="@{'/contract/showUpdateAccountForm/'+${customer.customerId}}"><i data-feather="edit"></i>&nbsp;Cập nhật</a>
 
                                 </td>
 

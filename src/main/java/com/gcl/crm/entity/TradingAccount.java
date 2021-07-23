@@ -40,12 +40,22 @@ public class TradingAccount {
     @Column(name="account_name")
     private String accountName ;
 
+    @Column (name="customerID")
+    private int customerID ;
 
     @OneToOne(mappedBy = "tradingAccount", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Customer customer;
     public TradingAccount(){
 
     };
+
+    public int getCustomerID() {
+        return customerID;
+    }
+
+    public void setCustomerID(int customerID) {
+        this.customerID = customerID;
+    }
 
     public TradingAccount(String accountNumber, double balance, String status, String accountName, String brokerCode, String brokerName, Date createDate) {
         this.accountNumber = accountNumber;

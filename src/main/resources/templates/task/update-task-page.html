@@ -114,7 +114,7 @@
               <div class="card mb-4">
                 <div class="card-header">ThÔNG TIN CÔNG VIỆC</div>
                 <form class="row g-3"
-                      id="taskForm"
+                      id="form"
                       th:action="@{/task/updateTask}"
                       th:object="${task}"
                       th:method="POST"
@@ -139,11 +139,13 @@
                           Trạng thái
                           <span style="color: red">*</span>
                         </label>
-                        <input text="text" th:field="*{status}" class="form-control "  id="status">
-                        <i class="fas fa-check-circle "></i>
-                        <i class="fas fa-exclamation-circle"></i>
-                        <small>Error Message</small>
-
+                        <select th:field="*{status}"
+                                class="form-select"
+                                id="exampleFormControlSelect1"
+                        >
+                          <option value="Chưa hoàn thành">Chưa hoàn thành</option>
+                          <option value="Lên kế hoạch">Lên kế hoạch</option>
+                        </select>
                       </div>
 
 
@@ -233,7 +235,7 @@
                     </div>
 
                     <div class="row selectEmp">
-                      <div class="col-xs-3" style="width: 25%">
+                      <div class="col-xs-3" style="width: 45%">
                         <select
                                 id="lstBox1"
                                 multiple="multiple"
@@ -252,7 +254,7 @@
                         <a id="btnRightall" class="btn btn-block btn-sm btn-primary mb-1">Add all</a>
                         <a id="btnLeftall" class="btn btn-block btn-sm btn-primary">Remove all</a>
                       </div>
-                      <div class="col-xs-3" style="width: 25%">
+                      <div class="col-xs-3" style="width: 45%">
                         <select
 
                                 id="lstBox2"
@@ -274,21 +276,30 @@
                   </div>
                   <input type="hidden" id="empIdList" th:field="${task.employees}" >
 
-                  <div class="row gx-3 mb-3">
-                    <div class="col-md-6 form-validate ">
-                      <div class="button">
-                        <input id="updateTask" type="button" value="Cập nhật công việc">
-                      </div>
-                    </div>
-                    <div class="col-md-6 form-validate ">
-                      <div class="button">
-                        <a th:href="@{/task/viewAllTask}">
-                          <button>Quay Lại</button>
-                        </a>
-                      </div>
-                    </div>
+                  <th:block th:switch="${task.status}">
+                    <th:block th:case="'Chưa hoàn thành'">
+                      <div class="row gx-3 mb-3">
+                          <div class="button">
+                            <input id="updateTask" type="button" value="Cập nhật công việc">
+                          </div>
 
-                  </div>
+                      </div>
+
+                    </th:block>
+                    <th:block th:case="'Lên kế hoạch'">
+                      <div class="row gx-3 mb-3">
+                        <div class="button">
+                          <input id="updateTask" type="button" value="Cập nhật công việc">
+                        </div>
+
+                      </div>
+
+                    </th:block>
+
+                    </th:block>
+
+                </form>
+                <form>
 
                 </form>
               </div>
@@ -354,53 +365,48 @@
 <script>
   const form = document.getElementById('form');
   const name = document.getElementById('name');
-  const reporter = document.getElementById('reporter');
-  const status = document.getElementById('status');
-  const assign = document.getElementById('assign');
-  const startDate = document.getElementById('startDate');
-  const endDate = document.getElementById('endDate');
+
+  const  startDate = document.getElementById('date')
+  const endDate = document.getElementById('date1');
 
   form.addEventListener('submit',(e) => {
 
     const nameValue = name.value.trim();
-    const reporterValue = reporter.value.trim();
-    const statusValue = status.value.trim();
-    const  assginValue = assign.value.trim();
 
-    //
-    //     const re = /^\d{1,2}\/\d{1,2}\/\d{4}$/;
+    const startDateValue = startDate.value.trim();
+    const endDateValue = endDate.value.trim();
     if(nameValue ==''){
-      setErrorFor(name,"Tên không thể trống");
+      setErrorFor(name,"Hãy nhập tên công việc");
       e.preventDefault();
 
 
     }else {
       setSuccessFor(name);
     }
-    if(reporterValue ==''){
-      setErrorFor(reporter,"Người báo cáo không thể trống");
+
+    if(startDateValue ==''){
+      setErrorFor(startDate,"Hãy nhập ngày bắt đầu");
       e.preventDefault();
 
 
     }else {
-      setSuccessFor(reporter);
+      setSuccessFor(startDate);
     }
-    if(statusValue ==''){
-      setErrorFor(status,"Trạng thái không thể trống");
+    if(endDateValue == ''){
+      setErrorFor(endDate,"Hãy nhập ngày kết thúc");
       e.preventDefault();
 
 
     }else {
-      setSuccessFor(status);
+      setSuccessFor(endDate);
     }
-    if(assginValue ==''){
-      setErrorFor(assign,"Tên không thể trống");
-      e.preventDefault();
 
 
-    }else {
-      setSuccessFor(assign);
-    }
+
+
+
+
+
 
 
   });

@@ -103,7 +103,7 @@
 
                               method="post"
                         >
-                            <input type="hidden"  name="customerCode" th:field="${customer.customerCode}">
+                            <input type="hidden"   th:field="${contract.customer.customerId}">
                             <div id="contractInfo">
                                 <div class="card mb-4">
                                     <div class="card-header">Tạo mới hợp đồng</div>
@@ -111,12 +111,12 @@
                                         <div class="row gx-3 mb-3">
                                             <div class="col-md-6 form-validate">
                                                 <label for="tradingCode" class="small mb-1">
-                                                    Mã hợp đồng
+                                                    Mã hợp đồng ( Hệ thống tự động cập nhật )
                                                     <span style="color: red">*</span>
                                                 </label>
                                                 <input type="text" class="form-control"
                                                        id="contractID"
-                                                       placeholder="Mã hợp đồng"
+
                                                        th:field="${contract.id}"
 
                                                 />
@@ -129,17 +129,17 @@
                                                     Trạng thái
                                                     <span style="color: red">*</span>
                                                 </label>
-                                                <input type="text"
-                                                       class="form-control"
-                                                       id="status"
-                                                       th:field="${contract.status}"
+                                                <select th:field="${contract.status}"
+                                                        class="form-select"
+                                                        id="exampleFormControlSelect1"
+                                                >
+                                                    <option value="Đã Lưu HĐKH">Đã Lưu HĐKH</option>
+                                                    <option value="Chờ Lưu HĐKH">Chờ Lưu HĐKH</option>
 
+                                                </select>
 
-                                                />
-                                                <i class="fas fa-check-circle "></i>
-                                                <i class="fas fa-exclamation-circle"></i>
-                                                <small>Error Message</small>
                                             </div>
+
                                         </div>
 
 
@@ -203,7 +203,7 @@
                                                     Tên tài khoản giao dịch
                                                 </label>
                                                 <input
-                                                        class="form-control ps-0"
+                                                        class="form-control "
                                                         type="text"
                                                         aria-label="Search"
                                                         th:field="${customer.tradingAccount.accountName}"
@@ -213,7 +213,7 @@
                                             <div class="col-md-6">
                                                 <label class="small mb-1"> Tên môi giới </label>
                                                 <input
-                                                        class="form-control ps-0"
+                                                        class="form-control "
                                                         type="text"
                                                         aria-label="Search"
                                                         th:field="${customer.tradingAccount.brokerName}"
@@ -228,17 +228,16 @@
                                                     Trạng thái
                                                 </label>
                                                 <!-- Joined input group prepend example-->
-                                                <select
+                                                <input
+                                                        class="form-control "
+                                                        type="text"
+                                                        aria-label="Search"
                                                         th:field="${customer.tradingAccount.status}"
 
-                                                        class="form-select"
-                                                        id="exampleFormControlSelect1"
                                                         readonly
 
-                                                >
-                                                    <option value="Active">Active</option>
-                                                    <option value="Inactive">Inactive</option>
-                                                </select>
+                                                />
+
                                             </div>
                                             <div class="col-md-6 ">
                                                 <label class="small mb-1">
@@ -253,7 +252,7 @@
                                                     </div>
                                                     <input
                                                             th:field="*{createDate}"
-                                                            class="form-control ps-0"
+                                                            class="form-control "
                                                             id="dateOfBirth"
                                                             readonly
                                                     />
@@ -309,7 +308,7 @@
                               <span class="input-group-text">
                                 <i data-feather="phone"></i>
                               </span>
-                                                    <input readonly type="text" class="form-control ps-0"
+                                                    <input readonly type="text" class="form-control "
                                                            id="phoneNumber"
                                                            min="0" maxlength="10" pattern="\d*"
                                                            th:field="${customer.phoneNumber}"
@@ -317,12 +316,16 @@
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
-                                                <label class="small mb-1" for="customerStatusCmb"> Tình trạng </label>
-                                                <select readonly th:field="${customer.status}" id="customerStatusCmb" class="form-select">
-                                                    <option value="1">Active</option>
-                                                    <option value="0">Inactive</option>
-                                                </select>
+                                                <label class="small mb-1" > Tình trạng </label>
 
+                                                <input
+                                                        class="form-control "
+                                                        type="text"
+                                                        aria-label="Search"
+                                                        th:field="${customer.status}"
+                                                        readonly
+
+                                                />
                                             </div>
                                         </div>
                                         <div class="row gx-3 mb-3">
@@ -334,7 +337,7 @@
                                 <i data-feather="mail"></i>
                               </span>
                                                     <input readonly
-                                                           class="form-control ps-0"
+                                                           class="form-control "
                                                            type="text"
                                                            aria-label="Search"
                                                            th:field="${customer.email}"
@@ -385,10 +388,9 @@
                               </span>
                                                     <input
                                                             readonly
-                                                            th:field="${customer.identification.birthDate}"
-                                                            class="form-control ps-0"
+                                                            th:field="${customer.birthDate}"
+                                                            class="form-control "
                                                             id="date1"
-                                                            placeholder="Chọn ngày sinh..."
                                                     />
                                                 </div>
                                             </div>
@@ -396,18 +398,16 @@
 
                                         <div class="row gx-3 mb-3">
                                             <div class="col-md-6">
-                                                <label for="" class="small mb-1"> Nơi cấp </label>
-                                                <select
-                                                        th:field="${customer.identification.issuePlace}"
-                                                        class="form-select"
-                                                        readonly
-                                                        id="exampleFormControlSelect1"
-                                                >
-                                                    <option value="HCM">HCM</option>
-                                                    <option value="Hà Nội">Hà Nội</option>
-                                                    <option value="Bình Dương">Bình Dương</option>
-                                                    <option value="Đồng Nai">Đồng Nai</option>
-                                                </select>
+                                                <label class="small mb-1">
+                                                    Nơi cấp
+                                                    <span style="color: red">*</span>
+                                                </label>
+                                                <input type="text"
+                                                       class="form-control"
+                                                       th:readonly="true"
+                                                       th:field="${customer.identification.issuePlace}"
+
+                                                />
                                             </div>
                                             <div class="col-md-6">
                                                 <label class="small mb-1"> Ngày cấp </label>
@@ -417,28 +417,9 @@
                               </span>
                                                     <input
                                                             readonly
-                                                            th:field="${customer.identification.issueDate}"
-                                                            class="form-control ps-0"
+                                                            th:field="${customer.issueDate}"
+                                                            class="form-control "
                                                             id="date2"
-                                                            placeholder="Chọn ngày cấp..."
-                                                    />
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row gx-3 mb-3">
-
-                                            <div class="col-md-6">
-                                                <label class="small mb-1"> Ngày cấp </label>
-                                                <div class="input-group input-group-joined">
-                              <span class="input-group-text">
-                                <i data-feather="calendar"></i>
-                              </span>
-                                                    <input
-                                                            readonly
-                                                            th:field="${customer.identification.issueDate}"
-                                                            class="form-control ps-0"
-                                                            id="date2"
-                                                            placeholder="Chọn ngày cấp..."
                                                     />
                                                 </div>
                                             </div>

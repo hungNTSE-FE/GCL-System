@@ -70,7 +70,7 @@ public class UserServiceImpl implements UserService{
     public List<User> getUsersByRole(Role role) {
         List<UserRole> userRoles = userRoleRepository.findAllByRoleAndStatus(role, Status.ACTIVE);
         List<User> users = new ArrayList<>();
-        for (UserRole userRole : userRoles){
+        for (   UserRole userRole : userRoles){
             if (userRole.getStatus().equals(Status.ACTIVE)){
                 users.add(userRole.getUser());
             }

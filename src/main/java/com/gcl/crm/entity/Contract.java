@@ -1,7 +1,7 @@
 package com.gcl.crm.entity;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.sql.Date;
 
 
 @Entity

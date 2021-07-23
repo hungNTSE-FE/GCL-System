@@ -5,7 +5,7 @@ import com.gcl.crm.form.CustomerStatusForm;
 import com.gcl.crm.form.CustomerStatusEvaluationForm;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
 @Entity
@@ -82,13 +82,13 @@ public class Customer {
     private String contractNumber;
 
     @Column(name = "ADD_USER")
-    private String addUser;
+    private int addUser;
 
     @Column(name = "UPD_DATE")
     private Date updDate;
 
     @Column(name = "UPD_USER")
-    private Date updUser;
+    private int updUser;
 
     @ManyToOne
     @JoinColumn(name = "LEVEL_ID")
@@ -123,6 +123,33 @@ public class Customer {
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "source_id")
     private Source source;
+
+    private String birthDate ;
+    private String issueDate ;
+
+    public String getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(String birthDate) {
+        this.birthDate = birthDate;
+    }
+
+    public String getIssueDate() {
+        return issueDate;
+    }
+
+    public void setIssueDate(String issueDate) {
+        this.issueDate = issueDate;
+    }
+
+    public Integer getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(Integer customerId) {
+        this.customerId = customerId;
+    }
 
     public String getContractNumber() {
         return contractNumber;
@@ -260,13 +287,7 @@ public class Customer {
         this.employee = employee;
     }
 
-    public String getAddUser() {
-        return addUser;
-    }
 
-    public void setAddUser(String addUser) {
-        this.addUser = addUser;
-    }
 
     public Date getUpdDate() {
         return updDate;
@@ -276,13 +297,7 @@ public class Customer {
         this.updDate = updDate;
     }
 
-    public Date getUpdUser() {
-        return updUser;
-    }
 
-    public void setUpdUser(Date updUser) {
-        this.updUser = updUser;
-    }
 
     public Date getCreateDate() {
         return createDate;

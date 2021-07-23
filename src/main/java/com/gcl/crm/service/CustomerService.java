@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -145,8 +146,8 @@ public class CustomerService {
         customer.setPhoneNumber(customerForm.getPhoneNumber());
         customer.setDescription(customerForm.getDescription());
         customer.setStatus(customerForm.getStatus());
-        customer.setCreateDate(WebUtils.getSystemDate());
-        customer.setUpdDate(WebUtils.getSystemDate());
+        customer.setCreateDate(java.sql.Date.valueOf(LocalDate.now()));
+        customer.setUpdDate(java.sql.Date.valueOf(LocalDate.now()));
         return customer;
     }
 
