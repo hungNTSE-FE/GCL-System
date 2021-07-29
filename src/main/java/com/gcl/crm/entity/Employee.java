@@ -87,9 +87,6 @@ public class Employee {
     @ManyToMany(mappedBy = "employees", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<MarketingGroup> marketingGroups;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "employee")
-    private List<CustomerDistribution> customerDistributionList;
-
     @ManyToMany(mappedBy = "employees", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Task> tasks;
 
@@ -251,13 +248,5 @@ public class Employee {
 
     public void setMarketingGroups(List<MarketingGroup> marketingGroups) {
         this.marketingGroups = marketingGroups;
-    }
-
-    public List<CustomerDistribution> getCustomerDistributionList() {
-        return customerDistributionList;
-    }
-
-    public void setCustomerDistributionList(List<CustomerDistribution> customerDistributionList) {
-        this.customerDistributionList = customerDistributionList;
     }
 }

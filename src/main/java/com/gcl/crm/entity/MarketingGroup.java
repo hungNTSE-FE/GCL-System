@@ -29,6 +29,9 @@ public class MarketingGroup {
             inverseJoinColumns = @JoinColumn(name = "employee_id"))
     private List<Employee> employees;
 
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "marketingGroup")
+    private List<CustomerDistribution> customerDistributionList;
+
     private Date createDate;
 
     // Id of last employee create group

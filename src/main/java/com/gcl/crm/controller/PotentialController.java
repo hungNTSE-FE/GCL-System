@@ -60,7 +60,7 @@ public class PotentialController {
     DepartmentService departmentService;
 
     @Autowired
-    EmployeeService employeeService;
+    MarketingGroupService marketingGroupService;
 
     @RequestMapping(value = "/home", method = RequestMethod.GET)
     public String goHomePage(Model model, Principal principal) {
@@ -68,7 +68,7 @@ public class PotentialController {
         List<Level> levels = levelService.getAll();
         List<Potential> potentials = potentialService.getAllPotentials();
         List<Department> departments = departmentService.findAllDepartments();
-        List<Employee> employees = employeeService.getAllWorkingEmployees();
+        List<MarketingGroup> marketingGroups = marketingGroupService.getAllMktByStatus();
         PotentialSearchForm searchForm = new PotentialSearchForm();
         model.addAttribute("departments", departments);
         CustomerDistributionForm customerDistributionForm = new CustomerDistributionForm();
@@ -76,7 +76,7 @@ public class PotentialController {
         model.addAttribute("levels", levels);
         model.addAttribute("potentials", potentials);
         model.addAttribute("searchForm", searchForm);
-        model.addAttribute("employees", employees);
+        model.addAttribute("marketingGroups", marketingGroups);
         model.addAttribute("customerDistributionForm", customerDistributionForm);
         model.addAttribute("userName", principal.getName());
         return DASHBOARD_PAGE;
@@ -327,17 +327,6 @@ public class PotentialController {
         CustomerDistributionForm customerDistributionForm = new CustomerDistributionForm();
         customerDistributionForm.setPotentialSearchFormList(potentialsSharing);
         return new ResponseEntity<>(customerDistributionForm, HttpStatus.OK);
-    }
-
-    @PostMapping(value = "/getEmployeeByDepartmentId")
-    public ResponseEntity<List<EmployeeSearchForm>> getEmployeeByDepartmentId(@RequestBody String id) throws JsonProcessingException {
-        List<EmployeeSearchForm> employeeList = null;
-        try {
-            employeeList = potentialService.getEmployeeByDepartmentId(Long.parseLong(id));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return new ResponseEntity<>(employeeList, HttpStatus.OK);
     }
 
     //   SALE

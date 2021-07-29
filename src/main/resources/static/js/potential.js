@@ -5,12 +5,12 @@ $('#sharingLeads').on('click', function(){
         alert("Vui lòng chọn nhân viên để chia");
         return;
     }
-    var listSelectedEmployeId = [];
+    var listSelectedMktId = [];
 
     $.each(optsListBox2, function(){
-        listSelectedEmployeId.push(Number($(this).val()));
+        listSelectedMktId.push(Number($(this).val()));
     })
-    $('#empIdList').val(listSelectedEmployeId.join());
+    $('#mktIdList').val(listSelectedMktId.join());
     $('#customerDistributionForm').submit();
 })
 
@@ -38,25 +38,6 @@ $('#modalPotentailSharing').on('click', function () {
     });
 
 
-})
-
-$('#selectDepartment').on('change', function(){
-    $('#lstBox1').empty();
-    $.ajax({
-        type: "POST",
-        contentType: "application/json",
-        url: "/potential/getEmployeeByDepartmentId",
-        dataType: 'json',
-        data: $(this).val(),
-        cache: false,
-        timeout: 600000,
-        success: function (data) {
-            render_data_potential_sharing_combobox(data);
-        },
-        error: function (e) {
-            // window.location.href = "http://localhost:8081/error/error-400.html";
-        },
-    });
 })
 
 function render_data_potential_sharing(data) {
@@ -89,9 +70,3 @@ $('#modalShareLead').on('hide.bs.modal', function () {
     });
 
 })
-
-function render_data_potential_sharing_combobox(data) {
-    $.each(data, function (index, emp){
-        $('#lstBox1').append(`<option value="${emp.id}">${emp.name}</option>`);
-    })
-}

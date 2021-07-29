@@ -1,6 +1,7 @@
 package com.gcl.crm.form;
 
 import com.gcl.crm.entity.Employee;
+import com.gcl.crm.entity.MarketingGroup;
 
 import java.sql.Date;
 import java.util.List;
@@ -102,7 +103,7 @@ public class CustomerForm {
 
     private ComboboxForm comboboxForm;
 
-    private List<Employee> employeeList;
+    private List<MarketingGroup> marketingGroupList;
 
     public String getHdnCustomerCode() {
         return hdnCustomerCode;
@@ -320,11 +321,11 @@ public class CustomerForm {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public List<Employee> getEmployeeList() {
-        return employeeList;
+    public List<MarketingGroup> getMarketingGroupList() {
+        return marketingGroupList;
     }
 
-    public void setEmployeeList(List<Employee> employeeList) {
-        this.employeeList = employeeList;
+    public void setMarketingGroupList(List<MarketingGroup> marketingGroupList) {
+        this.marketingGroupList = marketingGroupList;
     }
 }

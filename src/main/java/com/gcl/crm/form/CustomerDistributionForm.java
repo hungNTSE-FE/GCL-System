@@ -7,16 +7,16 @@ import java.io.Serializable;
 import java.util.List;
 
 public class CustomerDistributionForm implements Serializable {
-    List<Long> empIdList;
+    List<Long> mktIdList;
     List<Long> potentialIdList;
     List<PotentialSearchForm> potentialSearchFormList;
 
-    public List<Long> getEmpIdList() {
-        return empIdList;
+    public List<Long> getMktIdList() {
+        return mktIdList;
     }
 
-    public void setEmpIdList(List<Long> empIdList) {
-        this.empIdList = empIdList;
+    public void setMktIdList(List<Long> mktIdList) {
+        this.mktIdList = mktIdList;
     }
 
     public List<Long> getPotentialIdList() {

@@ -18,7 +18,7 @@ public class CustomerDistribution {
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "id", nullable = false)
-    private Employee employee;
+    private MarketingGroup marketingGroup;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Potential potential;
@@ -26,11 +26,11 @@ public class CustomerDistribution {
     @Column(name = "DATE_DISTRIBUTION")
     private Date date_distribution;
 
-    @Column(name = "NOTE")
-    private String note;
-
     @Column(name = "ADD_DATE")
     private Date add_date;
+
+    @Column(name = "ADD_USER")
+    private Long add_user;
 
     @Column(name = "UPD_DATE")
     private Date upd_date;
@@ -52,14 +52,6 @@ public class CustomerDistribution {
 
     public void setDate_distribution(Date date_distribution) {
         this.date_distribution = date_distribution;
-    }
-
-    public String getNote() {
-        return note;
-    }
-
-    public void setNote(String note) {
-        this.note = note;
     }
 
     public Date getAdd_date() {
@@ -94,12 +86,12 @@ public class CustomerDistribution {
         this.customer = customer;
     }
 
-    public Employee getEmployee() {
-        return employee;
+    public MarketingGroup getMarketingGroup() {
+        return marketingGroup;
     }
 
-    public void setEmployee(Employee employee) {
-        this.employee = employee;
+    public void setMarketingGroup(MarketingGroup marketingGroup) {
+        this.marketingGroup = marketingGroup;
     }
 
     public Potential getPotential() {
@@ -108,5 +100,13 @@ public class CustomerDistribution {
 
     public void setPotential(Potential potential) {
         this.potential = potential;
+    }
+
+    public Long getAdd_user() {
+        return add_user;
+    }
+
+    public void setAdd_user(Long add_user) {
+        this.add_user = add_user;
     }
 }

@@ -42,6 +42,9 @@ public class CustomerService {
     @Autowired
     PotentialService potentialService;
 
+    @Autowired
+    MarketingGroupService marketingGroupService;
+
     public ComboboxForm initComboboxData() {
         ComboboxForm comboboxForm = new ComboboxForm();
         List<SelectItem> sourceList = sourceRepository.getAll()
@@ -62,8 +65,8 @@ public class CustomerService {
 
     public CustomerForm initForm(Long potentialId) {
         CustomerForm form = new CustomerForm();
-        List<Employee> employeeList = employeeService.getAllWorkingEmployees();
-        form.setEmployeeList(employeeList);
+        List<MarketingGroup> marketingGroupList = marketingGroupService.getAllMktByStatus();
+        form.setMarketingGroupList(marketingGroupList);
         form.setComboboxForm(initComboboxData());
         if (Objects.nonNull(potentialId)) {
             Potential potential = potentialService.getPotentialById(potentialId);

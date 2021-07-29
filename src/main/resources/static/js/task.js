@@ -27,7 +27,7 @@ $('#createTask').on('click', function(){
     $.each(optsListBox2, function(){
         listSelectedEmployeId.push(Number($(this).val()));
     })
-    $('#empIdList').val(listSelectedEmployeId.join());
+    $('#mktIdList').val(listSelectedEmployeId.join());
 
         let checkValidate = true;
         const nameValue = name.value.trim();
@@ -109,7 +109,7 @@ $('#updateTask').on('click', function(){
     $.each(optsListBox2, function(){
         listSelectedEmployeId.push(Number($(this).val()));
     })
-    $('#empIdList').val(listSelectedEmployeId.join());
+    $('#mktIdList').val(listSelectedEmployeId.join());
     $('#taskForm').submit();
 })
 function render_data_employee(data) {

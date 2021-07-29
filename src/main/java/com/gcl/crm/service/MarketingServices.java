@@ -2,6 +2,7 @@ package com.gcl.crm.service;
 
 import com.gcl.crm.dto.SelectItem;
 import com.gcl.crm.entity.*;
+import com.gcl.crm.enums.Status;
 import com.gcl.crm.form.*;
 import com.gcl.crm.repository.*;
 import com.gcl.crm.utils.WebUtils;
@@ -33,7 +34,7 @@ public class MarketingServices {
     SourceRepository sourceRepository;
 
     @Autowired
-    EmployeeRepository employeeRepository;
+    MarketingGroupRepository marketingGroupRepository;
 
     @Autowired
     CustomerDistributionRepository customerDistributionRepository;
@@ -91,24 +92,24 @@ public class MarketingServices {
     }
 
     @Transactional
-    public void distributeCustomerData(CustomerDistributionForm customerDistributionForm) {
+    public void distributeCustomerData(CustomerDistributionForm customerDistributionForm, User user) {
         try{
-            List<Long> empIdList = customerDistributionForm.getEmpIdList();
+            List<Long> mktIdList = customerDistributionForm.getMktIdList();
             List<Long> potentialIDList = customerDistributionForm.getPotentialIdList();
-            Random random = new Random();
             Date systemDate = WebUtils.getSystemDate();
             int i = 0;
             for (Long potentialId : potentialIDList) {
-                int randomIndex = random.nextInt(empIdList.size());
                 CustomerDistribution customerDistribution = new CustomerDistribution();
                 customerDistribution.setPotential(potentialRepository2.getReferenceById(potentialId));
-                customerDistribution.setEmployee(employeeRepository.findEmployeeById(empIdList.get(i++)));
+                customerDistribution.setMarketingGroup(marketingGroupRepository.findByIdAndStatus(mktIdList.get(i++), Status.ACTIVE));
                 customerDistribution.setAdd_date(systemDate);
                 customerDistribution.setDate_distribution(systemDate);
                 customerDistribution.setCustomer(null);
                 customerDistribution.setUpd_date(systemDate);
+                customerDistribution.setAdd_user(user.getEmployee().getId());
+                customerDistribution.setUpd_user(user.getEmployee().getId());
                 customerDistributionRepository.insertDataCustomer(customerDistribution);
-                if (i == empIdList.size()) i = 0;
+                if (i == mktIdList.size()) i = 0;
             }
         } catch(Exception e) {
             e.printStackTrace();

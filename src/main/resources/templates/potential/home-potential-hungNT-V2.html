@@ -346,7 +346,7 @@
       <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">Chia sẻ đầu mối (1)</h5>
+            <h5 class="modal-title">Chia sẻ đầu mối</h5>
             <button
                     class="btn-close"
                     type="button"
@@ -370,18 +370,6 @@
             </table>
 
             <hr class="mt-0 mb-4" />
-            <div class="row mb-3">
-              <div class="col-md-3">
-                <label class="text-small">Phòng ban</label>
-                <select class="ui fluid dropdown" id="selectDepartment">
-                  <option value="">Lựa chọn</option>
-                  <option th:each="department : ${departments}"
-                          th:value="*{department.id}"
-                          th:text="*{department.name}"
-                  ></option>
-                </select>
-              </div>
-            </div>
             <div class="row">
               <div class="col-xs-3" style="width: 25%">
                 <select
@@ -390,6 +378,10 @@
                         class="form-control"
                         size="10"
                 >
+                  <option th:each="marketingGroup : ${marketingGroups}"
+                          th:value="*{marketingGroup.id}"
+                          th:text="*{marketingGroup.name}"
+                  ></option>
                 </select>
               </div>
 
@@ -431,7 +423,7 @@
           <div>
             <form action="#" id="customerDistributionForm" method="POST" th:action="@{/marketing/distributionPotential}"
                   th:object="${customerDistributionForm}">
-              <input type="hidden" id="empIdList" th:field="${customerDistributionForm.empIdList}">
+              <input type="hidden" id="mktIdList" th:field="${customerDistributionForm.mktIdList}">
               <input type="hidden" id="potentialIdList" th:field="${customerDistributionForm.potentialIdList}">
             </form>
           </div>

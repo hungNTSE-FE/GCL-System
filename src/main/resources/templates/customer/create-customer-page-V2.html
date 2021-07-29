@@ -87,9 +87,9 @@
                                                     class="form-select"
                                                     id="brokerNameCmb"
                                             >
-                                                <option th:each="employee : ${CustomerForm.employeeList}"
-                                                        th:value="${employee.id}"
-                                                        th:utext="${employee.name}"/>
+                                                <option th:each="marketingGroup : ${CustomerForm.marketingGroupList}"
+                                                        th:value="${marketingGroup.id}"
+                                                        th:utext="${marketingGroup.name}"/>
                                             </select>
                                         </div>
                                         <div class="col-md-6 form-validate">
@@ -100,9 +100,9 @@
                                                     class="form-select"
                                                     id="brokerCodeCmb"
                                             >
-                                                <option th:each="employee : ${CustomerForm.employeeList}"
-                                                        th:value="${employee.id}"
-                                                        th:utext="${employee.brokerCode}"/>
+                                                <option th:each="marketingGroup : ${CustomerForm.marketingGroupList}"
+                                                        th:value="${marketingGroup.id}"
+                                                        th:utext="${marketingGroup.code}"/>
                                             </select>
                                         </div>
                                     </div>

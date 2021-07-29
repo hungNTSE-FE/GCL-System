@@ -6,6 +6,7 @@ import com.gcl.crm.form.ComboboxForm;
 import com.gcl.crm.form.CustomerForm;
 import com.gcl.crm.service.CustomerProcessService;
 import com.gcl.crm.service.CustomerService;
+import com.gcl.crm.service.MarketingGroupService;
 import com.gcl.crm.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
@@ -30,6 +31,9 @@ public class CustomerController {
 
     @Autowired
     CustomerProcessService customerProcessService;
+
+    @Autowired
+    MarketingGroupService marketingGroupService;
 
     @Autowired
     CustomerService customerService;
@@ -72,7 +76,9 @@ public class CustomerController {
         List<ErrorInFo> errorInFoList = customerService.checkBussinessBeforeRegistCustomer(customerForm);
         if (!CollectionUtils.isEmpty(errorInFoList)) {
             ComboboxForm comboboxForm = customerService.initComboboxData();
+            List<MarketingGroup> marketingGroupList = marketingGroupService.getAllMktByStatus();
             customerForm.setComboboxForm(comboboxForm);
+            customerForm.setMarketingGroupList(marketingGroupList);
             model.addAttribute(CUSTOMER_FORM, customerForm);
             model.addAttribute("errorInfo", errorInFoList);
             return ADD_CUSTOMER_PAGE;
