@@ -98,10 +98,6 @@ public class Customer {
     @JoinColumn(name = "identity_number", referencedColumnName = "identity_number")
     private Identification identification;
 
-    @ManyToMany
-    @JoinColumn(name = "CAMPAIGN_CODE")
-    private List<Campaign> campaignList;
-
     @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<BankAccount> bankAccounts;
 
@@ -250,14 +246,6 @@ public class Customer {
 
     public void setIdentification(Identification identification) {
         this.identification = identification;
-    }
-
-    public List<Campaign> getCampaignList() {
-        return campaignList;
-    }
-
-    public void setCampaignList(List<Campaign> campaignList) {
-        this.campaignList = campaignList;
     }
 
     public Employee getEmployee() {
