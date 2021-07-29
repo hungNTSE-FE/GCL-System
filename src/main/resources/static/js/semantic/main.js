@@ -2,6 +2,7 @@ var SOURCE_DROPDOWN = "#selectSource";
 var LEVEL_DROPDOWN = "#selectLevel";
 var DEPARTMENT_DROPDOWN = "#selectDepartment";
 var RATING_DROPDOWN = "#selectRanking";
+var TRANSACTION_DROPDOWN = "#selectTransaction";
 
 var MULTI_SELECT = "#multi-select";
 
@@ -10,6 +11,7 @@ $(LEVEL_DROPDOWN).dropdown();
 $(DEPARTMENT_DROPDOWN).dropdown();
 $(RATING_DROPDOWN).dropdown();
 $(MULTI_SELECT).dropdown();
+$(TRANSACTION_DROPDOWN).dropdown();
 
 //MULTI SELECT
 $(MULTI_SELECT).change(function () {

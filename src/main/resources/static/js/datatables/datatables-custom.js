@@ -93,4 +93,13 @@ if (document.getElementById("datatablesStatisticPotential") != null) {
             noRows: "Không có dữ liệu",
         },
     });
+} else if (document.getElementById("datatablesDeal") != null) {
+    const datatablesDeal = new simpleDatatables.DataTable("#datatablesDeal", {
+        fixedHeight: true,
+        labels: {
+            placeholder: "Tìm kiếm...",
+            perPage: "Show {select} per page",
+            noRows: "Không có dữ liệu",
+        },
+    });
 }
