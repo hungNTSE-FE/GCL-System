@@ -157,7 +157,7 @@ public class CustomerService {
     public List<ErrorInFo> checkBussinessBeforeRegistCustomer(CustomerForm customerForm) {
         List<ErrorInFo> errorInFoList = new ArrayList<>();
         if (Objects.nonNull(bankRepository.findObjectByPrimaryKey(customerForm.getBankNumber()))){
-            errorInFoList.add(new ErrorInFo("bank_number", "Số tài khoản đã tồn tại"));
+            errorInFoList.add(new ErrorInFo("bank_number", "Số tài khoản ngân hàng đã tồn tại"));
         }
         if (identificationRepository.findById(customerForm.getIdentifyNumber()).isPresent()){
             errorInFoList.add(new ErrorInFo("identity_number", "Số căn cước công dân đã tồn tại"));

@@ -43,6 +43,9 @@ public class PotentialService {
     @Autowired
     EmployeesRepository employeesRepository;
 
+    @Autowired
+    UserService userService;
+
     @Transactional
     public boolean importPotential(List<Potential> potentials, User user){
         if (potentials.size() == 0){
@@ -271,6 +274,18 @@ public class PotentialService {
 
     public List<EmployeeSearchForm> getEmployeeByDepartmentId(Long id) {
         return employeesRepository.getListEmployeeByDepartmentId(id);
+    }
+
+    public String getDepartmentByUserName(String username) {
+        User user = userService.getUserByUsername(username);
+        String depName = user.getEmployee().getDepartment().getName();
+        if (depName.toUpperCase().contains("SALE")) {
+            return "SALE";
+        }
+        if (depName.toUpperCase().contains("MARKETING")) {
+            return "MARKETING";
+        }
+        return null;
     }
 
     private Date getCurrentDate() {

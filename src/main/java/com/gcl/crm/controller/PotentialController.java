@@ -67,11 +67,10 @@ public class PotentialController {
         List<Source> sources = sourceRepository.getAll();
         List<Level> levels = levelService.getAll();
         List<Potential> potentials = potentialService.getAllPotentials();
-        List<Department> departments = departmentService.findAllDepartments();
         List<MarketingGroup> marketingGroups = marketingGroupService.getAllMktByStatus();
         PotentialSearchForm searchForm = new PotentialSearchForm();
-        model.addAttribute("departments", departments);
         CustomerDistributionForm customerDistributionForm = new CustomerDistributionForm();
+        String roleEmployee = potentialService.getDepartmentByUserName(principal.getName());
         model.addAttribute("sources", sources);
         model.addAttribute("levels", levels);
         model.addAttribute("potentials", potentials);
@@ -79,7 +78,17 @@ public class PotentialController {
         model.addAttribute("marketingGroups", marketingGroups);
         model.addAttribute("customerDistributionForm", customerDistributionForm);
         model.addAttribute("userName", principal.getName());
-        return DASHBOARD_PAGE;
+
+        if ("SALE".equals(roleEmployee)) {
+            return "redirect:/salesman/potential/home";
+        }
+
+        if ("MARKETING".equals(roleEmployee)) {
+            return DASHBOARD_PAGE;
+        }
+
+        return ERROR_400;
+
     }
 
     @RequestMapping(value = "/detail/overview/{id}", method = RequestMethod.GET)
