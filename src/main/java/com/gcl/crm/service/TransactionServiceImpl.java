@@ -31,7 +31,7 @@ public class TransactionServiceImpl implements TransactionService{
         if(option.isPresent()){
             transaction = option.get();
         }else {
-            throw new RuntimeException("Task not found for id  :"+id);
+            throw new RuntimeException(" not found for id  :"+id);
         }
         return transaction;
     }

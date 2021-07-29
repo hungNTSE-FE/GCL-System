@@ -2,6 +2,7 @@ package com.gcl.crm.repository;
 
 import com.gcl.crm.entity.BankAccount;
 import com.gcl.crm.entity.Customer;
+import com.gcl.crm.entity.Source;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -18,4 +19,8 @@ public class BankRepository {
     }
 
     public void update(BankAccount bankAccount) { entityManager.merge(bankAccount); }
+
+    public BankAccount findObjectByPrimaryKey(String id) {
+        return entityManager.find(BankAccount.class, id);
+    }
 }

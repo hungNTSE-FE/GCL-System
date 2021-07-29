@@ -25,23 +25,10 @@
   >
     <i data-feather="menu"></i>
   </button>
-  <!-- Navbar Brand-->
-  <!-- * * Tip * * You can use text or an image for your navbar brand.-->
-  <!-- * * * * * * When using an image, we recommend the SVG format.-->
-  <!-- * * * * * * Dimensions: Maximum height: 32px, maximum width: 240px-->
-  <a class="navbar-brand pe-3 ps-4 ps-lg-2" href="index.html"
-  >Gia Cát Lợi</a
-  >
-  <!-- Navbar Search Input-->
-  <!-- * * Note: * * Visible only on and above the lg breakpoint-->
+  <a class="navbar-brand pe-3 ps-4 ps-lg-2" href="index.html">Gia Cát Lợi</a>
   <form class="form-inline me-auto d-none d-lg-block me-3">
     <div class="input-group input-group-joined input-group-solid">
-      <input
-              class="form-control pe-0"
-              type="search"
-              placeholder="Search"
-              aria-label="Search"
-      />
+      <input class="form-control pe-0" type="search" placeholder="Search" aria-label="Search"/>
       <div class="input-group-text"><i data-feather="search"></i></div>
     </div>
   </form>
@@ -412,17 +399,23 @@
           </div>
         </h6>
         <div class="dropdown-divider"></div>
-        <a class="dropdown-item" href="#!">
+        <a class="dropdown-item" th:href="@{/user/accountProfile}">
           <div class="dropdown-item-icon">
-            <i data-feather="settings"></i>
+            <i data-feather="user"></i>
           </div>
-          Account
+          Thông tin tài khoản
+        </a>
+        <a class="dropdown-item" th:href="@{/user/changePassword}">
+          <div class="dropdown-item-icon">
+            <i data-feather="key"></i>
+          </div>
+          Đổi mật khẩu
         </a>
         <a class="dropdown-item" th:href="@{/logout}">
           <div class="dropdown-item-icon">
             <i data-feather="log-out"></i>
           </div>
-          Logout
+          Đăng xuất
         </a>
       </div>
     </li>

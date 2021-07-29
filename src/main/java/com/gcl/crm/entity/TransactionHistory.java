@@ -10,7 +10,7 @@ import java.util.Date;
 @Table(name="transaction_history")
 public class TransactionHistory {
     @Id
-    @Column(name="transactionID")
+    @Column(name="transaction_id")
     private String transactionID;
 
     @Column(name="account_number")
@@ -29,7 +29,7 @@ public class TransactionHistory {
     private int lot ;
 
     @Column(name="money")
-    private double money;
+    private String money;
 
 
 

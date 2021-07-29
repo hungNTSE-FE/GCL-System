@@ -89,6 +89,7 @@ public class TaskController {
         taskService.createTask(task);
         return "redirect:/task/viewAllTask";
 
+
     }
     @PostMapping({"/updateTask"})
     public String updateTask(@ModelAttribute("task") Task task){
@@ -98,11 +99,11 @@ public class TaskController {
         task.setSubmitStatus(tmp.getSubmitStatus());
         task.setDepartmentName(task.getEmployees().get(0).getDepartment().getName());
         task.setUpdateDate(Date.valueOf(LocalDate.now()));
-
-        taskService.createTask(task);
         return "redirect:/task/viewAllTask";
 
+
     }
+
 
 
     @GetMapping({"/showUpdateTaskForm/{id}"})
