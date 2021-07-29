@@ -27,14 +27,15 @@ public class UserController {
     UserService userService;
 
     @RequestMapping(value = "/change-password", method = RequestMethod.GET)
-    public String goChangePass(Model model) {
+    public String goChangePass(Model model, Principal principal) {
         ChangePasswordForm changePasswordForm = new ChangePasswordForm();
         model.addAttribute("passwordForm", changePasswordForm);
+        model.addAttribute("userName", principal.getName());
         return CHANGE_PASS_PAGE;
     }
-
     @RequestMapping(value = "/profile", method = RequestMethod.GET)
-    public String goAccountProfile(Model model) {
+    public String goAccountProfile(Model model, Principal principal) {
+        model.addAttribute("userName", principal.getName());
         return ACCOUNT_PROFILE_PAGE;
     }
 

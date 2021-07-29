@@ -4,6 +4,7 @@ var DEPARTMENT_DROPDOWN = "#selectDepartment";
 var RATING_DROPDOWN = "#selectRanking";
 var TRANSACTION_DROPDOWN = "#selectTransaction";
 
+
 var MULTI_SELECT = "#multi-select";
 
 $(SOURCE_DROPDOWN).dropdown();

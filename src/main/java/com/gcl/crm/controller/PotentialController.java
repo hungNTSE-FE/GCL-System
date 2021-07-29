@@ -60,37 +60,26 @@ public class PotentialController {
     DepartmentService departmentService;
 
     @Autowired
-    MarketingGroupService marketingGroupService;
+    EmployeeService employeeService;
 
     @RequestMapping(value = "/home", method = RequestMethod.GET)
     public String goHomePage(Model model, Principal principal) {
-        User user = userService.getUserByUsername(principal.getName());
-        String roleEmployee = potentialService.getDepartmentByUserName(user);
-
-        if ("SALE".equals(roleEmployee)) {
-            return "redirect:/salesman/potential/home";
-        }
-
         List<Source> sources = sourceRepository.getAll();
         List<Level> levels = levelService.getAll();
-        PotentialSearchForm searchForm = new PotentialSearchForm();
         List<Potential> potentials = potentialService.getAllPotentials();
-        List<MarketingGroup> marketingGroups = marketingGroupService.getAllMktByStatus();
+        List<Department> departments = departmentService.findAllDepartments();
+        List<Employee> employees = employeeService.getAllWorkingEmployees();
+        PotentialSearchForm searchForm = new PotentialSearchForm();
+        model.addAttribute("departments", departments);
         CustomerDistributionForm customerDistributionForm = new CustomerDistributionForm();
-
-        model.addAttribute("potentials", potentials);
-        model.addAttribute("marketingGroups", marketingGroups);
-        model.addAttribute("customerDistributionForm", customerDistributionForm);
-        model.addAttribute("searchForm", searchForm);
         model.addAttribute("sources", sources);
         model.addAttribute("levels", levels);
+        model.addAttribute("potentials", potentials);
+        model.addAttribute("searchForm", searchForm);
+        model.addAttribute("employees", employees);
+        model.addAttribute("customerDistributionForm", customerDistributionForm);
         model.addAttribute("userName", principal.getName());
-
-        if ("MARKETING".equals(roleEmployee)) {
-            return DASHBOARD_PAGE;
-        }
-
-        return ERROR_400;
+        return DASHBOARD_PAGE;
     }
 
     @RequestMapping(value = "/detail/overview/{id}", method = RequestMethod.GET)
@@ -338,6 +327,17 @@ public class PotentialController {
         CustomerDistributionForm customerDistributionForm = new CustomerDistributionForm();
         customerDistributionForm.setPotentialSearchFormList(potentialsSharing);
         return new ResponseEntity<>(customerDistributionForm, HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/getEmployeeByDepartmentId")
+    public ResponseEntity<List<EmployeeSearchForm>> getEmployeeByDepartmentId(@RequestBody String id) throws JsonProcessingException {
+        List<EmployeeSearchForm> employeeList = null;
+        try {
+            employeeList = potentialService.getEmployeeByDepartmentId(Long.parseLong(id));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return new ResponseEntity<>(employeeList, HttpStatus.OK);
     }
 
     //   SALE
