@@ -64,31 +64,33 @@ public class PotentialController {
 
     @RequestMapping(value = "/home", method = RequestMethod.GET)
     public String goHomePage(Model model, Principal principal) {
-        List<Source> sources = sourceRepository.getAll();
-        List<Level> levels = levelService.getAll();
-        List<Potential> potentials = potentialService.getAllPotentials();
-        List<MarketingGroup> marketingGroups = marketingGroupService.getAllMktByStatus();
-        PotentialSearchForm searchForm = new PotentialSearchForm();
-        CustomerDistributionForm customerDistributionForm = new CustomerDistributionForm();
-        String roleEmployee = potentialService.getDepartmentByUserName(principal.getName());
-        model.addAttribute("sources", sources);
-        model.addAttribute("levels", levels);
-        model.addAttribute("potentials", potentials);
-        model.addAttribute("searchForm", searchForm);
-        model.addAttribute("marketingGroups", marketingGroups);
-        model.addAttribute("customerDistributionForm", customerDistributionForm);
-        model.addAttribute("userName", principal.getName());
+        User user = userService.getUserByUsername(principal.getName());
+        String roleEmployee = potentialService.getDepartmentByUserName(user);
 
         if ("SALE".equals(roleEmployee)) {
             return "redirect:/salesman/potential/home";
         }
+
+        List<Source> sources = sourceRepository.getAll();
+        List<Level> levels = levelService.getAll();
+        PotentialSearchForm searchForm = new PotentialSearchForm();
+        List<Potential> potentials = potentialService.getAllPotentials();
+        List<MarketingGroup> marketingGroups = marketingGroupService.getAllMktByStatus();
+        CustomerDistributionForm customerDistributionForm = new CustomerDistributionForm();
+
+        model.addAttribute("potentials", potentials);
+        model.addAttribute("marketingGroups", marketingGroups);
+        model.addAttribute("customerDistributionForm", customerDistributionForm);
+        model.addAttribute("searchForm", searchForm);
+        model.addAttribute("sources", sources);
+        model.addAttribute("levels", levels);
+        model.addAttribute("userName", principal.getName());
 
         if ("MARKETING".equals(roleEmployee)) {
             return DASHBOARD_PAGE;
         }
 
         return ERROR_400;
-
     }
 
     @RequestMapping(value = "/detail/overview/{id}", method = RequestMethod.GET)

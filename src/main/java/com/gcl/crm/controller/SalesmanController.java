@@ -43,21 +43,18 @@ public class SalesmanController {
 
     @RequestMapping(value = "/potential/home", method = RequestMethod.GET)
     public String goHomePage(Model model, Principal principal) {
+        User user = userService.getUserByUsername(principal.getName());
         List<Source> sources = sourceRepository.getAll();
         List<Level> levels = levelService.getAll();
-        List<Potential> potentials = potentialService.getAllPotentials();
-        List<Department> departments = departmentService.findAllDepartments();
-        List<Employee> employees = employeeService.getAllWorkingEmployees();
+        List<Potential> potentials = potentialService.getAllPotentialsOfSale(user);
         PotentialSearchForm searchForm = new PotentialSearchForm();
-        CustomerDistributionForm customerDistributionForm = new CustomerDistributionForm();
-        model.addAttribute("departments", departments);
+
+        model.addAttribute("potentials", potentials);
         model.addAttribute("sources", sources);
         model.addAttribute("levels", levels);
-        model.addAttribute("potentials", potentials);
         model.addAttribute("searchForm", searchForm);
-        model.addAttribute("employees", employees);
-        model.addAttribute("customerDistributionForm", customerDistributionForm);
         model.addAttribute("userName", principal.getName());
+
         return DASHBOARD_PAGE;
     }
 

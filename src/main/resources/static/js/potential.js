@@ -20,6 +20,11 @@ $('#modalPotentailSharing').on('click', function () {
         listSelectedPotentailId.push(Number(this.value));
     });
 
+    if (listSelectedPotentailId.length === 0) {
+        $('#btnErrorModal').click();
+        return;
+    }
+
     $.ajax({
         type: "POST",
         contentType: "application/json",
@@ -29,8 +34,12 @@ $('#modalPotentailSharing').on('click', function () {
         cache: false,
         timeout: 600000,
         success: function (data) {
-            render_data_potential_sharing(data);
-            $('#hdnModalPotentailSharing').click();
+            if (data.potentialSearchFormList.length === 0) {
+                $('#btnErrorModal').click();
+            } else {
+                render_data_potential_sharing(data);
+                $('#hdnModalPotentailSharing').click();
+            }
         },
         error: function (e) {
             console.log("ERROR : ", e);

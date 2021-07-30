@@ -276,8 +276,7 @@ public class PotentialService {
         return employeesRepository.getListEmployeeByDepartmentId(id);
     }
 
-    public String getDepartmentByUserName(String username) {
-        User user = userService.getUserByUsername(username);
+    public String getDepartmentByUserName(User user) {
         String depName = user.getEmployee().getDepartment().getName();
         if (depName.toUpperCase().contains("SALE")) {
             return "SALE";
@@ -286,6 +285,10 @@ public class PotentialService {
             return "MARKETING";
         }
         return null;
+    }
+
+    public List<Potential> getAllPotentialsOfSale(User user){
+        return potentialRepository2.getListPotentialOfSale(user.getEmployee().getMarketingGroup().getId());
     }
 
     private Date getCurrentDate() {

@@ -12,7 +12,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService{
@@ -139,24 +141,7 @@ public class EmployeeServiceImpl implements EmployeeService{
     @Override
     public List<Employee> getAllNotGroupedEmployees() {
         List<Employee> employees = this.getAllWorkingEmployees();
-        List<Employee> result = new ArrayList<>();
-        for (Employee employee : employees){
-            if (employee.getMarketingGroups() == null || employee.getMarketingGroups().size() == 0){
-                result.add(employee);
-                continue;
-            }
-            boolean flag = true;
-            for (MarketingGroup group : employee.getMarketingGroups()){
-                if (group.getStatus().equals(Status.ACTIVE)){
-                    flag = false;
-                    break;
-                }
-            }
-            if (flag){
-                result.add(employee);
-            }
-        }
-        return result;
+        return employees.stream().filter(emp -> Objects.isNull(emp.getMarketingGroup())).collect(Collectors.toList());
     }
 
     @Override

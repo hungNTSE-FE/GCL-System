@@ -43,6 +43,21 @@ public class PotentialRepository2 {
         return entityManager.getReference(Potential.class, id);
     }
 
+    public List<Potential> getListPotentialOfSale(Long mkt_id) {
+        String sql = "select potential.*\n" +
+                "from potential\n" +
+                "inner join (\n" +
+                "    select potential_id\n" +
+                "    from customer_distribution\n" +
+                "    where id = :mkt_id\n" +
+                "    ) tmp\n" +
+                "on tmp.potential_id = potential.id";
+
+        Query query = entityManager.createNativeQuery(sql, Potential.class);
+        query.setParameter("mkt_id", mkt_id);
+        return query.getResultList();
+    }
+
     public void ratingPotential() {
         StoredProcedureQuery storedProcedureQuery = entityManager.createStoredProcedureQuery("PROC_RATING_POTENTIAL");
         storedProcedureQuery.execute();
