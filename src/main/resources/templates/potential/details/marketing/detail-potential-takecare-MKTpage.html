@@ -7,6 +7,7 @@
     <title>Chăm sóc khách hàng tiềm năng - Gia Cat Loi</title>
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
     <link rel="icon" type="image/x-icon" href="assets/img/favicon.png" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css"/>
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css"/>
     <script data-search-pseudo-elements defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js" crossorigin="anonymous"></script>
@@ -64,6 +65,7 @@
                     <div class="card-header">CHĂM SÓC KHÁCH HÀNG</div>
                     <div class="card-body">
                         <form id="form-mkt" method="POST" th:action="@{/potential/detail/take-care/MKT/{id}(id=${potentialDetail.id})}">
+                            <input type="hidden" id="name" value="tinh" placeholder="User will receive the message...">
                             <table id="datatablesManageTakeCareOfPotential">
                                 <colgroup>
                                     <col width="12%" />
@@ -89,7 +91,7 @@
                                                   disabled class="form-control" rows="3"></textarea>
                                     </td>
                                     <td>
-                                        <input class="form-check-input" onchange="$('#form-mkt').submit();" type="checkbox" value="0" name="index"
+                                        <input id="send1" class="form-check-input" onchange="$('#form-mkt').submit();" type="checkbox" value="0" name="index"
                                                th:disabled="${potentialDetail.cares.size() < 1 ? true : potentialDetail.cares.get(0).accepted}"
                                                th:checked="${potentialDetail.cares.size() < 1 ? false : potentialDetail.cares.get(0).accepted}"/>
                                     </td>
@@ -103,7 +105,7 @@
                                                   disabled class="form-control" rows="3"></textarea>
                                     </td>
                                     <td>
-                                        <input class="form-check-input" onchange="$('#form-mkt').submit();" type="checkbox" value="1" name="index"
+                                        <input id="send2" class="form-check-input" onchange="$('#form-mkt').submit();" type="checkbox" value="1" name="index"
                                                th:disabled="${potentialDetail.cares.size() < 2 ? true : potentialDetail.cares.get(1).accepted}"
                                                th:checked="${potentialDetail.cares.size() < 2 ? false : potentialDetail.cares.get(1).accepted}"/>
                                     </td>
@@ -117,7 +119,7 @@
                                                   disabled class="form-control" rows="3"></textarea>
                                     </td>
                                     <td>
-                                        <input class="form-check-input" onchange="$('#form-mkt').submit();" type="checkbox" value="2" name="index"
+                                        <input id="send3" class="form-check-input" onchange="$('#form-mkt').submit();" type="checkbox" value="2" name="index"
                                                th:disabled="${potentialDetail.cares.size() < 3 ? true : potentialDetail.cares.get(2).accepted}"
                                                th:checked="${potentialDetail.cares.size() < 3 ? false : potentialDetail.cares.get(2).accepted}"/>
                                     </td>
@@ -140,6 +142,7 @@
 <script src="https://cdn.jsdelivr.net/npm/litepicker/dist/litepicker.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 <script type="text/javascript" th:src="@{/js/mainTH.js}"></script>
@@ -169,13 +172,24 @@
                 })
 
                 Toast.fire({
-                    icon: 'success',
+                    icon: 'info',
                     title: message.body,
                 })
             });
         });
     }
     window.onload = connect;
+    $(function() {
+        $("#send1").click(function() {
+            stompClient.send("/app/hello", {}, $("#name").val());
+        });
+        $("#send2").click(function() {
+            stompClient.send("/app/hello", {}, $("#name").val());
+        });
+        $("#send3").click(function() {
+            stompClient.send("/app/hello", {}, $("#name").val());
+        });
+    });
     /*]]>*/
 </script>
 </body>

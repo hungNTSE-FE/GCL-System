@@ -1,3 +1,7 @@
+const phoneInputField = document.querySelector("#to");
+const phoneInput = window.intlTelInput(phoneInputField, {
+});
+
 $(document).ready(function() {
     $('a.edit').click(function() {
         var dad = $(this).parent().parent();

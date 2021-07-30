@@ -18,4 +18,5 @@ public class MessageController {
         String message = "Thông báo bởi nhân viên " + sha.getUser().getName();
         simpMessagingTemplate.convertAndSendToUser(username, "/queue/messages", message);
     }
+
 }

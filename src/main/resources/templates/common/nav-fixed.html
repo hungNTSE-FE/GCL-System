@@ -394,8 +394,8 @@
                   th:src="@{/assets/img/illustrations/profiles/profile-1.png}"
           />
           <div class="dropdown-user-details">
-            <div class="dropdown-user-details-name">Valerie Luna</div>
-            <div class="dropdown-user-details-email">vluna@aol.com</div>
+            <div class="dropdown-user-details-name" th:utext="${userInfo.employee.name}"></div>
+            <div class="dropdown-user-details-email" th:utext="${userInfo.employee.companyEmail}"></div>
           </div>
         </h6>
         <div class="dropdown-divider"></div>

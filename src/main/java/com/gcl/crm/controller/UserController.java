@@ -8,6 +8,8 @@ import com.gcl.crm.utils.WebUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import com.gcl.crm.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -26,16 +28,21 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    @RequestMapping(value = "/change-password", method = RequestMethod.GET)
+    @RequestMapping(value = "/changePassword", method = RequestMethod.GET)
     public String goChangePass(Model model, Principal principal) {
         ChangePasswordForm changePasswordForm = new ChangePasswordForm();
         model.addAttribute("passwordForm", changePasswordForm);
+        User currentUser = userService.getUserByUsername(principal.getName());
         model.addAttribute("userName", principal.getName());
+        model.addAttribute("userInfo", currentUser);
         return CHANGE_PASS_PAGE;
     }
-    @RequestMapping(value = "/profile", method = RequestMethod.GET)
+
+    @RequestMapping(value = "/accountProfile", method = RequestMethod.GET)
     public String goAccountProfile(Model model, Principal principal) {
+        User currentUser = userService.getUserByUsername(principal.getName());
         model.addAttribute("userName", principal.getName());
+        model.addAttribute("userInfo", currentUser);
         return ACCOUNT_PROFILE_PAGE;
     }
 

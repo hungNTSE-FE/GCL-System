@@ -43,6 +43,7 @@ public class SalesmanController {
 
     @RequestMapping(value = "/potential/home", method = RequestMethod.GET)
     public String goHomePage(Model model, Principal principal) {
+        User currentUser = userService.getUserByUsername(principal.getName());
         List<Source> sources = sourceRepository.getAll();
         List<Level> levels = levelService.getAll();
         List<Potential> potentials = potentialService.getAllPotentials();
@@ -58,11 +59,13 @@ public class SalesmanController {
         model.addAttribute("employees", employees);
         model.addAttribute("customerDistributionForm", customerDistributionForm);
         model.addAttribute("userName", principal.getName());
+        model.addAttribute("userInfo", currentUser);
         return DASHBOARD_PAGE;
     }
 
     @RequestMapping(value = "/detail/{id}", method = RequestMethod.GET)
-    public String goDetailInformationCustomer(Model model, @PathVariable("id") Long id) {
+    public String goDetailInformationCustomer(Model model, @PathVariable("id") Long id, Principal principal) {
+        User currentUser = userService.getUserByUsername(principal.getName());
         Potential potentialDetail = potentialService.getPotentialById(id);
         Potential potentialEntity = new Potential();
         if (potentialDetail == null) {
@@ -72,6 +75,7 @@ public class SalesmanController {
         model.addAttribute("levels", levelService.getAll());
         model.addAttribute("selectedLevel", potentialDetail.getLevel());
         model.addAttribute("potentialEntity", potentialEntity);
+        model.addAttribute("userInfo", currentUser);
         return DETAIL_INFORMATION_PAGE;
     }
 }

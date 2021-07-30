@@ -2,10 +2,13 @@ package com.gcl.crm.controller;
 
 import com.gcl.crm.entity.Department;
 import com.gcl.crm.entity.Employee;
+import com.gcl.crm.entity.User;
 import com.gcl.crm.service.DepartmentService;
 import com.gcl.crm.service.EmployeeService;
+import com.gcl.crm.service.UserService;
 import com.gcl.crm.utils.WebUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import com.gcl.crm.constants.MyConstants;
 import com.gcl.crm.service.UserService;
 import org.springframework.lang.Nullable;
@@ -35,6 +38,9 @@ public class MainController {
     DepartmentService departmentService;
 
     @Autowired
+    UserService userService;
+
+    @Autowired
     private JavaMailSender javaMailSender;
 
     @Autowired
@@ -46,6 +52,7 @@ public class MainController {
         if (principal == null) {
             return "loginPage";
         }
+        User currentUser = userService.getUserByUsername(principal.getName());
         Department departmentForm = new Department();
         List<Department> departments = departmentService.findAllDepartments();
         List<Employee> employees = employeeService.getAllEmployees();
@@ -54,7 +61,13 @@ public class MainController {
         model.addAttribute("departmentForm", departmentForm);
         System.out.println("department home");
         model.addAttribute("userName", principal.getName());
+        model.addAttribute("userInfo", currentUser);
         return DEPARTMENT_PAGE;
+    }
+
+    @RequestMapping(value = "/test", method = RequestMethod.GET)
+    public String getTest() {
+        return "test";
     }
 
     @RequestMapping(value = {"/login"}, method = RequestMethod.GET)

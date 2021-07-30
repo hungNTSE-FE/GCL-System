@@ -29,9 +29,11 @@ public class JunkController {
 
     @RequestMapping(value = "/home", method = RequestMethod.GET)
     public String goHomePage(Model model, Principal principal) {
+        User currentUser = userService.getUserByUsername(principal.getName());
         List<Potential> potentials = potentialService.getAllDeletedPotentials();
         model.addAttribute("potentials", potentials);
         model.addAttribute("userName", principal.getName());
+        model.addAttribute("userInfo", currentUser);
         return "/junk/data-junk-page-hungNT";
     }
 

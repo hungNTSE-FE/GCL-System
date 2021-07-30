@@ -1,8 +1,10 @@
 package com.gcl.crm.controller;
 
 import com.gcl.crm.entity.Potential;
+import com.gcl.crm.entity.User;
 import com.gcl.crm.form.RecentPotentialForm;
 import com.gcl.crm.service.StatisticService;
+import com.gcl.crm.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Controller;
@@ -20,9 +22,14 @@ public class StatisticController {
     @Autowired
     StatisticService statisticService;
 
+    @Autowired
+    UserService userService;
+
     @RequestMapping(value = "/potential", method = RequestMethod.GET)
     public String goStatisticPotential(Model model, Principal principal) {
+        User currentUser = userService.getUserByUsername(principal.getName());
         model.addAttribute("userName", principal.getName());
+        model.addAttribute("userInfo", currentUser);
         return STATISTIC_POTENTIAL_PAGE;
     }
 
