@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -20,14 +21,15 @@ public class StatisticController {
     StatisticService statisticService;
 
     @RequestMapping(value = "/potential", method = RequestMethod.GET)
-    public String goStatisticPotential(Model model) {
+    public String goStatisticPotential(Model model, Principal principal) {
+        model.addAttribute("userName", principal.getName());
         return STATISTIC_POTENTIAL_PAGE;
     }
 
     /*
     Return list 12 integer number of potentials present volatility
     Return null if year is empty or not match [yyyy]
-    URL: http://localhost:8081/statistic/potential/volatility?year=2021
+    URL: http://localhost:8085/statistic/potential/volatility?year=2021
      */
     @GetMapping(value = {"/potential/volatility"})
     @ResponseBody
@@ -43,7 +45,7 @@ public class StatisticController {
 
     /*
     Return list potentials of current date
-    URL: http://localhost:8081/statistic/potential/today
+    URL: http://localhost:8085/statistic/potential/today
      */
     @GetMapping(value = {"/potential/today"})
     @ResponseBody
@@ -54,7 +56,7 @@ public class StatisticController {
     /*
     Return list 8 integers present number of potential count by level
     Return null if date is empty or not match [M/yyyy] and [MM/yyyy]
-    URL: http://localhost:8081/statistic/potential/level?date=05/2021
+    URL: http://localhost:8085/statistic/potential/level?date=05/2021
      */
     @GetMapping(value = {"/potential/level"})
     @ResponseBody

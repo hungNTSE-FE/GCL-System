@@ -21,6 +21,9 @@ import java.util.stream.Stream;
 @Controller
 @RequestMapping("/employee")
 public class EmployeeController {
+    private static final String HOME_EMP_PAGE = "employee/home-employee-page-V2";
+    private static final String INSERT_EMP_PAGE = "employee/insert-employee-page-V2";
+    private static final String EDIT_EMP_PAGE = "employee/edit-employee-page-V2";
     private static final String HOME_GROUP_PAGE = "employee/group-employee-page-V2";
     private static final String UPDATE_GROUP_PAGE = "employee/edit-group-employee-page-V2";
     private static final String ERROR_400 = "error/error-400";
@@ -44,16 +47,14 @@ public class EmployeeController {
 
     @RequestMapping(value = "/home", method = RequestMethod.GET)
     public String getHomePage(Model model, Principal principal) {
-        if (principal == null) {
-            return ERROR_400;
-        }
         List<Employee> employees = employeeService.getAllWorkingEmployees();
         List<Department> departments = departmentService.findAllDepartments();
         List<Position> positions = positionService.findAllPositions();
         model.addAttribute("employees", employees);
         model.addAttribute("departments", departments);
         model.addAttribute("positions", positions);
-        return "employee/home-employee-page-V2";
+        model.addAttribute("userName", principal.getName());
+        return HOME_EMP_PAGE;
     }
 
     @RequestMapping(value = "/marketing-group", method = RequestMethod.GET)
@@ -67,31 +68,26 @@ public class EmployeeController {
         model.addAttribute("marketingGroups", marketingGroups);
         model.addAttribute("marketingGroup", marketingGroup);
         model.addAttribute("employees", employees);
+        model.addAttribute("userName", principal.getName());
         return HOME_GROUP_PAGE;
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.GET)
     public String getInsertPage(Model model, Principal principal) {
-        if (principal == null) {
-            return ERROR_400;
-        }
         Employee employee = new Employee();
         employee.setUser(new User());
-
         List<Department> departments = departmentService.findAllDepartments();
         List<Position> positions = positionService.findAllPositions();
         model.addAttribute("employee", employee);
         model.addAttribute("departments", departments);
         model.addAttribute("positions", positions);
-        return "employee/insert-employee-page-V2";
+        model.addAttribute("userName", principal.getName());
+        return INSERT_EMP_PAGE;
     }
 
     @RequestMapping(value = "/marketing-group/update/{id}", method = RequestMethod.GET)
     public String getUpdateGroupPage(Model model, @Nullable @PathVariable("id") String id, Principal principal) {
         List<Long> arr = new ArrayList<Long>();
-        if (principal == null) {
-            return ERROR_400;
-        }
         MarketingGroup marketingGroupById = marketingGroupService.findMarketGroupById(id);
         if (marketingGroupById == null) {
             return "redirect:/employee/marketing-group";
@@ -113,6 +109,7 @@ public class EmployeeController {
         model.addAttribute("employeeInsiteGroup", employeesInGroup);
         model.addAttribute("employees", union);
         model.addAttribute("marketingGroup", marketingGroupById);
+        model.addAttribute("userName", principal.getName());
         return UPDATE_GROUP_PAGE;
     }
 
@@ -222,7 +219,7 @@ public class EmployeeController {
 
     @RequestMapping(value = "/edit", method = RequestMethod.GET)
     public String getEditPage(Model model, RedirectAttributes redirectAttributes,
-                              @Nullable @RequestParam("eid") Long id) {
+                              @Nullable @RequestParam("eid") Long id, Principal principal) {
         if (id == null){
             redirectAttributes.addAttribute("error", "Không tìm thấy nhân viên được chọn");
             return "redirect:/employee/home";
@@ -237,7 +234,8 @@ public class EmployeeController {
         model.addAttribute("departments", departments);
         model.addAttribute("positions", positions);
         model.addAttribute("employee", employee);
-        return "employee/edit-employee-page-V2";
+        model.addAttribute("userName", principal.getName());
+        return EDIT_EMP_PAGE;
     }
 
     @RequestMapping(value = "/editGroup", method = RequestMethod.GET)

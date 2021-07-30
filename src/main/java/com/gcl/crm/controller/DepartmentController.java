@@ -43,7 +43,6 @@ public class DepartmentController {
         model.addAttribute("employees", employees);
         model.addAttribute("departments", departments);
         model.addAttribute("departmentForm", departmentForm);
-        System.out.println("department home");
         return "department/home-department-page-v2";
     }
 

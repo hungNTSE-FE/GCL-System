@@ -63,7 +63,7 @@ public class PotentialController {
     EmployeeService employeeService;
 
     @RequestMapping(value = "/home", method = RequestMethod.GET)
-    public String goHomePage(Model model) {
+    public String goHomePage(Model model, Principal principal) {
         List<Source> sources = sourceRepository.getAll();
         List<Level> levels = levelService.getAll();
         List<Potential> potentials = potentialService.getAllPotentials();
@@ -78,6 +78,7 @@ public class PotentialController {
         model.addAttribute("searchForm", searchForm);
         model.addAttribute("employees", employees);
         model.addAttribute("customerDistributionForm", customerDistributionForm);
+        model.addAttribute("userName", principal.getName());
         return DASHBOARD_PAGE;
     }
 
@@ -92,7 +93,7 @@ public class PotentialController {
     }
 
     @RequestMapping(value = "/detail/{id}", method = RequestMethod.GET)
-    public String goDetailInformationCustomer(Model model, @PathVariable("id") Long id) {
+    public String goDetailInformationCustomer(Model model, @PathVariable("id") Long id, Principal principal) {
         Potential potentialDetail = potentialService.getPotentialById(id);
         Potential potentialEntity = new Potential();
         if (potentialDetail == null) {
@@ -102,6 +103,7 @@ public class PotentialController {
         model.addAttribute("levels", levelService.getAll());
         model.addAttribute("selectedLevel", potentialDetail.getLevel());
         model.addAttribute("potentialEntity", potentialEntity);
+        model.addAttribute("userName", principal.getName());
         return DETAIL_INFORMATION_PAGE;
     }
 
@@ -114,16 +116,12 @@ public class PotentialController {
         model.addAttribute("levels", levelService.getAll());
         model.addAttribute("selectedLevel", potentialDetail.getLevel());
         model.addAttribute("potentialDetail", potentialDetail);
+        model.addAttribute("userName", principal.getName());
         return DETAIL_TAKECARE_MKTPAGE;
     }
 
-    @RequestMapping(value = "/email/id1", method = RequestMethod.GET)
-    public String goDetailEmailCustomer(Model model) {
-        return "detail-potential-email-page-V2";
-    }
-
     @RequestMapping(value = "/detail/diary/{id}", method = RequestMethod.GET)
-    public String goDetailDiary(Model model, @PathVariable("id") Long potentialId) {
+    public String goDetailDiary(Model model, @PathVariable("id") Long potentialId, Principal principal) {
         Potential potential = potentialService.getPotentialById(potentialId);
         if (potential == null) {
             return "redirect:/potential/home";
@@ -133,6 +131,7 @@ public class PotentialController {
         model.addAttribute("levels", levelService.getAll());
         model.addAttribute("selectedLevel", potential.getLevel());
         model.addAttribute("potentialDetail", potential);
+        model.addAttribute("userName", principal.getName());
         return DETAIL_DIARY_PAGE;
     }
 
@@ -158,11 +157,12 @@ public class PotentialController {
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.GET)
-    public String goCreatePage(Model model) {
+    public String goCreatePage(Model model, Principal principal) {
         List<Source> sources = sourceRepository.getAll();
         Potential potential = new Potential();
         model.addAttribute("potentialForm", potential);
         model.addAttribute("sources", sources);
+        model.addAttribute("userName", principal.getName());
         return CREATE_PAGE;
     }
 
@@ -184,6 +184,7 @@ public class PotentialController {
         List<Source> sources = sourceRepository.getAll();
         model.addAttribute("potential", potential);
         model.addAttribute("sources", sources);
+        model.addAttribute("userName", principal.getName());
         return UPDATE_PAGE;
     }
 
@@ -341,7 +342,7 @@ public class PotentialController {
 
     //   SALE
     @RequestMapping(value = "/detail/sale/{id}", method = RequestMethod.GET)
-    public String goDetailInformationCustomerSale(Model model, @PathVariable("id") Long id) {
+    public String goDetailInformationCustomerSale(Model model, @PathVariable("id") Long id, Principal principal) {
         Potential potentialDetail = potentialService.getPotentialById(id);
         Potential potentialEntity = new Potential();
         if (potentialDetail == null) {
@@ -351,11 +352,12 @@ public class PotentialController {
         model.addAttribute("levels", levelService.getAll());
         model.addAttribute("selectedLevel", potentialDetail.getLevel());
         model.addAttribute("potentialEntity", potentialEntity);
+        model.addAttribute("userName", principal.getName());
         return "/potential/sale/detail-potential-information-salesman";
     }
 
     @RequestMapping(value = "/detail/diary/sale/{id}", method = RequestMethod.GET)
-    public String goDetailDiarySalesman(Model model, @PathVariable("id") Long potentialId) {
+    public String goDetailDiarySalesman(Model model, @PathVariable("id") Long potentialId, Principal principal) {
         Potential potential = potentialService.getPotentialById(potentialId);
         if (potential == null) {
             return "redirect:/potential/home";
@@ -365,11 +367,12 @@ public class PotentialController {
         model.addAttribute("levels", levelService.getAll());
         model.addAttribute("selectedLevel", potential.getLevel());
         model.addAttribute("potentialDetail", potential);
+        model.addAttribute("userName", principal.getName());
         return "/potential/sale/detail-potential-diary-salesman";
     }
 
     @RequestMapping(value = "/detail/takecare/{id}", method = RequestMethod.GET)
-    public String goDetailTakeCarePotential(Model model, @PathVariable("id") Long id) {
+    public String goDetailTakeCarePotential(Model model, @PathVariable("id") Long id, Principal principal) {
         Potential potential = potentialService.getPotentialById(id);
         if (potential == null){
             return "redirect:/potential/home";
@@ -377,15 +380,8 @@ public class PotentialController {
         model.addAttribute("levels", levelService.getAll());
         model.addAttribute("selectedLevel", potential.getLevel());
         model.addAttribute("potentialDetail", potential);
+        model.addAttribute("userName", principal.getName());
         return "/potential/sale/detail-potential-takecare-page";
     }
-
     //END SALE
-    private String getCurrentDate() {
-        String newYorkDateTimePattern = "dd/MM/yyyy";
-        DateTimeFormatter newYorkDateFormatter = DateTimeFormatter.ofPattern(newYorkDateTimePattern);
-        String formattedDate = newYorkDateFormatter.format(LocalDate.now());
-        return formattedDate;
-    }
-
 }

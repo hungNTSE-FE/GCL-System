@@ -34,7 +34,7 @@
                                 <nav class="rounded" aria-label="breadcrumb">
                                     <ol class="breadcrumb px-3 py-2 rounded mb-0">
                                         <li class="breadcrumb-item">
-                                            <a th:href="@{/potential/home}">Đầu mối</a>
+                                            <a th:href="@{/salesman/potential/home}">Đầu mối</a>
                                         </li>
                                         <li class="breadcrumb-item active" th:text="${potentialDetail.name}"></li>
                                     </ol>
@@ -96,9 +96,67 @@
     </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-<script type="text/javascript" th:src="@{/js/mainTH.js}"></script>
 <script src="https://code.jquery.com/jquery-1.8.3.js" integrity="sha256-dW19+sSjW7V1Q/Z3KD1saC6NcE5TUIhLJzJbrdKzxKc=" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/litepicker/dist/litepicker.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+<script type="text/javascript" th:src="@{/js/mainTH.js}"></script>
+<script th:inline = "javascript">
+    /*<![CDATA[*/
+    $(document).ready(function() {
+        var showtext = /*[[${flag}]]*/ "";
+        console.log(showtext);
+        if (showtext === 'showAlert') {
+            swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "Gửi thành công",
+                showConfirmButton: false,
+                timer: 5000,
+            });
+        } else if (showtext === 'showAlertUpdateLevelSuccessful') {
+            swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "Cập nhật thành công",
+                showConfirmButton: false,
+                timer: 5000,
+            });
+        }
+    });
+
+    var stompClient = null;
+    var userName = /*[[${userName}]]*/ "";
+
+    function connect() {
+        var socket = new SockJS('/hello');
+        stompClient = Stomp.over(socket);
+        stompClient.connect({ username: userName, }, function() {
+            console.log('Web Socket is connected');
+            stompClient.subscribe('/users/queue/messages', function(message) {
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                    }
+                })
+
+                Toast.fire({
+                    icon: 'success',
+                    title: message.body,
+                })
+            });
+        });
+    }
+
+    window.onload = connect;
+    /*]]>*/
+</script>
 </body>
 </html>

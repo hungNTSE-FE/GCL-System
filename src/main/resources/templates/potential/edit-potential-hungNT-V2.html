@@ -142,6 +142,9 @@
 <script src="https://semantic-ui.com/dist/components/form.js"></script>
 <script src="https://semantic-ui.com/javascript/validate-form.js"></script>
 <script src="https://semantic-ui.com/dist/components/popup.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 <script th:inline="javascript">
   $('select.dropdown').dropdown();
   $(".ui.form").form({
@@ -172,6 +175,36 @@
       });
     }
   });
+
+  var stompClient = null;
+  var userName = /*[[${userName}]]*/ "";
+
+  function connect() {
+    var socket = new SockJS('/hello');
+    stompClient = Stomp.over(socket);
+    stompClient.connect({ username: userName, }, function() {
+      console.log('Web Socket is connected');
+      stompClient.subscribe('/users/queue/messages', function(message) {
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+          }
+        })
+
+        Toast.fire({
+          icon: 'success',
+          title: message.body,
+        })
+      });
+    });
+  }
+  window.onload = connect;
   /*]]>*/
 </script>
 </body>

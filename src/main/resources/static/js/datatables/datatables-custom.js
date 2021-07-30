@@ -52,4 +52,45 @@ if (document.getElementById("datatablesStatisticPotential") != null) {
             noRows: "Không có đầu mối",
         },
     });
+} else if (document.getElementById("datatablesDepartment") != null) {
+    const dataTableDepartment = new simpleDatatables.DataTable("#datatablesDepartment", {
+        fixedHeight: true,
+        fixedColumns: true,
+    });
+} else if (document.getElementById("datatableEmployee") != null) {
+    const datatableEmployee = new simpleDatatables.DataTable("#datatableEmployee", {
+        fixedHeight: true,
+        fixedColumns: true,
+    });
+} else if (document.getElementById("datatablesGroupEmp") != null) {
+    const datatablesGroupEmp = new simpleDatatables.DataTable("#datatablesGroupEmp", {
+        fixedHeight: true,
+        labels: {
+            placeholder: "Tìm kiếm nhóm nhân viên...",
+            perPage: "Show {select} leads per page",
+            noRows: "Không có nhóm nhân viên",
+        },
+    });
+} else if (document.getElementById("datatablesPermission") != null) {
+    const datatablesPermission = new simpleDatatables.DataTable("#datatablesPermission", {
+        fixedHeight: true,
+        labels: {
+            placeholder: "Tìm kiếm nhóm quyền...",
+            perPage: "Show {select} per page",
+            noRows: "Không có nhóm quyền",
+        },
+    });
+} else if (document.getElementById("datatableDecentralize") != null) {
+    const datatableDecentralize = new simpleDatatables.DataTable("#datatableDecentralize", {
+        fixedHeight: true,
+    });
+} else if (document.getElementById("dataTablesJunk") != null) {
+    const datatablesPermission = new simpleDatatables.DataTable("#dataTablesJunk", {
+        fixedHeight: true,
+        labels: {
+            placeholder: "Tìm kiếm...",
+            perPage: "Show {select} per page",
+            noRows: "Không có dữ liệu",
+        },
+    });
 }

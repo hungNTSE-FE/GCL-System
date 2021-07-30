@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -41,21 +42,22 @@ public class SalesmanController {
     EmployeeService employeeService;
 
     @RequestMapping(value = "/potential/home", method = RequestMethod.GET)
-    public String goHomePage(Model model) {
+    public String goHomePage(Model model, Principal principal) {
         List<Source> sources = sourceRepository.getAll();
         List<Level> levels = levelService.getAll();
         List<Potential> potentials = potentialService.getAllPotentials();
         List<Department> departments = departmentService.findAllDepartments();
         List<Employee> employees = employeeService.getAllWorkingEmployees();
         PotentialSearchForm searchForm = new PotentialSearchForm();
-        model.addAttribute("departments", departments);
         CustomerDistributionForm customerDistributionForm = new CustomerDistributionForm();
+        model.addAttribute("departments", departments);
         model.addAttribute("sources", sources);
         model.addAttribute("levels", levels);
         model.addAttribute("potentials", potentials);
         model.addAttribute("searchForm", searchForm);
         model.addAttribute("employees", employees);
         model.addAttribute("customerDistributionForm", customerDistributionForm);
+        model.addAttribute("userName", principal.getName());
         return DASHBOARD_PAGE;
     }
 

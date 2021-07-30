@@ -184,27 +184,17 @@
 </div>
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-<script type="text/javascript" th:src="@{/js/mainTH.js}"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
 <script src="https://semantic-ui.com/dist/components/form.js"></script>
 <script src="https://semantic-ui.com/javascript/validate-form.js"></script>
 <script src="https://semantic-ui.com/dist/components/popup.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+<script type="text/javascript" th:src="@{/js/mainTH.js}"></script>
+<script type="text/javascript" th:src="@{/js/semantic/main.js}"></script>
 <script th:inline="javascript">
-  $("#multi-select").dropdown("get value");
-
-  $(document).ready(function() {
-    $("#multi-select").change(function () {
-      var meals = $(this).val();
-      var selectedmeals = meals.join(", ");
-      console.log(selectedmeals);
-      $("input[name=listSelected]").val(selectedmeals);
-    });
-  })
-
-
   $(".ui.form").form({
     fields: {
       code: {
@@ -265,12 +255,42 @@
         position: "top-end",
         icon: "error",
         title: "Sửa thông tin nhóm thất bại",
-        // text: 'Mã ID này đã tồn tại!',
         showConfirmButton: false,
         timer: 5000,
       });
     }
   });
+
+  var stompClient = null;
+  var userName = /*[[${userName}]]*/ "";
+
+  function connect() {
+    var socket = new SockJS('/hello');
+    stompClient = Stomp.over(socket);
+    stompClient.connect({ username: userName, }, function() {
+      console.log('Web Socket is connected');
+      stompClient.subscribe('/users/queue/messages', function(message) {
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+          }
+        })
+
+        Toast.fire({
+          icon: 'success',
+          title: message.body,
+        })
+      });
+    });
+  }
+
+  window.onload = connect;
   /*]]>*/
 </script>
 </body>
