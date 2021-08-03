@@ -57,9 +57,11 @@ $(BTN_REGISTER_CUSTOMER_ID).on('click', function (){
 });
 
 $(BTN_UPDATE_CUSTOMER_ID).on('click', function (){
-    registerCustomer();
+   updateCustomer();
 });
-
+function  updateCustomer(){
+    $(CUSTOMER_FORM_ID).submit();
+}
 function registerCustomer(){
     // Remove error before submit form
     removeError();

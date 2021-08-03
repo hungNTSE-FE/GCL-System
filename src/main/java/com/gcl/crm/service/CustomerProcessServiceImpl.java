@@ -99,8 +99,9 @@ public class CustomerProcessServiceImpl implements CustomerProcessService{
     }
 
     @Override
-    public List<Customer> getAllPotentialCustomer() {
+    public List<Customer> getAllContractCustomer() {
         return customerProcessRepository.getAllPotentialCustomer("GCL");
+
     }
 
 

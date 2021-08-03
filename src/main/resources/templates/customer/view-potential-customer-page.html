@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>Đầu mối - Gia Cát Lợi</title>
+    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+    <link rel="icon" type="image/x-icon" href="assets/img/favicon.png" />
+    <script data-search-pseudo-elements defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css"/>
+</head>
+<body class="nav-fixed">
+<th:block th:include="/common/nav-fixed.html"></th:block>
+<div id="layoutSidenav">
+    <th:block th:include="/common/layoutSidenav.html"></th:block>
+    <div id="layoutSidenav_content">
+        <main>
+            <header class="
+              page-header page-header-compact page-header-light
+              border-bottom
+              bg-white
+              mb-4
+            "
+            >
+                <div class="container-fluid px-4">
+                    <div class="page-header-content">
+                        <div
+                                class="row align-items-center justify-content-between pt-3"
+                        >
+                            <div class="col-auto mb-3">
+                                <nav class="rounded" aria-label="breadcrumb">
+                                    <ol class="breadcrumb px-3 py-2 rounded mb-0">
+                                        <li class="breadcrumb-item">
+                                            <a href="#">Đầu mối</a>
+                                        </li>
+                                        <li class="breadcrumb-item active">Tất cả</li>
+                                    </ol>
+                                </nav>
+                            </div>
+                            <div class="col-12 col-xl-auto mb-3">
+                                <!-- Extra large modal -->
+                                <div class="d-flex">
+                                    <button
+                                            class="btn btn-outline-dark mx-1"
+                                            type="button"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#exampleModalXl"
+                                    >
+                                        <i
+                                                class="fas fa-file-import"
+                                                style="padding-right: 2px"
+                                        ></i>
+                                        Nhập dữ liệu
+                                    </button>
+                                    <a class="btn btn-outline-dark mx-1" th:href="@{/potential/create}">
+                                        <i class="fas fa-plus" style="padding-right: 2px"></i>
+                                        Thêm đầu mối
+                                    </a>
+                                    <div class="dropdown no-caret">
+                                        <button
+                                                class="btn btn-outline-dark dropdown-toggle"
+                                                id="dropdownMenuButton"
+                                                type="button"
+                                                data-bs-toggle="dropdown"
+                                                aria-haspopup="true"
+                                                aria-expanded="false"
+                                        >
+                                            <i data-feather="more-vertical"></i>
+                                        </button>
+                                        <div
+                                                class="
+                            dropdown-menu dropdown-menu-right
+                            animated--fade-in-up
+                          "
+                                                aria-labelledby="dropdownMenuButton"
+                                        >
+                                            <button data-bs-toggle="modal"
+                                                    data-bs-target="#modalShareLead"
+                                                    id = "hdnModalPotentailSharing"
+                                                    hidden>Chia sẻ đầu mối</button>
+                                            <a
+                                                    class="dropdown-item"
+                                                    href="#"
+                                                    id = "modalPotentailSharing"
+                                            >Chia sẻ đầu mối</a
+                                            >
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            <!-- Main page content-->
+            <div class="container-fluid px-4">
+                <div style="height: 100%; position: relative">
+                    <div class="row">
+                        <div class="col-lg-3 mb-4">
+                            <!-- Report summary card example-->
+                            <div class="card card-header-actions mb-4">
+                                <div class="card-header">
+                                    TRA CỨU
+                                </div>
+                                <div class="card-body">
+                                    <form th:action="@{/potential/search}" th:object="${searchForm}">
+                                        <div class="mb-3">
+                                            <label
+                                                    for="potential-name"
+                                                    class="text-sm"
+                                            >Tên khách hàng</label
+                                            >
+                                            <input th:field="*{name}"
+                                                   class="form-control"
+                                                   id="potential-name"
+                                                   type="text"
+                                                   placeholder="Nhập tên khách hàng"
+                                            />
+                                        </div>
+                                        <div class="mb-3">
+                                            <label
+                                                    for="phone-number"
+                                                    class="text-sm"
+                                            >Số điện thoại</label
+                                            >
+                                            <!-- Joined input group append example-->
+                                            <div class="input-group input-group-joined">
+                                                <input id="phone-number" th:field="*{phone}"
+                                                       class="form-control pe-0"
+                                                       type="text"
+                                                       placeholder="Nhập số điện thoại"
+                                                       aria-label="Search"
+                                                />
+                                                <span class="input-group-text">
+                              <i data-feather="phone"></i>
+                            </span>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label
+                                                    for="email"
+                                                    class="text-sm"
+                                            >Email</label
+                                            >
+                                            <!-- Joined input group append example-->
+                                            <div class="input-group input-group-joined">
+                                                <input id="email" th:field="*{email}"
+                                                       class="form-control pe-0"
+                                                       type="text"
+                                                       placeholder="Nhập mail"
+                                                       aria-label="Search"
+                                                />
+                                                <span class="input-group-text">
+                              <i data-feather="mail"></i>
+                            </span>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="text-sm">Nguồn gốc</label>
+                                            <select class="form-select" id="selectSource" th:field="*{source}">
+                                                <option selected value="" >Tất cả</option>
+                                                <option th:each="source : ${sources}" th:text="${source.sourceName}" th:value="${source.sourceName}"></option>
+                                            </select>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="text-sm">Tình trạng</label>
+                                            <select class="form-select" id="selectLevel" th:field="*{level}">
+                                                <option selected value="" >Tất cả</option>
+                                                <option th:each="level : ${levels}" th:text="${level.levelName}" th:value="${level.levelId}"></option>
+                                            </select>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="text-sm">Đánh giá</label>
+                                            <select class="form-select" id="selectRanking">
+                                                <option selected value="" >Tất cả</option>
+                                                <option value="1" >HIGH</option>
+                                                <option value="2" >MEDIUM</option>
+                                                <option value="3" >LOW</option>
+                                            </select>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="text-sm">
+                                                Thời gian
+                                            </label>
+                                            <div class="input-group input-group-joined">
+                                                <input th:field="*{time}"
+                                                       class="form-control pointer"
+                                                       id="litepickerRangePlugin"
+                                                       placeholder="Lựa chọn"
+                                                />
+                                                <span class="input-group-text">
+                          <i data-feather="calendar"></i>
+                        </span>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-flex align-center">
+                                            <button type="submit"
+                                                    class="btn btn-primary"
+                                                    style="margin-right: 10px">
+                                                Tìm kiếm
+                                            </button>
+                                            <button type="reset" class="btn btn-outline-dark">Mặc định</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-9 mb-4">
+                            <!-- Area chart example-->
+                            <div class="card card-scrollable mb-4">
+                                <div class="card-body" style="max-height: 45em;">
+                                    <form id="devel-generate-content-form">
+                                        <div class="d-flex justify-content-between mb-2">
+                                            <button type="button" class="btn btn-outline-dark btn-sm" data-bs-toggle="modal" data-bs-target="#removeModal">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </button>
+                                            <div class="info text-center">
+                                                <span>Đang xem tất cả các Potential</span>
+                                                <div class="flex-row">
+                                                    <a href="#" class="text-sm" id="general">Đã chọn <span id="count-checked-checkboxes">0</span> của Potential.
+                                                        <!-- Đã chọn  của trang 1. -->
+                                                    </a>
+                                                    <a href="#" class="text-sm" id="selectAll">
+                                                        Click vào đây để chọn tất cả (<span id="count-all-table"></span>)
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <i class="fas fa-redo-alt" style="color: white"></i>
+                                        </div>
+                                        <table id="datatablesPotentials">
+                                            <thead>
+                                            <tr>
+                                                <th></th>
+                                                <th>TÊN</th>
+                                                <th>DI ĐỘNG</th>
+                                                <th>EMAIL</th>
+                                                <th>NGUỒN</th>
+                                                <th>MÃ HỢP ĐỒNG</th>
+                                                <th>TKGD</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr th:each="potential : ${potentials}" th:id="${potential.customerId}">
+                                                <td>
+                                                    <div class="d-flex">
+                                                        <input class="m-1 potential-id" type="checkbox" th:value="${potential.customerId}" name="potential-id" form="remove-form" />
+                                                        <a th:href="@{/potential/detail/{id}(id=${potential.customerId})}" class="text-dark mx-1">
+                                                            <i class="fas fa-info-circle"></i>
+                                                        </a>
+                                                        <a th:href="@{/potential/detail/edit/{id}(id=${potential.customerId})}" class="text-dark mx-1">
+                                                            <i class="fas fa-edit"></i>
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                                <td th:text="${potential.customerName}"></td>
+                                                <td th:text="${potential.phoneNumber}"></td>
+                                                <td th:text="${potential.email}"></td>
+                                                <td>
+                                                    <span th:if="${potential.source}" th:text="${potential.source.sourceName}"></span>
+                                                </td>
+                                                <td th:text="${potential.contractNumber}">
+
+                                                </td>
+                                                <td th:text="${potential.number}">
+
+                                                </td>
+
+
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <th:block th:include="/common/footer.html"></th:block>
+
+        <!-- Modal Import -->
+        <div
+                class="modal fade"
+                id="exampleModalXl"
+                tabindex="-1"
+                role="dialog"
+                aria-labelledby="myExtraLargeModalLabel"
+                style="display: none"
+                aria-hidden="true"
+        >
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <form th:action="@{/potential/import}" method="POST" enctype="multipart/form-data">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Nhập dữ liệu từ file Excel</h5>
+                            <button
+                                    class="btn-close"
+                                    type="button"
+                                    data-bs-dismiss="modal"
+                                    aria-label="Close"
+                            ></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row gx-3 mb-2">
+                                <div class="col-md-4">
+                                    <label class="small">Chọn file Excel</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <input accept=".xlsx, .xls" required
+                                           class="form-control form-control-sm"
+                                           type="file"
+                                           name="upload"
+                                           placeholder=""
+                                           style="border: 1px solid #aaa"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button
+                                    class="btn btn-primary"
+                                    type="submit">
+                                Tiếp tục
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Share leads -->
+        <div
+                class="modal fade"
+                id="modalShareLead"
+                tabindex="-1"
+                role="dialog"
+                aria-labelledby="myExtraLargeModalLabel"
+                style="display: none"
+                aria-hidden="true"
+        >
+            <div class="modal-dialog modal-xl" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Chia sẻ đầu mối (1)</h5>
+                        <button
+                                class="btn-close"
+                                type="button"
+                                data-bs-dismiss="modal"
+                                aria-label="Close"
+                        ></button>
+                    </div>
+                    <div class="modal-body">
+                        <table id="datatablesCheckedPotential">
+                            <thead>
+                            <tr>
+                                <th>TÊN</th>
+                                <th>DI ĐỘNG</th>
+                                <th>EMAIL</th>
+                                <th>NGUỒN</th>
+                                <th>NGÀY TẠO</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+
+                        <hr class="mt-0 mb-4" />
+                        <div class="row mb-3">
+                            <div class="col-md-3">
+                                <label class="text-small">Phòng ban</label>
+                                <select class="ui fluid dropdown" id="selectDepartment">
+                                    <option value="">Lựa chọn</option>
+                                    <option th:each="department : ${departments}"
+                                            th:value="*{department.id}"
+                                            th:text="*{department.name}"
+                                    ></option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-3" style="width: 25%">
+                                <select
+                                        id="lstBox1"
+                                        multiple="multiple"
+                                        class="form-control"
+                                        size="10"
+                                >
+                                </select>
+                            </div>
+
+                            <div class="d-flex flex-column py-3" style="width: 10%">
+                                <a id="btnRight" class="btn btn-block btn-sm btn-primary mb-1">Add</a>
+                                <a id="btnLeft" class="btn btn-block btn-sm btn-primary mb-1">Remove</a>
+                                <a id="btnRightall" class="btn btn-block btn-sm btn-primary mb-1">Add all</a>
+                                <a id="btnLeftall" class="btn btn-block btn-sm btn-primary">Remove all</a>
+                            </div>
+                            <div class="col-xs-3" style="width: 25%">
+                                <select
+                                        id="lstBox2"
+                                        multiple="multiple"
+                                        class="form-control"
+                                        size="10"
+                                ></select>
+                            </div>
+                            <div class="col-xs-3" style="width: 40%">
+                                <div class="form-check">
+                                    <input
+                                            class="form-check-input"
+                                            id="flexCheckDefault"
+                                            type="checkbox"
+                                            value=""
+                                    />
+                                    <label class="form-check-label" for="flexCheckDefault"
+                                    >Chia sẻ ngẫu nhiên toàn bộ đầu mối</label
+                                    >
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-primary" id="sharingLeads" type="button">Chia sẻ</button>
+                        <button class="btn btn-outline-dark" data-bs-dismiss="modal" id="closeSharingLeads" type="button">
+                            Bỏ qua
+                        </button>
+                    </div>
+                    <div>
+                        <form action="#" id="customerDistributionForm" method="POST" th:action="@{/marketing/distributionPotential}"
+                              th:object="${customerDistributionForm}">
+                            <input type="hidden" id="empIdList" th:field="${customerDistributionForm.empIdList}">
+                            <input type="hidden" id="potentialIdList" th:field="${customerDistributionForm.potentialIdList}">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--Modal Remove-->
+        <div class="modal fade" id="removeModal" tabindex="-1" role="dialog" aria-labelledby="removeModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="removeModalCenterTitle">Bạn có muốn xoá bản ghi đã chọn?</h5>
+                        <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-footer">
+                        <form th:action="@{/potential/remove}" method="POST" id="remove-form">
+                            <button class="btn btn-primary" type="submit">
+                                Xoá
+                            </button>
+                        </form>
+                        <button class="btn btn-outline-dark" type="button">Huỷ bỏ</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/litepicker/dist/bundle.js" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+<script type="text/javascript" th:src="@{/js/mainTH.js}"></script>
+<script type="text/javascript" th:src="@{/js/datatables/datatables-custom.js}"></script>
+<script type="text/javascript" th:src="@{/js/litepicker.js}"></script>
+<script type="text/javascript" th:src="@{/js/semantic/main.js}"></script>
+<script type="text/javascript" th:src="@{/js/listbox/main.js}"></script>
+<script type="text/javascript" th:src="@{/js/modules/checkbox/main.js}"></script>
+<script type="text/javascript" th:src="@{/js/potential.js}"></script>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    $(document).ready(function() {
+        var showtext = /*[[${flag}]]*/ "";
+        console.log(showtext);
+        if (showtext === 'showAlert') {
+            swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "Xoá thành công",
+                showConfirmButton: false,
+                timer: 5000,
+            });
+        } else if (showtext === 'showAlertError') {
+            swal.fire({
+                position: "top-end",
+                icon: "error",
+                title: "Xoá thất bại",
+                showConfirmButton: false,
+                timer: 5000,
+            });
+        }
+    });
+
+    var stompClient = null;
+    var userName = /*[[${userName}]]*/ "";
+
+    function connect() {
+        var socket = new SockJS('/hello');
+        stompClient = Stomp.over(socket);
+        stompClient.connect({ username: userName, }, function() {
+            console.log('Web Socket is connected');
+            stompClient.subscribe('/users/queue/messages', function(message) {
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                    }
+                })
+
+                Toast.fire({
+                    icon: 'success',
+                    title: message.body,
+                })
+            });
+        });
+    }
+    window.onload = connect;
+    /*]]>*/
+</script>
+</body>
+</html>

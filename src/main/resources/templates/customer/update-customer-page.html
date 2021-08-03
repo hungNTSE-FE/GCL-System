@@ -56,17 +56,17 @@
                 <div class="row">
                     <div class="col-lg-9">
 
-                            <input type="hidden"  name="customerCode" th:field="${customer.customerCode}">
 
-                        </form>
+
                         <!-- Default Bootstrap Toasts-->
                         <form class="row g-3"
                               id="customerForm"
+                              th:action="@{/customer/updateCustomer}"
 
                               th:object="${customer}"
                               method="post"
                         >
-                            <input type="hidden" th:field="${customer.customerCode}" name="customerID">
+                            <input type="hidden" th:field="${customer.customerId}" name="customerID">
                             <input type="hidden" th:field="${customer.customerCode}"  >
                             <div id="customerInformation">
                                 <div class="card mb-4">
@@ -86,7 +86,7 @@
                                             </div>
                                             <div class="col-md-6">
                                                 <label class="small mb-1" for="genderCmb">Giới tính</label>
-                                                <select th:field="${customer.gender}" id="genderCmb" class="form-control">
+                                                <select  name="gender" id="genderCmb" class="form-control">
                                                     <option value="0">Nam</option>
                                                     <option value="1">Nữ</option>
                                                 </select>
@@ -178,9 +178,10 @@
                                 <i data-feather="calendar"></i>
                               </span>
                                                     <input
-                                                            th:field="${customer.identification.birthDate}"
+                                                            th:value="${customer.identification.birthDate}"
                                                             class="form-control ps-0"
-                                                            id="date1"
+                                                            name="dateOfBirth"
+                                                            id="dateOfBirth"
                                                             placeholder="Chọn ngày sinh..."
                                                     />
                                                 </div>
@@ -190,16 +191,9 @@
                                         <div class="row gx-3 mb-3">
                                             <div class="col-md-6">
                                                 <label for="" class="small mb-1"> Nơi cấp </label>
-                                                <select
-                                                        th:field="${customer.identification.issuePlace}"
-                                                        class="form-select"
-                                                        id="exampleFormControlSelect1"
-                                                >
-                                                    <option value="HCM">HCM</option>
-                                                    <option value="Hà Nội">Hà Nội</option>
-                                                    <option value="Bình Dương">Bình Dương</option>
-                                                    <option value="Đồng Nai">Đồng Nai</option>
-                                                </select>
+                                                <input  th:field="${customer.identification.issuePlace}" text="text" class="form-control" id=""/>
+
+
                                             </div>
                                             <div class="col-md-6">
                                                 <label class="small mb-1"> Ngày cấp </label>
@@ -208,124 +202,62 @@
                                 <i data-feather="calendar"></i>
                               </span>
                                                     <input
-                                                            th:field="${customer.identification.issueDate}"
+                                                            th:value="${customer.identification.issueDate}"
                                                             class="form-control ps-0"
-                                                            id="date2"
+
+                                                            name="issueDate"
+                                                            id="dateOfIssue"
                                                             placeholder="Chọn ngày cấp..."
                                                     />
                                                 </div>
                                             </div>
                                         </div>
-                                        <!--                                                                           <div class="row gx-3 mb-3">&ndash;&gt;-->
-                                        <!--                                        &lt;!&ndash;                                        <div class="col-md-6">&ndash;&gt;-->
-                                        <!--                                        &lt;!&ndash;                                            <label class="small mb-1"> Mặt trước</label>&ndash;&gt;-->
-
-                                        <!--                                        &lt;!&ndash;                                            <div id="imageBefore">&ndash;&gt;-->
-                                        <!--                                        &lt;!&ndash;                                                <div class="wrapper">&ndash;&gt;-->
-                                        <!--                                        &lt;!&ndash;                                                    <div class="image">&ndash;&gt;-->
-                                        <!--                                        &lt;!&ndash;                                                        <img  alt="">&ndash;&gt;-->
-                                        <!--                                        &lt;!&ndash;                                                    </div>&ndash;&gt;-->
-                                        <!--                                        &lt;!&ndash;                                                    <div class="content">&ndash;&gt;-->
-                                        <!--                                        &lt;!&ndash;                                                        <div class="icon">&ndash;&gt;-->
-                                        <!--                                        &lt;!&ndash;                                                            <i class="fas fa-cloud-upload-alt"></i>&ndash;&gt;-->
-                                        <!--                                        &lt;!&ndash;                                                        </div>&ndash;&gt;-->
-                                        <!--                                        &lt;!&ndash;                                                        <div class="text">&ndash;&gt;-->
-                                        <!--                                        &lt;!&ndash;                                                            Chưa có hình ảnh&ndash;&gt;-->
-                                        <!--                                        &lt;!&ndash;                                                        </div>&ndash;&gt;-->
-                                        <!--                                        &lt;!&ndash;                                                    </div>&ndash;&gt;-->
-                                        <!--                                        &lt;!&ndash;                                                    <div id="cancel-btn">&ndash;&gt;-->
-                                        <!--                                        &lt;!&ndash;                                                        <i class="fas fa-times"></i>&ndash;&gt;-->
-                                        <!--                                        &lt;!&ndash;                                                    </div>&ndash;&gt;-->
-                                        <!--                                        &lt;!&ndash;                                                    <div class="file-name">&ndash;&gt;-->
-                                        <!--                                        &lt;!&ndash;                                                        Tên ảnh&ndash;&gt;-->
-                                        <!--                                        &lt;!&ndash;                                                    </div>&ndash;&gt;-->
-                                        <!--                                        &lt;!&ndash;                                                </div>&ndash;&gt;-->
-                                        <!--                                        &lt;!&ndash;                                                <button  th:onclick="defaultBtnActive()" id="custom-btn">Chọn 1 ảnh</button>&ndash;&gt;-->
-                                        <!--                                        &lt;!&ndash;                                                <input id="default-btn" type="file"  hidden>&ndash;&gt;-->
-                                        <!--                                        &lt;!&ndash;                                            </div>&ndash;&gt;-->
-                                        <!--                                        &lt;!&ndash;                                        </div>&ndash;&gt;-->
-                                        <!--                                        &lt;!&ndash;                                        <div class="col-md-6">&ndash;&gt;-->
-                                        <!--                                        &lt;!&ndash;                                            <label class="small mb-1"> Mặt sau </label>&ndash;&gt;-->
-
-                                        <!--                                        &lt;!&ndash;                                            <div id="imageAfter">&ndash;&gt;-->
-                                        <!--                                        &lt;!&ndash;                                                <div class="wrapper1">&ndash;&gt;-->
-                                        <!--                                        &lt;!&ndash;                                                    <div class="image1">&ndash;&gt;-->
-                                        <!--                                        &lt;!&ndash;                                                        <img  alt="">&ndash;&gt;-->
-                                        <!--                                        &lt;!&ndash;                                                    </div>&ndash;&gt;-->
-                                        <!--                                        &lt;!&ndash;                                                    <div class="content">&ndash;&gt;-->
-                                        <!--                                        &lt;!&ndash;                                                        <div class="icon">&ndash;&gt;-->
-                                        <!--                                        &lt;!&ndash;                                                            <i class="fas fa-cloud-upload-alt"></i>&ndash;&gt;-->
-                                        <!--                                        &lt;!&ndash;                                                        </div>&ndash;&gt;-->
-                                        <!--                                        &lt;!&ndash;                                                        <div class="text1">&ndash;&gt;-->
-                                        <!--                                        &lt;!&ndash;                                                            Chưa có hình ảnh&ndash;&gt;-->
-                                        <!--                                        &lt;!&ndash;                                                        </div>&ndash;&gt;-->
-                                        <!--                                        &lt;!&ndash;                                                    </div>&ndash;&gt;-->
-                                        <!--                                        &lt;!&ndash;                                                    <div id="cancel-btn1">&ndash;&gt;-->
-                                        <!--                                        &lt;!&ndash;                                                        <i class="fas fa-times"></i>&ndash;&gt;-->
-                                        <!--                                        &lt;!&ndash;                                                    </div>&ndash;&gt;-->
-                                        <!--                                        &lt;!&ndash;                                                    <div class="file-name1">&ndash;&gt;-->
-                                        <!--                                        &lt;!&ndash;                                                        Tên ảnh&ndash;&gt;-->
-                                        <!--                                        &lt;!&ndash;                                                    </div>&ndash;&gt;-->
-                                        <!--                                        &lt;!&ndash;                                                </div>&ndash;&gt;-->
-                                        <!--                                        &lt;!&ndash;                                                <button  th:onclick="defaultBtnActiveAfter()" id="custom-btn1">Chọn 1 ảnh</button>&ndash;&gt;-->
-                                        <!--                                        &lt;!&ndash;                                                <input id="default-btnAfter" type="file"  hidden>&ndash;&gt;-->
-                                        <!--                                        &lt;!&ndash;                                            </div>&ndash;&gt;-->
-
-                                        <!--                                        &lt;!&ndash;                                        </div>&ndash;&gt;-->
-                                        <!--                                        &lt;!&ndash;                                    </div>-->
 
                                     </div>
                                 </div>
                             </div>-->
 
-<!--                            <div id="bankingInformation">-->
-<!--                                <div class="card mb-4">-->
-<!--                                    <div class="card-header">ThÔNG TIN TÀI KHOẢN NGÂN HÀNG</div>-->
-<!--                                    <div th:each="bankAccount : ${bankAccountList}"class="card-body">-->
-<!--                                        <div class="mb-3">-->
-<!--                                            <label class="small mb-1">-->
-<!--                                                Ngân hàng-->
-<!--                                                <span style="color: red">*</span>-->
-<!--                                            </label>-->
-<!--                                            <input type="text" class="form-control"-->
-<!--                                                   id="bank"-->
-<!--                                                   th:field="${bankAccount.bankName}"-->
-<!--                                            />-->
-<!--                                            &lt;!&ndash;                                        <select&ndash;&gt;-->
-<!--                                            &lt;!&ndash;                                                class="form-select"&ndash;&gt;-->
-<!--                                            &lt;!&ndash;                                                id="exampleFormControlSelect1"&ndash;&gt;-->
-<!--                                            &lt;!&ndash;                                        >&ndash;&gt;-->
-<!--                                            &lt;!&ndash;                                            <option>1</option>&ndash;&gt;-->
-<!--                                            &lt;!&ndash;                                            <option>2</option>&ndash;&gt;-->
-<!--                                            &lt;!&ndash;                                            <option>3</option>&ndash;&gt;-->
-<!--                                            &lt;!&ndash;                                            <option>4</option>&ndash;&gt;-->
-<!--                                            &lt;!&ndash;                                            <option>5</option>&ndash;&gt;-->
-<!--                                            &lt;!&ndash;                                        </select>&ndash;&gt;-->
-<!--                                        </div>-->
-<!--                                        &lt;!&ndash; Form Row&ndash;&gt;-->
-<!--                                        <div class="row gx-3 mb-3">-->
-<!--                                            &lt;!&ndash; Form Group (first name)&ndash;&gt;-->
-<!--                                            <div class="col-md-6">-->
-<!--                                                <label class="small mb-1" for="ownerBanking"-->
-<!--                                                >Tên chủ tài khoản-->
-<!--                                                    <span style="color: red">*</span></label-->
-<!--                                                >-->
-<!--                                                <input class="form-control" type="text" id="ownerBanking"-->
-<!--                                                       />-->
-<!--                                            </div>-->
-<!--                                            &lt;!&ndash; Form Group (last name)&ndash;&gt;-->
-<!--                                            <div class="col-md-6">-->
-<!--                                                <label class="small mb-1" for="bankNumber"-->
-<!--                                                >Số tài khoản-->
-<!--                                                    <span style="color: red">*</span></label-->
-<!--                                                >-->
-<!--                                                <input class="form-control" type="text" id="bankNumber"-->
-<!--                                                       th/>-->
-<!--                                            </div>-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                            </div>-->
+                            <div id="bankingInformation">
+                                <div class="card mb-4">
+                                    <div class="card-header">ThÔNG TIN TÀI KHOẢN NGÂN HÀNG</div>
+                                    <th:block th:each="account: ${bankAccountList}">
+                                        <div class="card-body">
+
+                                            <!-- Form Row-->
+                                            <div class="row gx-3 mb-3">
+                                                <!-- Form Group (first name)-->
+                                                <!-- Form Group (last name)-->
+                                                <div class="col-md-6 form-validate">
+                                                    <label class="small mb-1" for="bankNumber"
+                                                    >Số tài khoản
+                                                        <span style="color: red">*</span></label
+                                                    >
+                                                    <input type="text" class="form-control"
+                                                           id="bankName"
+                                                           name="bankName"
+                                                           th:value="${account.bankName}"/>
+                                                    <i class="fas fa-check-circle "></i>
+                                                    <i class="fas fa-exclamation-circle"></i>
+                                                </div>
+                                                <div class="col-md-6 form-validate">
+                                                    <label class="small mb-1" for="bankNumber"
+                                                    >Số tài khoản
+                                                        <span style="color: red">*</span></label
+                                                    >
+                                                    <input   class="form-control" type="text" name="bankNumber" id="bankNumber"
+                                                           th:value="${account.id}"/>
+                                                    <i class="fas fa-check-circle "></i>
+                                                    <i class="fas fa-exclamation-circle"></i>
+                                                </div>
+
+
+                                            </div>
+                                        </div>
+
+                                    </th:block>
+                                </div>
+
+                            </div>
 
                         </form>
                     </div>
@@ -369,7 +301,7 @@
                                                             Lưu
                                                         </button>
                                                         <button class="btn btn-primary" id="updateCustomer" type="button" style="margin-right: 10px">
-                                                            Đăng kí
+                                                            Cập nhật
                                                         </button>
                                                     </div>
                                                 </div>
@@ -379,10 +311,7 @@
                                     </div>
             </div>
             <!-- Hidden field -->
-            <input type="hidden"
-                   id="gender"
 
-            />
             <input type="hidden"
                    id="hdnEmployeeId"
 
@@ -412,11 +341,11 @@
 <script type="text/javascript" th:src="@{/js/customer.js}"></script>
 <script th:inline="javascript">
     const picker = new Litepicker({
-        element: document.getElementById("date"),
+        element: document.getElementById("dateOfBirth"),
         autoRefresh: true,
     });
     const picker2 = new Litepicker({
-        element: document.getElementById("date1"),
+        element: document.getElementById("dateOfIssue"),
         autoRefresh: true,
     });
     const picker3 = new Litepicker({
@@ -424,5 +353,6 @@
         autoRefresh: true,
     });
 </script>
+
 </body>
 </html>

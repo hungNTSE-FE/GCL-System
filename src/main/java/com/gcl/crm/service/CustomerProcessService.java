@@ -15,6 +15,6 @@ public interface CustomerProcessService {
     void createTradingAccount(TradingAccount tradingAccount, Customer customer);
     void createContract(Contract contract, Customer customer);
     void activateTradingAccount(Customer customer);
-    List<Customer> getAllPotentialCustomer() ;
+    List<Customer> getAllContractCustomer() ;
 
 }
