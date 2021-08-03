@@ -24,18 +24,7 @@ public class TransactionHistoryServiceImpl implements TransactionHistoryService{
         if (transactionHistories.size() == 0){
             return false;
         }
-//        for (TransactionHistory transactionHistory : transactionHistories){
-//
-//            try{
-//                transactionHistoryRepository.save(transactionHistory);
-//                transactionHistories.remove(transactionHistory);
-//            }catch(Exception e){
-//                if(e.getMessage().contains("duplicate")){
-//                    transactionHistories.remove(transactionHistory);
-//                    importTransactionHistory(transactionHistories);
-//                }
-//            }
-//        }
+
         for(int i = 0 ;  i<transactionHistories.size();i++){
             try{
                 transactionHistoryRepository.save(transactionHistories.get(i));

@@ -7,6 +7,7 @@ import com.gcl.crm.form.CustomerStatusEvaluationForm;
 import javax.persistence.*;
 import java.sql.Date;
 import java.util.List;
+import lombok.Data;
 
 @Entity
 @Table(name = "CUSTOMER")
@@ -89,6 +90,19 @@ public class Customer {
 
     @Column(name = "UPD_USER")
     private int updUser;
+
+    public Customer() {
+    }
+
+    public Customer(Integer customerId, String customerName, String phoneNumber, String email, String number, String contractNumber, Source source) {
+        this.customerId = customerId;
+        this.customerName = customerName;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
+        this.number = number;
+        this.contractNumber = contractNumber;
+        this.source = source;
+    }
 
     @ManyToOne
     @JoinColumn(name = "LEVEL_ID")
