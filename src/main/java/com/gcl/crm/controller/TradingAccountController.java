@@ -1,8 +1,7 @@
 package com.gcl.crm.controller;
 
-import com.gcl.crm.entity.TradingAccount;
-import com.gcl.crm.entity.TransactionHistory;
-import com.gcl.crm.entity.User;
+import com.gcl.crm.entity.*;
+import com.gcl.crm.enums.Status;
 import com.gcl.crm.exporter.TradingAccountExcelExporter;
 import com.gcl.crm.form.TradingAccountForm;
 import com.gcl.crm.repository.TradingAccountRepository2;
@@ -16,18 +15,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.security.Principal;
+import java.sql.Date;
 import java.text.NumberFormat;
 import java.text.ParseException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -107,7 +105,7 @@ public class TradingAccountController {
         numberFormat.setMaximumFractionDigits(30);
         numberFormat.setGroupingUsed(true);
         model.addAttribute("numberFormat", numberFormat);
-        model.addAttribute("tradingAccountList",tradingAccountService.findAccountStopDeal());
+        model.addAttribute("tradingAccountList",tradingAccountService.findAll());
 
         model.addAttribute("tradingAccountStopList",tradingAccountService.findAccountStopDeal());
         model.addAttribute("userInfo", currentUser);
@@ -137,5 +135,30 @@ public class TradingAccountController {
             redirectAttributes.addFlashAttribute("error", "Tập tin đã chọn không đúng định dạng");
         }
         return "redirect:/tradingAccount/manageTradingAccount";
+    }
+    @GetMapping({"/showUpdateBalance/{id}"})
+    public String showUpdateAccountBalance(@PathVariable(name="id") String id,Model model,Principal principal) throws ParseException {
+        TradingAccount account = tradingAccountService.findTradingAccountByID(id);
+        if(account == null){
+            return "redirect:/tradingAccount/manageTradingAccount";
+        }
+        User currentUser = userService.getUserByUsername(principal.getName());
+        model.addAttribute("tradingAccount",account);
+        model.addAttribute("userInfo", currentUser);
+        return "tradingAccount/update-account-balance-page";
+    }
+    @PostMapping({"/updateAccountBalance"})
+    public String upadteAccountBalance(@ModelAttribute("tradingAccount") TradingAccount tradingAccount) throws ParseException {
+        if(tradingAccount == null){
+            return "redirect:/tradingAccount/manageTradingAccount";
+
+        }else{
+            tradingAccountService.updateAccountBalance(tradingAccount.getAccountNumber(),tradingAccount.getBalance());
+            return "redirect:/tradingAccount/manageTradingAccount";
+
+        }
+
+
+
     }
 }

@@ -2,6 +2,7 @@ package com.gcl.crm.form;
 
 import com.gcl.crm.entity.Employee;
 import com.gcl.crm.entity.MarketingGroup;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.sql.Date;
 import java.util.List;
@@ -64,23 +65,23 @@ public class CustomerForm {
     @NotBlank(message = "Mã môi giới không thể bỏ trống")
     private String brokerCode;
 
-    private String imageBefore ;
+    private MultipartFile imageBefore ;
 
-    private String imageAfter ;
+    private MultipartFile imageAfter ;
 
-    public String getImageBefore() {
+    public MultipartFile getImageBefore() {
         return imageBefore;
     }
 
-    public void setImageBefore(String imageBefore) {
+    public void setImageBefore(MultipartFile imageBefore) {
         this.imageBefore = imageBefore;
     }
 
-    public String getImageAfter() {
+    public MultipartFile getImageAfter() {
         return imageAfter;
     }
 
-    public void setImageAfter(String imageAfter) {
+    public void setImageAfter(MultipartFile imageAfter) {
         this.imageAfter = imageAfter;
     }
 

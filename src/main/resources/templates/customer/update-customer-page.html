@@ -188,30 +188,68 @@
                                             </div>
                                         </div>
 
+
                                         <div class="row gx-3 mb-3">
-                                            <div class="col-md-6">
-                                                <label for="" class="small mb-1"> Nơi cấp </label>
-                                                <input  th:field="${customer.identification.issuePlace}" text="text" class="form-control" id=""/>
-
-
+                                            <div class="col-md-6 form-validate">
+                                                <label class="small mb-1"> Mặt trước
+                                                    <span style="color: red">*</span>
+                                                </label>
+                                                <div id="imageBefore">
+                                                    <div class="wrapper">
+                                                        <div class="image">
+                                                            <img    th:src="@{/{path}(path=${customer.identification.frontImageUrl})}"
+                                                                    alt="">
+                                                        </div>
+                                                        <div class="content">
+                                                            <div class="icon">
+                                                                <i class="fas fa-cloud-upload-alt"></i>
+                                                            </div>
+                                                            <div class="text">
+                                                                Chưa có hình ảnh
+                                                            </div>
+                                                        </div>
+                                                        <div id="cancel-btn">
+                                                            <i class="fas fa-times"></i>
+                                                        </div>
+                                                        <div class="file-name">
+                                                            Tên ảnh
+                                                        </div>
+                                                    </div>
+                                                    <button  type="button" th:onclick="defaultBtnActive()" id="custom-btn">Chọn 1 ảnh</button>
+                                                    <input id="idImageBefore" name="imageBefore" type="file"  hidden>
+                                                </div>
                                             </div>
-                                            <div class="col-md-6">
-                                                <label class="small mb-1"> Ngày cấp </label>
-                                                <div class="input-group input-group-joined">
-                              <span class="input-group-text">
-                                <i data-feather="calendar"></i>
-                              </span>
-                                                    <input
-                                                            th:value="${customer.identification.issueDate}"
-                                                            class="form-control ps-0"
-
-                                                            name="issueDate"
-                                                            id="dateOfIssue"
-                                                            placeholder="Chọn ngày cấp..."
-                                                    />
+                                            <div class="col-md-6 form-validate">
+                                                <label class="small mb-1"> Mặt sau
+                                                    <span style="color: red">*</span>
+                                                </label>
+                                                <div id="imageAfter">
+                                                    <div class="wrapper1">
+                                                        <div class="image1">
+                                                            <img    th:src="@{/{path}(path=${customer.identification.backImageUrl})}"
+                                                                    alt="">
+                                                        </div>
+                                                        <div class="content">
+                                                            <div class="icon">
+                                                                <i class="fas fa-cloud-upload-alt"></i>
+                                                            </div>
+                                                            <div class="text1">
+                                                                Chưa có hình ảnh
+                                                            </div>
+                                                        </div>
+                                                        <div id="cancel-btn1">
+                                                            <i class="fas fa-times"></i>
+                                                        </div>
+                                                        <div class="file-name1">
+                                                            Tên ảnh
+                                                        </div>
+                                                    </div>
+                                                    <button type="button" th:onclick="defaultBtnActiveAfter()" id="custom-btn1">Chọn 1 ảnh</button>
+                                                    <input id="idImageAfter"  name="imageAfter" type="file"  hidden>
                                                 </div>
                                             </div>
                                         </div>
+
 
                                     </div>
                                 </div>

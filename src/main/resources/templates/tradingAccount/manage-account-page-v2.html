@@ -95,6 +95,19 @@
                         <div class="col-lg-9 mb-4">
                             <!-- Area chart example-->
                             <div class="card card-scrollable mb-4">
+                                <div class="card-header border-bottom">
+                                    <ul class="nav nav-tabs card-header-tabs" id="cardTab" role="tablist">
+                                        <li class="nav-item">
+                                            <a class="nav-link active" id="all-tab" href="#all" data-bs-toggle="tab" role="tab" aria-controls="all" aria-selected="true">Tất cả tài khoản</a>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a class="nav-link " id="stopTrading-tab" href="#stopTrading" data-bs-toggle="tab" role="tab" aria-controls="stopTrading" aria-selected="false">Tài khoản dưới hạn mức </a>
+                                        </li>
+
+                                    </ul>
+                                </div>
+
                                 <div class="card-body" style="max-height: 45em;">
                                     <form id="devel-generate-content-form">
                                         <div class="d-flex justify-content-center mb-2">
@@ -111,30 +124,54 @@
                                             </div>
                                             <i class="fas fa-redo-alt" style="color: white"></i>
                                         </div>
-                                        <table id="datatablesTradingAccountBalance">
-                                            <thead>
-                                            <tr>
-                                                <th>MÃ TÀI KHOẢN</th>
-                                                <th>TÊN TÀI KHOẢN</th>
-                                                <th>SỐ DƯ KHẢ DỤNG</th>
-                                                <th>Cập nhật số dư</th>
+                                        <div class="tab-pane fade show active" id="all" role="tabpanel" aria-labelledby="all-tab">
 
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            <tr th:each="tradingAcount : ${tradingAccountStopList}">
-                                                <td th:text="${tradingAcount.accountNumber}"></td>
-                                                <td  th:text="${tradingAcount.accountName}"></td>
-                                               <td th:text="${numberFormat.format(tradingAcount.balance)}"></td>
-                                               <td>
-                                                   <a th:href="@{'/tradingAccount/showUpdateBalance/'+${tradingAcount.accountNumber}}"> <i data-feather="edit"></i>&nbsp;Cập nhật</a>
+                                            <table id="datatablesTradingAccount">
+                                                <thead>
+                                                <tr>
+                                                    <th>MÃ TÀI KHOẢN</th>
+                                                    <th>TÊN TÀI KHOẢN</th>
+                                                    <th>SỐ DƯ KHẢ DỤNG</th>
 
-                                               </td>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr th:each="tradingAcount : ${tradingAccountList}">
+                                                    <td th:text="${tradingAcount.accountNumber}"></td>
+                                                    <td  th:text="${tradingAcount.accountName}"></td>
+
+                                                    <td th:text="${numberFormat.format(tradingAcount.balance)}"></td>
 
 
-                                            </tr>
-                                            </tbody>
-                                        </table>
+
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="tab-pane fade" id="stopTrading" role="tabpanel" aria-labelledby="stopTrading-tab">
+                                            <table id="datatablesTradingAccountBalance">
+                                                <thead>
+                                                <tr>
+                                                    <th>MÃ TÀI KHOẢN</th>
+                                                    <th>TÊN TÀI KHOẢN</th>
+                                                    <th>SỐ DƯ KHẢ DỤNG</th>
+
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr th:each="tradingAcount : ${tradingAccountStopList}">
+                                                    <td th:text="${tradingAcount.accountNumber}"></td>
+                                                    <td  th:text="${tradingAcount.accountName}"></td>
+
+                                                    <td th:text="${numberFormat.format(tradingAcount.balance)}"></td>
+
+
+
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+
                                     </form>
                                 </div>
                             </div>

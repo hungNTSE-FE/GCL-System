@@ -13,6 +13,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         exposeDirectory("avatar", registry);
+        exposeDirectory("customerIdentification", registry);
     }
 
     private void exposeDirectory(String dirName, ResourceHandlerRegistry registry) {

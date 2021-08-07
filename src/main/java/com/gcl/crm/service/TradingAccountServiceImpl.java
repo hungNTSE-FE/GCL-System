@@ -41,7 +41,7 @@ public class TradingAccountServiceImpl implements TradingAccountService{
     public TradingAccount findTradingAccountByID(String id) {
         List<TradingAccount> tradingAccountList =tradingAccountRepository.findAll();
         for(int i = 0 ; i <tradingAccountList.size();i++){
-            if(tradingAccountList.get(i).getAccountNumber().equals("id")){
+            if(tradingAccountList.get(i).getAccountNumber().equals(id)){
                 return tradingAccountList.get(i);
             }
         }
@@ -65,7 +65,7 @@ public class TradingAccountServiceImpl implements TradingAccountService{
 
     @Override
     public List<TradingAccount> findAccountStopDeal() {
-        return tradingAccountRepository.findAllByBalance(5000000,0);
+        return tradingAccountRepository.findAllByBalance(5000000,-1);
     }
 
     @Override

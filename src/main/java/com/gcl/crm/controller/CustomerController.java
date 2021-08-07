@@ -20,6 +20,7 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
 import com.gcl.crm.service.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.security.Principal;
@@ -92,9 +93,13 @@ public class CustomerController {
     public String showContractCreatePage(@PathVariable(name="id") int id ,Model model, Principal principal){
         Customer customer = customerProcessService.findCustomerByID(id);
         User user = userService.getUserByUsername(principal.getName());
-        model.addAttribute("customer",customer);
+
         model.addAttribute("bankAccountList",customer.getBankAccounts());
         model.addAttribute("userInfo", user);
+        customer.getIdentification().setBackImageUrl("customerIdentification" + "/" + customer.getCustomerId() +"/"+ customer.getIdentification().getBackImageUrl());
+        customer.getIdentification().setFrontImageUrl("customerIdentification" + "/" + customer.getCustomerId() + "/" + customer.getIdentification().getFrontImageUrl());
+        System.out.println(customer.getIdentification().getBackImageUrl());
+        model.addAttribute("customer",customer);
         return "customer/update-customer-page";
     }
     @RequestMapping(value = "/addCustomer", method = RequestMethod.GET)
@@ -115,7 +120,10 @@ public class CustomerController {
                                  ) {
         User user = userService.getUserByUsername(principal.getName());
         Customer updateCustomer = customerProcessService.findCustomerByID(customer.getCustomerId());
+
+
         List<BankAccount> bankAccountList = updateCustomer.getBankAccounts();
+
         customer.getIdentification().setBirthDate(Date.valueOf(dateOfBirth));
         customer.getIdentification().setIssueDate(Date.valueOf(issueDate));
 
@@ -129,8 +137,10 @@ public class CustomerController {
 
     @PostMapping(value = "/registerCustomer")
     public String registerCustomer(Model model, @Valid @ModelAttribute(CUSTOMER_FORM) CustomerForm customerForm
-            , BindingResult result, Errors errors, Principal principal) {
+            , BindingResult result, Errors errors, Principal principal,@RequestParam(value="imageAfter") MultipartFile after,@RequestParam(value="imageBefore") MultipartFile before) {
         User user = userService.getUserByUsername(principal.getName());
+        customerForm.setImageAfter(after);
+        customerForm.setImageBefore(before);
         List<ErrorInFo> errorInFoList = customerService.checkBussinessBeforeRegistCustomer(customerForm);
         if (!CollectionUtils.isEmpty(errorInFoList)) {
             ComboboxForm comboboxForm = customerService.initComboboxData();
@@ -142,7 +152,8 @@ public class CustomerController {
             model.addAttribute("errorInfo", errorInFoList);
             return ADD_CUSTOMER_PAGE;
         }
-        customerService.registerCustomer(customerForm, user);
+
+        customerService.registerCustomer(customerForm, user,before,after);
         ComboboxForm comboboxForm = customerService.initComboboxData();
         customerForm.setComboboxForm(comboboxForm);
         model.addAttribute(CUSTOMER_FORM, customerForm);

@@ -1,13 +1,15 @@
 package com.gcl.crm.service;
 
-import com.gcl.crm.entity.Contract;
-import com.gcl.crm.entity.Customer;
-import com.gcl.crm.entity.Task;
-import com.gcl.crm.entity.TradingAccount;
+import com.gcl.crm.entity.*;
+import com.gcl.crm.form.CustomerForm;
 import com.gcl.crm.repository.CustomerProcessRepository;
+import com.gcl.crm.utils.FileUploadUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -102,6 +104,17 @@ public class CustomerProcessServiceImpl implements CustomerProcessService{
     public List<Customer> getAllContractCustomer() {
         return customerProcessRepository.getAllPotentialCustomer("GCL");
 
+    }
+
+    @Override
+    public void saveAvatar(MultipartFile multipartFile, Customer customer) {
+        String filename = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+        String uploadDir = "customerIdentification/"+customer.getCustomerId();
+        try {
+            FileUploadUtils.saveFile(uploadDir, filename, multipartFile);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 

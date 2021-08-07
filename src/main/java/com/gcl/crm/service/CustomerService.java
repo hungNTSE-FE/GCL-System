@@ -11,6 +11,7 @@ import com.gcl.crm.repository.*;
 import com.gcl.crm.utils.WebUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
 import java.text.ParseException;
@@ -41,7 +42,8 @@ public class CustomerService {
 
     @Autowired
     PotentialService potentialService;
-
+    @Autowired
+    CustomerProcessService customerProcessService;
     @Autowired
     MarketingGroupService marketingGroupService;
 
@@ -80,7 +82,7 @@ public class CustomerService {
     }
 
     @Transactional
-    public void registerCustomer(CustomerForm customerForm, User user) {
+    public void registerCustomer(CustomerForm customerForm, User user, MultipartFile before,MultipartFile after) {
         try {
             Customer customer = convertToCustomerEntity(customerForm, user);
             // Set level 6 as default of customer when register customer successfully
@@ -98,6 +100,8 @@ public class CustomerService {
 
 
             customerRepository.register(customer);
+            customerProcessService.saveAvatar(after,customer);
+            customerProcessService.saveAvatar(before,customer);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -118,8 +122,8 @@ public class CustomerService {
     public Identification registerIdentification(CustomerForm customerForm) throws ParseException{
         Identification identification = new Identification(customerForm.getIdentifyNumber(),
                 customerForm.getPlaceOfIssue(),
-                customerForm.getImageBefore(),
-                customerForm.getImageAfter(),
+                customerForm.getImageBefore().getOriginalFilename(),
+                customerForm.getImageAfter().getOriginalFilename(),
                 convertStringToDate(customerForm.getDateOfIssue(), "yyyy-mm-dd"),
                 convertStringToDate(customerForm.getDateOfBirth(), "yyyy-mm-dd"));
 

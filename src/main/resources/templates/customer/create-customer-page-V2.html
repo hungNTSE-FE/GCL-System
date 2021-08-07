@@ -55,6 +55,7 @@
                   action="#"
                   th:object="${CustomerForm}"
                   th:method="POST"
+                  enctype="multipart/form-data"
             >
                 <div class="container-xl px-4 mt-n10">
                 <div class="row">
@@ -311,7 +312,7 @@
                                                     </div>
                                                 </div>
                                                 <button  type="button" th:onclick="defaultBtnActive()" id="custom-btn">Chọn 1 ảnh</button>
-                                                <input id="idImageBefore" th:field="${CustomerForm.imageBefore}"type="file"  hidden>
+                                                <input id="idImageBefore" name="imageBefore" type="file"  hidden>
                                             </div>
                                         </div>
                                         <div class="col-md-6 form-validate">
@@ -339,7 +340,7 @@
                                                     </div>
                                                 </div>
                                                 <button type="button" th:onclick="defaultBtnActiveAfter()" id="custom-btn1">Chọn 1 ảnh</button>
-                                                <input id="idImageAfter"  th:field="${CustomerForm.imageAfter}"type="file"  hidden>
+                                                <input id="idImageAfter"  name="imageAfter" type="file"  hidden>
                                             </div>
                                         </div>
                                     </div>
