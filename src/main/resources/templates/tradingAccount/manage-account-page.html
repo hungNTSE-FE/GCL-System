@@ -93,49 +93,59 @@
                             </div>
                         </div>
                         <div class="col-lg-9 mb-4">
-                            <!-- Area chart example-->
-                            <div class="card card-scrollable mb-4">
-                                <div class="card-body" style="max-height: 45em;">
-                                    <form id="devel-generate-content-form">
-                                        <div class="d-flex justify-content-center mb-2">
-                                            <div class="info text-center">
-                                                <span>Đang xem tất cả các giao dịch</span>
-                                                <div class="flex-row">
-                                                    <a href="#" class="text-sm" id="general">Đã chọn <span id="count-checked-checkboxes">0</span> của giao dịch.
-                                                        <!-- Đã chọn  của trang 1. -->
-                                                    </a>
-                                                    <a href="#" class="text-sm" id="selectAll">
-                                                        Click vào đây để chọn tất cả (<span id="count-all-table"></span>)
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <i class="fas fa-redo-alt" style="color: white"></i>
+                            <div class="card">
+                                <div class="card-header">
+                                    <ul class="nav nav-pills card-header-pills" id="cardPill" role="tablist">
+                                        <li class="nav-item"><a class="nav-link active" id="overview-pill" href="#overviewPill" data-bs-toggle="tab" role="tab" aria-controls="overview" aria-selected="true">Tất cả tài khoản</a></li>
+                                        <li class="nav-item"><a class="nav-link" id="example-pill" href="#examplePill" data-bs-toggle="tab" role="tab" aria-controls="example" aria-selected="false">Tài khoản dưới hạn mức</a></li>
+                                    </ul>
+                                </div>
+                                <div class="card-body">
+                                    <div class="tab-content" id="cardPillContent">
+                                        <div class="tab-pane fade show active" id="overviewPill" role="tabpanel" aria-labelledby="overview-pill">
+                                            <table id="datatablesSimple">
+                                                <thead>
+                                                <tr>
+                                                    <th>MÃ TÀI KHOẢN</th>
+                                                    <th>TÊN TÀI KHOẢN</th>
+                                                    <th>SỐ DƯ KHẢ DỤNG</th>
+                                                    <th>CẬP NHẬT</th>
+
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr th:each="tradingAcount : ${tradingAccountList}">
+                                                    <td th:text="${tradingAcount.accountNumber}"></td>
+                                                    <td  th:text="${tradingAcount.accountName}"></td>
+                                                    <td th:text="${numberFormat.format(tradingAcount.balance)}"></td>
+                                                    <td>
+
+                                                    <a th:href="@{'/tradingAccount/showUpdateBalance/'+${tradingAcount.accountNumber}}"><i data-feather="edit"></i>&nbsp;Cập nhật</a>
+                                                    </td>
+
+                                                </tr>
+                                                </tbody>
+                                            </table>
                                         </div>
-                                        <table id="datatablesTradingAccountBalance">
-                                            <thead>
-                                            <tr>
-                                                <th>MÃ TÀI KHOẢN</th>
-                                                <th>TÊN TÀI KHOẢN</th>
-                                                <th>SỐ DƯ KHẢ DỤNG</th>
-                                                <th>Cập nhật số dư</th>
-
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            <tr th:each="tradingAcount : ${tradingAccountStopList}">
-                                                <td th:text="${tradingAcount.accountNumber}"></td>
-                                                <td  th:text="${tradingAcount.accountName}"></td>
-                                               <td th:text="${numberFormat.format(tradingAcount.balance)}"></td>
-                                               <td>
-                                                   <a th:href="@{'/tradingAccount/showUpdateBalance/'+${tradingAcount.accountNumber}}"> <i data-feather="edit"></i>&nbsp;Cập nhật</a>
-
-                                               </td>
-
-
-                                            </tr>
-                                            </tbody>
-                                        </table>
-                                    </form>
+                                        <div class="tab-pane fade" id="examplePill" role="tabpanel" aria-labelledby="example-pill">
+                                            <table id="datatablesSimple1">
+                                                <thead>
+                                                <tr>
+                                                    <th>MÃ TÀI KHOẢN</th>
+                                                    <th>TÊN TÀI KHOẢN</th>
+                                                    <th>SỐ DƯ KHẢ DỤNG</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr th:each="tradingAcount : ${tradingAccountStopList}">
+                                                    <td th:text="${tradingAcount.accountNumber}"></td>
+                                                    <td  th:text="${tradingAcount.accountName}"></td>
+                                                    <td th:text="${numberFormat.format(tradingAcount.balance)}"></td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -144,7 +154,6 @@
             </div>
         </main>
         <th:block th:include="/common/footer.html"></th:block>
-
         <!-- Modal Import -->
         <div
                 class="modal fade"
@@ -207,29 +216,9 @@
 <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 <script type="text/javascript" th:src="@{/js/mainTH.js}"></script>
-<script type="text/javascript" th:src="@{/js/datatables/datatables-custom.js}"></script>
+<script type="text/javascript" th:src="@{/js/datatables/datatables-simple-demo.js}"></script>
 <script type="text/javascript" th:src="@{/js/semantic/main.js}"></script>
 <script type="text/javascript" th:src="@{/js/litepicker.js}"></script>
-<script th:inline="javascript">
-    //Count Checkbox
-    $(document).ready(function() {
-        var $checkboxes = $('#devel-generate-content-form td .d-flex input[type="checkbox"]');
-        var rowCount = $('#datatablesDeal tr').length - 1;
-        $('#count-all-table').text(rowCount);
-
-        $checkboxes.change(function() {
-            var countCheckedCheckboxes = $checkboxes.filter(':checked').length;
-            $('#count-checked-checkboxes').text(countCheckedCheckboxes);
-        })
-    });
-
-    //Select all checkbox with button
-    var clicked = false;
-    $("#selectAll").on("click", function () {
-        $('#datatablesDeal tr td input[type="checkbox"]').prop("checked", !clicked);
-        clicked = !clicked;
-    });
-</script>
 
 <script th:inline="javascript">
     /*<![CDATA[*/

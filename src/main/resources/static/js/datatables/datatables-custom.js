@@ -131,8 +131,78 @@ if (document.getElementById("datatablesStatisticPotential") != null) {
             info: "",
         },
     });
-}else if (document.getElementById("datatablesTradingAccountBalance") != null) {
-    const datatablesReportAgency = new simpleDatatables.DataTable("#datatablesTradingAccountBalance", {
+
+} else if (document.getElementById("dataTablesPersonInCharge") != null) {
+    const dataTablesPersonInCharge = new simpleDatatables.DataTable("#dataTablesPersonInCharge", {
+        searchable: false,
+        fixedHeight: true,
+        perPageSelect: false,
+        labels: {
+            info: "",
+        },
+    });
+
+    const dataTableReportCustomerStatus = new simpleDatatables.DataTable("#dataTableReportCustomerStatus", {
+        searchable: false,
+        fixedHeight: true,
+        perPageSelect: false,
+        labels: {
+            info: "",
+        },
+    });
+} else if (document.getElementById("dataTableReportSummaryCustomerManagement") != null) {
+    const dataTableReportSummaryCustomerManagement = new simpleDatatables.DataTable("#dataTableReportSummaryCustomerManagement", {
+        searchable: false,
+        fixedHeight: true,
+        perPageSelect: false,
+        labels: {
+            info: "",
+        },
+    });
+    const dataTableReportSummarySalesAndMKT = new simpleDatatables.DataTable("#dataTableReportSummarySalesAndMKT", {
+        searchable: false,
+        fixedHeight: true,
+        perPageSelect: false,
+        labels: {
+            info: "",
+        },
+    });
+    const dataTablesReportSummarize3 = new simpleDatatables.DataTable("#dataTablesReportSummarize3", {
+        searchable: false,
+        fixedHeight: true,
+        perPageSelect: false,
+        labels: {
+            info: "",
+        },
+    });
+
+} else if (document.getElementById("datatablesTradingAccount") != null) {
+    const datatablesReportAgency = new simpleDatatables.DataTable("#datatablesTradingAccount", {
+        searchable: true,
+        fixedHeight: true,
+        labels: {
+            info: "",
+        },
+    });
+
+    const datatables2 = new simpleDatatables.DataTable("#datatables2", {
+        searchable: true,
+        fixedHeight: true,
+        labels: {
+            info: "",
+        },
+    });
+} else if (document.getElementById("datatablesTradingAccountBalance") != null) {
+    const datatablesReportAgency = new simpleDatatables.DataTable("#datatablesTradingAccount", {
+        searchable: true,
+        fixedHeight: true,
+        perPageSelect: false,
+        labels: {
+            info: "",
+        },
+    });
+}else if (document.getElementById("datatablesAllTradingAccount") != null) {
+    const datatablesReportAgency = new simpleDatatables.DataTable("#datatablesAllTradingAccount", {
         searchable: true,
         fixedHeight: true,
         perPageSelect: false,

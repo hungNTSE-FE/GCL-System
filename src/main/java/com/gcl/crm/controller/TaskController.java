@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
 import java.sql.Date;
@@ -41,7 +42,7 @@ public class TaskController {
     private static final String UPDATE_TASK_PAGE = "/task/update-task-page";
     private static final String EMPLOYEE_DETAIL_TASK_PAGE = "/task/view-detail-employee-task";
 
-    @GetMapping({"/viewAllTask"})
+    @GetMapping({"/home"})
     public  String viewTaskPage(Model model, Principal principal){
         User currentUser = userService.getUserByUsername(principal.getName());
 
@@ -83,16 +84,17 @@ public class TaskController {
     }
 
     @PostMapping({"/saveTask"})
-    public String saveTask(@ModelAttribute("task") Task task) throws ParseException {
+    public String saveTask(@ModelAttribute("task") Task task, RedirectAttributes redirectAttributes) throws ParseException {
         if(task == null){
-            return "redirect:/task/viewAllTask";
+            return "redirect:/task/home";
         }
         task.setActive(Status.ACTIVE);
         task.setCreateDate(Date.valueOf(LocalDate.now()));
         task.setSubmitStatus("Đang tiến hành");
         task.setDepartmentName(task.getEmployees().get(0).getDepartment().getName());
+        redirectAttributes.addFlashAttribute("flag","showAlert");
         taskService.createTask(task);
-        return "redirect:/task/viewAllTask";
+        return "redirect:/task/home";
 
 
     }

@@ -44,14 +44,7 @@ public class CustomerProcessServiceImpl implements CustomerProcessService{
 
     @Override
     public List<Customer> getCustomerHaveTradingAccount() {
-        List<Customer> customerList = getAllCustomer();
-        List<Customer> result = new ArrayList<>();
-        for(int i = 0 ; i < customerList.size();i++){
-            if(!customerList.get(i).getNumber().equals("none")){
-                result.add(customerList.get(i));
-            }
-        }
-        return  result;
+       return customerProcessRepository.getAllAccount("none");
     }
 
     @Override
@@ -60,8 +53,6 @@ public class CustomerProcessServiceImpl implements CustomerProcessService{
         customer.setCustomerCode(tradingAccount.getAccountNumber());
         tradingAccount.setCreateDate(Date.valueOf(LocalDate.now()));
         tradingAccount.setUpdateDate(Date.valueOf(LocalDate.now()));
-        tradingAccount.setBrokerName(customer.getEmployee().getName());
-        tradingAccount.setBrokerCode(customer.getEmployee().getId()+"");
         tradingAccount.setUpdateType("Inactive");
         tradingAccount.setAccountNumber(customer.getNumber());
         tradingAccount.setAccountName(customer.getCustomerName());
@@ -115,6 +106,16 @@ public class CustomerProcessServiceImpl implements CustomerProcessService{
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public List<Customer> getWaitingCustomer() {
+        return customerProcessRepository.getWaitingCustomer("none");
+    }
+
+    @Override
+    public List<Customer> getCustomerNotContract() {
+        return  customerProcessRepository.getCustomerNotContract("none","none");
     }
 
 

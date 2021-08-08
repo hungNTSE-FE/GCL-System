@@ -86,7 +86,7 @@ public class CustomerService {
         try {
             Customer customer = convertToCustomerEntity(customerForm, user);
             // Set level 6 as default of customer when register customer successfully
-            customer.setLevel(new Level(LevelEnum.LEVEL_6.getValue()));
+            customer.setLevel(new Level(LevelEnum.LEVEL_5.getValue()));
             //Identification
             //kh-ng depar-docu
             customer.setNumber("none");

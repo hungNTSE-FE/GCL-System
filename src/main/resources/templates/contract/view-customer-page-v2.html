@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
-    <title>Tài khoản giao dịch - Gia Cát Lợi</title>
+    <title>Mở tài khoản</title>
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet"/>
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
     <link rel="icon" type="image/x-icon" href="assets/img/favicon.png" />
@@ -12,17 +12,17 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"/>
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css"/>
-<style>
-    .fa-check-circle{
-        color: springgreen;
-    }
-    .fa-trash{
-        color: orangered;
-    }
-    .fa-unlock{
-        color : yellow;
-    }
-</style>
+    <style>
+        .fa-check-circle{
+            color: springgreen;
+        }
+        .fa-trash{
+            color: orangered;
+        }
+        .fa-unlock{
+            color : yellow;
+        }
+    </style>
 </head>
 
 <body class="nav-fixed">
@@ -43,16 +43,6 @@
                         <div
                                 class="row align-items-center justify-content-between pt-3"
                         >
-                            <div class="col-auto mb-3">
-                                <nav class="rounded" aria-label="breadcrumb">
-                                    <ol class="breadcrumb px-3 py-2 rounded mb-0">
-                                        <li class="breadcrumb-item">
-                                            <a href="#">Tài khoản</a>
-                                        </li>
-                                        <li class="breadcrumb-item active">Tất cả</li>
-                                    </ol>
-                                </nav>
-                            </div>
 
                         </div>
                     </div>
@@ -70,29 +60,21 @@
                                 </div>
                                 <div class="card-body">
                                     <form>
-                                        <div class="mb-3">
-                                            <label class="text-sm">Mã tài khoản</label>
-                                            <input class="form-control" type="text" placeholder="Nhập mã tài khoản"/>
-                                        </div>
+
                                         <div class="mb-3">
                                             <label class="text-sm">Tên khách hàng</label>
-                                            <input class="form-control" type="text" placeholder="Nhập tên tài khoản"/>
+                                            <input class="form-control" type="text" placeholder="Nhập tên khách hàng"/>
                                         </div>
                                         <div class="mb-3">
                                             <label class="text-sm">Số điện thoại</label>
                                             <input class="form-control" type="text" placeholder="Số điện thoại"/>
                                         </div>
-                                        <div class="mb-3">
-                                            <label class="text-sm">Trạng thái</label>
-                                            <select class="form-select" id="selectTransaction">
-                                                <option selected value="" >Tất cả</option>
-                                                <option value="Active">Đã kích hoạt</option>
-                                                <option value="Inactive">Chưa kích hoạt</option>
-                                                <option value="Stop">Dừng giao dịch</option>
-                                                <option value="Block">Khóa</option>
 
-                                            </select>
+                                        <div class="mb-3">
+                                            <label class="text-sm">Email</label>
+                                            <input class="form-control" type="text" placeholder="Email"/>
                                         </div>
+
 
 
                                         <div class="d-flex align-center">
@@ -114,7 +96,7 @@
                                     <form id="devel-generate-content-form">
                                         <div class="d-flex justify-content-center mb-2">
                                             <div class="info text-center">
-                                                <span>Đang xem tất cả các tài khoản giao dịch</span>
+                                                <span>Các khách hàng đã có tài khoản giao dịch</span>
                                                 <div class="flex-row">
 
 
@@ -125,60 +107,27 @@
                                         <table id="datatablesAllTradingAccount">
                                             <thead>
                                             <tr>
-                                                <th>Tài khoản giao dịch </th>
                                                 <th>Tên khách hàng</th>
+                                                <th>Email</th>
                                                 <th>Số điện thoại</th>
-                                                <th>Người mô giới</th>
-                                                <th>Trạng thái</th>
-                                                <th>Cập nhật</th>
-
-
+                                                <th>Mô tả</th>
+                                                <th>Tài khoản giao dịch</th>
+                                                <th>Hợp đồng</tH>
 
 
                                             </tr>
                                             </thead>
                                             <tbody>
                                             <tr th:each="customer : ${listCustomers}">
-                                                <td th:text="${customer.tradingAccount.accountNumber}"></td>
                                                 <td th:text="${customer.customerName}"></td>
+                                                <td th:text="${customer.email}"></td>
                                                 <td th:text="${customer.phoneNumber}"></td>
-                                                <td th:text="${customer.tradingAccount.brokerName}"></td>
-                                                <th:block th:switch="${customer.tradingAccount.status}">
-                                                    <th:block th:case="'Inactive'">
-                                                        <td>
-                                                            <a th:href="@{'/contract/active/'+${customer.customerId}}"><i  onclick="return confirm('Sau khi kích hoạt tài khoản sẽ có thể ký quỹ')" class="fa fa-arrow-circle-right" aria-hidden="true"></i>&nbsp;Kích Hoạt</a>
-
-                                                        </td>
-                                                    </th:block>
-                                                    <th:block th:case="'Active'">
-                                                        <td>
-                                                            <i class="fa fa-check-circle" aria-hidden="true"></i>&nbsp;
-                                                            Đã kích hoạt
-                                                        </td>
-
-
-                                                    </th:block>
-                                                    <th:block th:case="'Block'">
-                                                        <td>
-                                                            <i class="fa fa-trash" aria-hidden="true"></i>
-                                                            Khóa
-                                                        </td>
-
-
-                                                    </th:block>
-                                                    <th:block th:case="'Stop'">
-                                                        <td>
-                                                            <i class="fa fa-unlock" aria-hidden="true"></i>
-                                                            Dừng giao dịch
-                                                        </td>
-
-
-                                                    </th:block>
-                                                </th:block>
+                                                <td th:text="${customer.description}"></td>
+                                                <td th:text="${customer.number}"></td>
                                                 <td>
-                                                    <a th:href="@{'/contract/showUpdateAccountForm/'+${customer.customerId}}"><i data-feather="edit"></i>&nbsp;Cập nhật</a>
-
+                                                    <a th:href="@{'/contract/showCreateContract/'+${customer.customerId}}"> <i data-feather="edit"></i>&nbsp;Ký hợp đồng</a>
                                                 </td>
+
 
 
 
@@ -210,44 +159,6 @@
                 style="display: none"
                 aria-hidden="true"
         >
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <form th:action="@{/deal/import}" method="POST" enctype="multipart/form-data">
-                        <div class="modal-header">
-                            <h5 class="modal-title">Nhập dữ liệu từ file Excel</h5>
-                            <button
-                                    class="btn-close"
-                                    type="button"
-                                    data-bs-dismiss="modal"
-                                    aria-label="Close"
-                            ></button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="row gx-3 mb-2">
-                                <div class="col-md-4">
-                                    <label class="small">Chọn file Excel</label>
-                                </div>
-                                <div class="col-md-8">
-                                    <input accept=".xlsx, .xls" required
-                                           class="form-control form-control-sm"
-                                           type="file"
-                                           name="upload"
-                                           placeholder=""
-                                           style="border: 1px solid #aaa"
-                                    />
-                                </div>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button
-                                    class="btn btn-primary"
-                                    type="submit">
-                                Tiếp tục
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            </div>
         </div>
 
     </div>

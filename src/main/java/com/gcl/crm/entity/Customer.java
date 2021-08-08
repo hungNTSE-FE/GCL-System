@@ -40,7 +40,6 @@ import lombok.Data;
         )
 )
 public class Customer {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "CUSTOMER_ID")
@@ -51,6 +50,31 @@ public class Customer {
 
     @Column(name = "CUSTOMER_NAME")
     private String customerName;
+
+
+    public Customer(Integer customerId, String customerCode, String customerName, String phoneNumber, TradingAccount tradingAccount) {
+        this.customerId = customerId;
+        this.customerCode = customerCode;
+        this.customerName = customerName;
+        this.phoneNumber = phoneNumber;
+        this.tradingAccount = tradingAccount;
+    }
+
+    public Customer(Integer customerId, String customerName, String phoneNumber, String email, String description) {
+        this.customerId = customerId;
+        this.customerName = customerName;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
+        this.description = description;
+    }
+    public Customer(Integer customerId, String customerName, String phoneNumber, String email, String description, String number) {
+        this.customerId = customerId;
+        this.customerName = customerName;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
+        this.description = description;
+        this.number = number;
+    }
 
     @Column(name = "GENDER")
     private Gender gender;

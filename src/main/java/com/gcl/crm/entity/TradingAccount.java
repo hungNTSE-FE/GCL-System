@@ -3,8 +3,11 @@ package com.gcl.crm.entity;
 import com.gcl.crm.form.CustomerStatusForm;
 import com.gcl.crm.form.TradingAccountForm;
 import lombok.Data;
+import org.springframework.format.annotation.NumberFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.util.Date;
 import java.util.List;
 

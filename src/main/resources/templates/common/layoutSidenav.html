@@ -110,6 +110,7 @@
             </div>
             <a class="nav-link" th:href="@{/report/source}">Nguồn</a>
             <a class="nav-link" th:href="@{/report/agency}">Môi giới</a>
+            <a class="nav-link" th:href="@{/report/customerStatus}">Đánh giá tình trạng khách hàng</a>
             <a
                     class="nav-link collapsed"
                     href="javascript:void(0);"
@@ -140,6 +141,57 @@
                 >
               </nav>
             </div>
+          </nav>
+        </div>
+        <!-- Sidenav Trading Account (Flows)-->
+        <a
+                class="nav-link collapsed"
+                href="javascript:void(0);"
+                data-bs-toggle="collapse"
+                data-bs-target="#collapseAccount"
+                aria-expanded="false"
+                aria-controls="collapseAccount"
+        >
+          <div class="nav-link-icon"><i data-feather="pocket"></i></div>
+          Tài khoản giao dịch
+          <div class="sidenav-collapse-arrow">
+            <i class="fas fa-angle-down"></i>
+          </div>
+        </a>
+
+        <div
+                class="collapse"
+                id="collapseAccount"
+                data-bs-parent="#accordionSidenav"
+        >
+          <nav class="sidenav-menu-nested nav">
+            <a
+                    class="nav-link collapsed"
+                    href="javascript:void(0);"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#pagesCollapseWork"
+                    aria-expanded="false"
+                    aria-controls="pagesCollapseWork"
+            >
+              Tất cả tài khoản
+              <div class="sidenav-collapse-arrow">
+                <i class="fas fa-angle-down"></i>
+              </div>
+            </a>
+            <div
+                    class="collapse"
+                    id="pagesCollapseWork"
+                    data-bs-parent="#accordionSidenavPagesMenu"
+            >
+              <nav class="sidenav-menu-nested nav">
+                <a class="nav-link" th:href="@{/contract/manageTradingAccount}">Trạng Thái</a>
+                <a class="nav-link" th:href="@{/tradingAccount/manageTradingAccount}">Số dư</a>
+              </nav>
+            </div>
+            <a class="nav-link" th:href="@{/tradingAccount/manageTradingAccountInMonth}">Cập nhật trong tháng</a>
+            <a class="nav-link" th:href="@{/contract/waitingCustomer}">Đang chờ mở tài khoản</a>
+            <a class="nav-link" th:href="@{/contract/manageCustomer}">Ký hợp đồng <a>
+
           </nav>
         </div>
         <!-- Sidenav Heading (App Views)-->

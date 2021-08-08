@@ -19,5 +19,6 @@ public interface CustomerProcessService {
     void activateTradingAccount(Customer customer);
     List<Customer> getAllContractCustomer() ;
     void saveAvatar(MultipartFile multipartFile, Customer customer);
-
+    List<Customer> getWaitingCustomer();
+    List<Customer> getCustomerNotContract();
 }

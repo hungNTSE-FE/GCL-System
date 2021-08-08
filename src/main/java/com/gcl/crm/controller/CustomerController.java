@@ -62,11 +62,11 @@ public class CustomerController {
 
     @GetMapping({"/manageCustomer"})
     public  String viewCustomer(Model model){
-        model.addAttribute("listCustomers",customerProcessService.getAllCustomer());
+        model.addAttribute("listCustomers",customerProcessService.getCustomerNotContract());
 
         return "customer/view-customer-page";
     }
-    @GetMapping({"/managePotentialCustomer"})
+        @GetMapping({"/managePotentialCustomer"})
     public  String viewPotentialCustomer(Model model, Principal principal){
         User user = userService.getUserByUsername(principal.getName());
         List<Source> sources = sourceRepository.getAll();
@@ -109,6 +109,8 @@ public class CustomerController {
         CustomerForm customerForm = customerService.initForm(potentialId);
         model.addAttribute(CUSTOMER_FORM, customerForm);
         model.addAttribute("userInfo", user);
+        model.addAttribute("userName",principal.getName());
+
         return ADD_CUSTOMER_PAGE;
     }
     @PostMapping({"/updateCustomer"})
@@ -158,7 +160,7 @@ public class CustomerController {
         customerForm.setComboboxForm(comboboxForm);
         model.addAttribute(CUSTOMER_FORM, customerForm);
         model.addAttribute("userInfo", user);
-        return "redirect:/customer/manageCustomer";
+        return "redirect:/potential/home";
     }
 
     @RequestMapping(value = "/viewContractCustomer", method = RequestMethod.GET)

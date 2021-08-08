@@ -133,7 +133,13 @@
                                                        th:field="${tradingAccount.accountNumber}"
 
                                                 />
+                                                <span th:if="${length}" th:text="${length}" style="color:red"></span>
+                                                <span th:if="${number}" th:text="${number}" style="color:red"></span>
+
+                                                <span th:if="${duplicate}" th:text="${duplicate}" style="color:red"></span>
+
                                             </div>
+
 
                                         </div>
 
@@ -377,35 +383,7 @@
                                                 </select>
                                             </div>
 
-<!--                                            <form class="row g-3"-->
 
-<!--                                                  th:each="account: ${bankAccount}"-->
-
-
-<!--                                            >-->
-<!--                                            <div class="row gx-3 mb-3">-->
-<!--                                                &lt;!&ndash; Form Group (first name)&ndash;&gt;-->
-<!--                                                <div class="col-md-6">-->
-<!--                                                    <label class="small mb-1">-->
-<!--                                                        Ngân hàng-->
-<!--                                                        <span style="color: red">*</span>-->
-<!--                                                    </label>-->
-<!--                                                    <input type="text" class="form-control"-->
-<!--                                                           id="bank"-->
-<!--                                                           th:field="${account.bankName}"-->
-<!--                                                    />-->
-<!--                                                </div>-->
-<!--                                                &lt;!&ndash; Form Group (last name)&ndash;&gt;-->
-<!--                                                <div class="col-md-6">-->
-<!--                                                    <label class="small mb-1" for="bankNumber"-->
-<!--                                                    >Số tài khoản-->
-<!--                                                        <span style="color: red">*</span></label-->
-<!--                                                    >-->
-<!--                                                    <input class="form-control" type="text" id="bankNumber"-->
-<!--                                                           th:field="${account.id}"/>-->
-<!--                                                </div>-->
-<!--                                            </div>-->
-<!--                                            </form>-->
 
                                         </div>
                                     </div>

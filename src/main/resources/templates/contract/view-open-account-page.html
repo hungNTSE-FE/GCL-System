@@ -118,9 +118,7 @@
                 <th>Email</th>
                 <th>Số điện thoại</th>
                 <th>Mô tả</th>
-
-                <th>Mở tài khoản </th>
-                <th>Hợp đồng</tH>
+                <th>Mở tài khoản</th>
 
 
               </tr>
@@ -131,50 +129,12 @@
                 <td th:text="${customer.email}"></td>
                 <td th:text="${customer.phoneNumber}"></td>
                 <td th:text="${customer.description}"></td>
-                <th:block th:switch="${customer.number}">
-                  <th:block th:case="'none'">
-                    <td>
-                      <a th:href="@{'/contract/openAccount/'+${customer.customerId}}"><i class="fa fa-arrow-circle-right" aria-hidden="true"></i>&nbsp;Mở tài khoản</a>
+                <td>
+                  <a id="btnSend" th:href="@{'/contract/openAccount/'+${customer.customerId}}"><i class="fa fa-arrow-circle-right" aria-hidden="true"></i>Gửi thông báo</a>
+                  <input type="hidden" id="name" value="admin" placeholder="User will receive the message...">
 
-                    </td>
-                  </th:block>
-                  <th:block th:case="*">
-                    <td>
-                      <i class="fa fa-check" aria-hidden="true"></i>&nbsp;
-                      Đã mở tài khoản
+                </td>
 
-                    </td>
-
-
-                  </th:block>
-                </th:block>
-                <th:block th:switch="${customer.number}">
-                  <th:block th:case="'none'">
-                    <td>
-                      <i class="fa fa-times" aria-hidden="true"></i>&nbsp;Chưa có tài khoản</a>
-
-                    </td>
-                  </th:block>
-                  <th:block th:case="*">
-                    <th:block th:switch="${customer.contractNumber}">
-                      <th:block th:case="'none'">
-                        <td>
-                          <a th:href="@{'/contract/showCreateContract/'+${customer.customerId}}"> <i data-feather="edit"></i>&nbsp;Ký hợp đồng</a>
-
-
-
-                        </td>
-                      </th:block>
-                      <th:block th:case="*">
-                        <td>
-                          <i class="fa fa-check" aria-hidden="true"> </i>&nbsp; Đã kí hợp đồng
-                        </td>
-                      </th:block>
-                    </th:block>
-
-
-                  </th:block>
-                </th:block>
 
 
 
@@ -213,5 +173,54 @@
 <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
 <!-- Latest compiled and minified JavaScript -->
 <script type="text/javascript" th:src="@{/js/datatables/datatables-simple-demo.js}"></script>
+<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+<script th:inline="javascript">
+
+
+  /*<![CDATA[*/
+
+
+  var stompClient = null;
+  var userName = /*[[${userName}]]*/ "";
+
+  function connect() {
+    var socket = new SockJS('/hello');
+    stompClient = Stomp.over(socket);
+    stompClient.connect({ username: userName, }, function() {
+      console.log('Web Socket is connected');
+      stompClient.subscribe('/users/queue/messages', function(message) {
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+          }
+        })
+
+        Toast.fire({
+          icon: 'info',
+          title: message.body,
+        })
+      });
+    });
+  }
+
+  window.onload = connect;
+
+  $(function() {
+    $("#btnSend").click(function() {
+      stompClient.send("/app/hello", {}, $("#name").val());
+    });
+
+  });
+
+  /*]]>*/
+</script>
+
 </body>
 </html>
