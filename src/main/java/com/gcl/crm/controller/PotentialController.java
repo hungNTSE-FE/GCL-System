@@ -159,14 +159,18 @@ public class PotentialController {
     }
 
     @RequestMapping(value = "/search", method = RequestMethod.GET)
-    public String search(Model model, @Nullable @ModelAttribute("searchForm") PotentialSearchForm searchForm){
+    public String search(Model model, @Nullable @ModelAttribute("searchForm") PotentialSearchForm searchForm,Principal principal){
         if (searchForm == null){
             return "redirect:/potential/home";
         }
+        User currentUser = userService.getUserByUsername(principal.getName());
+
         CustomerDistributionForm customerDistributionForm = new CustomerDistributionForm();
         List<Source> sources = sourceRepository.getAll();
         List<Level> levels = levelService.getAll();
         List<Potential> potentials = potentialService.search(searchForm);
+        model.addAttribute("userName", principal.getName());
+        model.addAttribute("userInfo", currentUser);
         model.addAttribute("sources", sources);
         model.addAttribute("levels", levels);
         model.addAttribute("potentials", potentials);

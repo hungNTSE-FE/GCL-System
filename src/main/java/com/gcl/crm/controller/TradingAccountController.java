@@ -3,7 +3,9 @@ package com.gcl.crm.controller;
 import com.gcl.crm.entity.*;
 import com.gcl.crm.enums.Status;
 import com.gcl.crm.exporter.TradingAccountExcelExporter;
+import com.gcl.crm.form.CustomerSearchForm;
 import com.gcl.crm.form.TradingAccountForm;
+import com.gcl.crm.form.TradingAccountSearchForm;
 import com.gcl.crm.repository.TradingAccountRepository2;
 import com.gcl.crm.service.CustomerProcessService;
 import com.gcl.crm.service.TradingAccountService;
@@ -13,6 +15,7 @@ import com.gcl.crm.utils.WebUtils;
 import org.apache.poi.openxml4j.exceptions.NotOfficeXmlFileException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -99,16 +102,48 @@ public class TradingAccountController {
         return "tradingAccount/view-tradingAccount-page";
     }
     @GetMapping({"/manageTradingAccount"})
-    public  String viewTradingAccount(Model model,Principal principal){
+    public  String viewTradingAccount(Model model, Principal principal){
         User currentUser = userService.getUserByUsername(principal.getName());
         NumberFormat numberFormat = NumberFormat.getInstance();
         numberFormat.setMaximumFractionDigits(30);
         numberFormat.setGroupingUsed(true);
+        TradingAccountSearchForm searchForm = new TradingAccountSearchForm();
         model.addAttribute("numberFormat", numberFormat);
         model.addAttribute("tradingAccountList",tradingAccountService.findAll());
-
+        model.addAttribute("searchForm",searchForm);
         model.addAttribute("tradingAccountStopList",tradingAccountService.findAccountStopDeal());
         model.addAttribute("userInfo", currentUser);
+        return "tradingAccount/manage-account-page";
+    }
+    @RequestMapping(value = "/searchBalanceAccount", method = RequestMethod.GET)
+    public String search(Model model, @Nullable @ModelAttribute("searchForm") TradingAccountSearchForm searchForm, Principal principal){
+        User currentUser = userService.getUserByUsername(principal.getName());
+        model.addAttribute("userInfo", currentUser);
+
+        double balance  = 0 ;
+        if (searchForm == null){
+            return "redirect:/tradingAccount/manageTradingAccount";
+        }
+        try{
+
+            List<TradingAccount> tradingAccountList = tradingAccountService.findAllByNameNumberBalance(searchForm);
+            NumberFormat numberFormat = NumberFormat.getInstance();
+            numberFormat.setMaximumFractionDigits(30);
+            numberFormat.setGroupingUsed(true);
+            model.addAttribute("numberFormat", numberFormat);
+            model.addAttribute("tradingAccountList",tradingAccountService.findAllByNameNumberBalance(searchForm));
+            model.addAttribute("tradingAccountStopList",tradingAccountService.findAccountStopDeal());
+            return "tradingAccount/manage-account-page";
+
+        }catch (Exception e){
+            if(e.getMessage().contains("Number")){
+                    model.addAttribute("balance","xin hay nhap so");
+                return "redirect:/tradingAccount/manageTradingAccount";
+
+            }
+        }
+
+
         return "tradingAccount/manage-account-page";
     }
     @RequestMapping(value = "/import", method = RequestMethod.POST)

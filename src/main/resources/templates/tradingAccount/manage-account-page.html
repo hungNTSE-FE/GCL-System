@@ -65,18 +65,32 @@
                                     TRA CỨU
                                 </div>
                                 <div class="card-body">
-                                    <form>
-                                        <div class="mb-3">
-                                            <label class="text-sm">Tên tài khoản</label>
-                                            <input class="form-control" type="text" placeholder="Nhập mã giao dịch"/>
-                                        </div>
+                                    <form th:action="@{/tradingAccount/searchBalanceAccount}" th:object="${searchForm}">
+
                                         <div class="mb-3">
                                             <label class="text-sm">Mã tài khoản</label>
-                                            <input class="form-control" type="text" placeholder="Nhập mã tài khoản"/>
+                                            <input
+                                                    th:field="*{number}"
+
+                                                    class="form-control" type="text" placeholder="Nhập mã tài khoản"/>
                                         </div>
                                         <div class="mb-3">
-                                            <label class="text-sm">Số dư</label>
-                                            <input class="form-control" type="text" placeholder="Nhập tên tài khoản"/>
+                                            <label class="text-sm">Tên tài khoản</label>
+                                            <input
+                                                    th:field="*{name}"
+                                                    class="form-control" type="text" placeholder="Nhập tên tài khoản"/>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="text-sm">Số dư từ </label>
+                                            <input
+                                                    th:field="*{min}"
+                                                    class="form-control" type="text" placeholder="Nhập số dư"/>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="text-sm">Số dư đến</label>
+                                            <input
+                                                    th:field="*{max}"
+                                                    class="form-control" type="text" placeholder="Nhập số dư"/>
                                         </div>
 
 

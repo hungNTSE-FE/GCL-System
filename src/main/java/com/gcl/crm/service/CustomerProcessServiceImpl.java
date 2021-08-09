@@ -2,6 +2,7 @@ package com.gcl.crm.service;
 
 import com.gcl.crm.entity.*;
 import com.gcl.crm.form.CustomerForm;
+import com.gcl.crm.form.CustomerSearchForm;
 import com.gcl.crm.repository.CustomerProcessRepository;
 import com.gcl.crm.utils.FileUploadUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -116,6 +117,23 @@ public class CustomerProcessServiceImpl implements CustomerProcessService{
     @Override
     public List<Customer> getCustomerNotContract() {
         return  customerProcessRepository.getCustomerNotContract("none","none");
+    }
+
+    @Override
+    public List<Customer> findCustomerByNumberPhoneStatus(CustomerSearchForm customerSearchForm) {
+        return customerProcessRepository.searchAccountByNumberNamePhoneStatus(customerSearchForm.getStatus(),customerSearchForm.getPhone(),customerSearchForm.getAccountNumber(),customerSearchForm.getCustomerName());
+    }
+
+    @Override
+    public List<Customer> findWaitingCustomer(CustomerSearchForm customerSearchForm) {
+        return customerProcessRepository.searchWaitingCustomer(customerSearchForm.getCustomerName(),customerSearchForm.getPhone(),customerSearchForm.getEmail());
+    }
+
+    @Override
+    public List<Customer> findWaitingContractCustomer(CustomerSearchForm customerForm) {
+        return customerProcessRepository.searchCustomerNotContract(customerForm.getCustomerName()
+                ,customerForm.getEmail(),customerForm.getPhone(),
+                customerForm.getAccountNumber(),"none","none");
     }
 
 

@@ -59,21 +59,34 @@
                                     TRA CỨU
                                 </div>
                                 <div class="card-body">
-                                    <form>
+                                    <form th:action="@{/contract/searchWaitingContract}" th:object="${searchForm}">
 
                                         <div class="mb-3">
                                             <label class="text-sm">Tên khách hàng</label>
-                                            <input class="form-control" type="text" placeholder="Nhập tên khách hàng"/>
+                                            <input
+                                                    th:field="*{customerName}"
+                                                    class="form-control" type="text" placeholder="Nhập tên khách hàng"/>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="text-sm">Email</label>
+                                            <input
+                                                    th:field="*{email}"
+                                                    class="form-control" type="text" placeholder="Email"/>
                                         </div>
                                         <div class="mb-3">
                                             <label class="text-sm">Số điện thoại</label>
-                                            <input class="form-control" type="text" placeholder="Số điện thoại"/>
+                                            <input
+                                                    th:field="*{phone}"
+                                                    class="form-control" type="text" placeholder="Số điện thoại"/>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="text-sm">Mã tài khoản giao dịch</label>
+                                            <input
+                                                    th:field="*{accountNumber}"
+                                                    class="form-control" type="text" placeholder="Mã tài khoản "/>
                                         </div>
 
-                                        <div class="mb-3">
-                                            <label class="text-sm">Email</label>
-                                            <input class="form-control" type="text" placeholder="Email"/>
-                                        </div>
+
 
 
 
@@ -176,6 +189,7 @@
 <script type="text/javascript" th:src="@{/js/datatables/datatables-custom.js}"></script>
 <script type="text/javascript" th:src="@{/js/semantic/main.js}"></script>
 <script type="text/javascript" th:src="@{/js/litepicker.js}"></script>
+
 <script th:inline="javascript">
     //Count Checkbox
     $(document).ready(function() {
@@ -231,5 +245,23 @@
     window.onload = connect;
     /*]]>*/
 </script>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    $(document).ready(function() {
+        var showtext = /*[[${flag}]]*/ "";
+        console.log(showtext);
+        if (showtext === 'showAlert') {
+            swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: " Tạo tài khoản thành công",
+                showConfirmButton: false,
+                timer: 5000,
+            });
+        }
+    });
+    /*]]>*/
+</script>
+
 </body>
 </html>

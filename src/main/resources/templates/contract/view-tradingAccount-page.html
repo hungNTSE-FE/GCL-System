@@ -69,23 +69,32 @@
                                     TRA CỨU
                                 </div>
                                 <div class="card-body">
-                                    <form>
+
+                                    <form th:action="@{/contract/searchAllAccount}" th:object="${customerForm}">
                                         <div class="mb-3">
                                             <label class="text-sm">Mã tài khoản</label>
-                                            <input class="form-control" type="text" placeholder="Nhập mã tài khoản"/>
+                                            <input
+                                                    th:field="*{accountNumber}"
+                                                    class="form-control" type="text" placeholder="Nhập mã tài khoản"/>
                                         </div>
                                         <div class="mb-3">
                                             <label class="text-sm">Tên khách hàng</label>
-                                            <input class="form-control" type="text" placeholder="Nhập tên tài khoản"/>
+                                            <input
+                                                    th:field="*{customerName}"
+                                                    class="form-control" type="text" placeholder="Nhập tên tài khoản"/>
                                         </div>
                                         <div class="mb-3">
                                             <label class="text-sm">Số điện thoại</label>
-                                            <input class="form-control" type="text" placeholder="Số điện thoại"/>
+                                            <input
+                                                    th:field="*{phone}"
+                                                    class="form-control" type="text" placeholder="Số điện thoại"/>
                                         </div>
                                         <div class="mb-3">
                                             <label class="text-sm">Trạng thái</label>
-                                            <select class="form-select" id="selectTransaction">
-                                                <option selected value="" >Tất cả</option>
+                                            <select
+                                                    th:field="*{status}"
+                                                    class="form-select" id="selectTransaction">
+                                                <option selected value="All" >Tất cả</option>
                                                 <option value="Active">Đã kích hoạt</option>
                                                 <option value="Inactive">Chưa kích hoạt</option>
                                                 <option value="Stop">Dừng giao dịch</option>
@@ -320,5 +329,23 @@
     window.onload = connect;
     /*]]>*/
 </script>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    $(document).ready(function() {
+        var showtext = /*[[${flag}]]*/ "";
+        console.log(showtext);
+        if (showtext === 'showAlert') {
+            swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: " Cập nhật thành công",
+                showConfirmButton: false,
+                timer: 5000,
+            });
+        }
+    });
+    /*]]>*/
+</script>
+
 </body>
 </html>
