@@ -1,11 +1,18 @@
 package com.gcl.crm.service;
 
 import com.gcl.crm.entity.TradingAccount;
+import com.gcl.crm.exporter.TradingAccountExcelExporter;
 import com.gcl.crm.form.TradingAccountSearchForm;
 import com.gcl.crm.repository.TradingAccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.sql.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -67,6 +74,16 @@ public class TradingAccountServiceImpl implements TradingAccountService{
     @Override
     public List<TradingAccount> findAccountStopDeal() {
         return tradingAccountRepository.findAllByBalance(5000000,-1);
+    }
+
+    @Override
+    public TradingAccount activateAccount(TradingAccount tradingAccount) {
+        tradingAccount.setStatus("Active");
+        tradingAccount.setUpdateType("Active");
+        tradingAccount.setUpdateDate(Date.valueOf(LocalDate.now()));
+        tradingAccount.setActiveDate(Date.valueOf(LocalDate.now()));
+        System.out.println(tradingAccount.getActiveDate());
+       return tradingAccount;
     }
 
     @Override
@@ -148,6 +165,38 @@ public class TradingAccountServiceImpl implements TradingAccountService{
 
         return  result;
 
+    }
+
+    @Override
+    public TradingAccount createTradingAccount(TradingAccount tradingAccount) {
+        tradingAccount.setCreateDate(Date.valueOf(LocalDate.now()));
+        tradingAccount.setUpdateDate(Date.valueOf(LocalDate.now()));
+        tradingAccount.setUpdateType("Inactive");
+        return tradingAccount ;
+    }
+
+    @Override
+    public void exportDateInMonth(HttpServletResponse response) throws IOException {
+        response.setContentType("application/octet-stream");
+        String headerKey = "Content-Disposition";
+        String excelSheetName = "DSTK";
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+        LocalDateTime nowTime = LocalDateTime.now();
+        String now = dtf.format(nowTime)+"";
+
+        String month ="Tháng "+now.charAt(5)+now.charAt(6)+"/"+now.charAt(0)+now.charAt(1)+now.charAt(2)+now.charAt(3);
+        String title ="DANH SÁCH TÀI KHOẢN";
+        String monthInput = now.charAt(5)+""+now.charAt(6)+"";
+        String yearInput = now.charAt(0)+""+now.charAt(1)+""+now.charAt(2)+""+now.charAt(3)+"";
+        String headerValue ="attachment;"+" filename="+"Tong ket tai khoan giao dich thang "+ monthInput +"/"+yearInput+".xlsx";
+
+        response.setHeader(headerKey,headerValue);
+        List<TradingAccount> tradingAccountList = this.findTradingAccountByMonthAndStatus(monthInput,"Active");
+        List<TradingAccount> noneTradingAccountList = this.findTradingAccountByMonthAndStatus(monthInput,"Inactive");
+        List<TradingAccount> blockTradingAccountList = this.findTradingAccountByMonthAndStatus(monthInput,"Block");
+        List<TradingAccount> stopTradingAccountList = this.findTradingAccountByMonthAndStatus(monthInput,"Stop");
+        TradingAccountExcelExporter excelExporter = new TradingAccountExcelExporter(title,month,excelSheetName,stopTradingAccountList,tradingAccountList,noneTradingAccountList,blockTradingAccountList);
+        excelExporter.export(response);
     }
 
 }

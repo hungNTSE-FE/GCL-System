@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+  <title>Khách hàng - Gia Cát Lợi</title>
+  <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+  <link rel="icon" type="image/x-icon" href="assets/img/favicon.png"/>
+  <script data-search-pseudo-elements defer
+          src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"
+          crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js"
+          crossorigin="anonymous"></script>
+  <style>
+    form .button{
+      height: 45px;
+      margin: 35px 0
+    }
+    form .button input{
+      height: 100%;
+      width: 100%;
+      border-radius: 5px;
+      border: none;
+      color: #fff;
+      font-size: 18px;
+      font-weight: 500;
+      letter-spacing: 1px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      background: linear-gradient(135deg, #0e4db5,#0e4db5);
+    }
+    form .button input:hover{
+      /* transform: scale(0.99); */
+      background: linear-gradient(-135deg, #fff3e0,#0e4db5);
+    }
+    form .button button{
+      height: 100%;
+      width: 100%;
+      border-radius: 5px;
+      border: none;
+      color: #fff;
+      font-size: 18px;
+      font-weight: 500;
+      letter-spacing: 1px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      background: linear-gradient(135deg, red,red);
+    }
+    form .button button:hover{
+      /* transform: scale(0.99); */
+      background: linear-gradient(-135deg, #fff3e0,red);
+    }
+  </style>
+
+</head>
+<body class="nav-fixed">
+<th:block th:include="/common/nav-fixed.html"></th:block>
+<div id="layoutSidenav">
+  <th:block th:include="/common/layoutSidenav.html"></th:block>
+  <div id="layoutSidenav_content">
+    <main>
+      <header
+              class="
+              page-header page-header-dark
+              bg-gradient-primary-to-secondary
+              pb-10
+            "
+      >
+        <div class="container-xl px-4">
+          <div class="page-header-content pt-4">
+            <div class="row align-items-center justify-content-between">
+              <div class="col-auto mt-4">
+                <h1 class="page-header-title">
+                  <div class="page-header-icon">
+                    <i data-feather="layout"></i>
+                  </div>
+                  Cập nhật trạng thái tài khoản giao dịch
+                </h1>
+              </div>
+            </div>
+            <nav class="mt-4 rounded" aria-label="breadcrumb">
+              <ol class="breadcrumb px-3 py-2 rounded mb-0">
+                <li class="breadcrumb-item">
+                  <a th:href="@{'/contract/manageCustomer'}">Quay lại</a>
+                </li>
+                <li class="breadcrumb-item active">Tài khoản giao dịch</li>
+              </ol>
+            </nav>
+          </div>
+        </div>
+      </header>
+      <!-- Main page content-->
+
+
+      <div class="container-xl px-4 mt-n10">
+        <div class="row">
+          <div class="col-lg-9">
+            <form class="row g-3"
+                  id="customerForm"
+                  th:action="@{/customer/updateAccount}"
+                  th:object="${tradingAccount}"
+
+                  method="post"
+            >
+              <input type="hidden"  th:field="${tradingAccount.customerID}">
+
+              <div id="tradingAccountInfo">
+                <div class="card mb-4">
+                  <div class="card-header">Cập nhật khoản giao dịch</div>
+                  <div class="card-body">
+                    <div class="row gx-3 mb-3">
+                      <div class="col-md-6">
+                        <label for="tradingCode" class="small mb-1">
+                          Mã tài khoản giao dịch
+                          <span style="color: red">*</span>
+                        </label>
+                        <input type="text" class="form-control"
+                               id="tradingCode"
+                               placeholder="Mã tài khoản giao dịch"
+                               readonly
+                               th:field="${tradingAccount.accountNumber}"
+
+                        />
+                      </div>
+                      <div class="col-md-6">
+                        <label class="small mb-1">
+                          Mã môi giới
+                          <span style="color: red">*</span>
+                        </label>
+                        <input type="text"
+                               class="form-control"
+                               id="brokerCode"
+                               placeholder="Mã môi giới"
+                               readonly
+                               th:field="${tradingAccount.brokerCode}"
+
+                        />
+                      </div>
+                    </div>
+
+                    <div class="row gx-3 mb-3">
+                      <div class="col-md-6">
+                        <label  class="small mb-1">
+                          Tên tài khoản giao dịch
+                        </label>
+
+                        <input type="text" class="form-control"
+
+                               readonly
+                               th:field="${customer.customerName}"
+
+                        />
+                      </div>
+                      <div class="col-md-6">
+                        <label class="small mb-1"> Tên môi giới </label>
+                        <input
+                                class="form-control "
+                                type="text"
+                                readonly
+                                aria-label="Search"
+                                th:field="${tradingAccount.brokerName}"
+
+
+                        />
+                      </div>
+                    </div>
+                    <div class="row gx-3 mb-3">
+                      <div class="col-md-6">
+                        <label  class="small mb-1">
+                          Trạng thái
+                        </label>
+                        <!-- Joined input group prepend example-->
+                        <select
+                                th:field="${tradingAccount.status}"
+
+                                class="form-select"
+                                id="exampleFormControlSelect1"
+                        >
+                          <option value="Active">Active</option>
+                          <option value="Inactive">Inactive</option>
+                          <option value="Block">Block</option>
+                          <option value="Stop">Stop</option>
+                        </select>
+                      </div>
+
+                    </div>
+                    <div class="row gx-3 mb-3">
+
+
+                      <div class="button">
+                        <input type="submit" value="Cập nhật trạng thái ">
+                      </div>
+
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            </form>
+            <!-- Default Bootstrap Toasts-->
+
+
+            <!-- Sticky Navigation-->
+
+
+
+          </div>
+          <div class="col-lg-3">
+            <div class="nav-sticky">
+              <div class="card">
+                <div class="card-body">
+                  <ul class="nav flex-column" id="stickyNav">
+                    <li class="nav-item">
+                      <a class="nav-link" href="#tradingAccountInfo">Tài khoản giao dịch</a>
+                    </li>
+
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Hidden field -->
+        <input type="hidden"
+               id="gender"
+
+        />
+        <input type="hidden"
+               id="hdnEmployeeId"
+
+        />
+        <input type="hidden"
+               id="hdnSourceId"
+
+        />
+        <input type="hidden" class="form-control"
+               id="customerStatus"
+
+        />
+
+    </main>
+    <th:block th:include="/common/footer.html"></th:block>
+  </div>
+</div>
+<script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+        crossorigin="anonymous"
+></script>
+<script src="https://cdn.jsdelivr.net/npm/litepicker/dist/litepicker.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.js"
+        integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+        crossorigin="anonymous"></script>
+<script type="text/javascript" th:src="@{/js/mainTH.js}"></script>
+<script type="text/javascript" th:src="@{/js/customer.js}"></script>
+<script th:inline="javascript">
+  const picker = new Litepicker({
+    element: document.getElementById("date"),
+    autoRefresh: true,
+  });
+  const picker2 = new Litepicker({
+    element: document.getElementById("date1"),
+    autoRefresh: true,
+  });
+  const picker3 = new Litepicker({
+    element: document.getElementById("date2"),
+    autoRefresh: true,
+  });
+</script>
+</body>
+</html>

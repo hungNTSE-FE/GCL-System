@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
-    <title>Giao dịch- Gia Cát Lợi</title>
+    <title>Mở tài khoản</title>
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet"/>
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
     <link rel="icon" type="image/x-icon" href="assets/img/favicon.png" />
@@ -12,7 +12,19 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"/>
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css"/>
+    <style>
+        .fa-check-circle{
+            color: springgreen;
+        }
+        .fa-trash{
+            color: orangered;
+        }
+        .fa-unlock{
+            color : yellow;
+        }
+    </style>
 </head>
+
 <body class="nav-fixed">
 <th:block th:include="/common/nav-fixed.html"></th:block>
 <div id="layoutSidenav">
@@ -31,21 +43,7 @@
                         <div
                                 class="row align-items-center justify-content-between pt-3"
                         >
-                            <div class="col-auto mb-3">
-                                <nav class="rounded" aria-label="breadcrumb">
-                                    <ol class="breadcrumb px-3 py-2 rounded mb-0">
-                                        <li class="breadcrumb-item">
-                                            <a href="#">Giao dịch</a>
-                                        </li>
-                                        <li class="breadcrumb-item active">Tất cả</li>
-                                    </ol>
-                                </nav>
-                            </div>
-                            <div class="col-12 col-xl-auto mb-3">
-                                <!-- Extra large modal -->
 
-
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -61,38 +59,36 @@
                                     TRA CỨU
                                 </div>
                                 <div class="card-body">
-                                    <form>
+                                    <form th:action="@{/contract/searchWaitingContract}" th:object="${searchForm}">
+
                                         <div class="mb-3">
-                                            <label class="text-sm">Mã giao dịch</label>
-                                            <input class="form-control" type="text" placeholder="Nhập mã giao dịch"/>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label class="text-sm">Mã tài khoản</label>
-                                            <input class="form-control" type="text" placeholder="Nhập mã tài khoản"/>
+                                            <label class="text-sm">Tên khách hàng</label>
+                                            <input
+                                                    th:field="*{customerName}"
+                                                    class="form-control" type="text" placeholder="Nhập tên khách hàng"/>
                                         </div>
                                         <div class="mb-3">
                                             <label class="text-sm">Email</label>
-                                            <input class="form-control" type="text" placeholder="Nhập tên tài khoản"/>
+                                            <input
+                                                    th:field="*{email}"
+                                                    class="form-control" type="text" placeholder="Email"/>
                                         </div>
                                         <div class="mb-3">
-                                            <label class="text-sm">Loại giao dịch</label>
-                                            <select class="form-select" id="selectTransaction">
-                                                <option selected value="" >Tất cả</option>
-                                                <option value="1">A</option>
-                                                <option value="2">B</option>
-                                            </select>
+                                            <label class="text-sm">Số điện thoại</label>
+                                            <input
+                                                    th:field="*{phone}"
+                                                    class="form-control" type="text" placeholder="Số điện thoại"/>
                                         </div>
                                         <div class="mb-3">
-                                            <label class="text-sm">
-                                                Thời gian giao dịch
-                                            </label>
-                                            <div class="input-group input-group-joined">
-                                                <input class="form-control pointer" id="litepickerRangePlugin" placeholder="Lựa chọn"/>
-                                                <span class="input-group-text">
-                                                    <i data-feather="calendar"></i>
-                                                </span>
-                                            </div>
+                                            <label class="text-sm">Mã tài khoản giao dịch</label>
+                                            <input
+                                                    th:field="*{accountNumber}"
+                                                    class="form-control" type="text" placeholder="Mã tài khoản "/>
                                         </div>
+
+
+
+
 
                                         <div class="d-flex align-center">
                                             <button type="submit"
@@ -113,28 +109,23 @@
                                     <form id="devel-generate-content-form">
                                         <div class="d-flex justify-content-center mb-2">
                                             <div class="info text-center">
-                                                <span>Đang xem tất cả các giao dịch</span>
+                                                <span>Các khách hàng đã có tài khoản giao dịch</span>
                                                 <div class="flex-row">
-                                                    <a href="#" class="text-sm" id="general">Đã chọn <span id="count-checked-checkboxes">0</span> của giao dịch.
-                                                        <!-- Đã chọn  của trang 1. -->
-                                                    </a>
-                                                    <a href="#" class="text-sm" id="selectAll">
-                                                        Click vào đây để chọn tất cả (<span id="count-all-table"></span>)
-                                                    </a>
+
+
                                                 </div>
                                             </div>
                                             <i class="fas fa-redo-alt" style="color: white"></i>
                                         </div>
-                                        <table id="datatablesDeal">
+                                        <table id="datatablesAllTradingAccount">
                                             <thead>
                                             <tr>
                                                 <th>Tên khách hàng</th>
                                                 <th>Email</th>
                                                 <th>Số điện thoại</th>
-                                                <th>Mã tài khoản</th>
-                                                <th>Mã hợp đồng</th>
-                                                <th>Cập nhật </th>
-                                                <th>Hợp đồng</th>
+                                                <th>Mô tả</th>
+                                                <th>Tài khoản giao dịch</th>
+                                                <th>Hợp đồng</tH>
 
 
                                             </tr>
@@ -144,24 +135,21 @@
                                                 <td th:text="${customer.customerName}"></td>
                                                 <td th:text="${customer.email}"></td>
                                                 <td th:text="${customer.phoneNumber}"></td>
+                                                <td th:text="${customer.description}"></td>
                                                 <td th:text="${customer.number}"></td>
-
-                                                <td th:text="${customer.contractNumber}"></td>
                                                 <td>
-
-                                                    <a th:href="@{'/customer/showUpdateForm/'+${customer.customerId}}"><i class="fa fa-arrow-circle-right" aria-hidden="true"></i></a>
-
+                                                    <a th:href="@{'/customer/contract/showCreateContract/'+${customer.customerId}}"> <i data-feather="edit"></i>&nbsp;Ký hợp đồng</a>
                                                 </td>
-                                                <td>
 
-                                                    <a th:href="@{'/customer/downloadContractFile/'+${customer.customerId}}"><i class="fa fa-download" aria-hidden="true"></i> Tải xuống</a>
 
-                                                </td>
+
+
+
+
 
 
 
                                             </tr>
-
                                             </tbody>
                                         </table>
                                     </form>
@@ -184,10 +172,6 @@
                 style="display: none"
                 aria-hidden="true"
         >
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                </div>
-            </div>
         </div>
 
     </div>
@@ -205,6 +189,7 @@
 <script type="text/javascript" th:src="@{/js/datatables/datatables-custom.js}"></script>
 <script type="text/javascript" th:src="@{/js/semantic/main.js}"></script>
 <script type="text/javascript" th:src="@{/js/litepicker.js}"></script>
+
 <script th:inline="javascript">
     //Count Checkbox
     $(document).ready(function() {
@@ -260,5 +245,23 @@
     window.onload = connect;
     /*]]>*/
 </script>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    $(document).ready(function() {
+        var showtext = /*[[${flag}]]*/ "";
+        console.log(showtext);
+        if (showtext === 'showAlert') {
+            swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: " Hợp đồng đã được lưu",
+                showConfirmButton: false,
+                timer: 5000,
+            });
+        }
+    });
+    /*]]>*/
+</script>
+
 </body>
 </html>

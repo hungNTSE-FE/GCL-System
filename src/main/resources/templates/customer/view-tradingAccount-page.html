@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
-    <title>Giao dịch- Gia Cát Lợi</title>
+    <title>Tài khoản giao dịch - Gia Cát Lợi</title>
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet"/>
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
     <link rel="icon" type="image/x-icon" href="assets/img/favicon.png" />
@@ -12,7 +12,19 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"/>
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css"/>
+<style>
+    .fa-check-circle{
+        color: springgreen;
+    }
+    .fa-trash{
+        color: orangered;
+    }
+    .fa-unlock{
+        color : yellow;
+    }
+</style>
 </head>
+
 <body class="nav-fixed">
 <th:block th:include="/common/nav-fixed.html"></th:block>
 <div id="layoutSidenav">
@@ -35,17 +47,13 @@
                                 <nav class="rounded" aria-label="breadcrumb">
                                     <ol class="breadcrumb px-3 py-2 rounded mb-0">
                                         <li class="breadcrumb-item">
-                                            <a href="#">Giao dịch</a>
+                                            <a href="#">Tài khoản</a>
                                         </li>
                                         <li class="breadcrumb-item active">Tất cả</li>
                                     </ol>
                                 </nav>
                             </div>
-                            <div class="col-12 col-xl-auto mb-3">
-                                <!-- Extra large modal -->
 
-
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -61,38 +69,40 @@
                                     TRA CỨU
                                 </div>
                                 <div class="card-body">
-                                    <form>
-                                        <div class="mb-3">
-                                            <label class="text-sm">Mã giao dịch</label>
-                                            <input class="form-control" type="text" placeholder="Nhập mã giao dịch"/>
-                                        </div>
+
+                                    <form th:action="@{/customer/searchAllAccount}" th:object="${customerForm}">
                                         <div class="mb-3">
                                             <label class="text-sm">Mã tài khoản</label>
-                                            <input class="form-control" type="text" placeholder="Nhập mã tài khoản"/>
+                                            <input
+                                                    th:field="*{accountNumber}"
+                                                    class="form-control" type="text" placeholder="Nhập mã tài khoản"/>
                                         </div>
                                         <div class="mb-3">
-                                            <label class="text-sm">Email</label>
-                                            <input class="form-control" type="text" placeholder="Nhập tên tài khoản"/>
+                                            <label class="text-sm">Tên khách hàng</label>
+                                            <input
+                                                    th:field="*{customerName}"
+                                                    class="form-control" type="text" placeholder="Nhập tên tài khoản"/>
                                         </div>
                                         <div class="mb-3">
-                                            <label class="text-sm">Loại giao dịch</label>
-                                            <select class="form-select" id="selectTransaction">
-                                                <option selected value="" >Tất cả</option>
-                                                <option value="1">A</option>
-                                                <option value="2">B</option>
+                                            <label class="text-sm">Số điện thoại</label>
+                                            <input
+                                                    th:field="*{phone}"
+                                                    class="form-control" type="text" placeholder="Số điện thoại"/>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="text-sm">Trạng thái</label>
+                                            <select
+                                                    th:field="*{status}"
+                                                    class="form-select" id="selectTransaction">
+                                                <option selected value="All" >Tất cả</option>
+                                                <option value="Active">Đã kích hoạt</option>
+                                                <option value="Inactive">Chưa kích hoạt</option>
+                                                <option value="Stop">Dừng giao dịch</option>
+                                                <option value="Block">Khóa</option>
+
                                             </select>
                                         </div>
-                                        <div class="mb-3">
-                                            <label class="text-sm">
-                                                Thời gian giao dịch
-                                            </label>
-                                            <div class="input-group input-group-joined">
-                                                <input class="form-control pointer" id="litepickerRangePlugin" placeholder="Lựa chọn"/>
-                                                <span class="input-group-text">
-                                                    <i data-feather="calendar"></i>
-                                                </span>
-                                            </div>
-                                        </div>
+
 
                                         <div class="d-flex align-center">
                                             <button type="submit"
@@ -113,55 +123,80 @@
                                     <form id="devel-generate-content-form">
                                         <div class="d-flex justify-content-center mb-2">
                                             <div class="info text-center">
-                                                <span>Đang xem tất cả các giao dịch</span>
+                                                <span>Đang xem tất cả các tài khoản giao dịch</span>
                                                 <div class="flex-row">
-                                                    <a href="#" class="text-sm" id="general">Đã chọn <span id="count-checked-checkboxes">0</span> của giao dịch.
-                                                        <!-- Đã chọn  của trang 1. -->
-                                                    </a>
-                                                    <a href="#" class="text-sm" id="selectAll">
-                                                        Click vào đây để chọn tất cả (<span id="count-all-table"></span>)
-                                                    </a>
+
+
                                                 </div>
                                             </div>
                                             <i class="fas fa-redo-alt" style="color: white"></i>
                                         </div>
-                                        <table id="datatablesDeal">
+                                        <table id="datatablesAllTradingAccount">
                                             <thead>
                                             <tr>
+                                                <th>Tài khoản giao dịch </th>
                                                 <th>Tên khách hàng</th>
-                                                <th>Email</th>
                                                 <th>Số điện thoại</th>
-                                                <th>Mã tài khoản</th>
-                                                <th>Mã hợp đồng</th>
-                                                <th>Cập nhật </th>
-                                                <th>Hợp đồng</th>
+                                                <th>Người mô giới</th>
+                                                <th>Trạng thái</th>
+                                                <th>Cập nhật</th>
+
+
 
 
                                             </tr>
                                             </thead>
                                             <tbody>
                                             <tr th:each="customer : ${listCustomers}">
+                                                <td th:text="${customer.tradingAccount.accountNumber}"></td>
                                                 <td th:text="${customer.customerName}"></td>
-                                                <td th:text="${customer.email}"></td>
                                                 <td th:text="${customer.phoneNumber}"></td>
-                                                <td th:text="${customer.number}"></td>
+                                                <td th:text="${customer.tradingAccount.brokerName}"></td>
+                                                <th:block th:switch="${customer.tradingAccount.status}">
+                                                    <th:block th:case="'Inactive'">
+                                                        <td>
+                                                            <a th:href="@{'/customer/activeAccount/'+${customer.customerId}}"><i  onclick="return confirm('Sau khi kích hoạt tài khoản sẽ có thể ký quỹ')" class="fa fa-arrow-circle-right" aria-hidden="true"></i>&nbsp;Kích Hoạt</a>
 
-                                                <td th:text="${customer.contractNumber}"></td>
+                                                        </td>
+                                                    </th:block>
+                                                    <th:block th:case="'Active'">
+                                                        <td>
+                                                            <i class="fa fa-check-circle" aria-hidden="true"></i>&nbsp;
+                                                            Đã kích hoạt
+                                                        </td>
+
+
+                                                    </th:block>
+                                                    <th:block th:case="'Block'">
+                                                        <td>
+                                                            <i class="fa fa-trash" aria-hidden="true"></i>
+                                                            Khóa
+                                                        </td>
+
+
+                                                    </th:block>
+                                                    <th:block th:case="'Stop'">
+                                                        <td>
+                                                            <i class="fa fa-unlock" aria-hidden="true"></i>
+                                                            Dừng giao dịch
+                                                        </td>
+
+
+                                                    </th:block>
+                                                </th:block>
                                                 <td>
-
-                                                    <a th:href="@{'/customer/showUpdateForm/'+${customer.customerId}}"><i class="fa fa-arrow-circle-right" aria-hidden="true"></i></a>
+                                                    <a th:href="@{'/customer/showUpdateAccountForm/'+${customer.customerId}}"><i data-feather="edit"></i>&nbsp;Cập nhật</a>
 
                                                 </td>
-                                                <td>
 
-                                                    <a th:href="@{'/customer/downloadContractFile/'+${customer.customerId}}"><i class="fa fa-download" aria-hidden="true"></i> Tải xuống</a>
 
-                                                </td>
+
+
+
 
 
 
                                             </tr>
-
                                             </tbody>
                                         </table>
                                     </form>
@@ -186,6 +221,40 @@
         >
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
+                    <form th:action="@{/deal/import}" method="POST" enctype="multipart/form-data">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Nhập dữ liệu từ file Excel</h5>
+                            <button
+                                    class="btn-close"
+                                    type="button"
+                                    data-bs-dismiss="modal"
+                                    aria-label="Close"
+                            ></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row gx-3 mb-2">
+                                <div class="col-md-4">
+                                    <label class="small">Chọn file Excel</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <input accept=".xlsx, .xls" required
+                                           class="form-control form-control-sm"
+                                           type="file"
+                                           name="upload"
+                                           placeholder=""
+                                           style="border: 1px solid #aaa"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button
+                                    class="btn btn-primary"
+                                    type="submit">
+                                Tiếp tục
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -260,5 +329,23 @@
     window.onload = connect;
     /*]]>*/
 </script>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    $(document).ready(function() {
+        var showtext = /*[[${flag}]]*/ "";
+        console.log(showtext);
+        if (showtext === 'showAlert') {
+            swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: " Cập nhật thành công",
+                showConfirmButton: false,
+                timer: 5000,
+            });
+        }
+    });
+    /*]]>*/
+</script>
+
 </body>
 </html>

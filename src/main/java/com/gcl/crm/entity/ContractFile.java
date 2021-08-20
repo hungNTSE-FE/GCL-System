@@ -9,12 +9,13 @@ import java.util.List;
 
 
 @Entity
-@Table(name ="documentary")
-public class    Documentary {
+@Table(name ="contractFile")
+public class ContractFile {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
+    @Column(name="file_id")
     private  int id;
+
     @Column(name="name",length = 512 , nullable = false,unique = true)
     private String name ;
     @Column(name="size")
@@ -26,7 +27,17 @@ public class    Documentary {
     @Column(name = "active", nullable = false)
     @Enumerated(EnumType.ORDINAL)
     private Status active;
-    public Documentary() {
+    @OneToOne(mappedBy = "contractFile", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Contract contract;
+    public ContractFile() {
+    }
+
+    public Contract getContract() {
+        return contract;
+    }
+
+    public void setContract(Contract contract) {
+        this.contract = contract;
     }
 
     public Status getActive() {
@@ -37,13 +48,13 @@ public class    Documentary {
         this.active = active;
     }
 
-    public Documentary(int id, String name, long size) {
+    public ContractFile(int id, String name, long size) {
         this.id = id;
         this.name = name;
         this.size = size;
     }
 
-    public Documentary(int id, String name, long size, Date uploadTime) {
+    public ContractFile(int id, String name, long size, Date uploadTime) {
         this.id = id;
         this.name = name;
         this.size = size;
@@ -88,17 +99,5 @@ public class    Documentary {
 
     public void setContent(byte[] content) {
         this.content = content;
-    }
-
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(name="documentary_department",joinColumns = @JoinColumn(name="documentary_id"),inverseJoinColumns = @JoinColumn(name="department_id"))
-    private List<Department> departments;
-
-    public List<Department> getDepartments() {
-        return departments;
-    }
-
-    public void setDepartments(List<Department> departments) {
-        this.departments = departments;
     }
 }

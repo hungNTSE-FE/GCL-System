@@ -53,24 +53,25 @@ public class TradingAccountController {
         User currentUser = userService.getUserByUsername(principal.getName());
 
         model.addAttribute("userInfo", currentUser);
-        String excelSheetName = "DSTK";
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-        LocalDateTime nowTime = LocalDateTime.now();
-        String now = dtf.format(nowTime)+"";
-
-        String month ="Tháng "+now.charAt(5)+now.charAt(6)+"/"+now.charAt(0)+now.charAt(1)+now.charAt(2)+now.charAt(3);
-        String title ="DANH SÁCH TÀI KHOẢN";
-        String monthInput = now.charAt(5)+""+now.charAt(6)+"";
-        String yearInput = now.charAt(0)+""+now.charAt(1)+""+now.charAt(2)+""+now.charAt(3)+"";
-        String headerValue ="attachment;"+" filename="+"Tong ket tai khoan giao dich thang "+ monthInput +"/"+yearInput+".xlsx";
-
-        response.setHeader(headerKey,headerValue);
-        List<TradingAccount> tradingAccountList = tradingAccountService.findTradingAccountByMonthAndStatus(monthInput,"Active");
-        List<TradingAccount> noneTradingAccountList = tradingAccountService.findTradingAccountByMonthAndStatus(monthInput,"Inactive");
-        List<TradingAccount> blockTradingAccountList = tradingAccountService.findTradingAccountByMonthAndStatus(monthInput,"Block");
-        List<TradingAccount> stopTradingAccountList = tradingAccountService.findTradingAccountByMonthAndStatus(monthInput,"Stop");
-        TradingAccountExcelExporter excelExporter = new TradingAccountExcelExporter(title,month,excelSheetName,stopTradingAccountList,tradingAccountList,noneTradingAccountList,blockTradingAccountList);
-        excelExporter.export(response);
+        tradingAccountService.exportDateInMonth(response);
+//        String excelSheetName = "DSTK";
+//        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+//        LocalDateTime nowTime = LocalDateTime.now();
+//        String now = dtf.format(nowTime)+"";
+//
+//        String month ="Tháng "+now.charAt(5)+now.charAt(6)+"/"+now.charAt(0)+now.charAt(1)+now.charAt(2)+now.charAt(3);
+//        String title ="DANH SÁCH TÀI KHOẢN";
+//        String monthInput = now.charAt(5)+""+now.charAt(6)+"";
+//        String yearInput = now.charAt(0)+""+now.charAt(1)+""+now.charAt(2)+""+now.charAt(3)+"";
+//        String headerValue ="attachment;"+" filename="+"Tong ket tai khoan giao dich thang "+ monthInput +"/"+yearInput+".xlsx";
+//
+//        response.setHeader(headerKey,headerValue);
+//        List<TradingAccount> tradingAccountList = tradingAccountService.findTradingAccountByMonthAndStatus(monthInput,"Active");
+//        List<TradingAccount> noneTradingAccountList = tradingAccountService.findTradingAccountByMonthAndStatus(monthInput,"Inactive");
+//        List<TradingAccount> blockTradingAccountList = tradingAccountService.findTradingAccountByMonthAndStatus(monthInput,"Block");
+//        List<TradingAccount> stopTradingAccountList = tradingAccountService.findTradingAccountByMonthAndStatus(monthInput,"Stop");
+//        TradingAccountExcelExporter excelExporter = new TradingAccountExcelExporter(title,month,excelSheetName,stopTradingAccountList,tradingAccountList,noneTradingAccountList,blockTradingAccountList);
+//        excelExporter.export(response);
 
     }
     @GetMapping({"/manageTradingAccountInMonth"})
@@ -183,7 +184,7 @@ public class TradingAccountController {
         return "tradingAccount/update-account-balance-page";
     }
     @PostMapping({"/updateAccountBalance"})
-    public String upadteAccountBalance(@ModelAttribute("tradingAccount") TradingAccount tradingAccount) throws ParseException {
+    public String updateAccountBalance(@ModelAttribute("tradingAccount") TradingAccount tradingAccount) throws ParseException {
         if(tradingAccount == null){
             return "redirect:/tradingAccount/manageTradingAccount";
 

@@ -54,6 +54,9 @@ public class Customer {
     private String customerName;
 
 
+
+
+
     public Customer(Integer customerId, String customerCode, String customerName, String phoneNumber, TradingAccount tradingAccount) {
         this.customerId = customerId;
         this.customerCode = customerCode;
@@ -76,6 +79,22 @@ public class Customer {
         this.email = email;
         this.description = description;
         this.number = number;
+    }
+
+    public String getBrokerCode() {
+        return brokerCode;
+    }
+
+    public void setBrokerCode(String brokerCode) {
+        this.brokerCode = brokerCode;
+    }
+
+    public String getBrokerName() {
+        return brokerName;
+    }
+
+    public void setBrokerName(String brokerName) {
+        this.brokerName = brokerName;
     }
 
     @Column(name = "GENDER")

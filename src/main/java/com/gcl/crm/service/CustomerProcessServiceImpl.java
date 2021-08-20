@@ -1,7 +1,6 @@
 package com.gcl.crm.service;
 
 import com.gcl.crm.entity.*;
-import com.gcl.crm.form.CustomerForm;
 import com.gcl.crm.form.CustomerSearchForm;
 import com.gcl.crm.repository.CustomerProcessRepository;
 import com.gcl.crm.utils.FileUploadUtils;
@@ -10,12 +9,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Date;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class CustomerProcessServiceImpl implements CustomerProcessService{
@@ -26,6 +24,8 @@ public class CustomerProcessServiceImpl implements CustomerProcessService{
         return customerProcessRepository.findAll();
     }
     @Autowired ContractService contractService;
+    @Autowired ContractFileService contractFileService;
+    @Autowired TradingAccountService tradingAccountService;
     @Override
     public Customer findCustomerByID(int id) {
         List<Customer> customerList = getAllCustomer();
@@ -52,9 +52,7 @@ public class CustomerProcessServiceImpl implements CustomerProcessService{
     public void createTradingAccount(TradingAccount tradingAccount,Customer customer) {
         customer.setNumber(tradingAccount.getAccountNumber());
         customer.setCustomerCode(tradingAccount.getAccountNumber());
-        tradingAccount.setCreateDate(Date.valueOf(LocalDate.now()));
-        tradingAccount.setUpdateDate(Date.valueOf(LocalDate.now()));
-        tradingAccount.setUpdateType("Inactive");
+        tradingAccountService.createTradingAccount(tradingAccount);
         tradingAccount.setAccountNumber(customer.getNumber());
         tradingAccount.setAccountName(customer.getCustomerName());
         tradingAccount.setCustomer(customer);
@@ -81,11 +79,7 @@ public class CustomerProcessServiceImpl implements CustomerProcessService{
     @Override
     public void activateTradingAccount(Customer customer) {
         TradingAccount tradingAccount = customer.getTradingAccount();
-        tradingAccount.setStatus("Active");
-        tradingAccount.setUpdateType("Active");
-        tradingAccount.setUpdateDate(Date.valueOf(LocalDate.now()));
-        tradingAccount.setActiveDate(Date.valueOf(LocalDate.now()));
-        System.out.println(tradingAccount.getActiveDate());
+        tradingAccountService.activateAccount(tradingAccount);
         tradingAccount.setCustomer(customer);
         customer.setTradingAccount(tradingAccount);
 
@@ -115,7 +109,7 @@ public class CustomerProcessServiceImpl implements CustomerProcessService{
     }
 
     @Override
-    public List<Customer> getCustomerNotContract() {
+    public List<Customer> getCustomerWaitingContract() {
         return  customerProcessRepository.getCustomerNotContract("none","none");
     }
 
@@ -126,7 +120,7 @@ public class CustomerProcessServiceImpl implements CustomerProcessService{
 
     @Override
     public List<Customer> findWaitingCustomer(CustomerSearchForm customerSearchForm) {
-        return customerProcessRepository.searchWaitingCustomer(customerSearchForm.getCustomerName(),customerSearchForm.getPhone(),customerSearchForm.getEmail());
+        return customerProcessRepository.searchWaitingCustomer(customerSearchForm.getCustomerName(),customerSearchForm.getPhone(),customerSearchForm.getEmail(),"none");
     }
 
     @Override
@@ -134,6 +128,11 @@ public class CustomerProcessServiceImpl implements CustomerProcessService{
         return customerProcessRepository.searchCustomerNotContract(customerForm.getCustomerName()
                 ,customerForm.getEmail(),customerForm.getPhone(),
                 customerForm.getAccountNumber(),"none","none");
+    }
+
+    @Override
+    public void downloadContractFile(ContractFile contractFile,HttpServletResponse response) throws IOException {
+        contractFileService.download(contractFile,response);
     }
 
 

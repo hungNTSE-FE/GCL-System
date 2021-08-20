@@ -1,13 +1,14 @@
 package com.gcl.crm.service;
 
 import com.gcl.crm.entity.Contract;
+import com.gcl.crm.entity.ContractFile;
 import com.gcl.crm.entity.Customer;
 import com.gcl.crm.entity.TradingAccount;
-import com.gcl.crm.form.CustomerForm;
 import com.gcl.crm.form.CustomerSearchForm;
 import org.springframework.web.multipart.MultipartFile;
-import org.yaml.snakeyaml.constructor.SafeConstructor;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
 
 public interface CustomerProcessService {
@@ -21,8 +22,9 @@ public interface CustomerProcessService {
     List<Customer> getAllContractCustomer() ;
     void saveAvatar(MultipartFile multipartFile, Customer customer);
     List<Customer> getWaitingCustomer();
-    List<Customer> getCustomerNotContract();
+    List<Customer> getCustomerWaitingContract();
     List<Customer> findCustomerByNumberPhoneStatus(CustomerSearchForm customerSearchForm);
     List<Customer> findWaitingCustomer(CustomerSearchForm customerSearchForm);
     List<Customer> findWaitingContractCustomer(CustomerSearchForm customerForm);
+    void downloadContractFile(ContractFile contractFile, HttpServletResponse response) throws IOException;
 }

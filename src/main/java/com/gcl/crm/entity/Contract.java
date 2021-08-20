@@ -14,9 +14,17 @@ public class Contract {
 
     @OneToOne(mappedBy = "contract", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Customer customer;
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "file_id", referencedColumnName = "file_id")
+    private ContractFile contractFile;
 
+    public ContractFile getContractFile() {
+        return contractFile;
+    }
 
-
+    public void setContractFile(ContractFile contractFile) {
+        this.contractFile = contractFile;
+    }
 
     private String number;
 
@@ -39,6 +47,8 @@ public class Contract {
     @Column(name="create_date")
     private Date createDate ;
 
+    public Contract() {
+    }
     public String getId() {
         return id;
     }

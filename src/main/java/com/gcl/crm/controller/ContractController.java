@@ -2,6 +2,7 @@ package com.gcl.crm.controller;
 
 import com.gcl.crm.entity.*;
 import com.gcl.crm.enums.LevelEnum;
+import com.gcl.crm.enums.Status;
 import com.gcl.crm.form.CustomerDistributionForm;
 import com.gcl.crm.form.CustomerForm;
 import com.gcl.crm.form.CustomerSearchForm;
@@ -14,11 +15,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.io.IOException;
 import java.security.Principal;
 import java.sql.Date;
 import java.text.ParseException;
@@ -26,6 +32,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/contract")
@@ -42,6 +49,8 @@ public class ContractController {
     UserService userService;
     @Autowired
     TradingAccountService tradingAccountService;
+    @Autowired
+    ContractFileService contractFileService;
     private static final String VIEW_CUSTOMER_PAGE = "/contract/view-customer-page-v2";
     private static final String VIEW_TRADING_ACCOUNT_PAGE = "/contract/view-tradingAccount-page";
     private static final String OPEN_ACCOUNT_PAGE = "/contract/open-account-page";
@@ -55,12 +64,12 @@ public class ContractController {
         CustomerSearchForm customerSearchForm = new CustomerSearchForm();
 
         model.addAttribute("userInfo", currentUser);
-        model.addAttribute("listCustomers",customerProcessService.getCustomerNotContract());
+        model.addAttribute("listCustomers",customerProcessService.getCustomerWaitingContract());
         model.addAttribute("searchForm",customerSearchForm);
         return VIEW_CUSTOMER_PAGE;
     }
     @GetMapping({"/waitingCustomer"})
-    public  String waitingCustomer(Model model, Principal principal){
+    public  String getWaitingCustomer(Model model, Principal principal){
         User currentUser = userService.getUserByUsername(principal.getName());
         CustomerSearchForm customerSearchForm = new CustomerSearchForm();
         model.addAttribute("searchForm",customerSearchForm);
@@ -115,7 +124,7 @@ public class ContractController {
     }
 
     @RequestMapping(value = "/searchAllAccount", method = RequestMethod.GET)
-    public String search(Model model, @Nullable @ModelAttribute("customerForm") CustomerSearchForm searchForm, Principal principal){
+    public String searchTradingAccount(Model model, @Nullable @ModelAttribute("customerForm") CustomerSearchForm searchForm, Principal principal){
         if (searchForm == null){
             return "redirect:/contract/manageTradingAccount";
         }
@@ -247,14 +256,28 @@ public class ContractController {
         return "redirect:/contract/manageTradingAccount";
     }
     @PostMapping({"/createContract"})
-    public String createContract(RedirectAttributes redirectAttributes,@ModelAttribute("contract") Contract contract) throws ParseException {
+    public String createContract(RedirectAttributes redirectAttributes
+            ,@ModelAttribute("contract") Contract contract
+            ,@RequestParam("file") MultipartFile multipartFile) throws ParseException, IOException {
         Customer customer = customerProcessService.findCustomerByID(contract.getCustomer().getCustomerId());
+        if(multipartFile == null){
+            return "redirect:/contract/manageCustomer";
 
+        }
         if(customer == null){
             return "redirect:/contract/manageCustomer";
         }else {
             contract.setId(contractService.getContractID());
+            String filename = StringUtils.cleanPath(multipartFile.getOriginalFilename());
 
+            ContractFile contractFile = new ContractFile();
+            contractFile.setName(filename);
+            contractFile.setContent(multipartFile.getBytes());
+            contractFile.setSize(multipartFile.getSize());
+            contractFile.setUploadTime(WebUtils.getSystemDate());
+            contractFile.setActive(Status.ACTIVE);
+            contract.setContractFile(contractFile);
+            System.out.println("contract file : "+ contractFile.toString());
             customerProcessService.createContract(contract,customer);
 
             redirectAttributes.addFlashAttribute("flag","showAlert");
@@ -302,6 +325,7 @@ public class ContractController {
         }
 
     }
+
 
 }
 

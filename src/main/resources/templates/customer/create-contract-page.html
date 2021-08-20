@@ -82,9 +82,9 @@
                         <nav class="mt-4 rounded" aria-label="breadcrumb">
                             <ol class="breadcrumb px-3 py-2 rounded mb-0">
                                 <li class="breadcrumb-item">
-                                    <a th:href="@{'/contract/manageCustomer'}">Quay lại</a>
+                                    <a th:href="@{'/customer/manageCustomer'}">Quay lại</a>
                                 </li>
-                                <li class="breadcrumb-item active">Tài khoản giao dịch</li>
+                                <li class="breadcrumb-item active">Hợp đồng khách hàng</li>
                             </ol>
                         </nav>
                     </div>
@@ -151,12 +151,14 @@
                                                            placeholder=""
                                                            style="border: 1px solid #aaa"
                                                     />
+                                                <span th:if="${fileSize}" th:text="${fileSize}" style="color:red"></span>
+                                                <span th:if="${fileType}" th:text="${fileType}" style="color:red"></span>
 
                                             </div>
 
 
 
-                                            </div>
+                                        </div>
 
 
                                         <div class="row gx-3 mb-3">
@@ -209,10 +211,7 @@
                                                        readonly
                                                        th:field="${customer.tradingAccount.brokerCode}"
                                                 />
-
-
                                             </div>
-
                                         </div>
 
                                         <div class="row gx-3 mb-3">
