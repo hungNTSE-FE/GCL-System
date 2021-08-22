@@ -149,7 +149,7 @@
                                                     <td th:text="${transactionHistory.tradingAccount.accountName}"></td>
                                                     <td th:text="${transactionHistory.transactionType}"></td>
                                                     <td th:text="${transactionHistory.lot}"></td>
-                                                    <td th:text="${transactionHistory.transactionDate}"></td>
+                                                    <td th:text="${formatter.format(transactionHistory.transactionDate)}"></td>
                                                     <td></td>
                                                 </tr>
                                             </tbody>

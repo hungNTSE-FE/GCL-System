@@ -120,6 +120,7 @@ public class PotentialService {
         }
     }
 
+    @Transactional
     public boolean createPotential(Potential potential, User user) {
         String sourceName = potential.getSourceName();
         Source source = sourceService.getSourceByName(sourceName);
@@ -128,6 +129,7 @@ public class PotentialService {
         potential.setMaker(user.getUserId());
         potential.setDate(getStringCurrentDate());
         Potential poten = potentialRepository.save(potential);
+        potentialRepository2.ratingPotential();
         diaryService.createDiary("Đầu mối được tạo", user, potential);
         return poten != null;
     }

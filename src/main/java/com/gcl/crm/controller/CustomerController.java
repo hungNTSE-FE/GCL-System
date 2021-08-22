@@ -296,6 +296,11 @@ public class CustomerController {
                 return  url ;
             }
             else{
+                SummaryMKTReport summaryMKTReport = marketingRepository.getBrokerByUserId(customer.getCustomerId());
+                if (summaryMKTReport != null) {
+                    tradingAccount.setBrokerCode(summaryMKTReport.getValue().toString());
+                    tradingAccount.setBrokerName(summaryMKTReport.getName());
+                }
                 tradingAccount.setAccountNumber("003C"+tradingAccount.getBrokerCode()+tradingAccount.getAccountNumber());
                 customer.setLevel(new Level(LevelEnum.LEVEL_6.getValue()));
                 redirectAttributes.addFlashAttribute("flag","showAlert");

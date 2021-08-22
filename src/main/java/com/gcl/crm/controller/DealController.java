@@ -20,6 +20,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
 import java.security.Principal;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 @Controller
@@ -36,6 +38,8 @@ public class DealController {
         User currentUser = userService.getUserByUsername(principal.getName());
         model.addAttribute("userName", principal.getName());
         List<TransactionHistory> transactionHistoryList = transactionHistoryService.getAllTransactionHistory();
+        DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+        model.addAttribute("formatter", dateFormat);
         model.addAttribute("transactionHistoryList",transactionHistoryList);
         model.addAttribute("userInfo", currentUser);
         return HOME_PAGE;
